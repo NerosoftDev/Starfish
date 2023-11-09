@@ -2,10 +2,34 @@
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
-        <EuoniaPackageVersion>7.5.0</EuoniaPackageVersion>
+        <EuoniaPackageVersion>7.2.3</EuoniaPackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageVersion Include="Euonia.Bus" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Business" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Core" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Domain" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Linq" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Mapping.Automapper" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Modularity" Version="$(EuoniaPackageVersion)" />
+    </ItemGroup>
+
+    <!-- Tests -->
+    <ItemGroup>
+        <PackageVersion Include="BenchmarkDotNet" Version="0.13.4"/>
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2"/>
+        <PackageVersion Include="xunit" Version="2.6.1"/>
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageVersion>
+        <PackageVersion Include="coverlet.collector" Version="6.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageVersion>
+        <PackageVersion Include="Xunit.DependencyInjection" Version="8.9.0"/>
+        <PackageVersion Include="Xunit.DependencyInjection.Logging" Version="8.0.1"/>
+        <PackageVersion Include="Moq" Version="4.20.69"/>
     </ItemGroup>
 </Project>

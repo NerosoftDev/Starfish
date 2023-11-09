@@ -10,8 +10,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{9B
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}"
+	ProjectSection(SolutionItems) = preProject
+		Source\common.props = Source\common.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{08B681B9-B5D2-439B-A913-B9DE5D374772}"
+	ProjectSection(SolutionItems) = preProject
+		Test\common.props = Test\common.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{5FFE10B6-8023-4475-9A43-D4EF7AC99009}"
 EndProject

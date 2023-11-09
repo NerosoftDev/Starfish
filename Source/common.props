@@ -1,0 +1,71 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>Nerosoft.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+        <Version>1.0.0</Version>
+        <Authors>damon</Authors>
+        <Company>Nerosoft Co., Ltd.</Company>
+        <Product>Starfish</Product>
+        <Copyright>© 2018-2023 Nerosoft. All Rights Reserved.</Copyright>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
+        <PackageProjectUrl>https://github.com/NerosoftDev/Starfish/</PackageProjectUrl>
+        <PackageTags>.net, asp.net, core, configuration, config, appsettings, configuration-management, configuration-service, configuration-server, configuration-center</PackageTags>
+        <Configurations>Debug;Release;Product</Configurations>
+        <DeployDependsOn> $(DeployDependsOn); PrepareForBuild; Build </DeployDependsOn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>CS2002</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+        <DebugType>pdbonly</DebugType>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <NoWarn>1591;CS2002</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)'=='Product' ">
+        <DebugType>pdbonly</DebugType>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <NoWarn>1591;CS2002</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="System"/>
+        <Using Include="System.Collections"/>
+        <Using Include="System.Collections.Generic"/>
+        <Using Include="System.Linq"/>
+        <Using Include="System.Text"/>
+        <Using Include="System.Threading"/>
+        <Using Include="System.Threading.Tasks"/>
+        <Using Include="$(RootNamespace).Properties"/>
+    </ItemGroup>
+
+    <!-- See Microsoft.Common.CurrentVersion.targets -->
+
+    <Target Name="GenerateResx" BeforeTargets="PrepareForBuild">
+
+        <GenerateResource Sources="@(EmbeddedResource)"
+                          ExecuteAsTool="false"
+                          StronglyTypedLanguage="C#"
+                          StronglyTypedClassName="%(Filename)"
+                          StronglyTypedNamespace="@(EmbeddedResource->'$(RootNamespace).Properties')"
+                          StronglyTypedFileName="@(EmbeddedResource->'%(RootDir)%(Directory)%(Filename).Designer.cs')"
+                          Condition="'%(EmbeddedResource.GenerateResource)' != 'false' and '%(EmbeddedResource.FileName)' == 'Resources'"
+                          PublicClass="false"
+                          MinimalRebuildFromTracking="false">
+            <Output TaskParameter="FilesWritten" ItemName="FileWrites"/>
+            <Output TaskParameter="StronglyTypedFileName" ItemName="Compile"/>
+            <Output TaskParameter="Sources" ItemName="_Temporary"/>
+        </GenerateResource>
+
+    </Target>
+</Project>
