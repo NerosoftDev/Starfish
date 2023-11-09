@@ -1,0 +1,11 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
+        <EuoniaPackageVersion>7.5.0</EuoniaPackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageVersion Include="Euonia.Core" Version="$(EuoniaPackageVersion)" />
+    </ItemGroup>
+</Project>
