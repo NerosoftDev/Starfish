@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
         <RootNamespace>Nerosoft.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
         <Version>1.0.0</Version>
         <Authors>damon</Authors>
@@ -11,6 +11,8 @@
         <Nullable>disable</Nullable>
         <LangVersion>latest</LangVersion>
         <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
+        <RepositoryUrl>https://github.com/NerosoftDev/Starfish/</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/NerosoftDev/Starfish/</PackageProjectUrl>
         <PackageTags>.net, asp.net, core, configuration, config, appsettings, configuration-management, configuration-service, configuration-server, configuration-center</PackageTags>
         <Configurations>Debug;Release;Product</Configurations>
@@ -21,21 +23,21 @@
         <DebugType>full</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <NoWarn>CS2002</NoWarn>
+        <NoWarn>CS2002;IDE0290</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
         <DebugType>pdbonly</DebugType>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <NoWarn>1591;CS2002</NoWarn>
+        <NoWarn>1591;CS2002;IDE0290</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)'=='Product' ">
         <DebugType>pdbonly</DebugType>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <NoWarn>1591;CS2002</NoWarn>
+        <NoWarn>1591;CS2002;IDE0290</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -46,7 +48,6 @@
         <Using Include="System.Text"/>
         <Using Include="System.Threading"/>
         <Using Include="System.Threading.Tasks"/>
-        <Using Include="$(RootNamespace).Properties"/>
     </ItemGroup>
 
     <!-- See Microsoft.Common.CurrentVersion.targets -->

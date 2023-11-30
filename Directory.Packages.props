@@ -2,24 +2,67 @@
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
-        <EuoniaPackageVersion>7.2.3</EuoniaPackageVersion>
+        <EuoniaPackageVersion>8.0.0</EuoniaPackageVersion>
     </PropertyGroup>
-
     <ItemGroup>
+        <PackageVersion Include="Dapper" Version="2.1.24" />
+        <PackageVersion Include="Dapper.Contrib" Version="2.0.78" />
+        <PackageVersion Include="Dapper.SqlBuilder" Version="2.0.78" />
+        <PackageVersion Include="Euonia.Application" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Bus" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Bus.InMemory" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Bus.RabbitMq" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Business" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Caching" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Caching.Memory" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Caching.Redis" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Caching.Runtime" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Core" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Domain" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Hosting" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Linq" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Mapping.Automapper" Version="$(EuoniaPackageVersion)" />
         <PackageVersion Include="Euonia.Modularity" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Pipeline" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Validation" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Euonia.Repository.EfCore" Version="$(EuoniaPackageVersion)" />
+        <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+        <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
-
+    <ItemGroup>
+        <PackageVersion Include="ConfigureAwait.Fody" Version="3.3.2">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageVersion>
+        <PackageVersion Include="Fody" Version="6.8.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageVersion>
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFrameworkVersion.Equals('v6.0')) ">
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="[6.0.0]" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="[6.0.0,7.0.0)" />
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFrameworkVersion.Equals('v7.0')) ">
+        <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="[7.0.13,8.0.0)" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="[7.0.0,8.0.0)" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="[7.0.0,8.0.0)" />
+        <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+        <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+        <PackageVersion Include="MongoDB.EntityFrameworkCore" Version="7.0.0-preview.1" />
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFrameworkVersion.Equals('v8.0')) ">
+        <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="[8.0.0,9.0.0)" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="[8.0.0,9.0.0)" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="[8.0.0,9.0.0)" />
+        <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.0-beta.2" />
+        <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+        <PackageVersion Include="MongoDB.EntityFrameworkCore" Version="7.0.0-preview.1" />
+    </ItemGroup>
     <!-- Tests -->
     <ItemGroup>
-        <PackageVersion Include="BenchmarkDotNet" Version="0.13.4"/>
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2"/>
-        <PackageVersion Include="xunit" Version="2.6.1"/>
+        <PackageVersion Include="BenchmarkDotNet" Version="0.13.4" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+        <PackageVersion Include="xunit" Version="2.6.1" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,8 +71,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageVersion>
-        <PackageVersion Include="Xunit.DependencyInjection" Version="8.9.0"/>
-        <PackageVersion Include="Xunit.DependencyInjection.Logging" Version="8.0.1"/>
-        <PackageVersion Include="Moq" Version="4.20.69"/>
+        <PackageVersion Include="Xunit.DependencyInjection" Version="8.9.0" />
+        <PackageVersion Include="Xunit.DependencyInjection.Logging" Version="8.0.1" />
+        <PackageVersion Include="Moq" Version="4.20.69" />
     </ItemGroup>
 </Project>
