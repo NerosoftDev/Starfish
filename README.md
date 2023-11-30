@@ -13,14 +13,14 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 
 > 💚 Completed/已完成 ⌛ In progress/进行中 🕝 Planned/计划中
 
-- [ ] 🕝 Support multiple data sources/支持多种数据源
-    - [ ] 🕝 MySQL
-    - [ ] 🕝 SqlServer
-    - [ ] 🕝 PostgreSQL
+- [ ] ⌛ Support multiple data sources/支持多种数据源
+    - [ ] ⌛ MySQL
+    - [ ] ⌛ SqlServer
+    - [ ] ⌛ PostgreSQL
     - [ ] 🕝 MongoDB
 - [ ] 🕝 Support multiple node deployment/支持多节点部署
 - [ ] 🕝 Support multiple environments/支持多环境
-- [ ] 🕝 Deploy with docker/支持Docker部署
+- [ ] ⌛ Deploy with docker/支持Docker部署
 - [ ] 🕝 Support client cache/支持客户端缓存
 - [ ] 🕝 Multiple protocols support/支持多种协议
     - [ ] 🕝 HTTP
@@ -29,8 +29,8 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 - [ ] 🕝 Rollback to history version/回滚到历史版本
 - [ ] 🕝 Role-based access control/基于角色的访问控制
 - [ ] 🕝 Support multiple languages admin panel/支持多语言管理面板
-    - [ ] 🕝 en/英语
-    - [ ] 🕝 zh-Hans/简体中文
+    - [ ] ⌛ en/英语
+    - [ ] ⌛ zh-Hans/简体中文
     - [ ] 🕝 zh-Hant/繁体中文
     
 ## 💰 Donate/捐助 
@@ -64,6 +64,19 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE)
 # Getting Started/快速开始 ⚡
 
 ## Solution structure/解决方案结构
+
+```
+Starfish
+├──Sample
+├──Sourc
+├    ├──Starfish.Client
+├    ├──Starfish.Service
+├    ├──Starfish.Transit
+├    ├──Starfish.Webapi
+├──Tests
+├    ├──Starfish.Client.Tests
+├    ├──Starfish.Service.Tests
+```
 
 ## Requirements/环境要求
 

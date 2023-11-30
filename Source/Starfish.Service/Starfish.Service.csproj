@@ -23,6 +23,7 @@
         <PackageReference Include="Euonia.Caching.Redis" />
         <PackageReference Include="Euonia.Caching.Runtime" />
         <PackageReference Include="Euonia.Domain" />
+        <PackageReference Include="Euonia.Mapping.Automapper" />
         <PackageReference Include="Euonia.Pipeline" />
         <PackageReference Include="Euonia.Repository.EfCore" />
     </ItemGroup>
