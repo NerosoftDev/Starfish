@@ -19,6 +19,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Starfish.Common\Starfish.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -34,7 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="$(RootNamespace).Properties"/>
+        <Using Include="$(RootNamespace).Properties" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Release'">

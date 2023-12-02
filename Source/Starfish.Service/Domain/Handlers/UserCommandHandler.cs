@@ -11,11 +11,12 @@ namespace Nerosoft.Starfish.Domain;
 /// </summary>
 public sealed class UserCommandHandler : CommandHandlerBase, IHandler<UserCreateCommand>
 {
-	public UserCommandHandler(IUnitOfWorkManager unitOfWork, ILoggerFactory logger)
-		: base(unitOfWork, logger)
-	{
-	}
-
+	/// <summary>
+	/// 初始化<see cref="UserCommandHandler"/>.
+	/// </summary>
+	/// <param name="unitOfWork"></param>
+	/// <param name="factory"></param>
+	/// <param name="logger"></param>
 	public UserCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory, ILoggerFactory logger)
 		: base(unitOfWork, factory, logger)
 	{

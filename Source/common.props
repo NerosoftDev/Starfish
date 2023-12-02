@@ -23,7 +23,7 @@
         <DebugType>full</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <NoWarn>CS2002;IDE0290;IDE0301</NoWarn>
+        <NoWarn>CS2002;IDE0290;IDE0301;IDE0300</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
