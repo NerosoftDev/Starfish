@@ -98,4 +98,10 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+    <data name="IDS_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
+        <value>Page must be greater than 0.</value>
+    </data>
+    <data name="IDS_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
+        <value>Page size must be greater than 0.</value>
+    </data>
 </root>
