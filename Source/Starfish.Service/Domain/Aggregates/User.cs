@@ -15,7 +15,8 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime
 	/// 此构造方法仅提供给EntityFramwork使用
 	/// </remarks>
 	private User()
-	{ }
+	{
+	}
 
 	/// <summary>
 	/// 初始化用户聚合根
@@ -52,6 +53,21 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }
+
+	/// <summary>
+	/// 邮箱
+	/// </summary>
+	public string Email { get; set; }
+
+	/// <summary>
+	/// 授权失败次数
+	/// </summary>
+	public int AccessFailedCount { get; set; }
+
+	/// <summary>
+	/// 锁定结束时间
+	/// </summary>
+	public DateTime? LockoutEnd { get; set; }
 
 	/// <summary>
 	/// 用户角色
