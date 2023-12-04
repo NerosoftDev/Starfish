@@ -26,6 +26,7 @@
         <PackageReference Include="Euonia.Mapping.Automapper" />
         <PackageReference Include="Euonia.Pipeline" />
         <PackageReference Include="Euonia.Repository.EfCore" />
+        <PackageReference Include="IdentityModel" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
