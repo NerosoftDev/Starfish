@@ -408,6 +408,7 @@ FodyWeavers.xsd
 package-lock.json
 */wwwroot/dist
 *.designer.cs
+Resources.resources
 */wwwroot/index.html
 .DS_Store
 nupkg/
