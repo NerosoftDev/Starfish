@@ -48,20 +48,12 @@ public abstract class CommandHandlerBase
 	}
 
 	/// <summary>
-	/// 判断Handler是否可以处理指定类型的消息
-	/// </summary>
-	/// <param name="messageType">消息类型</param>
-	/// <remarks></remarks>
-	/// <returns><c>true</c></returns>
-	public virtual bool CanHandle(Type messageType) => true;
-
-	/// <summary>
 	/// 
 	/// </summary>
 	/// <param name="messageId"></param>
 	/// <param name="action"></param>
 	/// <returns></returns>
-	protected virtual async Task<CommandResponse> ExecuteAsync(Guid messageId, [NotNull] Func<Task> action)
+	protected virtual async Task<CommandResponse> ExecuteAsync(string messageId, [NotNull] Func<Task> action)
 	{
 		var response = new CommandResponse(messageId);
 		try
@@ -91,7 +83,7 @@ public abstract class CommandHandlerBase
 	/// <param name="messageId"></param>
 	/// <param name="action"></param>
 	/// <returns></returns>
-	protected virtual async Task<CommandResponse<TResult>> ExecuteAsync<TResult>(Guid messageId, [NotNull] Func<Task<TResult>> action)
+	protected virtual async Task<CommandResponse<TResult>> ExecuteAsync<TResult>(string messageId, [NotNull] Func<Task<TResult>> action)
 	{
 		var response = new CommandResponse<TResult>(messageId);
 		try
@@ -102,6 +94,7 @@ public abstract class CommandHandlerBase
 				result = await action();
 				await uow.CommitAsync();
 			}
+
 			response.Success(result);
 		}
 		catch (Exception exception)
@@ -120,7 +113,7 @@ public abstract class CommandHandlerBase
 	/// <param name="action"></param>
 	/// <param name="context"></param>
 	/// <returns></returns>
-	protected virtual async Task ExecuteAsync(Guid messageId, [NotNull] Func<Task> action, [NotNull] MessageContext context)
+	protected virtual async Task ExecuteAsync(string messageId, [NotNull] Func<Task> action, [NotNull] MessageContext context)
 	{
 		var result = await ExecuteAsync(messageId, action);
 		context.Response(result);
@@ -134,7 +127,7 @@ public abstract class CommandHandlerBase
 	/// <param name="action"></param>
 	/// <param name="context"></param>
 	/// <returns></returns>
-	protected virtual async Task ExecuteAsync<TResult>(Guid messageId, [NotNull] Func<Task<TResult>> action, [NotNull] MessageContext context)
+	protected virtual async Task ExecuteAsync<TResult>(string messageId, [NotNull] Func<Task<TResult>> action, [NotNull] MessageContext context)
 	{
 		var result = await ExecuteAsync(messageId, action);
 		context.Response(result);
