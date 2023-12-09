@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 用户聚合根
 /// </summary>
-public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime
+public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITombstone
 {
 	/// <summary>
 	/// 初始化<see cref="User"/>实例
@@ -24,13 +24,15 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime
 	/// <param name="userName"></param>
 	/// <param name="passwordHash"></param>
 	/// <param name="passwordSalt"></param>
+	/// <param name="email"></param>
 	/// <param name="roles"></param>
-	private User(string userName, string passwordHash, string passwordSalt, string roles)
+	private User(string userName, string passwordHash, string passwordSalt, string email, string roles)
 		: this()
 	{
 		UserName = userName;
 		PasswordHash = passwordHash;
 		PasswordSalt = passwordSalt;
+		Email = email;
 		Roles = roles;
 	}
 
@@ -85,29 +87,29 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime
 	public DateTime UpdateTime { get; set; }
 
 	/// <summary>
+	/// 是否被删除
+	/// </summary>
+	public bool IsDeleted { get; set; }
+
+	/// <summary>
+	/// 删除时间
+	/// </summary>
+	public DateTime? DeleteTime { get; set; }
+
+	/// <summary>
 	/// 新建用户
 	/// </summary>
 	/// <param name="userName"></param>
 	/// <param name="password"></param>
+	/// <param name="email"></param>
 	/// <param name="roles"></param>
 	/// <returns></returns>
-	internal static User Create(string userName, string password, params string[] roles)
+	internal static User Create(string userName, string password, string email, params string[] roles)
 	{
 		var salt = RandomUtility.CreateUniqueId();
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
-		var entity = new User(userName, hash, salt, roles.JoinAsString(","));
+		var entity = new User(userName, hash, salt, email, roles.JoinAsString(","));
 		return entity;
-	}
-
-	/// <summary>
-	/// 修改用户信息
-	/// </summary>
-	/// <param name="nickName"></param>
-	/// <param name="roles"></param>
-	internal void Update(string nickName, string[] roles)
-	{
-		NickName = nickName;
-		Roles = roles.JoinAsString(",");
 	}
 
 	/// <summary>
@@ -120,5 +122,53 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
 		PasswordHash = hash;
 		PasswordSalt = salt;
+	}
+
+	/// <summary>
+	/// 设置用户角色
+	/// </summary>
+	/// <param name="roles"></param>
+	internal void SetRoles(params string[] roles)
+	{
+		Roles = roles?.JoinAsString(",");
+	}
+
+	/// <summary>
+	/// 设置邮箱
+	/// </summary>
+	/// <param name="email"></param>
+	internal void SetEmail(string email)
+	{
+		Email = email;
+	}
+
+	/// <summary>
+	/// 设置用户昵称
+	/// </summary>
+	/// <param name="nickName"></param>
+	internal void SetNickName(string nickName)
+	{
+		NickName = nickName;
+	}
+
+	/// <summary>
+	/// 增加授权失败次数
+	/// </summary>
+	internal void IncreaseAccessFailedCount()
+	{
+		AccessFailedCount++;
+		if (AccessFailedCount >= 10)
+		{
+			LockoutEnd = DateTime.Now.AddMinutes(30);
+		}
+	}
+
+	/// <summary>
+	/// 重置授权失败次数
+	/// </summary>
+	internal void ResetAccessFailedCount()
+	{
+		AccessFailedCount = 0;
+		LockoutEnd = null;
 	}
 }

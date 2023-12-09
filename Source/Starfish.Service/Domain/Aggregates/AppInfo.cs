@@ -8,8 +8,8 @@ using Nerosoft.Euonia.Domain;
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
-/// 创建用户命令
+/// 应用信息
 /// </summary>
-public sealed class UserCreateCommand : ICommand
+public sealed class AppInfo : Aggregate<int>
 {
 }

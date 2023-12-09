@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Nerosoft.Starfish.Service;
 
-namespace Nerosoft.Starfish.Domain;
+namespace Nerosoft.Starfish.Repository;
 
 internal class MysqlModelBuilder : IModelBuilder
 {

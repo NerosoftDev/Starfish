@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nerosoft.Starfish.Service;
 
-namespace Nerosoft.Starfish.Domain;
+namespace Nerosoft.Starfish.Repository;
 
 internal class MssqlModelBuilder : IModelBuilder
 {

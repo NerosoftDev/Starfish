@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Core;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Euonia.Repository;
+using Nerosoft.Euonia.Repository.EfCore;
 
 // ReSharper disable UnusedMember.Global
 
@@ -16,24 +17,19 @@ namespace Nerosoft.Starfish.Service;
 /// <typeparam name="TContext"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TKey"></typeparam>
-public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDependency
+public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository<TContext, TEntity, TKey>,
+                                                                ITransientDependency
 	where TContext : DbContext, IRepositoryContext
-	where TEntity : class
+	where TEntity : class, IEntity<TKey>
+	where TKey : IEquatable<TKey>
 {
-	private readonly IContextProvider _provider;
-
-	/// <summary>
-	/// 获取数据上下文对象
-	/// </summary>
-	protected TContext Context => _provider.GetContext<TContext>();
-
 	/// <summary>
 	/// 初始化<see cref="BaseRepository{TContext, TEntity, TKey}"/>
 	/// </summary>
 	/// <param name="provider"></param>
 	protected BaseRepository(IContextProvider provider)
+		: base(provider)
 	{
-		_provider = provider;
 	}
 
 	/// <summary>
@@ -44,7 +40,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TEntity>().AsQueryable();
 		query = tracking ? query.AsTracking() : query.AsNoTracking();
@@ -54,7 +50,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 			query = properties.Aggregate(query, (current, property) => current.Include(property));
 		}
 
-		return await query.Where(predicate).ToListAsync(cancellationToken);
+		return query.Where(predicate).ToListAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -65,7 +61,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="propertyAction"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TEntity>().AsQueryable();
 		query = tracking ? query.AsTracking() : query.AsNoTracking();
@@ -75,7 +71,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 			query = propertyAction(query);
 		}
 
-		return await query.Where(predicate).ToListAsync(cancellationToken);
+		return query.Where(predicate).ToListAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -88,7 +84,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
-	public virtual async Task<List<TEntity>> FetchAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> collator, int page, int size, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> FetchAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> collator, int page, int size, CancellationToken cancellationToken = default)
 	{
 		if (page <= 0)
 		{
@@ -107,7 +103,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 		}
 
 		query = query.Where(predicate).Skip((page - 1) * size).Take(size);
-		return await query.ToListAsync(cancellationToken);
+		return query.ToListAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -116,10 +112,10 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="predicate"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+	public override Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TEntity>().AsQueryable();
-		return await query.CountAsync(predicate, cancellationToken);
+		return query.CountAsync(predicate, cancellationToken);
 	}
 
 	/// <summary>
@@ -129,10 +125,10 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="tracking"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<TEntity> GetAsync(TKey id, bool tracking, CancellationToken cancellationToken = default)
+	public virtual Task<TEntity> GetAsync(TKey id, bool tracking, CancellationToken cancellationToken = default)
 	{
 		//var lambda = predicate.Compile();
-		return await GetAsync(id, tracking, Array.Empty<string>(), cancellationToken);
+		return GetAsync(id, tracking, Array.Empty<string>(), cancellationToken);
 	}
 
 	/// <summary>
@@ -143,12 +139,12 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<TEntity> GetAsync(TKey id, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public virtual Task<TEntity> GetAsync(TKey id, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
 		var predicate = BuildIdEqualsExpression(id);
 
 		//var lambda = predicate.Compile();
-		return await GetAsync(predicate, tracking, properties, cancellationToken);
+		return GetAsync(predicate, tracking, properties, cancellationToken);
 	}
 
 	/// <summary>
@@ -159,11 +155,11 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="propertyAction"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<TEntity> GetAsync(TKey id, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
+	public virtual Task<TEntity> GetAsync(TKey id, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
 	{
 		var predicate = BuildIdEqualsExpression(id);
 
-		return await GetAsync(predicate, tracking, propertyAction, cancellationToken);
+		return GetAsync(predicate, tracking, propertyAction, cancellationToken);
 	}
 
 	/// <summary>
@@ -173,9 +169,9 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="tracking"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, CancellationToken cancellationToken = default)
+	public virtual Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, CancellationToken cancellationToken = default)
 	{
-		return await GetAsync(predicate, tracking, Array.Empty<string>(), cancellationToken);
+		return GetAsync(predicate, tracking, Array.Empty<string>(), cancellationToken);
 	}
 
 	/// <summary>
@@ -186,7 +182,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public virtual Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TEntity>().AsQueryable();
 		query = tracking ? query.AsTracking() : query.AsNoTracking();
@@ -196,7 +192,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 			query = properties.Aggregate(query, (current, property) => current.Include(property));
 		}
 
-		return await query.FirstOrDefaultAsync(predicate, cancellationToken);
+		return query.FirstOrDefaultAsync(predicate, cancellationToken);
 	}
 
 	/// <summary>
@@ -207,7 +203,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="propertyAction"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
+	public virtual Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TEntity>().AsQueryable();
 		query = tracking ? query.AsTracking() : query.AsNoTracking();
@@ -217,7 +213,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 			query = propertyAction(query);
 		}
 
-		return await query.FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
+		return query.FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
 	}
 
 	/// <summary>
@@ -227,9 +223,9 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="tracking"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, CancellationToken cancellationToken = default)
 	{
-		return await GetAsync(ids, tracking, Array.Empty<string>(), cancellationToken);
+		return GetAsync(ids, tracking, Array.Empty<string>(), cancellationToken);
 	}
 
 	/// <summary>
@@ -240,11 +236,11 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
 		var predicate = BuildIdInArrayExpression(ids);
 
-		return await FindAsync(predicate, tracking, properties, cancellationToken);
+		return FindAsync(predicate, tracking, properties, cancellationToken);
 	}
 
 	/// <summary>
@@ -255,11 +251,11 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="propertyAction"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
 	{
 		var predicate = BuildIdInArrayExpression(ids);
 
-		return await FindAsync(predicate, tracking, propertyAction, cancellationToken);
+		return FindAsync(predicate, tracking, propertyAction, cancellationToken);
 	}
 
 	/// <summary>
@@ -268,10 +264,10 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="predicate">条件表达式</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+	public virtual Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TEntity>().AsQueryable();
-		return await query.AnyAsync(predicate, cancellationToken: cancellationToken);
+		return query.AnyAsync(predicate, cancellationToken: cancellationToken);
 	}
 
 	/// <summary>
@@ -296,31 +292,13 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	}
 
 	/// <summary>
-	/// 插入新的实体对象
-	/// </summary>
-	/// <param name="entity"></param>
-	/// <param name="autoSave"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual async Task<TKey> InsertAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
-	{
-		var entry = await Context.Set<TEntity>().AddAsync(entity, cancellationToken);
-		if (autoSave)
-		{
-			await Context.SaveChangesAsync(true, cancellationToken);
-		}
-
-		return GetId(entry.Entity);
-	}
-
-	/// <summary>
 	/// 更新实体
 	/// </summary>
 	/// <param name="entity"></param>
 	/// <param name="autoSave"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task UpdateAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
+	public override async Task UpdateAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
 	{
 		var set = Context.Set<TEntity>();
 		set.Update(entity);
@@ -397,7 +375,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="autoSave"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task DeleteAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
+	public override async Task DeleteAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
 	{
 		var set = Context.Set<TEntity>();
 
@@ -409,6 +387,16 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	}
 
 	/// <summary>
+	/// 保存更改
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+	{
+		return Context.SaveChangesAsync(cancellationToken);
+	}
+
+	/// <summary>
 	/// 删除指定实体对象
 	/// </summary>
 	/// <typeparam name="TEvent"></typeparam>
@@ -417,7 +405,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 	/// <param name="autoSave"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual async Task DeleteAsync<TEvent>(TEntity entity, Func<TEvent> eventFactory, bool autoSave = true, CancellationToken cancellationToken = default)
+	public virtual Task DeleteAsync<TEvent>(TEntity entity, Func<TEvent> eventFactory, bool autoSave = true, CancellationToken cancellationToken = default)
 		where TEvent : DomainEvent
 	{
 		if (entity is IHasDomainEvents aggregate)
@@ -426,20 +414,15 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : ITransientDepend
 			aggregate.RaiseEvent(@event);
 		}
 
-		await DeleteAsync(entity, autoSave, cancellationToken);
+		return DeleteAsync(entity, autoSave, cancellationToken);
 	}
 
 	/// <summary>
-	/// 保存变更
+	/// 获取实体Id
 	/// </summary>
-	/// <param name="cancellationToken"></param>
+	/// <param name="entity"></param>
 	/// <returns></returns>
-	public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-	{
-		return await Context.SaveChangesAsync(true, cancellationToken);
-	}
-
-	private static TKey GetId(TEntity entity)
+	protected virtual TKey GetId(TEntity entity)
 	{
 		var property = Expression.PropertyOrField(Expression.Constant(entity), "Id");
 		var lambda = Expression.Lambda<Func<TEntity, TKey>>(property, Expression.Parameter(typeof(TEntity), "entity")).Compile();

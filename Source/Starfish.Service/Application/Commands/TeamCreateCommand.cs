@@ -1,11 +1,11 @@
 ﻿using Nerosoft.Euonia.Domain;
 
-namespace Nerosoft.Starfish.Domain;
+namespace Nerosoft.Starfish.Application;
 
 /// <summary>
 /// 新建团队命令
 /// </summary>
-public sealed class TeamCreateCommand : ICommand
+public sealed class TeamCreateCommand : Command
 {
 	/// <summary>
 	/// 名称

@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Service;
 
-namespace Nerosoft.Starfish.Domain;
+namespace Nerosoft.Starfish.Repository;
 
 /// <summary>
 /// 数据上下文
@@ -12,7 +11,6 @@ namespace Nerosoft.Starfish.Domain;
 public sealed class DataContext : DataContextBase<DataContext>
 {
 	private readonly IModelBuilder _builder;
-	private readonly IBus _bus;
 
 	/// <summary>
 	/// 初始化<see cref="DataContext"/>.
@@ -26,35 +24,28 @@ public sealed class DataContext : DataContextBase<DataContext>
 		_builder = builder;
 	}
 
+	/// <inheritdoc/>
+	protected override bool AutoSetEntryValues => true;
+
+	/// <inheritdoc/>
+	protected override bool EnabledPublishEvents => false;
+
 	/// <summary>
-	/// 初始化<see cref="DataContext"/>.
+	/// 时间类型
 	/// </summary>
-	/// <param name="options"></param>
-	/// <param name="modelBuilder"></param>
-	/// <param name="bus"></param>
-	/// <param name="factory"></param>
-	public DataContext(DbContextOptions<DataContext> options, IModelBuilder modelBuilder, IBus bus, ILoggerFactory factory)
-		: this(options, modelBuilder, factory)
+	protected override DateTimeKind DateTimeKind => DateTimeKind.Local;
+
+	/// <inheritdoc/>
+	protected override Task PublishEventAsync<TEvent>(TEvent @event)
 	{
-		_bus = bus;
-	}
-
-	/// <inheritdoc/>
-	protected override bool AutoSetEntryValues { get; }
-
-	/// <inheritdoc/>
-	protected override bool EnabledPublishEvents { get; }
-
-	/// <inheritdoc/>
-	protected override async Task PublishEventAsync<TEvent>(TEvent @event)
-	{
-		await _bus.PublishAsync(@event);
+		throw new NotSupportedException();
 	}
 
 	/// <inheritdoc/>
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		base.OnModelCreating(modelBuilder);
 		_builder.Configure(modelBuilder);
+		modelBuilder.SetTombstoneQueryFilter();
+		base.OnModelCreating(modelBuilder);
 	}
 }
