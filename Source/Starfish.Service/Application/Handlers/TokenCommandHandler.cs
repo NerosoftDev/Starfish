@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using IdentityModel;
+using Microsoft.Extensions.Logging;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Repository;
@@ -45,7 +46,8 @@ public sealed class TokenCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(messageContext.MessageId, async () =>
 		{
-			var entity = await _repository.GetAsync(t => t.Type == message.Type && t.Key == message.Token, true, cancellationToken);
+			var key = message.Token.ToSha256();
+			var entity = await _repository.GetAsync(t => t.Type == message.Type && t.Key == key, true, cancellationToken);
 			await _repository.DeleteAsync(entity, true, cancellationToken);
 		}, messageContext);
 	}
