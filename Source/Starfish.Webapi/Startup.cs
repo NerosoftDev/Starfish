@@ -62,7 +62,7 @@ public class Startup
 		lifetime.ApplicationStarted.Register(() => OnStarted(app));
 		lifetime.ApplicationStopping.Register(() => OnStopping(app));
 		lifetime.ApplicationStopped.Register(() => OnStarted(app));
-		
+
 		app.UseWebSockets();
 
 		app.InitializeApplication();
@@ -86,22 +86,18 @@ public class Startup
 			}
 		});
 	}
-	
-	protected virtual void Configure(IServiceProvider provider)
-	{
-	}
 
-	protected virtual void OnStarted(IApplicationBuilder app)
+	private void OnStarted(IApplicationBuilder app)
 	{
 		//"On-started" logic
 	}
 
-	protected virtual void OnStopping(IApplicationBuilder app)
+	private void OnStopping(IApplicationBuilder app)
 	{
 		//"On-stopping" logic
 	}
 
-	protected virtual void OnStopped(IApplicationBuilder app)
+	private void OnStopped(IApplicationBuilder app)
 	{
 		//"On-stopped" logic
 	}

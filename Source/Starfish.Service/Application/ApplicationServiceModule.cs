@@ -25,6 +25,8 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	{
 		Configure<AutomapperOptions>(options =>
 		{
+			options.AddProfile<UserMappingProfile>();
+			options.AddProfile<LogsMappingProfile>();
 		});
 	}
 
@@ -32,6 +34,8 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	public override void ConfigureServices(ServiceConfigurationContext context)
 	{
 		context.Services.Register<ApplicationServiceContext>();
+		context.Services.AddAutomapper();
+		context.Services.AddSingleton<ITypeAdapterFactory, AutomapperTypeAdapterFactory>();
 
 		ConfigureCachingServices(context.Services);
 
@@ -94,5 +98,16 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 					throw new NotSupportedException($"不支持的消息总线提供程序：{provider}");
 			}
 		});
+	}
+
+	/// <inheritdoc />
+	public override void OnApplicationInitialization(ApplicationInitializationContext context)
+	{
+		base.OnApplicationInitialization(context);
+		var factory = context.ServiceProvider.GetService<ITypeAdapterFactory>();
+		if (factory != null)
+		{
+			TypeAdapterFactory.SetCurrent(factory);
+		}
 	}
 }

@@ -416,3 +416,4 @@ nupkg/
 .vscode/
 
 appsettings.Development.json
+!/Logs/*.cs

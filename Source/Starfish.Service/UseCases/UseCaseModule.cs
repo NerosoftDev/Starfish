@@ -12,7 +12,10 @@ public class UseCaseModule : ModuleContextBase
 	public override void ConfigureServices(ServiceConfigurationContext context)
 	{
 		context.Services.AddSingleton<IdentityCommonComponent>();
-		context.Services.AddScoped<IGrantWithPasswordUseCase, GrantWithPasswordUseCase>();
-		context.Services.AddScoped<IGrantWithRefreshTokenUseCase, GrantWithRefreshTokenUseCase>();
+		context.Services
+		       .AddScoped<IGrantWithPasswordUseCase, GrantWithPasswordUseCase>()
+		       .AddScoped<IGrantWithRefreshTokenUseCase, GrantWithRefreshTokenUseCase>()
+		       .AddScoped<ILogsCountUseCase, LogsCountUseCase>()
+		       .AddScoped<ILogsSearchUseCase, LogsSearchUseCase>();
 	}
 }
