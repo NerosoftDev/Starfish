@@ -12,6 +12,11 @@ public class LogsApplicationService : BaseApplicationService, ILogsApplicationSe
 	/// <inheritdoc />
 	public Task<List<OperateLogDatamodel>> SearchAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
 	{
+		if (page < 1)
+		{
+			throw new BadRequestException("页码不能小于1");
+		}
+
 		var useCase = LazyServiceProvider.GetService<ILogsSearchUseCase>();
 		return useCase.ExecuteAsync(new LogsSearchUseCaseInput(criteria, page, size), cancellationToken)
 		              .ContinueWith(task => task.Result.Logs, cancellationToken);

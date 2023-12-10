@@ -44,7 +44,7 @@ public class LogsCountUseCase : ILogsCountUseCase
 	}
 
 	/// <inheritdoc />
-	public async Task<LogsCountUseCaseOutput> ExecuteAsync(LogsCountUseCaseInput input, CancellationToken cancellationToken = new CancellationToken())
+	public async Task<LogsCountUseCaseOutput> ExecuteAsync(LogsCountUseCaseInput input, CancellationToken cancellationToken = default)
 	{
 		var specification = input.Criteria.GetSpecification();
 

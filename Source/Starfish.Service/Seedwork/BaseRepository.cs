@@ -391,7 +391,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+	public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 	{
 		return Context.SaveChangesAsync(cancellationToken);
 	}

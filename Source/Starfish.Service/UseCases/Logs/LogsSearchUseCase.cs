@@ -1,7 +1,6 @@
 ﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Claims;
 using Nerosoft.Euonia.Linq;
-using Nerosoft.Euonia.Mapping;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
@@ -49,7 +48,7 @@ public class LogsSearchUseCase : ILogsSearchUseCase
 	}
 
 	/// <inheritdoc />
-	public async Task<LogsSearchUseCaseOutput> ExecuteAsync(LogsSearchUseCaseInput input, CancellationToken cancellationToken = new CancellationToken())
+	public async Task<LogsSearchUseCaseOutput> ExecuteAsync(LogsSearchUseCaseInput input, CancellationToken cancellationToken = default)
 	{
 		var specification = input.Criteria.GetSpecification();
 
