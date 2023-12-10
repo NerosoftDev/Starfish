@@ -34,7 +34,7 @@ public sealed class TokenEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(TokenRefreshedEvent message, MessageContext messageContext, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(TokenRefreshedEvent message, MessageContext messageContext, CancellationToken cancellationToken = default)
 	{
 		var command = new TokenDeleteCommand
 		{

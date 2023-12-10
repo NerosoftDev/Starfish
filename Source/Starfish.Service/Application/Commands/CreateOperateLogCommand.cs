@@ -1,11 +1,11 @@
 ﻿using Nerosoft.Euonia.Domain;
 
-namespace Nerosoft.Starfish.Domain;
+namespace Nerosoft.Starfish.Application;
 
 /// <summary>
-/// 操作日志信息
+/// 创建日志命令
 /// </summary>
-public class Logs : Aggregate<long>
+public class CreateOperateLogCommand : Command
 {
 	/// <summary>
 	/// 类型
@@ -26,6 +26,11 @@ public class Logs : Aggregate<long>
 	/// 操作时间
 	/// </summary>
 	public DateTime OperateTime { get; set; }
+
+	/// <summary>
+	/// 错误消息
+	/// </summary>
+	public string Error { get; set; }
 
 	/// <summary>
 	/// 请求跟踪Id

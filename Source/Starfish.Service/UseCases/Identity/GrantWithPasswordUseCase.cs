@@ -1,6 +1,9 @@
 ﻿using System.Security.Authentication;
+using Microsoft.Extensions.DependencyInjection;
 using Nerosoft.Euonia.Application;
-using Nerosoft.Euonia.Core;
+using Nerosoft.Euonia.Bus;
+using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Application;
 using Nerosoft.Starfish.Common;
 using Nerosoft.Starfish.Domain;
 
@@ -19,12 +22,12 @@ public class GrantWithPasswordUseCaseInput : IUseCaseInput
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	public string UserName { get; set; }
+	public string UserName { get; init; }
 
 	/// <summary>
 	/// 密码
 	/// </summary>
-	public string Password { get; set; }
+	public string Password { get; init; }
 }
 
 /// <summary>
@@ -39,58 +42,102 @@ public class GrantWithPasswordUseCaseOutput : IdentityUseCaseOutput
 /// </summary>
 public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 {
-	private readonly IUserRepository _repository;
-	private readonly IdentityCommonComponent _component;
+	private readonly IServiceProvider _provider;
 
 	/// <summary>
 	/// 初始化<see cref="GrantWithPasswordUseCase"/>.
 	/// </summary>
-	/// <param name="repository"></param>
-	/// <param name="component"></param>
-	/// <param name="presenter"></param>
-	public GrantWithPasswordUseCase(IUserRepository repository, IdentityCommonComponent component, IUseCasePresenter<GrantWithPasswordUseCaseOutput> presenter)
+	/// <param name="provider"></param>
+	public GrantWithPasswordUseCase(IServiceProvider provider)
 	{
-		_repository = repository;
-		_component = component;
-		Presenter = presenter;
+		_provider = provider;
 	}
+
+	private IUserRepository _userRepository;
+	private IUserRepository UserRepository => _userRepository ??= _provider.GetService<IUserRepository>();
+
+	private IdentityCommonComponent _component;
+	private IdentityCommonComponent Component => _component ??= _provider.GetService<IdentityCommonComponent>();
+
+	private IBus _bus;
+	private IBus Bus => _bus ??= _provider.GetService<IBus>();
 
 	/// <inheritdoc />
 	public async Task<GrantWithPasswordUseCaseOutput> ExecuteAsync(GrantWithPasswordUseCaseInput input, CancellationToken cancellationToken = default)
 	{
-		if (string.IsNullOrWhiteSpace(input.UserName) || string.IsNullOrWhiteSpace(input.Password))
+		var events = new List<ApplicationEvent>();
+		try
 		{
-			throw new BadRequestException(Resources.IDS_USERNAME_OR_PASSWORD_IS_INVALID);
+			if (string.IsNullOrWhiteSpace(input.UserName) || string.IsNullOrWhiteSpace(input.Password))
+			{
+				throw new BadRequestException(Resources.IDS_USERNAME_OR_PASSWORD_IS_INVALID);
+			}
+
+			var user = await UserRepository.FindByUserNameAsync(input.UserName, false, cancellationToken);
+			if (user == null)
+			{
+				throw new BadRequestException(Resources.IDS_USERNAME_OR_PASSWORD_IS_INVALID);
+			}
+
+			var passwordHash = Cryptography.DES.Encrypt(input.Password, Encoding.UTF8.GetBytes(user.PasswordSalt));
+
+			if (string.Equals(user.PasswordHash, passwordHash))
+			{
+				throw new AuthenticationException(Resources.IDS_USERNAME_OR_PASSWORD_IS_INVALID);
+			}
+
+			if (user.LockoutEnd > DateTime.UtcNow)
+			{
+				throw new AuthenticationException(Resources.IDS_USER_LOCKOUT);
+			}
+
+			var roles = user.Roles.Split(',', StringSplitOptions.RemoveEmptyEntries);
+			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
+			@events.Add(new UserAuthSucceedEvent
+			{
+				AuthType = "password",
+				RefreshToken = refreshToken,
+				UserId = user.Id,
+				UserName = user.UserName,
+				TokenIssueTime = issuesAt,
+				Data = new Dictionary<string, string>
+				{
+					{ "username", input.UserName }
+				}
+			});
+			return new GrantWithPasswordUseCaseOutput
+			{
+				UserId = user.Id,
+				AccessToken = accessToken,
+				RefreshToken = refreshToken,
+				IssuesAt = issuesAt,
+				ExpiresAt = expiresAt
+			};
 		}
-
-		var user = await _repository.FindByUserNameAsync(input.UserName, false, cancellationToken);
-		if (user == null)
+		catch (Exception exception)
 		{
-			throw new BadRequestException(Resources.IDS_USERNAME_OR_PASSWORD_IS_INVALID);
+			@events.Add(new UserAuthFailedEvent
+			{
+				AuthType = "password",
+				Data = new Dictionary<string, string>
+				{
+					{ "username", input.UserName }
+				},
+				Error = exception.Message
+			});
+			throw;
 		}
-
-		var passwordHash = Cryptography.DES.Encrypt(input.Password, Encoding.UTF8.GetBytes(user.PasswordSalt));
-
-		if (string.Equals(user.PasswordHash, passwordHash))
+		finally
 		{
-			throw new AuthenticationException(Resources.IDS_USERNAME_OR_PASSWORD_IS_INVALID);
+			if (events.Count > 0)
+			{
+				await Parallel.ForEachAsync(events, cancellationToken, async (@event, token) => await Bus.PublishAsync(@event, token));
+			}
 		}
-
-		if (user.LockoutEnd > DateTime.UtcNow)
-		{
-			throw new AuthenticationException(Resources.IDS_USER_LOCKOUT);
-		}
-
-		var roles = user.Roles.Split(',', StringSplitOptions.RemoveEmptyEntries);
-		var (token, issuesAt, expiresAt) = _component.GenerateAccessToken(user.Id, user.UserName, roles);
-		return new GrantWithPasswordUseCaseOutput
-		{
-			Token = token,
-			IssuesAt = issuesAt,
-			ExpiresAt = expiresAt
-		};
 	}
 
+	private IUseCasePresenter<GrantWithPasswordUseCaseOutput> _presenter;
+
 	/// <inheritdoc />
-	public IUseCasePresenter<GrantWithPasswordUseCaseOutput> Presenter { get; }
+	public IUseCasePresenter<GrantWithPasswordUseCaseOutput> Presenter => _presenter ??= _provider.GetService<IUseCasePresenter<GrantWithPasswordUseCaseOutput>>();
 }

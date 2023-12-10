@@ -7,33 +7,55 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>, IHandler<UserAuthFailedEvent>
 {
-	/// <inheritdoc />
-	public bool CanHandle(Type messageType)
+	private readonly IBus _bus;
+
+	/// <summary>
+	/// 构造函数
+	/// </summary>
+	/// <param name="bus"></param>
+	public LoggingEventSubscriber(IBus bus)
 	{
-		return true;
+		_bus = bus;
 	}
 
 	/// <summary>
 	/// 处理用户认证成功事件
 	/// </summary>
 	/// <param name="message"></param>
-	/// <param name="messageContext"></param>
+	/// <param name="context"></param>
 	/// <param name="cancellationToken"></param>
 	/// <exception cref="NotImplementedException"></exception>
-	public async Task HandleAsync(UserAuthSucceedEvent message, MessageContext messageContext, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserAuthSucceedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		await Task.CompletedTask;
+		var command = new CreateOperateLogCommand
+		{
+			Type = $"Auth.{message.AuthType}",
+			UserName = message.UserName,
+			OperateTime = DateTime.Now,
+			Description = "认证成功",
+			RequestTraceId = context.RequestTraceId
+		};
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
 	/// <summary>
 	/// 处理用户认证失败事件
 	/// </summary>
 	/// <param name="message"></param>
-	/// <param name="messageContext"></param>
+	/// <param name="context"></param>
 	/// <param name="cancellationToken"></param>
 	/// <exception cref="NotImplementedException"></exception>
-	public async Task HandleAsync(UserAuthFailedEvent message, MessageContext messageContext, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserAuthFailedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		await Task.CompletedTask;
+		var command = new CreateOperateLogCommand
+		{
+			Type = $"Auth.{message.AuthType}",
+			Description = "认证失败",
+			OperateTime = DateTime.Now,
+			RequestTraceId = context.RequestTraceId, 
+			Error = message.Error
+		};
+
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 }

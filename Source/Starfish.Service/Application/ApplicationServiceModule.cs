@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
-using Nerosoft.Euonia.Bus.InMemory;
 using Nerosoft.Euonia.Bus.RabbitMq;
 using Nerosoft.Euonia.Caching;
 using Nerosoft.Euonia.Caching.Memory;
@@ -9,13 +9,15 @@ using Nerosoft.Euonia.Mapping;
 using Nerosoft.Euonia.Modularity;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.UseCases;
 
 namespace Nerosoft.Starfish.Application;
 
 /// <summary>
 /// 应用服务模块上下文
 /// </summary>
-[DependsOn(typeof(RepositoryModule), typeof(DomainServiceModule))]
+[DependsOn(typeof(ApplicationModule))]
+[DependsOn(typeof(UseCaseModule), typeof(RepositoryModule), typeof(DomainServiceModule))]
 public sealed class ApplicationServiceModule : ModuleContextBase
 {
 	/// <inheritdoc/>
@@ -60,6 +62,12 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	{
 		services.AddServiceBus(config =>
 		{
+			config.SetConventions(builder =>
+			{
+				builder.Add<DefaultMessageConvention>();
+				builder.Add<AttributeMessageConvention>();
+				builder.Add<DomainMessageConvention>();
+			});
 			config.RegisterHandlers(typeof(ApplicationServiceModule).Assembly);
 			var provider = Configuration.GetValue<string>("ServiceBus:Provider")?.ToLower();
 			switch (provider)

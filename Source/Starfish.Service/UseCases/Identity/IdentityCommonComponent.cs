@@ -30,10 +30,11 @@ public class IdentityCommonComponent
 	/// <param name="roles">角色</param>
 	/// <returns>
 	///	<para>Item1-访问令牌</para>
-	/// <para>Item2-颁发时间</para>
-	/// <para>Item3-过期时间</para>
+	/// <para>Item2-刷新令牌</para>
+	/// <para>Item3-颁发时间</para>
+	/// <para>Item4-过期时间</para>
 	/// </returns>
-	public Tuple<string, DateTime, DateTime> GenerateAccessToken(int userId, string userName, IEnumerable<string> roles = null)
+	public Tuple<string, string, DateTime, DateTime> GenerateAccessToken(int userId, string userName, IEnumerable<string> roles = null)
 	{
 		var issueTime = DateTime.UtcNow;
 		var expiresAt = issueTime.AddDays(1);
@@ -61,7 +62,8 @@ public class IdentityCommonComponent
 		}
 
 		var token = tokenHandler.CreateToken(tokenDescriptor);
-		var tokenString = tokenHandler.WriteToken(token);
-		return Tuple.Create(tokenString, issueTime, expiresAt);
+		var accessToken = tokenHandler.WriteToken(token);
+		var refreshToken = Guid.NewGuid().ToString("N");
+		return Tuple.Create(accessToken, refreshToken, issueTime, expiresAt);
 	}
 }

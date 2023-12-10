@@ -10,7 +10,12 @@ public abstract class IdentityUseCaseOutput : IUseCaseOutput
 	/// <summary>
 	/// 访问令牌
 	/// </summary>
-	public string Token { get; set; }
+	public string AccessToken { get; set; }
+
+	/// <summary>
+	/// 刷新令牌
+	/// </summary>
+	public string RefreshToken { get; set; }
 
 	/// <summary>
 	/// 颁发时间

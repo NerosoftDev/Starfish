@@ -7,5 +7,4 @@ namespace Nerosoft.Starfish.Domain;
 /// </summary>
 public sealed class UserPasswordChangedEvent : DomainEvent
 {
-
 }

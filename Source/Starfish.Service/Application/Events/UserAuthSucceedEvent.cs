@@ -43,6 +43,11 @@ public class UserAuthSucceedEvent : ApplicationEvent
 	public int UserId { get; set; }
 
 	/// <summary>
+	/// 用户名
+	/// </summary>
+	public string UserName { get; set; }
+
+	/// <summary>
 	/// Refresh token.
 	/// </summary>
 	public string RefreshToken { get; set; }

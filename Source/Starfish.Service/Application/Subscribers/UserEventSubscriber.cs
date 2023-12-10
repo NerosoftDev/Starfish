@@ -6,14 +6,8 @@ namespace Nerosoft.Starfish.Application;
 /// 用户相关应用事件处理器
 /// </summary>
 public class UserEventSubscriber : IHandler<UserAuthSucceedEvent>,
-								  IHandler<UserAuthFailedEvent>
+                                   IHandler<UserAuthFailedEvent>
 {
-	/// <inheritdoc />
-	public bool CanHandle(Type messageType)
-	{
-		return true;
-	}
-
 	/// <summary>
 	/// 处理用户认证成功事件
 	/// </summary>

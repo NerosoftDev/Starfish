@@ -38,10 +38,7 @@ public class Startup
 
         */
 
-		//services.AddModularityApplication<HostModuleContext>(Configuration);
-		services.AddControllers();
-		services.AddEndpointsApiExplorer()
-				.AddSwaggerGen();
+		services.AddModularityApplication<HostServiceModule>(Configuration);
 	}
 
 	/// <summary>
@@ -49,10 +46,11 @@ public class Startup
 	/// </summary>
 	/// <param name="app"></param>
 	/// <param name="env"></param>
+	/// <param name="lifetime"></param>
 	/// <remarks>
 	/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 	/// </remarks>
-	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
 	{
 		if (env.IsDevelopment())
 		{
@@ -61,6 +59,10 @@ public class Startup
 			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Starfish Webapi v1"));
 		}
 
+		lifetime.ApplicationStarted.Register(() => OnStarted(app));
+		lifetime.ApplicationStopping.Register(() => OnStopping(app));
+		lifetime.ApplicationStopped.Register(() => OnStarted(app));
+		
 		app.UseWebSockets();
 
 		app.InitializeApplication();
@@ -83,5 +85,24 @@ public class Startup
 				//endpoints.MapGrpcReflectionService();
 			}
 		});
+	}
+	
+	protected virtual void Configure(IServiceProvider provider)
+	{
+	}
+
+	protected virtual void OnStarted(IApplicationBuilder app)
+	{
+		//"On-started" logic
+	}
+
+	protected virtual void OnStopping(IApplicationBuilder app)
+	{
+		//"On-stopping" logic
+	}
+
+	protected virtual void OnStopped(IApplicationBuilder app)
+	{
+		//"On-stopped" logic
 	}
 }
