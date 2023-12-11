@@ -26,7 +26,7 @@ public record LogsSearchUseCaseInput(OperateLogCriteria Criteria, int Page, int 
 /// 日志搜索用例输出
 /// </summary>
 /// <param name="Logs"></param>
-public record LogsSearchUseCaseOutput(List<OperateLogDatamodel> Logs) : IUseCaseOutput;
+public record LogsSearchUseCaseOutput(List<OperateLogDto> Logs) : IUseCaseOutput;
 
 /// <summary>
 /// 日志搜索用例
@@ -54,17 +54,15 @@ public class LogsSearchUseCase : ILogsSearchUseCase
 
 		if (!_user.IsInRole("SU"))
 		{
-			specification &= (Specification<OperateLog>)OperateLogSpecification.UserNameEquals(_user.Username);
+			specification &= OperateLogSpecification.UserNameEquals(_user.Username);
 		}
 
 		var predicate = specification.Satisfy();
 
 		var entities = await _repository.FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken);
-		var items = entities.ProjectedAsCollection<OperateLogDatamodel>();
+		var items = entities.ProjectedAsCollection<OperateLogDto>();
 		return new LogsSearchUseCaseOutput(items);
 
 		IOrderedQueryable<OperateLog> Collator(IQueryable<OperateLog> query) => query.OrderByDescending(t => t.OperateTime);
 	}
-
-	public IUseCasePresenter<LogsSearchUseCaseOutput> Presenter { get; }
 }

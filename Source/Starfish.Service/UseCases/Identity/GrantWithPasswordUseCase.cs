@@ -135,9 +135,4 @@ public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 			}
 		}
 	}
-
-	private IUseCasePresenter<GrantWithPasswordUseCaseOutput> _presenter;
-
-	/// <inheritdoc />
-	public IUseCasePresenter<GrantWithPasswordUseCaseOutput> Presenter => _presenter ??= _provider.GetService<IUseCasePresenter<GrantWithPasswordUseCaseOutput>>();
 }

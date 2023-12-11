@@ -16,7 +16,7 @@ public interface ILogsApplicationService : IApplicationService
 	/// <param name="size"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<OperateLogDatamodel>> SearchAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<OperateLogDto>> SearchAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询日志数量

@@ -12,7 +12,7 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// 初始化<see cref="User"/>实例
 	/// </summary>
 	/// <remarks>
-	/// 此构造方法仅提供给EntityFramwork使用
+	/// 此构造方法仅提供给EntityFramework使用
 	/// </remarks>
 	private User()
 	{

@@ -3,7 +3,7 @@
 /// <summary>
 /// 操作日志Dto
 /// </summary>
-public class OperateLogDatamodel
+public class OperateLogDto
 {
 	/// <summary>
 	/// Id

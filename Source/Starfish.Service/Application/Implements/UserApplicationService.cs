@@ -1,7 +1,5 @@
 ﻿using Nerosoft.Euonia.Application;
-using Nerosoft.Euonia.Domain;
 using Nerosoft.Euonia.Mapping;
-using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
 
@@ -19,8 +17,8 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	public Task<int> CreateAsync(UserCreateDto model, CancellationToken cancellationToken = default)
 	{
 		var command = new UserCreateCommand();
-		return Bus.SendAsync<UserCreateCommand, CommandResponse<int>>(command, cancellationToken)
-		          .ContinueWith(task => task.Result.Result, cancellationToken);
+		return Bus.SendAsync<UserCreateCommand, int>(command, cancellationToken)
+		          .ContinueWith(task => task.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -46,7 +44,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	public Task<UserDetailDto> GetAsync(int id, CancellationToken cancellationToken = default)
 	{
 		return UserRepository.GetAsync(id, false, cancellationToken)
-		                     .ContinueWith(task => TypeAdapter.ProjectedAs<UserDetailDto>(task.Result));
+		                     .ContinueWith(task => TypeAdapter.ProjectedAs<UserDetailDto>(task.Result), cancellationToken);
 	}
 
 	/// <inheritdoc />

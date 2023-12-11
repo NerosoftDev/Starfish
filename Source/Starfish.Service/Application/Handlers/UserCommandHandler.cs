@@ -34,20 +34,20 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc/>
-	public Task HandleAsync(UserCreateCommand message, MessageContext messageContext, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(messageContext.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var isUserNameAvailable = await CheckUserNameAsync(message.UserName);
 			if (!isUserNameAvailable)
 			{
-				throw new BadRequestException(string.Format(Resources.IDS_USERNAME_NOT_AVAILABE, message.UserName));
+				throw new ConflictException(string.Format(Resources.IDS_USERNAME_NOT_AVAILABE, message.UserName));
 			}
 
 			var user = User.Create(message.UserName, message.Password, message.Email, message.Roles);
 			await _repository.InsertAsync(user, true, cancellationToken);
 			return user.Id;
-		}, messageContext);
+		}, context.Response);
 
 		Task<bool> CheckUserNameAsync(string userName)
 		{
@@ -57,9 +57,9 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(UserUpdateCommand message, MessageContext messageContext, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(messageContext.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var user = await _repository.GetAsync(message.UserId, true, cancellationToken);
 			if (user == null)
@@ -72,13 +72,13 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			user.SetRoles(message.Roles);
 
 			await _repository.UpdateAsync(user, true, cancellationToken);
-		}, messageContext);
+		});
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(UserChangePasswordCommand message, MessageContext messageContext, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserChangePasswordCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(messageContext.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var user = await _repository.GetAsync(message.UserId, true, cancellationToken);
 			if (user == null)
@@ -89,13 +89,13 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			user.ChangePassword(message.Password);
 
 			await _repository.UpdateAsync(user, true, cancellationToken);
-		}, messageContext);
+		});
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(UserDeleteCommand message, MessageContext messageContext, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserDeleteCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(messageContext.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var user = await _repository.GetAsync(message.Item1, true, cancellationToken);
 			if (user == null)
@@ -104,6 +104,6 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			}
 
 			await _repository.DeleteAsync(user, true, cancellationToken);
-		}, messageContext);
+		});
 	}
 }

@@ -31,7 +31,7 @@ public class OperateLogCommandHandler : CommandHandlerBase,
 	/// <inheritdoc />
 	public Task HandleAsync(CreateOperateLogCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(context.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var entity = OperateLog.Create(message.Type, message.Description, message.UserName, message.OperateTime, message.Error, message.RequestTraceId);
 			await _repository.InsertAsync(entity, true, cancellationToken);

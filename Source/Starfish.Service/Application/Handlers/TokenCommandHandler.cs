@@ -34,21 +34,21 @@ public sealed class TokenCommandHandler : CommandHandlerBase,
 	/// <inheritdoc/>
 	public Task HandleAsync(TokenCreateCommand message, MessageContext messageContext, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(messageContext.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var entity = Token.Create(message.Type, message.Token, message.Subject, message.Issues, message.Expires);
 			await _repository.InsertAsync(entity, true, cancellationToken);
-		}, messageContext);
+		});
 	}
 
 	/// <inheritdoc/>
 	public Task HandleAsync(TokenDeleteCommand message, MessageContext messageContext, CancellationToken cancellationToken = default)
 	{
-		return ExecuteAsync(messageContext.MessageId, async () =>
+		return ExecuteAsync(async () =>
 		{
 			var key = message.Token.ToSha256();
 			var entity = await _repository.GetAsync(t => t.Type == message.Type && t.Key == key, true, cancellationToken);
 			await _repository.DeleteAsync(entity, true, cancellationToken);
-		}, messageContext);
+		});
 	}
 }

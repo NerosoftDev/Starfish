@@ -50,7 +50,7 @@ public class LogsCountUseCase : ILogsCountUseCase
 
 		if (!_user.IsInRole("SU"))
 		{
-			specification &= (Specification<OperateLog>)OperateLogSpecification.UserNameEquals(_user.Username);
+			specification &= OperateLogSpecification.UserNameEquals(_user.Username);
 		}
 
 		var predicate = specification.Satisfy();
@@ -58,6 +58,4 @@ public class LogsCountUseCase : ILogsCountUseCase
 		var result = await _repository.CountAsync(predicate, cancellationToken);
 		return new LogsCountUseCaseOutput(result);
 	}
-
-	public IUseCasePresenter<LogsCountUseCaseOutput> Presenter { get; }
 }

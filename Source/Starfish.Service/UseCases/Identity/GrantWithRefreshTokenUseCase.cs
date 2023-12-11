@@ -142,9 +142,4 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 			}
 		}
 	}
-
-	private IUseCasePresenter<GrantWithRefreshTokenUseCaseOutput> _presenter;
-
-	/// <inheritdoc />
-	public IUseCasePresenter<GrantWithRefreshTokenUseCaseOutput> Presenter => _presenter ??= _provider.GetService<IUseCasePresenter<GrantWithRefreshTokenUseCaseOutput>>();
 }

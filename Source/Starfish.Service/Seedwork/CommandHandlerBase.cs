@@ -109,27 +109,31 @@ public abstract class CommandHandlerBase
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="messageId"></param>
 	/// <param name="action"></param>
-	/// <param name="context"></param>
 	/// <returns></returns>
-	protected virtual async Task ExecuteAsync(string messageId, [NotNull] Func<Task> action, [NotNull] MessageContext context)
+	protected virtual async Task ExecuteAsync([NotNull] Func<Task> action)
 	{
-		var result = await ExecuteAsync(messageId, action);
-		context.Response(result);
+		using (var uow = UnitOfWork.Begin())
+		{
+			await action();
+			await uow.CommitAsync();
+		}
 	}
 
 	/// <summary>
 	/// 
 	/// </summary>
 	/// <typeparam name="TResult"></typeparam>
-	/// <param name="messageId"></param>
 	/// <param name="action"></param>
-	/// <param name="context"></param>
+	/// <param name="next"></param>
 	/// <returns></returns>
-	protected virtual async Task ExecuteAsync<TResult>(string messageId, [NotNull] Func<Task<TResult>> action, [NotNull] MessageContext context)
+	protected virtual async Task ExecuteAsync<TResult>([NotNull] Func<Task<TResult>> action, Action<TResult> next)
 	{
-		var result = await ExecuteAsync(messageId, action);
-		context.Response(result);
+		using (var uow = UnitOfWork.Begin())
+		{
+			var result = await action();
+			await uow.CommitAsync();
+			next(result);
+		}
 	}
 }
