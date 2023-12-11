@@ -25,22 +25,57 @@ public static class CriteriaExtensions
 
 		if (!string.IsNullOrWhiteSpace(criteria.UserName))
 		{
-			specification &= (Specification<OperateLog>)OperateLogSpecification.UserNameContains(criteria.UserName);
+			specification &= OperateLogSpecification.UserNameContains(criteria.UserName);
 		}
 
 		if (!string.IsNullOrWhiteSpace(criteria.Type))
 		{
-			specification &= (Specification<OperateLog>)OperateLogSpecification.TypeEquals(criteria.Type);
+			specification &= OperateLogSpecification.TypeEquals(criteria.Type);
 		}
 
 		if (criteria.MinTime > DateTime.MinValue)
 		{
-			specification &= (Specification<OperateLog>)OperateLogSpecification.TimeAfter(criteria.MinTime.Value);
+			specification &= OperateLogSpecification.TimeAfter(criteria.MinTime.Value);
 		}
 
 		if (criteria.MaxTime > DateTime.MinValue)
 		{
-			specification &= (Specification<OperateLog>)OperateLogSpecification.TimeBefore(criteria.MaxTime.Value);
+			specification &= OperateLogSpecification.TimeBefore(criteria.MaxTime.Value);
+		}
+
+		return specification;
+	}
+
+	/// <summary>
+	/// 获取应用信息查询规约
+	/// </summary>
+	/// <param name="criteria"></param>
+	/// <returns></returns>
+	public static Specification<AppInfo> GetSpecification(this AppInfoCriteria criteria)
+	{
+		Specification<AppInfo> specification = new TrueSpecification<AppInfo>();
+		if (criteria == null)
+		{
+			return specification;
+		}
+
+		if (criteria.Status > 0)
+		{
+			var status = (AppStatus)criteria.Status;
+			if (status != AppStatus.None && Enum.IsDefined(status))
+			{
+				specification &= AppInfoSpecification.StatusEquals(status);
+			}
+		}
+
+		if (criteria.TeamId > 0)
+		{
+			specification &= AppInfoSpecification.TeamIdEquals(criteria.TeamId);
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
+		{
+			specification &= AppInfoSpecification.NameContains(criteria.Keyword);
 		}
 
 		return specification;

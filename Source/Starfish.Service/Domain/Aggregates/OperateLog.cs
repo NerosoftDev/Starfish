@@ -12,6 +12,11 @@ public class OperateLog : Aggregate<long>
 	}
 
 	/// <summary>
+	/// 模块
+	/// </summary>
+	public string Module { get; set; }
+
+	/// <summary>
 	/// 类型
 	/// </summary>
 	public string Type { get; set; }
@@ -41,10 +46,11 @@ public class OperateLog : Aggregate<long>
 	/// </summary>
 	public string RequestTraceId { get; set; }
 
-	internal static OperateLog Create(string type, string description, string userName, DateTime operateTime, string error, string requestTraceId)
+	internal static OperateLog Create(string module, string type, string description, string userName, DateTime operateTime, string error, string requestTraceId)
 	{
 		return new OperateLog
 		{
+			Module = module,
 			Type = type,
 			Description = description,
 			UserName = userName,

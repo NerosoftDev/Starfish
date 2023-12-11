@@ -33,7 +33,7 @@ public class OperateLogCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var entity = OperateLog.Create(message.Type, message.Description, message.UserName, message.OperateTime, message.Error, message.RequestTraceId);
+			var entity = OperateLog.Create(message.Module, message.Type, message.Description, message.UserName, message.OperateTime, message.Error, message.RequestTraceId);
 			await _repository.InsertAsync(entity, true, cancellationToken);
 		});
 	}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Service;
 
@@ -23,6 +24,16 @@ public class SqliteModelBuilder : IModelBuilder
 		modelBuilder.Entity<OperateLog>(entity =>
 		{
 			entity.ToTable("operate_log");
+		});
+		modelBuilder.Entity<AppInfo>(entity =>
+		{
+			entity.ToTable("app_info");
+			entity.HasKey(t => t.Id);
+			entity.HasIndex(t => t.Code);
+
+			entity.Property(t => t.Id)
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 	}
 }

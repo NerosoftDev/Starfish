@@ -118,8 +118,10 @@ public class RepositoryModule : ModuleContextBase
 			}
 		});
 
-		context.Services.AddScoped<IUserRepository, UserRepository>();
-		context.Services.AddScoped<ITokenRepository, TokenRepository>();
-		context.Services.AddScoped<IOperateLogRepository, OperateLogRepository>();
+		context.Services
+		       .AddScoped<IUserRepository, UserRepository>()
+		       .AddScoped<ITokenRepository, TokenRepository>()
+		       .AddScoped<IOperateLogRepository, OperateLogRepository>()
+		       .AddScoped<IAppInfoRepository, AppInfoRepository>();
 	}
 }

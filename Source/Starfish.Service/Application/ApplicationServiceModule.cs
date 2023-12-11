@@ -27,6 +27,7 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 		{
 			options.AddProfile<UserMappingProfile>();
 			options.AddProfile<LogsMappingProfile>();
+			options.AddProfile<AppsMappingProfile>();
 		});
 	}
 

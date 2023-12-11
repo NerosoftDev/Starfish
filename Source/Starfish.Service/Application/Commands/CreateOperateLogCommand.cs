@@ -8,6 +8,11 @@ namespace Nerosoft.Starfish.Application;
 public class CreateOperateLogCommand : Command
 {
 	/// <summary>
+	/// 模块
+	/// </summary>
+	public string Module { get; set; }
+
+	/// <summary>
 	/// 类型
 	/// </summary>
 	public string Type { get; set; }

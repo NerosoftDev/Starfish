@@ -16,6 +16,14 @@ public class UseCaseModule : ModuleContextBase
 		       .AddScoped<IGrantWithPasswordUseCase, GrantWithPasswordUseCase>()
 		       .AddScoped<IGrantWithRefreshTokenUseCase, GrantWithRefreshTokenUseCase>()
 		       .AddScoped<ILogsCountUseCase, LogsCountUseCase>()
-		       .AddScoped<ILogsSearchUseCase, LogsSearchUseCase>();
+		       .AddScoped<ILogsSearchUseCase, LogsSearchUseCase>()
+		       .AddScoped<IAppInfoSearchUseCase, AppInfoSearchUseCase>()
+		       .AddScoped<IAppInfoCountUseCase, AppInfoCountUseCase>()
+		       .AddScoped<IAppInfoDetailUseCase, AppInfoDetailUseCase>()
+		       .AddScoped<IAppInfoCreateUseCase, AppInfoCreateUseCase>()
+		       .AddScoped<IAppInfoUpdateUseCase, AppInfoUpdateUseCase>()
+		       .AddScoped<IAppInfoDeleteUseCase, AppInfoDeleteUseCase>()
+		       .AddScoped<IChangeAppInfoStatusUseCase, ChangeAppInfoStatusUseCase>()
+		       .AddScoped<IAppInfoAuthorizeUseCase, AppInfoAuthorizeUseCase>();
 	}
 }
