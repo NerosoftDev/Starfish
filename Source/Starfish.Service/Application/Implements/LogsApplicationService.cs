@@ -10,7 +10,7 @@ namespace Nerosoft.Starfish.Application;
 public class LogsApplicationService : BaseApplicationService, ILogsApplicationService
 {
 	/// <inheritdoc />
-	public Task<List<OperateLogDatamodel>> SearchAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
+	public Task<List<OperateLogDto>> SearchAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
 	{
 		if (page < 1)
 		{

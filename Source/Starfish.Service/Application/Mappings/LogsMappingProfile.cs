@@ -14,7 +14,7 @@ public class LogsMappingProfile : Profile
 	/// </summary>
 	public LogsMappingProfile()
 	{
-		CreateMap<OperateLog, OperateLogDatamodel>()
+		CreateMap<OperateLog, OperateLogDto>()
 			.ForMember(dest => dest.Type, opt => opt.MapFrom(src => GetTypeName(src.Type)));
 	}
 

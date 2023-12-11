@@ -13,7 +13,7 @@ public class OperateLogSpecification
 	/// </summary>
 	/// <param name="userName"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> UserNameEquals(string userName)
+	public static Specification<OperateLog> UserNameEquals(string userName)
 	{
 		return new DirectSpecification<OperateLog>(x => x.UserName == userName);
 	}
@@ -23,7 +23,7 @@ public class OperateLogSpecification
 	/// </summary>
 	/// <param name="userName"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> UserNameContains(string userName)
+	public static Specification<OperateLog> UserNameContains(string userName)
 	{
 		return new DirectSpecification<OperateLog>(x => x.UserName.Contains(userName));
 	}
@@ -33,7 +33,7 @@ public class OperateLogSpecification
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> TypeEquals(string type)
+	public static Specification<OperateLog> TypeEquals(string type)
 	{
 		return new DirectSpecification<OperateLog>(x => x.Type == type);
 	}
@@ -44,7 +44,7 @@ public class OperateLogSpecification
 	/// <param name="minTime"></param>
 	/// <param name="maxTime"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> TimeBetween(DateTime minTime, DateTime maxTime)
+	public static Specification<OperateLog> TimeBetween(DateTime minTime, DateTime maxTime)
 	{
 		return new DirectSpecification<OperateLog>(x => x.OperateTime >= minTime && x.OperateTime <= maxTime);
 	}
@@ -54,7 +54,7 @@ public class OperateLogSpecification
 	/// </summary>
 	/// <param name="minTime"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> TimeAfter(DateTime minTime)
+	public static Specification<OperateLog> TimeAfter(DateTime minTime)
 	{
 		return new DirectSpecification<OperateLog>(x => x.OperateTime >= minTime);
 	}
@@ -64,7 +64,7 @@ public class OperateLogSpecification
 	/// </summary>
 	/// <param name="maxTime"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> TimeBefore(DateTime maxTime)
+	public static Specification<OperateLog> TimeBefore(DateTime maxTime)
 	{
 		return new DirectSpecification<OperateLog>(x => x.OperateTime <= maxTime);
 	}
@@ -74,7 +74,7 @@ public class OperateLogSpecification
 	/// </summary>
 	/// <param name="requestTraceId"></param>
 	/// <returns></returns>
-	public static ISpecification<OperateLog> RequestTraceIdEquals(string requestTraceId)
+	public static Specification<OperateLog> RequestTraceIdEquals(string requestTraceId)
 	{
 		return new DirectSpecification<OperateLog>(x => x.RequestTraceId == requestTraceId);
 	}
