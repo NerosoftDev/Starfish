@@ -174,10 +174,10 @@
   <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
     <value>Invalid app status.</value>
   </data>
-  <data name="IDS_ENUM_APPSTATUS_DISABLED" xml:space="preserve">
+  <data name="IDS_ENUM_APPINFO_STATUS_DISABLED" xml:space="preserve">
     <value>Disabled</value>
   </data>
-  <data name="IDS_ENUM_APPSTATUS_ENABLED" xml:space="preserve">
+  <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
     <value>Enabled</value>
   </data>
   <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
@@ -191,5 +191,14 @@
   </data>
   <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
     <value>Unsupported service bus provider '{0}'.</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_STATUS_DISABLED" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_STATUS_PENDING" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_STATUS_PUBLISHED" xml:space="preserve">
+    <value>Published</value>
   </data>
 </root>

@@ -32,8 +32,30 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.HasIndex(t => t.Code);
 
 			entity.Property(t => t.Id)
-			      .IsRequired()
-			      .HasValueGenerator<SnowflakeIdValueGenerator>();
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+		});
+
+		modelBuilder.Entity<SettingNode>(entity =>
+		{
+			entity.ToTable("setting_node");
+			entity.HasKey(t => t.Id);
+			entity.HasIndex(t => t.ParentId);
+			entity.HasIndex(t => t.AppCode);
+
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+
+			entity.HasMany(t => t.Children)
+				  .WithOne()
+				  .HasForeignKey(t => t.ParentId)
+				  .OnDelete(DeleteBehavior.Cascade);
+
+			entity.HasOne(t => t.Parent)
+				  .WithMany()
+				  .HasForeignKey(t => t.ParentId)
+				  .OnDelete(DeleteBehavior.Cascade);
 		});
 	}
 }

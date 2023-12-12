@@ -1,5 +1,4 @@
 ﻿using Nerosoft.Euonia.Application;
-using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;

@@ -15,12 +15,12 @@ public enum AppStatus
 	/// <summary>
 	/// 启用
 	/// </summary>
-	[Description(nameof(Resources.IDS_ENUM_APPSTATUS_ENABLED))]
+	[Description(nameof(Resources.IDS_ENUM_APPINFO_STATUS_ENABLED))]
 	Enabled = 1,
 
 	/// <summary>
 	/// 禁用
 	/// </summary>
-	[Description(nameof(Resources.IDS_ENUM_APPSTATUS_DISABLED))]
+	[Description(nameof(Resources.IDS_ENUM_APPINFO_STATUS_DISABLED))]
 	Disabled = 2
 }

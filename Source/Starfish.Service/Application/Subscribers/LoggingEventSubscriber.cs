@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Nerosoft.Euonia.Bus;
-using Nerosoft.Euonia.Claims;
+﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.Application;
@@ -9,23 +7,20 @@ namespace Nerosoft.Starfish.Application;
 /// 应用日志收集处理器
 /// </summary>
 public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
-                                             IHandler<UserAuthFailedEvent>,
-                                             IHandler<AppInfoCreatedEvent>,
-                                             IHandler<AppInfoEnabledEvent>,
-                                             IHandler<AppInfoDisableEvent>
+											 IHandler<UserAuthFailedEvent>,
+											 IHandler<AppInfoCreatedEvent>,
+											 IHandler<AppInfoEnabledEvent>,
+											 IHandler<AppInfoDisableEvent>
 {
 	private readonly IBus _bus;
-	private readonly IServiceProvider _provider;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="bus"></param>
-	/// <param name="provider"></param>
-	public LoggingEventSubscriber(IBus bus, IServiceProvider provider)
+	public LoggingEventSubscriber(IBus bus)
 	{
 		_bus = bus;
-		_provider = provider;
 	}
 
 	/// <summary>
@@ -79,7 +74,6 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	/// <param name="cancellationToken"></param>
 	public Task HandleAsync(AppInfoCreatedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var user = _provider.GetService<UserPrincipal>();
 		var aggregate = message.GetAggregate<AppInfo>();
 		var command = new OperateLogCreateCommand
 		{
@@ -88,7 +82,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 			Description = $"创建应用 {aggregate.Code}({aggregate.Name})",
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = user?.Username
+			UserName = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -103,7 +97,6 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	/// <returns></returns>
 	public Task HandleAsync(AppInfoEnabledEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var user = _provider.GetService<UserPrincipal>();
 		var aggregate = message.GetAggregate<AppInfo>();
 		var command = new OperateLogCreateCommand
 		{
@@ -112,7 +105,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 			Description = $"启用应用 {aggregate.Code}({aggregate.Name})",
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = user?.Username
+			UserName = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -127,7 +120,6 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	/// <returns></returns>
 	public Task HandleAsync(AppInfoDisableEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var user = _provider.GetService<UserPrincipal>();
 		var aggregate = message.GetAggregate<AppInfo>();
 		var command = new OperateLogCreateCommand
 		{
@@ -136,7 +128,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 			Description = $"禁用应用 {aggregate.Code}({aggregate.Name})",
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = user?.Username
+			UserName = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
