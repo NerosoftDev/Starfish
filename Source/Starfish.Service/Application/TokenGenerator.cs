@@ -61,7 +61,9 @@ internal class TokenGeneratorBuilder
 {
 	private readonly List<Claim> _claims = [];
 
-	private TimeSpan? ExpireTime { get; set; }
+	private DateTime IssueTime { get; set; } = DateTime.UtcNow;
+
+	private TimeSpan ExpireTime { get; set; } = TimeSpan.FromDays(1);
 
 	private string Audience { get; set; }
 
@@ -71,7 +73,7 @@ internal class TokenGeneratorBuilder
 
 	private string Algorithm { get; set; } = SecurityAlgorithms.HmacSha256Signature;
 
-	public TokenGeneratorBuilder()
+	internal TokenGeneratorBuilder()
 	{
 		//generate token id
 		_claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
@@ -83,15 +85,19 @@ internal class TokenGeneratorBuilder
 		return this;
 	}
 
-	public TokenGeneratorBuilder AddScope(string scope)
+	public TokenGeneratorBuilder AddClaim(string type, string value, string valueType)
 	{
-		return AddClaim("scope", scope);
+		_claims.Add(new Claim(type, value, valueType));
+		return this;
 	}
 
 	public TokenGeneratorBuilder AddScope(params string[] scopes)
 	{
 		foreach (var scope in scopes)
-			AddScope(scope);
+		{
+			AddClaim(JwtClaimTypes.Scope, scope);
+		}
+
 		return this;
 	}
 
@@ -102,9 +108,12 @@ internal class TokenGeneratorBuilder
 
 	public TokenGeneratorBuilder AddRole(params string[] roles)
 	{
-		foreach (var role in roles)
+		if (roles?.Length > 0)
 		{
-			AddClaim(JwtClaimTypes.Role, role);
+			foreach (var role in roles)
+			{
+				AddClaim(JwtClaimTypes.Role, role);
+			}
 		}
 
 		return this;
@@ -127,9 +136,21 @@ internal class TokenGeneratorBuilder
 		return AddClaim(type, value);
 	}
 
-	public TokenGeneratorBuilder ExpiresIn(TimeSpan? time)
+	public TokenGeneratorBuilder ExpiresIn(TimeSpan time)
 	{
 		ExpireTime = time;
+		return this;
+	}
+
+	public TokenGeneratorBuilder IssuedAt(DateTime time)
+	{
+		// if (time != null)
+		// {
+		// 	AddClaim(JwtRegisteredClaimNames.Iat, EpochTime.GetIntDate(time.Value).ToString(), ClaimValueTypes.Integer64);
+		// }
+
+		IssueTime = time;
+
 		return this;
 	}
 
@@ -159,21 +180,20 @@ internal class TokenGeneratorBuilder
 
 	public string Build()
 	{
-		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey));
-		var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+		var handler = new JwtSecurityTokenHandler();
+		var key = Encoding.UTF8.GetBytes(SigningKey.ToSha256());
+		var descriptor = new SecurityTokenDescriptor
+		{
+			Subject = new ClaimsIdentity(_claims),
+			Expires = IssueTime.Add(ExpireTime),
+			Issuer = Issuer,
+			Audience = Audience,
+			IssuedAt = IssueTime,
+			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+		};
 
-		//create security token
-		var token = new JwtSecurityToken(issuer: "localhost",
-			audience: Audience,
-			claims: _claims,
-			expires: DateTime.UtcNow + (ExpireTime ?? TimeSpan.FromDays(365)),
-			signingCredentials: credentials
-		);
-
-		//sign and serialize token to string
-		var strToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-		//return token string
-		return strToken;
+		var token = handler.CreateToken(descriptor);
+		var accessToken = handler.WriteToken(token);
+		return accessToken;
 	}
 }

@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using IdentityModel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Bus.RabbitMq;
@@ -72,6 +76,35 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 				builder.Add<DefaultMessageConvention>();
 				builder.Add<AttributeMessageConvention>();
 				builder.Add<DomainMessageConvention>();
+			});
+			config.SetIdentityProvider(jwt =>
+			{
+				var token = jwt?.Replace("Bearer ", string.Empty);
+				ClaimsPrincipal principal;
+				if (string.IsNullOrWhiteSpace(token))
+				{
+					principal = new ClaimsPrincipal(); //GenericPrincipal(null, null);
+				}
+				else
+				{
+					var validation = new TokenValidationParameters
+					{
+						NameClaimType = JwtClaimTypes.Name,
+						RoleClaimType = ClaimTypes.Role,
+						ValidIssuers = new[] { Configuration.GetValue<string>("JwtBearerOptions:TokenIssuer") },
+						ValidateIssuer = true,
+						ValidateAudience = false,
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("JwtBearerOptions:TokenKey").ToSha256()))
+					};
+					principal = new JwtSecurityTokenHandler().ValidateToken(token, validation, out _);
+					principal ??= new ClaimsPrincipal();
+				}
+
+				return principal;
+
+				// var handler = new JwtSecurityTokenHandler().ReadJwtToken(token);
+				// var identity = new ClaimsPrincipal(new ClaimsIdentity(handler.Claims, null, null, JwtClaimTypes.Role));
+				// return identity;
 			});
 			config.RegisterHandlers(typeof(ApplicationServiceModule).Assembly);
 			var provider = Configuration.GetValue<string>("ServiceBus:Provider")?.ToLower();

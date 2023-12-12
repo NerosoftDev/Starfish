@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
-        <EuoniaPackageVersion>8.1.5</EuoniaPackageVersion>
+        <EuoniaPackageVersion>8.1.8</EuoniaPackageVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="Dapper" Version="2.1.24" />
@@ -69,8 +69,8 @@
     <ItemGroup>
         <PackageVersion Include="BenchmarkDotNet" Version="0.13.4" />
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-        <PackageVersion Include="xunit" Version="2.6.2" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.4">
+        <PackageVersion Include="xunit" Version="2.6.3" />
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.5">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageVersion>
@@ -78,7 +78,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageVersion>
-        <PackageVersion Include="Xunit.DependencyInjection" Version="8.9.0" />
+        <PackageVersion Include="Xunit.DependencyInjection" Version="8.9.1" />
         <PackageVersion Include="Xunit.DependencyInjection.Logging" Version="8.0.1" />
         <PackageVersion Include="Moq" Version="4.20.70" />
     </ItemGroup>

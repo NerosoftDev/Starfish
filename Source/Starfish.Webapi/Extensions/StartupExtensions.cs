@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -39,7 +40,7 @@ internal static class StartupExtensions
 			options.TokenValidationParameters = new TokenValidationParameters
 			{
 				NameClaimType = JwtClaimTypes.Name,
-				RoleClaimType = JwtClaimTypes.Role,
+				RoleClaimType = ClaimTypes.Role,
 				ValidIssuers = new[] { issuer },
 				//ValidAudience = "api",
 				ValidateIssuer = true,
