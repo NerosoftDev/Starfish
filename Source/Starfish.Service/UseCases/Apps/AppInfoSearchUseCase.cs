@@ -31,26 +31,34 @@ public record AppInfoSearchOutput(List<AppInfoItemDto> Items) : IUseCaseOutput;
 public class AppInfoSearchUseCase : IAppInfoSearchUseCase
 {
 	private readonly IAppInfoRepository _repository;
-	private readonly UserPrincipal _user;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="repository"></param>
-	/// <param name="user"></param>
-	public AppInfoSearchUseCase(IAppInfoRepository repository, UserPrincipal user)
+	/// 
+	public AppInfoSearchUseCase(IAppInfoRepository repository)
 	{
 		_repository = repository;
-		_user = user;
 	}
 
 	/// <inheritdoc />
 	public Task<AppInfoSearchOutput> ExecuteAsync(AppInfoSearchInput input, CancellationToken cancellationToken = default)
 	{
+		if (input.Page <= 0)
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0);
+		}
+
+		if (input.Size <= 0)
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
+		}
+
 		var predicate = input.Criteria.GetSpecification().Satisfy();
 		return _repository.FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken)
-		                  .ContinueWith(task => new AppInfoSearchOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
+						  .ContinueWith(task => new AppInfoSearchOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
 
-		IOrderedQueryable<AppInfo> Collator(IQueryable<AppInfo> query) => query.OrderByDescending(t => t.Id);
+		static IOrderedQueryable<AppInfo> Collator(IQueryable<AppInfo> query) => query.OrderByDescending(t => t.Id);
 	}
 }

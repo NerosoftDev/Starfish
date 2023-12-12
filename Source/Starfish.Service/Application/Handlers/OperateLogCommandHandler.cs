@@ -11,7 +11,7 @@ namespace Nerosoft.Starfish.Application;
 /// 操作日志命令处理器
 /// </summary>
 public class OperateLogCommandHandler : CommandHandlerBase,
-                                        IHandler<CreateOperateLogCommand>
+                                        IHandler<OperateLogCreateCommand>
 {
 	private readonly IOperateLogRepository _repository;
 
@@ -29,7 +29,7 @@ public class OperateLogCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(CreateOperateLogCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(OperateLogCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

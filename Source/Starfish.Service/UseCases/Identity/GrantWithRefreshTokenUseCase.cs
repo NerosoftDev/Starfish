@@ -65,7 +65,7 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 		{
 			if (string.IsNullOrWhiteSpace(input.Token))
 			{
-				throw new BadRequestException("refresh_token is required");
+				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_REQUIRED);
 			}
 
 			var key = input.Token.ToSha256();
@@ -74,24 +74,24 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 
 			if (token == null)
 			{
-				throw new BadRequestException(Resources.IDS_REFRESH_TOKEN_IS_INVALID);
+				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_IS_INVALID);
 			}
 
 			if (token.Expires < DateTime.UtcNow)
 			{
-				throw new BadRequestException(Resources.IDS_REFRESH_TOKEN_EXPIRED);
+				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_EXPIRED);
 			}
 
 			var user = await UserRepository.GetAsync(int.Parse(token.Subject), false, cancellationToken);
 
 			if (user == null)
 			{
-				throw new BadRequestException(Resources.IDS_REFRESH_TOKEN_IS_INVALID);
+				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_IS_INVALID);
 			}
 
 			if (user.LockoutEnd > DateTime.UtcNow)
 			{
-				throw new AuthenticationException(Resources.IDS_USER_LOCKOUT);
+				throw new AuthenticationException(Resources.IDS_ERROR_USER_LOCKOUT);
 			}
 
 			var roles = user.Roles.Split(',', StringSplitOptions.RemoveEmptyEntries);

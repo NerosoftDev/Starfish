@@ -88,12 +88,12 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	{
 		if (page <= 0)
 		{
-			throw new ArgumentOutOfRangeException(nameof(page), Resources.IDS_PAGE_NUMBER_MUST_GREATER_THAN_0);
+			throw new ArgumentOutOfRangeException(nameof(page), Resources.IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0);
 		}
 
 		if (size <= 0)
 		{
-			throw new ArgumentOutOfRangeException(nameof(size), Resources.IDS_PAGE_SIZE_MUST_GREATER_THAN_0);
+			throw new ArgumentOutOfRangeException(nameof(size), Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
 		}
 
 		var query = Context.Set<TEntity>().AsQueryable();
@@ -320,7 +320,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	{
 		var set = Context.Set<TEntity>();
 
-		var entity = await set.FindAsync(id);
+		var entity = await set.FindAsync(new object[] { id }, cancellationToken: cancellationToken);
 		if (entity is null)
 		{
 			throw new NotFoundException();

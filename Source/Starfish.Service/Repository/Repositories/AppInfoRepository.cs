@@ -23,7 +23,7 @@ public class AppInfoRepository : BaseRepository<DataContext, AppInfo, long>, IAp
 	{
 		if (string.IsNullOrWhiteSpace(code))
 		{
-			throw new BadRequestException("应用标识不能为空");
+			throw new BadRequestException(Resources.IDS_ERROR_APPINFO_CODE_REQUIRED);
 		}
 
 		code = code.Normalize(TextCaseType.Lower);

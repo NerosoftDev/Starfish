@@ -11,11 +11,11 @@ namespace Nerosoft.Starfish.Application;
 /// 应用信息命令处理器
 /// </summary>
 public class AppInfoCommandHandler : CommandHandlerBase,
-                                     IHandler<AppInfoCreateCommand>,
-                                     IHandler<AppInfoUpdateCommand>,
-                                     IHandler<AppInfoDeleteCommand>,
-                                     IHandler<ChangeAppInfoStatusCommand>,
-                                     IHandler<ResetAppInfoSecretCommand>
+									 IHandler<AppInfoCreateCommand>,
+									 IHandler<AppInfoUpdateCommand>,
+									 IHandler<AppInfoDeleteCommand>,
+									 IHandler<ChangeAppInfoStatusCommand>,
+									 IHandler<ResetAppInfoSecretCommand>
 {
 	private readonly IAppInfoRepository _repository;
 
@@ -48,7 +48,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 			var exists = await _repository.GetByCodeAsync(code, cancellationToken);
 			if (exists != null)
 			{
-				throw new ConflictException("应用编码不可用");
+				throw new ConflictException(Resources.IDS_ERROR_APPINFO_CODE_UNAVAILABLE);
 			}
 		}
 	}
@@ -116,7 +116,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 					break;
 				case AppStatus.None:
 				default:
-					throw new InvalidAppInfoStatusException("无效的状态");
+					throw new InvalidAppInfoStatusException(Resources.IDS_ERROR_APPINFO_STATUS_INVALID);
 			}
 
 			await _repository.UpdateAsync(entity, true, cancellationToken);

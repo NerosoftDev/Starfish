@@ -117,28 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
+  <data name="IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
     <value>Page must be greater than 0.</value>
   </data>
-  <data name="IDS_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
+  <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
     <value>Page size must be greater than 0.</value>
   </data>
-  <data name="IDS_USERNAME_OR_PASSWORD_IS_INVALID" xml:space="preserve">
+  <data name="IDS_ERROR_USERNAME_OR_PASSWORD_IS_INVALID" xml:space="preserve">
     <value>Username or password is invalid.</value>
   </data>
-  <data name="IDS_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
+  <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
     <value>Refresh token is invalid.</value>
   </data>
-  <data name="IDS_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
+  <data name="IDS_ERROR_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
     <value>Refresh token is expired.</value>
   </data>
-  <data name="IDS_USER_LOCKOUT" xml:space="preserve">
+  <data name="IDS_ERROR_USER_LOCKOUT" xml:space="preserve">
     <value>The user was locked out.</value>
   </data>
-  <data name="IDS_USERNAME_NOT_AVAILABE" xml:space="preserve">
+  <data name="IDS_ERROR_USERNAME_UNAVAILABLE" xml:space="preserve">
     <value>UserName {0} not available.</value>
   </data>
-  <data name="IDS_USER_NOT_EXISTS" xml:space="preserve">
-    <value>User not exists.</value>
+  <data name="IDS_ERROR_USER_NOT_EXISTS" xml:space="preserve">
+    <value>User not exists, [Id]:{0}.</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
+    <value>Refresh_token is required.</value>
+  </data>
+  <data name="IDS_DICTIONARY_ENVIRONMENT_DEV" xml:space="preserve">
+    <value>Development</value>
+  </data>
+  <data name="IDS_DICTIONARY_ENVIRONMENT_PET" xml:space="preserve">
+    <value>Performance Evaluation Testing</value>
+  </data>
+  <data name="IDS_DICTIONARY_ENVIRONMENT_PRD" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="IDS_DICTIONARY_ENVIRONMENT_SIM" xml:space="preserve">
+    <value>Simulation Testing</value>
+  </data>
+  <data name="IDS_DICTIONARY_ENVIRONMENT_SIT" xml:space="preserve">
+    <value>System Integration Testing</value>
+  </data>
+  <data name="IDS_DICTIONARY_ENVIRONMENT_UAT" xml:space="preserve">
+    <value>User Acceptance Testing</value>
+  </data>
+  <data name="IDS_DICTIONARY_NAME_SA" xml:space="preserve">
+    <value>Super administrator</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_CODE_UNAVAILABLE" xml:space="preserve">
+    <value>App unique code is not available.</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
+    <value>App not exists, [Id]:{0}.</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
+    <value>Invalid app status.</value>
+  </data>
+  <data name="IDS_ENUM_APPSTATUS_DISABLED" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="IDS_ENUM_APPSTATUS_ENABLED" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
+    <value>App unique code is required.</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_CACHE_PROVIDER" xml:space="preserve">
+    <value>Unsupported cache provider '{0}'.</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_DATABASE_PROVIDER" xml:space="preserve">
+    <value>Unsupported database provider '{0}'.</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
+    <value>Unsupported service bus provider '{0}'.</value>
   </data>
 </root>

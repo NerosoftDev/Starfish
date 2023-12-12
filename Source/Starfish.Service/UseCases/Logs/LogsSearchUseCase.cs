@@ -1,4 +1,6 @@
-﻿using Nerosoft.Euonia.Application;
+﻿using Azure;
+using System.Drawing;
+using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Claims;
 using Nerosoft.Euonia.Linq;
 using Nerosoft.Starfish.Domain;
@@ -50,9 +52,19 @@ public class LogsSearchUseCase : ILogsSearchUseCase
 	/// <inheritdoc />
 	public async Task<LogsSearchUseCaseOutput> ExecuteAsync(LogsSearchUseCaseInput input, CancellationToken cancellationToken = default)
 	{
+		if (input.Page <= 0)
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0);
+		}
+
+		if (input.Size <= 0)
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
+		}
+
 		var specification = input.Criteria.GetSpecification();
 
-		if (!_user.IsInRole("SU"))
+		if (!_user.IsInRole("SA"))
 		{
 			specification &= OperateLogSpecification.UserNameEquals(_user.Username);
 		}
@@ -63,6 +75,6 @@ public class LogsSearchUseCase : ILogsSearchUseCase
 		var items = entities.ProjectedAsCollection<OperateLogDto>();
 		return new LogsSearchUseCaseOutput(items);
 
-		IOrderedQueryable<OperateLog> Collator(IQueryable<OperateLog> query) => query.OrderByDescending(t => t.OperateTime);
+		static IOrderedQueryable<OperateLog> Collator(IQueryable<OperateLog> query) => query.OrderByDescending(t => t.OperateTime);
 	}
 }

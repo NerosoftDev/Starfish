@@ -73,7 +73,7 @@ public class RepositoryModule : ModuleContextBase
 				context.Services.TryAddSingleton<IModelBuilder, PgsqlModelBuilder>();
 				break;
 			default:
-				throw new NotSupportedException($"不支持的数据库类型：{databaseTypeValue}");
+				throw new NotSupportedException(string.Format(Resources.IDS_ERROR_UNSUPPORTED_DATABASE_PROVIDER, databaseTypeValue));
 		}
 
 		context.Services.AddDbContextFactory<DataContext>(options =>
@@ -114,14 +114,14 @@ public class RepositoryModule : ModuleContextBase
 					options.UseMongoDB(connection, "");
 					break;
 				default:
-					throw new NotSupportedException($"不支持的数据库类型：{databaseTypeValue}");
+					throw new NotSupportedException(string.Format(Resources.IDS_ERROR_UNSUPPORTED_DATABASE_PROVIDER, databaseTypeValue));
 			}
 		});
 
 		context.Services
-		       .AddScoped<IUserRepository, UserRepository>()
-		       .AddScoped<ITokenRepository, TokenRepository>()
-		       .AddScoped<IOperateLogRepository, OperateLogRepository>()
-		       .AddScoped<IAppInfoRepository, AppInfoRepository>();
+			   .AddScoped<IUserRepository, UserRepository>()
+			   .AddScoped<ITokenRepository, TokenRepository>()
+			   .AddScoped<IOperateLogRepository, OperateLogRepository>()
+			   .AddScoped<IAppInfoRepository, AppInfoRepository>();
 	}
 }

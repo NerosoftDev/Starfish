@@ -11,6 +11,7 @@ using Nerosoft.Euonia.Caching;
 using Nerosoft.Euonia.Caching.Memory;
 using Nerosoft.Euonia.Mapping;
 using Nerosoft.Euonia.Modularity;
+using Nerosoft.Euonia.Validation;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.UseCases;
@@ -21,6 +22,7 @@ namespace Nerosoft.Starfish.Application;
 /// 应用服务模块上下文
 /// </summary>
 [DependsOn(typeof(ApplicationModule))]
+[DependsOn(typeof(AutomapperModule), typeof(ValidationModule))]
 [DependsOn(typeof(UseCaseModule), typeof(RepositoryModule), typeof(DomainServiceModule))]
 public sealed class ApplicationServiceModule : ModuleContextBase
 {
@@ -39,8 +41,6 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	public override void ConfigureServices(ServiceConfigurationContext context)
 	{
 		context.Services.Register<ApplicationServiceContext>();
-		context.Services.AddAutomapper();
-		context.Services.AddSingleton<ITypeAdapterFactory, AutomapperTypeAdapterFactory>();
 
 		ConfigureCachingServices(context.Services);
 
@@ -61,7 +61,7 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 				services.AddSingleton<ICacheService, RedisCacheService>();
 				break;
 			default:
-				throw new NotSupportedException($"不支持的缓存提供程序：{provider}");
+				throw new NotSupportedException(string.Format(Resources.IDS_ERROR_UNSUPPORTED_CACHE_PROVIDER, provider));
 		}
 
 		services.AddDefaultCacheManager<ApplicationServiceContext>();
@@ -129,7 +129,7 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 					});
 					break;
 				default:
-					throw new NotSupportedException($"不支持的消息总线提供程序：{provider}");
+					throw new NotSupportedException(string.Format(Resources.IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER, provider));
 			}
 		});
 	}
@@ -137,11 +137,6 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	/// <inheritdoc />
 	public override void OnApplicationInitialization(ApplicationInitializationContext context)
 	{
-		base.OnApplicationInitialization(context);
-		var factory = context.ServiceProvider.GetService<ITypeAdapterFactory>();
-		if (factory != null)
-		{
-			TypeAdapterFactory.SetCurrent(factory);
-		}
+
 	}
 }

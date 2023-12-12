@@ -11,7 +11,7 @@ public class UserLockedException : ForbiddenException
 	/// 初始化<see cref="UserLockedException"/>实例。
 	/// </summary>
 	public UserLockedException()
-		: base(Resources.IDS_USER_LOCKOUT)
+		: base(Resources.IDS_ERROR_USER_LOCKOUT)
 	{
 	}
 }

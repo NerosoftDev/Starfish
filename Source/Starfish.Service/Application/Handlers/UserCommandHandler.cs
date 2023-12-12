@@ -13,10 +13,10 @@ namespace Nerosoft.Starfish.Application;
 /// 用户命令处理器
 /// </summary>
 public sealed class UserCommandHandler : CommandHandlerBase,
-                                         IHandler<UserCreateCommand>,
-                                         IHandler<UserUpdateCommand>,
-                                         IHandler<UserChangePasswordCommand>,
-                                         IHandler<UserDeleteCommand>
+										 IHandler<UserCreateCommand>,
+										 IHandler<UserUpdateCommand>,
+										 IHandler<UserChangePasswordCommand>,
+										 IHandler<UserDeleteCommand>
 {
 	private readonly UserRepository _repository;
 
@@ -41,7 +41,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			var isUserNameAvailable = await CheckUserNameAsync(message.UserName);
 			if (!isUserNameAvailable)
 			{
-				throw new ConflictException(string.Format(Resources.IDS_USERNAME_NOT_AVAILABE, message.UserName));
+				throw new ConflictException(string.Format(Resources.IDS_ERROR_USERNAME_UNAVAILABLE, message.UserName));
 			}
 
 			var user = User.Create(message.UserName, message.Password, message.Email, message.Roles);
@@ -52,7 +52,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 		Task<bool> CheckUserNameAsync(string userName)
 		{
 			return _repository.ExistsAsync(t => t.UserName == userName, cancellationToken)
-			                  .ContinueWith(task => !task.Result, cancellationToken);
+							  .ContinueWith(task => !task.Result, cancellationToken);
 		}
 	}
 
@@ -64,7 +64,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			var user = await _repository.GetAsync(message.UserId, true, cancellationToken);
 			if (user == null)
 			{
-				throw new NotFoundException(Resources.IDS_USER_NOT_EXISTS);
+				throw new UserNotFoundException(message.UserId);
 			}
 
 			user.SetEmail(message.Email);
@@ -83,7 +83,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			var user = await _repository.GetAsync(message.UserId, true, cancellationToken);
 			if (user == null)
 			{
-				throw new NotFoundException(Resources.IDS_USER_NOT_EXISTS);
+				throw new UserNotFoundException(message.UserId);
 			}
 
 			user.ChangePassword(message.Password);
@@ -100,7 +100,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			var user = await _repository.GetAsync(message.Item1, true, cancellationToken);
 			if (user == null)
 			{
-				throw new NotFoundException(Resources.IDS_USER_NOT_EXISTS);
+				throw new UserNotFoundException(message.Item1);
 			}
 
 			await _repository.DeleteAsync(user, true, cancellationToken);

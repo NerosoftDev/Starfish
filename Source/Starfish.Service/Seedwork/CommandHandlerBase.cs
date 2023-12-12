@@ -113,11 +113,9 @@ public abstract class CommandHandlerBase
 	/// <returns></returns>
 	protected virtual async Task ExecuteAsync([NotNull] Func<Task> action)
 	{
-		using (var uow = UnitOfWork.Begin())
-		{
-			await action();
-			await uow.CommitAsync();
-		}
+		using var uow = UnitOfWork.Begin();
+		await action();
+		await uow.CommitAsync();
 	}
 
 	/// <summary>
@@ -129,11 +127,9 @@ public abstract class CommandHandlerBase
 	/// <returns></returns>
 	protected virtual async Task ExecuteAsync<TResult>([NotNull] Func<Task<TResult>> action, Action<TResult> next)
 	{
-		using (var uow = UnitOfWork.Begin())
-		{
-			var result = await action();
-			await uow.CommitAsync();
-			next(result);
-		}
+		using var uow = UnitOfWork.Begin();
+		var result = await action();
+		await uow.CommitAsync();
+		next(result);
 	}
 }

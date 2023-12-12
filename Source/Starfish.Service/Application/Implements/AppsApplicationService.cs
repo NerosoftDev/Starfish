@@ -40,7 +40,10 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	/// <inheritdoc />
 	public Task<bool> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default)
 	{
-		throw new NotImplementedException();
+		var input = new AppInfoAuthorizeInput(code, secret);
+		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoAuthorizeUseCase>();
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />

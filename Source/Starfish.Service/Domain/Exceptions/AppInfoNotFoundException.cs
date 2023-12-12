@@ -10,7 +10,7 @@ public class AppInfoNotFoundException : NotFoundException
 	/// </summary>
 	/// <param name="id"></param>
 	public AppInfoNotFoundException(long id)
-		: base($"应用信息不存在，Id：{id}")
+		: base(string.Format(Resources.IDS_ERROR_APPINFO_NOT_EXISTS, id))
 	{
 	}
 }

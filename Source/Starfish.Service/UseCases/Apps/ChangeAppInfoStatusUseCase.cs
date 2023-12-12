@@ -7,10 +7,21 @@ using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.UseCases;
 
+/// <summary>
+/// 变更应用信息状态用例接口
+/// </summary>
 public interface IChangeAppInfoStatusUseCase : IUseCase<ChangeAppInfoStatusInput>;
 
+/// <summary>
+/// 变更应用信息状态输入
+/// </summary>
+/// <param name="Id"></param>
+/// <param name="Status"></param>
 public record ChangeAppInfoStatusInput(long Id, AppStatus Status) : IUseCaseInput;
 
+/// <summary>
+/// 变更应用信息状态用例
+/// </summary>
 public class ChangeAppInfoStatusUseCase : IChangeAppInfoStatusUseCase
 {
 	/// <summary>
@@ -33,7 +44,7 @@ public class ChangeAppInfoStatusUseCase : IChangeAppInfoStatusUseCase
 	}
 
 	/// <inheritdoc />
-	public Task ExecuteAsync(ChangeAppInfoStatusInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(ChangeAppInfoStatusInput input, CancellationToken cancellationToken = default)
 	{
 		if (!_user.IsAuthenticated)
 		{

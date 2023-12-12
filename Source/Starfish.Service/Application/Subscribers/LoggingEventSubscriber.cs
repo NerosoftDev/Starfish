@@ -37,9 +37,10 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	/// <exception cref="NotImplementedException"></exception>
 	public Task HandleAsync(UserAuthSucceedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var command = new CreateOperateLogCommand
+		var command = new OperateLogCreateCommand
 		{
-			Type = $"Auth.{message.AuthType}",
+			Module = "auth",
+			Type = message.AuthType,
 			UserName = message.UserName,
 			OperateTime = DateTime.Now,
 			Description = "认证成功",
@@ -57,7 +58,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	/// <exception cref="NotImplementedException"></exception>
 	public Task HandleAsync(UserAuthFailedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var command = new CreateOperateLogCommand
+		var command = new OperateLogCreateCommand
 		{
 			Module = "auth",
 			Type = message.AuthType,
@@ -80,7 +81,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	{
 		var user = _provider.GetService<UserPrincipal>();
 		var aggregate = message.GetAggregate<AppInfo>();
-		var command = new CreateOperateLogCommand
+		var command = new OperateLogCreateCommand
 		{
 			Module = "appinfo",
 			Type = "create",
@@ -104,7 +105,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	{
 		var user = _provider.GetService<UserPrincipal>();
 		var aggregate = message.GetAggregate<AppInfo>();
-		var command = new CreateOperateLogCommand
+		var command = new OperateLogCreateCommand
 		{
 			Module = "appinfo",
 			Type = "enable",
@@ -128,7 +129,7 @@ public sealed class LoggingEventSubscriber : IHandler<UserAuthSucceedEvent>,
 	{
 		var user = _provider.GetService<UserPrincipal>();
 		var aggregate = message.GetAggregate<AppInfo>();
-		var command = new CreateOperateLogCommand
+		var command = new OperateLogCreateCommand
 		{
 			Module = "appinfo",
 			Type = "disable",

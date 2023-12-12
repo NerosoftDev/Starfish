@@ -16,9 +16,9 @@ public class AppsMappingProfile : Profile
 	{
 		CreateMap<AppInfo, AppInfoItemDto>()
 			.ForMember(dest => dest.Secret, opt => opt.MapFrom(src => Mask(src.Secret)))
-			.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.GetDescription()));
+			.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.GetDescription(Resources.ResourceManager, Resources.Culture)));
 		CreateMap<AppInfo, AppInfoDetailDto>()
-			.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.GetDescription()));
+			.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.GetDescription(Resources.ResourceManager, Resources.Culture)));
 	}
 
 	private static string Mask(string source)

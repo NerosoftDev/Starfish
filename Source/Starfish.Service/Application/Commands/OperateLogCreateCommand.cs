@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 创建日志命令
 /// </summary>
-public class CreateOperateLogCommand : Command
+public class OperateLogCreateCommand : Command
 {
 	/// <summary>
 	/// 模块

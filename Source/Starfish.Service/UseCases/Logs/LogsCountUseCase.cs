@@ -48,7 +48,7 @@ public class LogsCountUseCase : ILogsCountUseCase
 	{
 		var specification = input.Criteria.GetSpecification();
 
-		if (!_user.IsInRole("SU"))
+		if (!_user.IsInRole("SA"))
 		{
 			specification &= OperateLogSpecification.UserNameEquals(_user.Username);
 		}
