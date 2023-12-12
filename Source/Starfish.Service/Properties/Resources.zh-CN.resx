@@ -154,4 +154,22 @@
   <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
     <value>Token不能为空。</value>
   </data>
+  <data name="IDS_ERROR_UNSUPPORTED_CACHE_PROVIDER" xml:space="preserve">
+    <value>不支持的缓存提供程序'{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_DATABASE_PROVIDER" xml:space="preserve">
+    <value>不支持的数据库提供程序'{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
+    <value>不支持的服务总线提供程序'{0}'。</value>
+  </data>
+  <data name="IDS_ENUM_APPSTATUS_DISABLED" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="IDS_ENUM_APPSTATUS_ENABLED" xml:space="preserve">
+    <value>启用</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
+    <value>应用唯一编码不能为空。</value>
+  </data>
 </root>
