@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using IdentityModel;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;

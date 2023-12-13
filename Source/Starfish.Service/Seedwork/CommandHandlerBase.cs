@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Logging;
-using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Euonia.Repository;
@@ -12,8 +10,6 @@ namespace Nerosoft.Starfish.Service;
 /// </summary>
 public abstract class CommandHandlerBase
 {
-	private readonly ILogger<CommandHandlerBase> _logger;
-
 	/// <summary>
 	/// 工作单元管理器
 	/// </summary>
@@ -28,11 +24,9 @@ public abstract class CommandHandlerBase
 	/// 初始化<see cref="CommandHandlerBase"/>.
 	/// </summary>
 	/// <param name="unitOfWork"></param>
-	/// <param name="logger"></param>
-	protected CommandHandlerBase(IUnitOfWorkManager unitOfWork, ILoggerFactory logger)
+	protected CommandHandlerBase(IUnitOfWorkManager unitOfWork)
 	{
 		UnitOfWork = unitOfWork;
-		_logger = logger.CreateLogger<CommandHandlerBase>();
 	}
 
 	/// <summary>
@@ -40,9 +34,8 @@ public abstract class CommandHandlerBase
 	/// </summary>
 	/// <param name="unitOfWork"></param>
 	/// <param name="factory"></param>
-	/// <param name="logger"></param>
-	protected CommandHandlerBase(IUnitOfWorkManager unitOfWork, IObjectFactory factory, ILoggerFactory logger)
-		: this(unitOfWork, logger)
+	protected CommandHandlerBase(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
+		: this(unitOfWork)
 	{
 		Factory = factory;
 	}
@@ -68,8 +61,6 @@ public abstract class CommandHandlerBase
 		}
 		catch (Exception exception)
 		{
-			_logger.LogError(exception, "Command execute failed: {Message}", exception.Message);
-
 			response.Failure(exception);
 		}
 
@@ -99,7 +90,6 @@ public abstract class CommandHandlerBase
 		}
 		catch (Exception exception)
 		{
-			_logger.LogError(exception, "Command execute failed: {Message}", exception.Message);
 			response.Failure(exception);
 		}
 

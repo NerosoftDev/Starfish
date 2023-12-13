@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using Nerosoft.Euonia.Bus;
+﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Core;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Application;
@@ -13,12 +10,12 @@ namespace Nerosoft.Starfish.Application;
 /// 用户命令处理器
 /// </summary>
 public sealed class UserCommandHandler : CommandHandlerBase,
-										 IHandler<UserCreateCommand>,
-										 IHandler<UserUpdateCommand>,
-										 IHandler<UserChangePasswordCommand>,
-										 IHandler<UserDeleteCommand>
+                                         IHandler<UserCreateCommand>,
+                                         IHandler<UserUpdateCommand>,
+                                         IHandler<UserChangePasswordCommand>,
+                                         IHandler<UserDeleteCommand>
 {
-	private readonly UserRepository _repository;
+	private readonly IUserRepository _repository;
 
 	/// <summary>
 	/// 初始化<see cref="UserCommandHandler"/>.
@@ -26,9 +23,8 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	/// <param name="userRepository"></param>
 	/// <param name="unitOfWork"></param>
 	/// <param name="factory"></param>
-	/// <param name="logger"></param>
-	public UserCommandHandler(UserRepository userRepository, IUnitOfWorkManager unitOfWork, IObjectFactory factory, ILoggerFactory logger)
-		: base(unitOfWork, factory, logger)
+	public UserCommandHandler(IUserRepository userRepository, IUnitOfWorkManager unitOfWork, IObjectFactory factory)
+		: base(unitOfWork, factory)
 	{
 		_repository = userRepository;
 	}
@@ -51,8 +47,8 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 
 		Task<bool> CheckUserNameAsync(string userName)
 		{
-			return _repository.ExistsAsync(t => t.UserName == userName, cancellationToken)
-							  .ContinueWith(task => !task.Result, cancellationToken);
+			return _repository.CheckUserNameExistsAsync(userName, cancellationToken)
+			                  .ContinueWith(task => !task.Result, cancellationToken);
 		}
 	}
 

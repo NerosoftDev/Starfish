@@ -1,10 +1,8 @@
 ﻿using IdentityModel;
-using Microsoft.Extensions.Logging;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Application;
@@ -16,7 +14,7 @@ public sealed class TokenCommandHandler : CommandHandlerBase,
                                           IHandler<TokenCreateCommand>,
                                           IHandler<TokenDeleteCommand>
 {
-	private readonly TokenRepository _repository;
+	private readonly ITokenRepository _repository;
 
 	/// <summary>
 	/// 初始化<see cref="TokenCommandHandler"/>.
@@ -24,9 +22,8 @@ public sealed class TokenCommandHandler : CommandHandlerBase,
 	/// <param name="repository">仓库对象</param>
 	/// <param name="unitOfWork">工作单元管理器</param>
 	/// <param name="factory">业务对象工厂</param>
-	/// <param name="logger">日志工厂</param>
-	public TokenCommandHandler(TokenRepository repository, IUnitOfWorkManager unitOfWork, IObjectFactory factory, ILoggerFactory logger)
-		: base(unitOfWork, factory, logger)
+	public TokenCommandHandler(ITokenRepository repository, IUnitOfWorkManager unitOfWork, IObjectFactory factory)
+		: base(unitOfWork, factory)
 	{
 		_repository = repository;
 	}

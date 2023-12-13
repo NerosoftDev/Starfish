@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Nerosoft.Euonia.Bus;
+﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
@@ -21,9 +20,8 @@ public class OperateLogCommandHandler : CommandHandlerBase,
 	/// <param name="unitOfWork"></param>
 	/// <param name="factory"></param>
 	/// <param name="repository"></param>
-	/// <param name="logger"></param>
-	public OperateLogCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory, IOperateLogRepository repository, ILoggerFactory logger)
-		: base(unitOfWork, factory, logger)
+	public OperateLogCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory, IOperateLogRepository repository)
+		: base(unitOfWork, factory)
 	{
 		_repository = repository;
 	}
