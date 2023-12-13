@@ -1,5 +1,4 @@
 ﻿using System.Security.Authentication;
-using Microsoft.Extensions.DependencyInjection;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Domain;

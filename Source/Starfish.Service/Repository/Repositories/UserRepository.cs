@@ -23,4 +23,12 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 	{
 		return GetAsync(t => t.UserName == userName, tracking, cancellationToken);
 	}
+
+	/// <inheritdoc />
+	public Task<bool> CheckUserNameExistsAsync(string userName, CancellationToken cancellationToken = default)
+	{
+		var specification = UserSpecification.UserNameEquals(userName);
+		var predicate = specification.Satisfy();
+		return ExistsAsync(predicate, cancellationToken);
+	}
 }

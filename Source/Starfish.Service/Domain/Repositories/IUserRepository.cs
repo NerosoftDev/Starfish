@@ -24,4 +24,12 @@ public interface IUserRepository : IRepository<User, int>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<User> FindByUserNameAsync(string userName, bool tracking, CancellationToken cancellationToken = default);
+	
+	/// <summary>
+	/// 检查用户名是否存在
+	/// </summary>
+	/// <param name="userName"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<bool> CheckUserNameExistsAsync(string userName, CancellationToken cancellationToken = default);
 }

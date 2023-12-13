@@ -38,7 +38,7 @@ public class AppInfoAuthorizeUseCase : IAppInfoAuthorizeUseCase
 	}
 
 	/// <inheritdoc />
-	public async Task<AppInfoAuthorizeOutput> ExecuteAsync(AppInfoAuthorizeInput input, CancellationToken cancellationToken = new CancellationToken())
+	public async Task<AppInfoAuthorizeOutput> ExecuteAsync(AppInfoAuthorizeInput input, CancellationToken cancellationToken = default)
 	{
 		var appInfo = await _repository.GetByCodeAsync(input.Code, cancellationToken);
 		if (appInfo == null)
