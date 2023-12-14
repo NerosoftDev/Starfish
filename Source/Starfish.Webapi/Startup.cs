@@ -28,16 +28,6 @@ public class Startup
 	/// </remarks>
 	public void ConfigureServices(IServiceCollection services)
 	{
-		/*
-        services.AddEntityFrameworkRepository<DataContext>(options =>
-        {
-            //options.UseNpgsql("Host=localhost;Database=euonia_sample;Username=postgres;Password=nerosoft.8888");
-            //options.UseNpgsql("postgres://postgres:nerosoft.8888@localhost:5432/euonia_sample");
-            options.UseInMemoryDatabase("Euonia.Sample");
-        }); //PageActionEndpointConventionBuilder{ })
-
-        */
-
 		services.AddModularityApplication<HostServiceModule>(Configuration);
 	}
 
@@ -56,7 +46,7 @@ public class Startup
 		{
 			app.UseDeveloperExceptionPage();
 			app.UseSwagger();
-			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Starfish Webapi v1"));
+			
 		}
 
 		lifetime.ApplicationStarted.Register(() => OnStarted(app));
