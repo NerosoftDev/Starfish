@@ -80,4 +80,30 @@ public static class CriteriaExtensions
 
 		return specification;
 	}
+
+	/// <summary>
+	/// 获取配置节点查询规约
+	/// </summary>
+	/// <param name="criteria"></param>
+	/// <returns></returns>
+	public static Specification<SettingNode> GetSpecification(this SettingNodeCriteria criteria)
+	{
+		Specification<SettingNode> specification = new TrueSpecification<SettingNode>();
+		if (criteria == null)
+		{
+			return specification;
+		}
+
+		if (criteria.ParentId > 0)
+		{
+			specification &= SettingNodeSpecification.ParentIdEquals(criteria.ParentId);
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Environment))
+		{
+			specification &= SettingNodeSpecification.EnvironmentEquals(criteria.Environment);
+		}
+
+		return specification;
+	}
 }

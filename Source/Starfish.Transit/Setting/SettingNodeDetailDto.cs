@@ -57,4 +57,9 @@ public class SettingNodeDetailDto
 	/// 配置节点排序
 	/// </summary>
 	public int Sort { get; set; }
+	
+	/// <summary>
+	/// 配置唯一键
+	/// </summary>
+	public string Key { get; set; }
 }

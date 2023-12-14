@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Nerosoft.Euonia.Modularity;
 using Nerosoft.Euonia.Repository;
@@ -119,9 +118,10 @@ public class RepositoryModule : ModuleContextBase
 		});
 
 		context.Services
-			   .AddScoped<IUserRepository, UserRepository>()
-			   .AddScoped<ITokenRepository, TokenRepository>()
-			   .AddScoped<IOperateLogRepository, OperateLogRepository>()
-			   .AddScoped<IAppInfoRepository, AppInfoRepository>();
+		       .AddScoped<IUserRepository, UserRepository>()
+		       .AddScoped<ITokenRepository, TokenRepository>()
+		       .AddScoped<IOperateLogRepository, OperateLogRepository>()
+		       .AddScoped<IAppInfoRepository, AppInfoRepository>()
+		       .AddScoped<ISettingNodeRepository, SettingNodeRepository>();
 	}
 }

@@ -41,7 +41,7 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.ToTable("setting_node");
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.ParentId);
-			entity.HasIndex(t => t.AppCode);
+			entity.HasIndex(t => t.AppId);
 
 			entity.Property(t => t.Id)
 				  .IsRequired()

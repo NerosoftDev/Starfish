@@ -44,4 +44,9 @@ public class SettingNodeItemDto
 	/// 配置节点状态
 	/// </summary>
 	public string Status { get; set; }
+
+	/// <summary>
+	/// 配置唯一键
+	/// </summary>
+	public string Key { get; set; }
 }
