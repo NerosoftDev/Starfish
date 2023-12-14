@@ -46,19 +46,19 @@ public interface IAppsApplicationService : IApplicationService
 	/// <summary>
 	/// 创建应用
 	/// </summary>
-	/// <param name="model"></param>
+	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> CreateAsync(AppInfoCreateDto model, CancellationToken cancellationToken = default);
+	Task<long> CreateAsync(AppInfoCreateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新应用
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="model"></param>
+	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long id, AppInfoUpdateDto model, CancellationToken cancellationToken = default);
+	Task UpdateAsync(long id, AppInfoUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除应用

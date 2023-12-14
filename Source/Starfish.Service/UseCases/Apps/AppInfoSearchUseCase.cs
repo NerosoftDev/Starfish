@@ -21,8 +21,8 @@ public record AppInfoSearchInput(AppInfoCriteria Criteria, int Page, int Size) :
 /// <summary>
 /// 应用信息搜索用例输出
 /// </summary>
-/// <param name="Items"></param>
-public record AppInfoSearchOutput(List<AppInfoItemDto> Items) : IUseCaseOutput;
+/// <param name="Result"></param>
+public record AppInfoSearchOutput(List<AppInfoItemDto> Result) : IUseCaseOutput;
 
 /// <summary>
 /// 应用信息搜索用例

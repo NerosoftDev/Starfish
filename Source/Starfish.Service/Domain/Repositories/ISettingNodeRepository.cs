@@ -41,6 +41,15 @@ public interface ISettingNodeRepository : IRepository<SettingNode, long>
 	/// </summary>
 	/// <param name="appId"></param>
 	/// <param name="environment"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<List<SettingNode>> GetNodesAsync(long appId, string environment, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 根据应用Id和环境查询所有节点
+	/// </summary>
+	/// <param name="appId"></param>
+	/// <param name="environment"></param>
 	/// <param name="types"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>

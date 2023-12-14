@@ -115,7 +115,7 @@ public class SettingNode : Aggregate<long>,
 			Type = SettingNodeType.Root,
 			Status = SettingNodeStatus.Pending
 		};
-
+		entity.RaiseEvent(new SettingNodeCreatedEvent(entity));
 		return entity;
 	}
 
@@ -139,6 +139,8 @@ public class SettingNode : Aggregate<long>,
 		};
 
 		Children.Add(entity);
+
+		RaiseEvent(new SettingNodeCreatedEvent(entity));
 	}
 
 	internal void AddObjectNode(string name, out SettingNode entity)
@@ -161,6 +163,8 @@ public class SettingNode : Aggregate<long>,
 		};
 
 		Children.Add(entity);
+
+		RaiseEvent(new SettingNodeCreatedEvent(entity));
 	}
 
 	internal void AddStringNode(string name, string value, out SettingNode entity)
@@ -184,6 +188,8 @@ public class SettingNode : Aggregate<long>,
 		};
 
 		Children.Add(entity);
+
+		RaiseEvent(new SettingNodeCreatedEvent(entity));
 	}
 
 	internal void AddBooleanNode(string name, string value, out SettingNode entity)
@@ -212,6 +218,8 @@ public class SettingNode : Aggregate<long>,
 		};
 
 		Children.Add(entity);
+
+		RaiseEvent(new SettingNodeCreatedEvent(entity));
 	}
 
 	internal void AddNumberNode(string name, string value, out SettingNode entity)
@@ -240,21 +248,14 @@ public class SettingNode : Aggregate<long>,
 		};
 
 		Children.Add(entity);
+
+		RaiseEvent(new SettingNodeCreatedEvent(entity));
 	}
 
-	internal void SetName(string name)
+	internal void ChangeStatus(SettingNodeStatus status)
 	{
-		if (string.IsNullOrWhiteSpace(name))
-		{
-			return;
-		}
-
-		if (Type == SettingNodeType.Array)
-		{
-			throw new InvalidOperationException("数组节点不允许修改名称");
-		}
-
-		Name = name;
+		Status = status;
+		RaiseEvent(new SettingNodeStatusChangedEvent());
 	}
 
 	private void CheckSealed()

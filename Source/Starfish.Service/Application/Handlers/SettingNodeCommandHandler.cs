@@ -14,7 +14,8 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
                                          IHandler<SettingLeafNodeCreateCommand>,
                                          IHandler<SettingNodeUpdateCommand>,
                                          IHandler<SettingNodeRenameCommand>,
-                                         IHandler<SettingNodeDeleteCommand>
+                                         IHandler<SettingNodeDeleteCommand>,
+                                         IHandler<SettingNodePublishCommand>
 {
 	private readonly IServiceProvider _provider;
 
@@ -214,6 +215,41 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
 			}
 
 			await SettingRepository.DeleteAsync(nodes, true, cancellationToken);
+		});
+	}
+
+	/// <inheritdoc />
+	public Task HandleAsync(SettingNodePublishCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	{
+		return ExecuteAsync(async () =>
+		{
+			var aggregate = await SettingRepository.GetAsync(message.Item1, cancellationToken);
+			if (aggregate.Type != SettingNodeType.Root)
+			{
+				throw new InvalidOperationException("只能发布根节点");
+			}
+
+			List<SettingNode> nodes = [aggregate];
+
+			var types = new[]
+			{
+				SettingNodeType.Array,
+				SettingNodeType.Object,
+				SettingNodeType.String,
+				SettingNodeType.Boolean,
+				SettingNodeType.Number,
+				SettingNodeType.Referer
+			};
+			var leaves = await SettingRepository.GetNodesAsync(aggregate.AppId, aggregate.Environment, types, cancellationToken);
+			nodes.AddRange(leaves);
+
+			foreach (var node in nodes)
+			{
+				node.ChangeStatus(SettingNodeStatus.Published);
+				node.ClearEvents();
+			}
+
+			await SettingRepository.UpdateAsync(nodes, true, cancellationToken);
 		});
 	}
 }

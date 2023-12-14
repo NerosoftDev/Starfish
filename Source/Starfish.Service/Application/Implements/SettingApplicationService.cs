@@ -47,19 +47,19 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 	}
 
 	/// <inheritdoc />
-	public Task<long> CreateLeafNodeAsync(long parentId, SettingNodeType type, SettingNodeCreateDto model, CancellationToken cancellationToken = default)
+	public Task<long> CreateLeafNodeAsync(long parentId, SettingNodeType type, SettingNodeCreateDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingLeafNodeCreateUseCase>();
-		var input = new SettingLeafNodeCreationInput(parentId, type, model);
+		var input = new SettingLeafNodeCreationInput(parentId, type, data);
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(t => t.Result.Id, cancellationToken);
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(long id, SettingNodeUpdateDto model, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(long id, SettingNodeUpdateDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeUpdateUseCase>();
-		var input = new SettingNodeUpdateInput(id, model);
+		var input = new SettingNodeUpdateInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
@@ -76,6 +76,14 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeDeleteUseCase>();
 		var input = new SettingNodeDeleteInput(id);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	/// <inheritdoc />
+	public Task PublishAsync(long id, SettingNodePublishDto data, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodePublishUseCase>();
+		var input = new SettingNodePublishInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 }

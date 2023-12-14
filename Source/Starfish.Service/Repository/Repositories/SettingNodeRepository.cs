@@ -38,6 +38,17 @@ public class SettingNodeRepository : BaseRepository<DataContext, SettingNode, lo
 	}
 
 	/// <inheritdoc />
+	public async Task<List<SettingNode>> GetNodesAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	{
+		var specification = SettingNodeSpecification.AppIdEquals(appId) & SettingNodeSpecification.EnvironmentEquals(environment);
+		var predicate = specification.Satisfy();
+		var set = Context.Set<SettingNode>()
+		                 .Include(t => t.Children);
+		return await set.Where(predicate)
+		                .ToListAsync(cancellationToken);
+	}
+
+	/// <inheritdoc />
 	public Task<List<SettingNode>> GetNodesAsync(long appId, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default)
 	{
 		var specification = SettingNodeSpecification.AppIdEquals(appId) & SettingNodeSpecification.EnvironmentEquals(environment) & SettingNodeSpecification.TypeIn(types);

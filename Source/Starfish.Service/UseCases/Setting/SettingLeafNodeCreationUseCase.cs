@@ -14,8 +14,8 @@ public interface ISettingLeafNodeCreateUseCase : IUseCase<SettingLeafNodeCreatio
 /// <summary>
 /// 应用配置子节点创建输出
 /// </summary>
-/// <param name="Id"></param>
-public record SettingLeafNodeCreationOutput(long Id) : IUseCaseOutput;
+/// <param name="Result"></param>
+public record SettingLeafNodeCreationOutput(long Result) : IUseCaseOutput;
 
 /// <summary>
 /// 应用配置子节点创建输入

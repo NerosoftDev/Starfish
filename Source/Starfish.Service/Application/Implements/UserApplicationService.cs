@@ -14,7 +14,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	private UserRepository UserRepository => _userRepository ??= LazyServiceProvider.GetService<UserRepository>();
 
 	/// <inheritdoc />
-	public Task<int> CreateAsync(UserCreateDto model, CancellationToken cancellationToken = default)
+	public Task<int> CreateAsync(UserCreateDto data, CancellationToken cancellationToken = default)
 	{
 		var command = new UserCreateCommand();
 		return Bus.SendAsync<UserCreateCommand, int>(command, cancellationToken)
@@ -22,7 +22,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(int id, UserUpdateDto model, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(int id, UserUpdateDto data, CancellationToken cancellationToken = default)
 	{
 		var command = new UserUpdateCommand();
 		return Bus.SendAsync(command, cancellationToken);

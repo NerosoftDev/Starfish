@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Nerosoft.Euonia.Application;
+﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
@@ -12,19 +11,19 @@ public interface IUserApplicationService : IApplicationService
 	/// <summary>
 	/// 新增用户
 	/// </summary>
-	/// <param name="model"></param>
+	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<int> CreateAsync(UserCreateDto model, CancellationToken cancellationToken = default);
+	Task<int> CreateAsync(UserCreateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 编辑用户
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="model"></param>
+	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(int id, UserUpdateDto model, CancellationToken cancellationToken = default);
+	Task UpdateAsync(int id, UserUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询符合条件的用户列表

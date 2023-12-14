@@ -66,12 +66,12 @@ public class SettingNodeController : ControllerBase
 	/// <summary>
 	/// 新增根节点
 	/// </summary>
-	/// <param name="request"></param>
+	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<IActionResult> CreateRootAsync([FromBody] SettingNodeCreateDto request)
+	public async Task<IActionResult> CreateRootAsync([FromBody] SettingNodeCreateDto data)
 	{
-		var result = await _service.CreateRootNodeAsync(request.AppId, request.Environment, HttpContext.RequestAborted);
+		var result = await _service.CreateRootNodeAsync(data.AppId, data.Environment, HttpContext.RequestAborted);
 		Response.Headers.Append("Entry", $"{result}");
 		return Ok();
 	}
@@ -81,12 +81,12 @@ public class SettingNodeController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <param name="type"></param>
-	/// <param name="request"></param>
+	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("{id:long}/{type}")]
-	public async Task<IActionResult> CreateLeafAsync(long id, SettingNodeType type, [FromBody] SettingNodeCreateDto request)
+	public async Task<IActionResult> CreateLeafAsync(long id, SettingNodeType type, [FromBody] SettingNodeCreateDto data)
 	{
-		var result = await _service.CreateLeafNodeAsync(id, type, request, HttpContext.RequestAborted);
+		var result = await _service.CreateLeafNodeAsync(id, type, data, HttpContext.RequestAborted);
 		Response.Headers.Append("Entry", $"{result}");
 		return Ok();
 	}
@@ -95,12 +95,12 @@ public class SettingNodeController : ControllerBase
 	/// 更新配置节点
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="request"></param>
+	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id:long}")]
-	public async Task<IActionResult> UpdateAsync(long id, [FromBody] SettingNodeUpdateDto request)
+	public async Task<IActionResult> UpdateAsync(long id, [FromBody] SettingNodeUpdateDto data)
 	{
-		await _service.UpdateAsync(id, request, HttpContext.RequestAborted);
+		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
 	}
 
@@ -108,12 +108,12 @@ public class SettingNodeController : ControllerBase
 	/// 重命名配置节点
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="request"></param>
+	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id:long}/rename")]
-	public async Task<IActionResult> RenameAsync(long id, [FromBody] SettingNodeRenameDto request)
+	public async Task<IActionResult> RenameAsync(long id, [FromBody] SettingNodeRenameDto data)
 	{
-		await _service.RenameAsync(id, request.Name, HttpContext.RequestAborted);
+		await _service.RenameAsync(id, data.Name, HttpContext.RequestAborted);
 		return Ok();
 	}
 
@@ -126,6 +126,19 @@ public class SettingNodeController : ControllerBase
 	public async Task<IActionResult> DeleteAsync(long id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
+	/// 发布配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPost("{id:long}/publish")]
+	public async Task<IActionResult> PublishAsync(long id, [FromBody] SettingNodePublishDto data)
+	{
+		await _service.PublishAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
 	}
 }

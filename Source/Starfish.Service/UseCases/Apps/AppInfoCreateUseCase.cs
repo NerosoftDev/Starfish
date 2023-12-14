@@ -19,8 +19,8 @@ public record AppInfoCreateOutput(long Id) : IUseCaseOutput;
 /// <summary>
 /// 创建应用信息用例输入
 /// </summary>
-/// <param name="Model"></param>
-public record AppInfoCreateInput(AppInfoCreateDto Model) : IUseCaseInput;
+/// <param name="Data"></param>
+public record AppInfoCreateInput(AppInfoCreateDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 创建应用信息用例
@@ -41,7 +41,7 @@ public class AppInfoCreateUseCase : IAppInfoCreateUseCase
 	/// <inheritdoc />
 	public Task<AppInfoCreateOutput> ExecuteAsync(AppInfoCreateInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new AppInfoCreateCommand(input.Model);
+		var command = new AppInfoCreateCommand(input.Data);
 		return _bus.SendAsync<AppInfoCreateCommand, long>(command, cancellationToken)
 		           .ContinueWith(task =>
 		           {

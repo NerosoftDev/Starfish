@@ -16,7 +16,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 		var input = new AppInfoSearchInput(criteria, page, size);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoSearchUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(task => task.Result.Items, cancellationToken);
+		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -47,18 +47,18 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task<long> CreateAsync(AppInfoCreateDto model, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(AppInfoCreateDto data, CancellationToken cancellationToken = default)
 	{
-		var input = new AppInfoCreateInput(model);
+		var input = new AppInfoCreateInput(data);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoCreateUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(task => task.Result.Id, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(long id, AppInfoUpdateDto model, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(long id, AppInfoUpdateDto data, CancellationToken cancellationToken = default)
 	{
-		var input = new AppInfoUpdateInput(id, model);
+		var input = new AppInfoUpdateInput(id, data);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoUpdateUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}

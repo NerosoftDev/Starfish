@@ -32,8 +32,8 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.HasIndex(t => t.Code);
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 
 		modelBuilder.Entity<SettingNode>(entity =>
@@ -42,20 +42,48 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.ParentId);
 			entity.HasIndex(t => t.AppId);
+			entity.HasIndex(t => t.AppCode);
+			entity.HasIndex(t => t.Environment);
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasMany(t => t.Children)
-				  .WithOne()
-				  .HasForeignKey(t => t.ParentId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .WithOne()
+			      .HasForeignKey(t => t.ParentId)
+			      .OnDelete(DeleteBehavior.Cascade);
 
 			entity.HasOne(t => t.Parent)
-				  .WithMany()
-				  .HasForeignKey(t => t.ParentId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .WithMany()
+			      .HasForeignKey(t => t.ParentId)
+			      .OnDelete(DeleteBehavior.Cascade);
+		});
+
+		modelBuilder.Entity<SettingRevision>(entity =>
+		{
+			entity.ToTable("setting_revision");
+			entity.HasKey(t => t.Id);
+			entity.HasIndex(t => t.AppId);
+
+			entity.Property(t => t.Id)
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
+		});
+
+		modelBuilder.Entity<SettingArchive>(entity =>
+		{
+			entity.ToTable("setting_archive");
+			entity.HasKey(t => t.Id);
+			entity.HasIndex(t => t.AppId)
+			      .HasDatabaseName("IDX_SETTING_ARCHIVE_APP_ID");
+			entity.HasIndex([nameof(SettingArchive.AppId), nameof(SettingArchive.Environment)], "IDX_SETTING_ARCHIVE_UNIQUE")
+			      .IsUnique();
+			entity.HasIndex([nameof(SettingArchive.AppCode), nameof(SettingArchive.Environment)], "IDX_SETTING_ARCHIVE_COMPOSE");
+
+			entity.Property(t => t.Id)
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 	}
 }

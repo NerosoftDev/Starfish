@@ -49,19 +49,19 @@ public interface ISettingApplicationService : IApplicationService
 	/// </summary>
 	/// <param name="parentId"></param>
 	/// <param name="type"></param>
-	/// <param name="model"></param>
+	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> CreateLeafNodeAsync(long parentId, SettingNodeType type, SettingNodeCreateDto model, CancellationToken cancellationToken = default);
+	Task<long> CreateLeafNodeAsync(long parentId, SettingNodeType type, SettingNodeCreateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新配置节点
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="model"></param>
+	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long id, SettingNodeUpdateDto model, CancellationToken cancellationToken = default);
+	Task UpdateAsync(long id, SettingNodeUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 重命名节点
@@ -79,4 +79,13 @@ public interface ISettingApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task DeleteAsync(long id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 发布配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task PublishAsync(long id, SettingNodePublishDto data, CancellationToken cancellationToken = default);
 }
