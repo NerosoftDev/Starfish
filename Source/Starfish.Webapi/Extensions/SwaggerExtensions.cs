@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 
 namespace Nerosoft.Starfish.Webapi;
 
@@ -8,31 +7,6 @@ namespace Nerosoft.Starfish.Webapi;
 /// </summary>
 internal static class SwaggerExtensions
 {
-	private static readonly string _name;
-	private static readonly string _description;
-
-	static SwaggerExtensions()
-
-	{
-		var assembly = Assembly.GetEntryAssembly();
-
-		if (assembly == null)
-		{
-			throw new NullReferenceException();
-		}
-
-		if (assembly.HasAttribute(out AssemblyTitleAttribute titleAttribute) && !string.IsNullOrEmpty(titleAttribute.Title))
-		{
-			_name = titleAttribute.Title;
-		}
-		else
-		{
-			_name = assembly.GetName().Name!.Split(".")[1];
-		}
-
-		_description = assembly.HasAttribute(out AssemblyDescriptionAttribute descriptionAttribute) ? descriptionAttribute.Description : $"Starfish {_name} Service";
-	}
-
 	/// <summary>
 	/// Adds the Swagger services.
 	/// </summary>
@@ -63,12 +37,12 @@ internal static class SwaggerExtensions
 					        new List<string>()
 				        }
 			        });
-
-			        gen.SwaggerDoc(_name, new OpenApiInfo
+			        
+			        gen.SwaggerDoc("v1", new OpenApiInfo
 			        {
-				        Title = _name,
+				        Title = "Starfish Webapi",
 				        Version = "v1",
-				        Description = _description,
+				        Description = "Starfish Webapi",
 				        License = new OpenApiLicense
 				        {
 					        Name = "© 2023 Nerosoft. All Rights Reserved."
@@ -95,13 +69,6 @@ internal static class SwaggerExtensions
 		{
 			//option.SerializeAsV2 = true;
 		});
-		app.UseSwaggerUI(option =>
-		{
-			option.SwaggerEndpoint($"/swagger/{_name}/swagger.json", _name);
-			//foreach (var (key, _) in ApiGroups)
-			//{
-			//    option.SwaggerEndpoint($"/swagger/{key}/swagger.json", key);
-			//}
-		});
+		app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Starfish Webapi v1"));
 	}
 }

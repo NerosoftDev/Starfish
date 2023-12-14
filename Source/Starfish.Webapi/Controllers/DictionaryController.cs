@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[AllowAnonymous]
 public class DictionaryController : ControllerBase
 {
 	private readonly IDictionaryApplicationService _service;
@@ -42,6 +42,28 @@ public class DictionaryController : ControllerBase
 	public async Task<IActionResult> GetEnvironmentItemsAsync()
 	{
 		var result = await _service.GetEnvironmentItemsAsync();
+		return Ok(result);
+	}
+
+	/// <summary>
+	/// 获取支持的数据库类型列表
+	/// </summary>
+	/// <returns></returns>
+	[HttpGet("database-type")]
+	public async Task<IActionResult> GetDatabaseTypeItemsAsync()
+	{
+		var result = await _service.GetDatabaseTypeItemsAsync();
+		return Ok(result);
+	}
+
+	/// <summary>
+	/// 获取支持的配置节点类型列表
+	/// </summary>
+	/// <returns></returns>
+	[HttpGet("setting-node-type")]
+	public async Task<IActionResult> GetSettingNodeTypeItemsAsync()
+	{
+		var result = await _service.GetSettingNodeTypeItemsAsync();
 		return Ok(result);
 	}
 }
