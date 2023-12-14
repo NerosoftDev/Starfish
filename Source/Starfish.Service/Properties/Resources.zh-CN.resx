@@ -163,13 +163,43 @@
   <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
     <value>不支持的服务总线提供程序'{0}'。</value>
   </data>
-  <data name="IDS_ENUM_APPSTATUS_DISABLED" xml:space="preserve">
-    <value>禁用</value>
-  </data>
-  <data name="IDS_ENUM_APPSTATUS_ENABLED" xml:space="preserve">
-    <value>启用</value>
-  </data>
   <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
     <value>应用唯一编码不能为空。</value>
+  </data>
+  <data name="IDS_ENUM_APPINFO_STATUS_DISABLED" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
+    <value>启用</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_STATUS_DISABLED" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_STATUS_PENDING" xml:space="preserve">
+    <value>待发布</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_STATUS_PUBLISHED" xml:space="preserve">
+    <value>已发布</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_ARRAY" xml:space="preserve">
+    <value>集合</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_BOOLEAN" xml:space="preserve">
+    <value>布尔</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_NUMBER" xml:space="preserve">
+    <value>数字</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_OBJECT" xml:space="preserve">
+    <value>对象</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_REFERER" xml:space="preserve">
+    <value>引用</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_ROOT" xml:space="preserve">
+    <value>根节点</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_NODE_TYPE_STRING" xml:space="preserve">
+    <value>字符串</value>
   </data>
 </root>
