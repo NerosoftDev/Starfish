@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Application;
+using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
@@ -40,32 +41,105 @@ public class DictionaryApplicationService : BaseApplicationService, IDictionaryA
 			new()
 			{
 				Name = "DEV",
-				Description = "Development"
+				Description = Resources.IDS_DICTIONARY_ENVIRONMENT_DEV
 			},
 			new()
 			{
 				Name = "SIT",
-				Description = "System Integration Testing"
+				Description = Resources.IDS_DICTIONARY_ENVIRONMENT_SIT
 			},
 			new()
 			{
 				Name = "UAT",
-				Description = "User Acceptance Testing"
+				Description = Resources.IDS_DICTIONARY_ENVIRONMENT_UAT
 			},
 			new()
 			{
 				Name = "PET",
-				Description = "Performance Evaluation Testing"
+				Description = Resources.IDS_DICTIONARY_ENVIRONMENT_PET
 			},
 			new()
 			{
 				Name = "SIM",
-				Description = "Simulation Testing"
+				Description = Resources.IDS_DICTIONARY_ENVIRONMENT_SIM
 			},
 			new()
 			{
 				Name = "PRD",
-				Description = "Production"
+				Description = Resources.IDS_DICTIONARY_ENVIRONMENT_PRD
+			}
+		};
+		return Task.FromResult(items);
+	}
+
+	/// <inheritdoc />
+	public Task<List<DictionaryItemDto>> GetDatabaseTypeItemsAsync(CancellationToken cancellationToken = default)
+	{
+		var items = new List<DictionaryItemDto>
+		{
+			new()
+			{
+				Name = "mssql/sqlserver",
+				Description = "Microsoft SQL Server"
+			},
+			new()
+			{
+				Name = "mysql",
+				Description = "MySQL"
+			},
+			new()
+			{
+				Name = "postgresql/postgre/pg/pgsql/postgres",
+				Description = "PostgreSQL"
+			},
+			new()
+			{
+				Name = "sqlite",
+				Description = "SQLite"
+			},
+			new()
+			{
+				Name = "mongodb/mongo",
+				Description = "MongoDb"
+			}
+		};
+		return Task.FromResult(items);
+	}
+
+	/// <inheritdoc />
+	public Task<List<DictionaryItemDto>> GetSettingNodeTypeItemsAsync(CancellationToken cancellationToken = default)
+	{
+		var items = new List<DictionaryItemDto>
+		{
+			new()
+			{
+				Name = nameof(SettingNodeType.Root),
+				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_ROOT
+			},
+			new()
+			{
+				Name = nameof(SettingNodeType.Array),
+				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_ARRAY
+			},
+			new()
+			{
+				Name = nameof(SettingNodeType.Object),
+				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_OBJECT
+			},
+			new()
+			{
+				Name = nameof(SettingNodeType.String),
+				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_STRING
+			},
+			new()
+			{
+				Name = nameof(SettingNodeType.Number),
+				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_NUMBER
+			},
+			new()
+			{
+				Name = nameof(SettingNodeType.Boolean),
+				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_BOOLEAN
 			}
 		};
 		return Task.FromResult(items);

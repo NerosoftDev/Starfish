@@ -21,4 +21,18 @@ public interface IDictionaryApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<List<DictionaryItemDto>> GetEnvironmentItemsAsync(CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 获取可用的数据库类型列表
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<List<DictionaryItemDto>> GetDatabaseTypeItemsAsync(CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 获取可用的配置节点类型列表
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<List<DictionaryItemDto>> GetSettingNodeTypeItemsAsync(CancellationToken cancellationToken = default);
 }
