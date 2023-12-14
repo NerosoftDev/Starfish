@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// 认证授权Controller
 /// </summary>
 [Route("api/[controller]")]
-[ApiController]
+[ApiController, ApiExplorerSettings(GroupName = "identity")]
 [AllowAnonymous]
 public class IdentityController : ControllerBase
 {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nerosoft.Starfish.Application;
 using Nerosoft.Starfish.Transit;
@@ -10,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// 日志管理接口
 /// </summary>
 [Route("api/[controller]")]
-[ApiController]
+[ApiController, ApiExplorerSettings(GroupName = "system")]
 [Authorize]
 public class LogsController : ControllerBase
 {

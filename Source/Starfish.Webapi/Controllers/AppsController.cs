@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// 应用管理接口
 /// </summary>
 [Route("api/[controller]")]
-[ApiController]
+[ApiController, ApiExplorerSettings(GroupName = "setting")]
 [Authorize]
 public class AppsController : ControllerBase
 {

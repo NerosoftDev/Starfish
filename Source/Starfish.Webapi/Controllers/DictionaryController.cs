@@ -8,7 +8,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// 字典接口
 /// </summary>
 [Route("api/[controller]")]
-[ApiController]
+[ApiController, ApiExplorerSettings(GroupName = "system")]
 [AllowAnonymous]
 public class DictionaryController : ControllerBase
 {

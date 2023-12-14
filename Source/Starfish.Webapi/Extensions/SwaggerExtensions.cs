@@ -7,6 +7,13 @@ namespace Nerosoft.Starfish.Webapi;
 /// </summary>
 internal static class SwaggerExtensions
 {
+	private static readonly Dictionary<string, string> _apiGroups = new()
+	{
+		["setting"] = "setting",
+		["identity"] = "identity",
+		["system"] = "system"
+	};
+
 	/// <summary>
 	/// Adds the Swagger services.
 	/// </summary>
@@ -37,19 +44,33 @@ internal static class SwaggerExtensions
 					        new List<string>()
 				        }
 			        });
-			        
-			        gen.SwaggerDoc("v1", new OpenApiInfo
-			        {
-				        Title = "Starfish Webapi",
-				        Version = "v1",
-				        Description = "Starfish Webapi",
-				        License = new OpenApiLicense
-				        {
-					        Name = "© 2023 Nerosoft. All Rights Reserved."
-				        }
-			        });
 
-			        foreach (var file in Directory.GetFiles(AppContext.BaseDirectory, "*.Summary.xml"))
+			        foreach (var (key, value) in _apiGroups)
+			        {
+				        gen.SwaggerDoc(key, new OpenApiInfo
+				        {
+					        Title = key,
+					        Version = "v1",
+					        Description = value,
+					        License = new OpenApiLicense
+					        {
+						        Name = "© 2023 Nerosoft. All Rights Reserved."
+					        }
+				        });
+			        }
+			        
+			        // gen.SwaggerDoc("v1", new OpenApiInfo
+			        // {
+				       //  Title = "Starfish Webapi",
+				       //  Version = "v1",
+				       //  Description = "Starfish Webapi",
+				       //  License = new OpenApiLicense
+				       //  {
+					      //   Name = "© 2023 Nerosoft. All Rights Reserved."
+				       //  }
+			        // });
+
+			        foreach (var file in Directory.GetFiles(AppContext.BaseDirectory, "*.xml"))
 			        {
 				        gen.IncludeXmlComments(file);
 			        }
@@ -69,6 +90,13 @@ internal static class SwaggerExtensions
 		{
 			//option.SerializeAsV2 = true;
 		});
-		app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Starfish Webapi v1"));
+		app.UseSwaggerUI(option =>
+		{
+			foreach (var (key, name) in _apiGroups)
+			{
+				option.SwaggerEndpoint($"/swagger/{key}/swagger.json", name);
+			}
+		});
+		app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Starfish Webapi"));
 	}
 }

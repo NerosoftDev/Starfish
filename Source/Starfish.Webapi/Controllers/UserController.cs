@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// 用户管理Controller
 /// </summary>
 [Route("api/[controller]")]
-[ApiController]
+[ApiController, ApiExplorerSettings(GroupName = "identity")]
 public class UserController : ControllerBase
 {
 }
