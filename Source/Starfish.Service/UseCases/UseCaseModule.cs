@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Nerosoft.Euonia.Modularity;
+﻿using Nerosoft.Euonia.Modularity;
 
 namespace Nerosoft.Starfish.UseCases;
 
@@ -11,19 +10,20 @@ public class UseCaseModule : ModuleContextBase
 	/// <inheritdoc />
 	public override void ConfigureServices(ServiceConfigurationContext context)
 	{
+		var types = typeof(UseCaseModule).Assembly.GetTypes()
+		                                 .Where(t => t.IsClass && t.IsPublic && t.Name.EndsWith("UseCase"));
+
+		foreach (var type in types)
+		{
+			var interfaces = type.GetInterfaces()
+			                     .Where(i => i.Name.EndsWith("UseCase"));
+
+			foreach (var @interface in interfaces)
+			{
+				context.Services.AddScoped(@interface, type);
+			}
+		}
+
 		context.Services.AddSingleton<IdentityCommonComponent>();
-		context.Services
-		       .AddScoped<IGrantWithPasswordUseCase, GrantWithPasswordUseCase>()
-		       .AddScoped<IGrantWithRefreshTokenUseCase, GrantWithRefreshTokenUseCase>()
-		       .AddScoped<ILogsCountUseCase, LogsCountUseCase>()
-		       .AddScoped<ILogsSearchUseCase, LogsSearchUseCase>()
-		       .AddScoped<IAppInfoSearchUseCase, AppInfoSearchUseCase>()
-		       .AddScoped<IAppInfoCountUseCase, AppInfoCountUseCase>()
-		       .AddScoped<IAppInfoDetailUseCase, AppInfoDetailUseCase>()
-		       .AddScoped<IAppInfoCreateUseCase, AppInfoCreateUseCase>()
-		       .AddScoped<IAppInfoUpdateUseCase, AppInfoUpdateUseCase>()
-		       .AddScoped<IAppInfoDeleteUseCase, AppInfoDeleteUseCase>()
-		       .AddScoped<IChangeAppInfoStatusUseCase, ChangeAppInfoStatusUseCase>()
-		       .AddScoped<IAppInfoAuthorizeUseCase, AppInfoAuthorizeUseCase>();
 	}
 }
