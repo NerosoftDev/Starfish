@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Service;
@@ -38,36 +39,46 @@ public class SettingNodeRepository : BaseRepository<DataContext, SettingNode, lo
 	}
 
 	/// <inheritdoc />
-	public async Task<List<SettingNode>> GetNodesAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task<List<SettingNode>> GetNodesAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var specification = SettingNodeSpecification.AppIdEquals(appId) & SettingNodeSpecification.EnvironmentEquals(environment);
 		var predicate = specification.Satisfy();
 		var set = Context.Set<SettingNode>()
 		                 .Include(t => t.Children);
-		return await set.Where(predicate)
-		                .ToListAsync(cancellationToken);
+		return set.Where(predicate)
+		          .ToListAsync(cancellationToken);
 	}
 
 	/// <inheritdoc />
 	public Task<List<SettingNode>> GetNodesAsync(long appId, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default)
 	{
-		var specification = SettingNodeSpecification.AppIdEquals(appId) & SettingNodeSpecification.EnvironmentEquals(environment) & SettingNodeSpecification.TypeIn(types);
+		ISpecification<SettingNode>[] specs = 
+		{
+			SettingNodeSpecification.AppIdEquals(appId),
+			SettingNodeSpecification.EnvironmentEquals(environment),
+			SettingNodeSpecification.TypeIn(types)
+		};
+		var specification = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specs);
 		var predicate = specification.Satisfy();
 		return base.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
 	}
-
+	
 	/// <inheritdoc />
-	public Task<List<SettingNode>> GetNodesAsync(string appCode, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default)
+	public Task<bool> CheckChildNodeNameAsync(long id, long parentId, string name, CancellationToken cancellationToken = default)
 	{
-		var specification = SettingNodeSpecification.AppCodeEquals(appCode) & SettingNodeSpecification.EnvironmentEquals(environment) & SettingNodeSpecification.TypeIn(types);
+		var specification = SettingNodeSpecification.ParentIdEquals(parentId)
+		                    & SettingNodeSpecification.NameEquals(name)
+		                    & SettingNodeSpecification.IdNotEquals(id);
 		var predicate = specification.Satisfy();
-		return base.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
+		var set = Context.Set<SettingNode>()
+		                 .AsNoTracking();
+		return set.AnyAsync(predicate, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public override Task<SettingNode> GetAsync(long key, CancellationToken cancellationToken = default)
+	public override Task<SettingNode> GetAsync(long id, CancellationToken cancellationToken = default)
 	{
-		var specification = SettingNodeSpecification.IdEquals(key);
+		var specification = SettingNodeSpecification.IdEquals(id);
 		var predicate = specification.Satisfy();
 		var set = Context.Set<SettingNode>()
 		                 .Include(t => t.Children);

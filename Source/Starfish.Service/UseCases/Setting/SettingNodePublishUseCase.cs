@@ -33,14 +33,14 @@ public class SettingNodePublishUseCase : ISettingNodePublishUseCase
 	}
 
 	/// <inheritdoc />
-	public async Task ExecuteAsync(SettingNodePublishInput input, CancellationToken cancellationToken = new CancellationToken())
+	public async Task ExecuteAsync(SettingNodePublishInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new SettingNodePublishCommand(input.Id);
 		await _bus.SendAsync(command, cancellationToken);
-		var @event = new SettingPublishedEvent(command.Item1)
+		var @event = new SettingPublishedEvent(input.Id)
 		{
 			Version = input.Data.Version,
-			Description = input.Data.Description
+			Comment = input.Data.Comment
 		};
 		await _bus.PublishAsync(@event, cancellationToken);
 	}

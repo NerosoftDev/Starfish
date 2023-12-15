@@ -122,6 +122,8 @@ public class RepositoryModule : ModuleContextBase
 		       .AddScoped<ITokenRepository, TokenRepository>()
 		       .AddScoped<IOperateLogRepository, OperateLogRepository>()
 		       .AddScoped<IAppInfoRepository, AppInfoRepository>()
-		       .AddScoped<ISettingNodeRepository, SettingNodeRepository>();
+		       .AddScoped<ISettingNodeRepository, SettingNodeRepository>()
+		       .AddScoped<ISettingRevisionRepository, SettingRevisionRepository>()
+		       .AddScoped<ISettingArchiveRepository, SettingArchiveRepository>();
 	}
 }

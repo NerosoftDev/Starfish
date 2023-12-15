@@ -19,6 +19,26 @@ public static class SettingNodeSpecification
 	}
 
 	/// <summary>
+	/// Id在<paramref name="ids"/>中
+	/// </summary>
+	/// <param name="ids"></param>
+	/// <returns></returns>
+	public static Specification<SettingNode> IdIn(IEnumerable<long> ids)
+	{
+		return new DirectSpecification<SettingNode>(x => ids.Contains(x.Id));
+	}
+
+	/// <summary>
+	/// Id不等于<paramref name="id"/>
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	public static Specification<SettingNode> IdNotEquals(long id)
+	{
+		return new DirectSpecification<SettingNode>(x => x.Id != id);
+	}
+
+	/// <summary>
 	/// 父节点Id等于<paramref name="parentId"/>
 	/// </summary>
 	/// <param name="parentId">父节点Id</param>
@@ -96,5 +116,26 @@ public static class SettingNodeSpecification
 	public static Specification<SettingNode> KeyStartsWith(string key)
 	{
 		return new DirectSpecification<SettingNode>(x => x.Key.StartsWith(key));
+	}
+
+	/// <summary>
+	/// 名称等于<paramref name="name"/>
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	public static Specification<SettingNode> NameEquals(string name)
+	{
+		name = name.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<SettingNode>(x => x.Name.ToLower() == name);
+	}
+
+	/// <summary>
+	/// 状态<paramref name="status"/>
+	/// </summary>
+	/// <param name="status"></param>
+	/// <returns></returns>
+	public static Specification<SettingNode> StatusEquals(SettingNodeStatus status)
+	{
+		return new DirectSpecification<SettingNode>(x => x.Status == status);
 	}
 }

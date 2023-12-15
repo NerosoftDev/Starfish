@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Repository;
+﻿using System.Linq.Expressions;
+using Nerosoft.Euonia.Repository;
 
 namespace Nerosoft.Starfish.Domain;
 
@@ -56,12 +57,22 @@ public interface ISettingNodeRepository : IRepository<SettingNode, long>
 	Task<List<SettingNode>> GetNodesAsync(long appId, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	/// 根据应用唯一编码和环境查询所有节点
+	/// 查询同级节点名称是否存在
 	/// </summary>
-	/// <param name="appCode"></param>
-	/// <param name="environment"></param>
-	/// <param name="types"></param>
+	/// <param name="id"></param>
+	/// <param name="parentId"></param>
+	/// <param name="name"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<SettingNode>> GetNodesAsync(string appCode, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default);
+	Task<bool> CheckChildNodeNameAsync(long id, long parentId, string name, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 查询符合条件的节点列表
+	/// </summary>
+	/// <param name="predicate"></param>
+	/// <param name="tracking"></param>
+	/// <param name="properties"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<List<SettingNode>> FindAsync(Expression<Func<SettingNode, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default);
 }

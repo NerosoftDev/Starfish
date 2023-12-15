@@ -7,6 +7,13 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class SettingRevisionEventSubscriber : IHandler<SettingPublishedEvent>
 {
+	private readonly IBus _bus;
+
+	public SettingRevisionEventSubscriber(IBus bus)
+	{
+		_bus = bus;
+	}
+
 	/// <summary>
 	/// 处理配置发布事件
 	/// </summary>
@@ -15,8 +22,14 @@ public class SettingRevisionEventSubscriber : IHandler<SettingPublishedEvent>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	/// <exception cref="NotImplementedException"></exception>
-	public Task HandleAsync(SettingPublishedEvent message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(SettingPublishedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		throw new NotImplementedException();
+		var command = new SettingRevisionCreateCommand
+		{
+			SettingId = message.Id,
+			Version = message.Version,
+			Comment = message.Comment
+		};
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 }

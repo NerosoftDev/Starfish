@@ -9,14 +9,12 @@ namespace Nerosoft.Starfish.Application;
 public sealed class LoggingEventSubscriber
 {
 	private readonly IBus _bus;
-
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
-	public LoggingEventSubscriber(IBus bus)
+	private readonly IServiceProvider _provider;
+	
+	public LoggingEventSubscriber(IBus bus, IServiceProvider provider)
 	{
 		_bus = bus;
+		_provider = provider;
 	}
 
 	/// <summary>
@@ -205,5 +203,22 @@ public sealed class LoggingEventSubscriber
 			UserName = context.User?.Identity?.Name
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
+	}
+
+	[Subscribe]
+	public async Task HandleAsync(SettingPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		var repository = _provider.GetService<ISettingNodeRepository>();
+		var node = await repository.GetAsync(@event.Id, false, [], cancellationToken);
+		var command = new OperateLogCreateCommand
+		{
+			Module = "setting",
+			Type = "publish",
+			Description = $"发布配置({@event.Version})，AppId: {node.AppId}, AppCode: {node.AppCode}, Environment: {node.Environment}",
+			OperateTime = DateTime.Now,
+			RequestTraceId = context.RequestTraceId,
+			UserName = context.User?.Identity?.Name
+		};
+		await _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 }

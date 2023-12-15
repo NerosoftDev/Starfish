@@ -10,12 +10,12 @@ public class SettingNode : Aggregate<long>,
                            IHasUpdateTime
 {
 	private readonly SettingNodeType[] _sealedTypes =
-	{
+	[
 		SettingNodeType.String,
 		SettingNodeType.Number,
 		SettingNodeType.Boolean,
 		SettingNodeType.Referer
-	};
+	];
 
 	private SettingNode()
 	{
@@ -131,12 +131,17 @@ public class SettingNode : Aggregate<long>,
 			AppCode = AppCode,
 			Environment = Environment,
 			ParentId = Id,
-			Name = Type == SettingNodeType.Array ? null : name,
 			Type = SettingNodeType.Array,
 			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
+
+		if (Type != SettingNodeType.Array)
+		{
+			CheckName(name);
+			entity.Name = name;
+		}
 
 		Children.Add(entity);
 
@@ -155,12 +160,17 @@ public class SettingNode : Aggregate<long>,
 			AppCode = AppCode,
 			Environment = Environment,
 			ParentId = Id,
-			Name = Type == SettingNodeType.Array ? null : name,
 			Type = SettingNodeType.Object,
 			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
+
+		if (Type != SettingNodeType.Array)
+		{
+			CheckName(name);
+			entity.Name = name;
+		}
 
 		Children.Add(entity);
 
@@ -179,13 +189,18 @@ public class SettingNode : Aggregate<long>,
 			AppCode = AppCode,
 			Environment = Environment,
 			ParentId = Id,
-			Name = Type == SettingNodeType.Array ? null : name,
 			Value = value,
 			Type = SettingNodeType.String,
 			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
+
+		if (Type != SettingNodeType.Array)
+		{
+			CheckName(name);
+			entity.Name = name;
+		}
 
 		Children.Add(entity);
 
@@ -200,7 +215,7 @@ public class SettingNode : Aggregate<long>,
 
 		if (!bool.TryParse(value, out var result))
 		{
-			throw new BadRequestException("配置值不是有效的布尔值");
+			throw new BadRequestException(Resources.IDS_ERROR_SETTING_NODE_VALUE_NOT_BOOLEAN);
 		}
 
 		entity = new SettingNode
@@ -209,13 +224,18 @@ public class SettingNode : Aggregate<long>,
 			AppCode = AppCode,
 			Environment = Environment,
 			ParentId = Id,
-			Name = Type == SettingNodeType.Array ? null : name,
 			Value = result.ToString(),
 			Type = SettingNodeType.Boolean,
 			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
+
+		if (Type != SettingNodeType.Array)
+		{
+			CheckName(name);
+			entity.Name = name;
+		}
 
 		Children.Add(entity);
 
@@ -230,7 +250,7 @@ public class SettingNode : Aggregate<long>,
 
 		if (!value.IsDecimal())
 		{
-			throw new BadRequestException("配置值不是有效的数字");
+			throw new BadRequestException(Resources.IDS_ERROR_SETTING_NODE_VALUE_NOT_NUMBER);
 		}
 
 		entity = new SettingNode
@@ -239,13 +259,18 @@ public class SettingNode : Aggregate<long>,
 			AppCode = AppCode,
 			Environment = Environment,
 			ParentId = Id,
-			Name = Type == SettingNodeType.Array ? null : name,
 			Value = value,
 			Type = SettingNodeType.Number,
 			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
+
+		if (Type != SettingNodeType.Array)
+		{
+			CheckName(name);
+			entity.Name = name;
+		}
 
 		Children.Add(entity);
 
@@ -256,6 +281,37 @@ public class SettingNode : Aggregate<long>,
 	{
 		Status = status;
 		RaiseEvent(new SettingNodeStatusChangedEvent());
+	}
+
+	internal void SetName(string newName)
+	{
+		var oldName = Name;
+		Name = newName;
+		RaiseEvent(new SettingNodeRenamedEvent(Id, oldName, newName));
+	}
+
+	internal void SetKey(string key)
+	{
+		if (string.Equals(Key, key))
+		{
+			return;
+		}
+
+		Key = key;
+		Status = SettingNodeStatus.Pending;
+	}
+
+	private void CheckName(string name)
+	{
+		if (string.IsNullOrWhiteSpace(name))
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_SETTING_NODE_NAME_REQUIRED);
+		}
+
+		if (Children.Any(t => string.Equals(t.Name, name, StringComparison.OrdinalIgnoreCase)))
+		{
+			throw new ConflictException(Resources.IDS_ERROR_SETTING_NODE_NAME_EXISTS);
+		}
 	}
 
 	private void CheckSealed()

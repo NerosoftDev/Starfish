@@ -8,6 +8,26 @@ namespace Nerosoft.Starfish.Domain;
 public class SettingNodeRenamedEvent : DomainEvent
 {
 	/// <summary>
+	/// 
+	/// </summary>
+	public SettingNodeRenamedEvent()
+	{
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="oldName"></param>
+	/// <param name="newName"></param>
+	public SettingNodeRenamedEvent(long id, string oldName, string newName)
+	{
+		Id = id;
+		OldName = oldName;
+		NewName = newName;
+	}
+
+	/// <summary>
 	/// 节点Id
 	/// </summary>
 	public long Id { get; set; }

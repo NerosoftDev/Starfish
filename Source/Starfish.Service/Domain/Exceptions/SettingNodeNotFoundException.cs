@@ -10,7 +10,7 @@ public class SettingNodeNotFoundException : NotFoundException
 	/// </summary>
 	/// <param name="id"></param>
 	public SettingNodeNotFoundException(long id)
-		: base($"Setting node with id {id} not found.")
+		: base(string.Format(Resources.IDS_ERROR_SETTING_NODE_NOT_EXISTS, id))
 	{
 	}
 }

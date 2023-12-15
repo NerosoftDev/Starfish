@@ -13,5 +13,5 @@ public class SettingNodePublishDto
 	/// <summary>
 	/// 描述
 	/// </summary>
-	public string Description { get; set; }
+	public string Comment { get; set; }
 }

@@ -31,7 +31,7 @@ public class SettingRevision : Entity<long>,
 	/// <summary>
 	/// 描述信息
 	/// </summary>
-	public string Description { get; set; }
+	public string Comment { get; set; }
 
 	/// <summary>
 	/// 版本

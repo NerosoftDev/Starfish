@@ -79,7 +79,7 @@ public class SettingNodeController : ControllerBase
 	/// <summary>
 	/// 新增子节点
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">父节点Id</param>
 	/// <param name="type"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
@@ -94,7 +94,7 @@ public class SettingNodeController : ControllerBase
 	/// <summary>
 	/// 更新配置节点
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">节点Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id:long}")]
@@ -107,7 +107,7 @@ public class SettingNodeController : ControllerBase
 	/// <summary>
 	/// 重命名配置节点
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">节点Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id:long}/rename")]
@@ -120,7 +120,7 @@ public class SettingNodeController : ControllerBase
 	/// <summary>
 	/// 删除配置节点
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">节点Id</param>
 	/// <returns></returns>
 	[HttpDelete("{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
@@ -132,7 +132,7 @@ public class SettingNodeController : ControllerBase
 	/// <summary>
 	/// 发布配置
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">根节点Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("{id:long}/publish")]

@@ -1,5 +1,7 @@
 ﻿using Nerosoft.Euonia.Domain;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Nerosoft.Starfish.Application;
 
 /// <summary>
@@ -7,27 +9,21 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class SettingPublishedEvent : ApplicationEvent
 {
-	/// <summary>
-	/// 构造函数
-	/// </summary>
 	public SettingPublishedEvent()
 	{
 	}
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="id"></param>
 	public SettingPublishedEvent(long id)
+		: this()
 	{
 		Id = id;
 	}
 
 	/// <summary>
-	/// 配置Id
+	/// 根节点Id
 	/// </summary>
 	public long Id { get; set; }
-	
+
 	/// <summary>
 	/// 版本号
 	/// </summary>
@@ -36,5 +32,5 @@ public class SettingPublishedEvent : ApplicationEvent
 	/// <summary>
 	/// 描述
 	/// </summary>
-	public string Description { get; set; }
+	public string Comment { get; set; }
 }
