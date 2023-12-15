@@ -58,6 +58,7 @@
     <ItemGroup>
         <Using Include="$(RootNamespace).Properties" />
         <Using Include="Microsoft.Extensions.DependencyInjection" />
+        <Using Include="System.Diagnostics.CodeAnalysis" />
     </ItemGroup>
 
 </Project>
