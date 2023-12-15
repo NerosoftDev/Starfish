@@ -56,18 +56,26 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(long id, SettingNodeUpdateDto data, CancellationToken cancellationToken = default)
+	public Task UpdateValueAsync(long id, string value, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeUpdateUseCase>();
-		var input = new SettingNodeUpdateInput(id, data);
+		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeUpdateValueUseCase>();
+		var input = new SettingNodeUpdateValueInput(id, value);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task RenameAsync(long id, string name, CancellationToken cancellationToken = default)
+	public Task UpdateNameAsync(long id, string name, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeRenameUseCase>();
-		var input = new SettingNodeRenameInput(id, name);
+		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeUpdateNameUseCase>();
+		var input = new SettingNodeUpdateNameInput(id, name);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	/// <inheritdoc />
+	public Task UpdateDescriptionAsync(long id, string description, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeUpdateDescriptionUseCase>();
+		var input = new SettingNodeUpdateDescriptionInput(id, description);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 

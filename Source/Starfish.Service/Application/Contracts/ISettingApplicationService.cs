@@ -58,10 +58,10 @@ public interface ISettingApplicationService : IApplicationService
 	/// 更新配置节点
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="data"></param>
+	/// <param name="value"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long id, SettingNodeUpdateDto data, CancellationToken cancellationToken = default);
+	Task UpdateValueAsync(long id, string value, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 重命名节点
@@ -70,7 +70,16 @@ public interface ISettingApplicationService : IApplicationService
 	/// <param name="name"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task RenameAsync(long id, string name, CancellationToken cancellationToken = default);
+	Task UpdateNameAsync(long id, string name, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 更新节点描述
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="description"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task UpdateDescriptionAsync(long id, string description, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除节点

@@ -1,7 +1,9 @@
 ﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
+using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
+using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 using Newtonsoft.Json;
 
@@ -19,7 +21,7 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.SettingId, cancellationToken);
+			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.RootId, cancellationToken);
 			var data = nodes.ToDictionary(t => t.Key, t => t.Value);
 			var json = JsonConvert.SerializeObject(data);
 
@@ -40,8 +42,25 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 			throw new SettingNodeNotFoundException(rootId);
 		}
 
-		var validTypes = new[] { SettingNodeType.String, SettingNodeType.Number, SettingNodeType.Boolean, SettingNodeType.Referer };
-		var leaves = await repository.GetNodesAsync(root.AppId, root.Environment, validTypes, cancellationToken);
+		var types = new[]
+		{
+			SettingNodeType.String,
+			SettingNodeType.Boolean,
+			SettingNodeType.Number,
+			SettingNodeType.Referer
+		};
+
+		ISpecification<SettingNode>[] specifications =
+		{
+			SettingNodeSpecification.AppIdEquals(root.AppId),
+			SettingNodeSpecification.EnvironmentEquals(root.Environment),
+			SettingNodeSpecification.TypeIn(types),
+			SettingNodeSpecification.StatusEquals(SettingNodeStatus.Pending)
+		};
+
+		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
+
+		var leaves = await repository.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
 
 		return Tuple.Create(root.AppId, root.AppCode, root.Environment, leaves);
 	}

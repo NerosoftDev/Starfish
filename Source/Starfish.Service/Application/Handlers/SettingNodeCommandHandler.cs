@@ -1,7 +1,9 @@
 ﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
+using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
+using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Application;
@@ -13,7 +15,6 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
                                          IHandler<SettingRootNodeCreateCommand>,
                                          IHandler<SettingLeafNodeCreateCommand>,
                                          IHandler<SettingNodeUpdateCommand>,
-                                         IHandler<SettingNodeRenameCommand>,
                                          IHandler<SettingNodeDeleteCommand>,
                                          IHandler<SettingNodePublishCommand>,
                                          IHandler<SettingNodeSetKeyCommand>
@@ -101,25 +102,9 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var properties = new[]
-			{
-				nameof(SettingNode.Parent),
-				nameof(SettingNode.Children)
-			};
-			var aggregate = await SettingRepository.GetAsync(message.Item1, true, properties, cancellationToken);
-			if (aggregate == null)
-			{
-				throw new SettingNodeNotFoundException(message.Item1);
-			}
-		});
-	}
-
-	/// <inheritdoc />
-	public Task HandleAsync(SettingNodeRenameCommand message, MessageContext context, CancellationToken cancellationToken = default)
-	{
-		return ExecuteAsync(async () =>
-		{
-			var business = await Factory.CreateAsync<SettingNodeRenameBusiness>(message.Item1, message.Item2);
+			var business = await Factory.FetchAsync<SettingNodeUpdateBusiness>(message.Id);
+			business.Intent = message.Intent;
+			business.Value = message.Value;
 			business.MarkAsUpdate();
 			await business.SaveAsync(true, cancellationToken);
 		});
@@ -138,6 +123,8 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
 
 			List<SettingNode> nodes = [aggregate];
 
+			var specifications = new List<ISpecification<SettingNode>>();
+
 			switch (aggregate.Type)
 			{
 				case SettingNodeType.Root:
@@ -151,17 +138,27 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
 						SettingNodeType.Number,
 						SettingNodeType.Referer
 					};
-					var leaves = await SettingRepository.GetNodesAsync(aggregate.AppId, aggregate.Environment, types, cancellationToken);
-					nodes.AddRange(leaves);
+					specifications.Add(SettingNodeSpecification.AppIdEquals(aggregate.AppId));
+					specifications.Add(SettingNodeSpecification.EnvironmentEquals(aggregate.Environment));
+					specifications.Add(SettingNodeSpecification.TypeIn(types));
 				}
 					break;
 				case SettingNodeType.Object:
 				case SettingNodeType.Array:
 				{
-					var leaves = await SettingRepository.GetLeavesAsync(aggregate.AppId, aggregate.Environment, aggregate.Key, cancellationToken);
-					nodes.AddRange(leaves);
+					specifications.Add(SettingNodeSpecification.AppIdEquals(aggregate.AppId));
+					specifications.Add(SettingNodeSpecification.EnvironmentEquals(aggregate.Environment));
+					specifications.Add(SettingNodeSpecification.KeyStartsWith(aggregate.Key));
 				}
 					break;
+			}
+
+			if (specifications.Count > 0)
+			{
+				var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications.ToArray()).Satisfy();
+
+				var leaves = await SettingRepository.FindAsync(predicate, true, [], cancellationToken);
+				nodes.AddRange(leaves);
 			}
 
 			await SettingRepository.DeleteAsync(nodes, true, cancellationToken);

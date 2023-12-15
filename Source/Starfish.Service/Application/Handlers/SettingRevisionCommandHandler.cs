@@ -21,7 +21,7 @@ public class SettingRevisionCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.SettingId, cancellationToken);
+			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.RootId, cancellationToken);
 
 			var entity = new SettingRevision
 			{

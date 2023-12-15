@@ -255,4 +255,7 @@
   <data name="IDS_ERROR_CANNOT_ADD_CHILD_NODE_IN_NODE_TYPE" xml:space="preserve">
     <value>Can not add child node in node of type '{0}'.</value>
   </data>
+    <data name="IDS_ERROR_SETTING_NODE_NOT_ALLOW_SET_VALUE" xml:space="preserve">
+        <value>Not allow to set value on node type of '{0}'.</value>
+    </data>
 </root>

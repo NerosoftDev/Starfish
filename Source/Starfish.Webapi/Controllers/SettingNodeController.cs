@@ -97,10 +97,10 @@ public class SettingNodeController : ControllerBase
 	/// <param name="id">节点Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}")]
-	public async Task<IActionResult> UpdateAsync(long id, [FromBody] SettingNodeUpdateDto data)
+	[HttpPut("{id:long}/value")]
+	public async Task<IActionResult> UpdateValueAsync(long id, [FromBody] SettingNodeUpdateDto data)
 	{
-		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
+		await _service.UpdateValueAsync(id, data.Value, HttpContext.RequestAborted);
 		return Ok();
 	}
 
@@ -110,10 +110,23 @@ public class SettingNodeController : ControllerBase
 	/// <param name="id">节点Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/rename")]
-	public async Task<IActionResult> RenameAsync(long id, [FromBody] SettingNodeRenameDto data)
+	[HttpPut("{id:long}/name")]
+	public async Task<IActionResult> UpdateNameAsync(long id, [FromBody] SettingNodeUpdateDto data)
 	{
-		await _service.RenameAsync(id, data.Name, HttpContext.RequestAborted);
+		await _service.UpdateNameAsync(id, data.Name, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
+	/// 设置配置节点描述
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPut("{id:long}/description")]
+	public async Task<IActionResult> UpdateDescriptionAsync(long id, [FromBody] SettingNodeUpdateDto data)
+	{
+		await _service.UpdateDescriptionAsync(id, data.Description, HttpContext.RequestAborted);
 		return Ok();
 	}
 

@@ -6,8 +6,8 @@ namespace Nerosoft.Starfish.Domain;
 /// 配置信息
 /// </summary>
 public class SettingNode : Aggregate<long>,
-                           IHasCreateTime,
-                           IHasUpdateTime
+						   IHasCreateTime,
+						   IHasUpdateTime
 {
 	private readonly SettingNodeType[] _sealedTypes =
 	[
@@ -299,6 +299,56 @@ public class SettingNode : Aggregate<long>,
 
 		Key = key;
 		Status = SettingNodeStatus.Pending;
+	}
+
+	internal void SetValue(string value)
+	{
+		if (!_sealedTypes.Contains(Type))
+		{
+			throw new BadRequestException(string.Format(Resources.IDS_ERROR_SETTING_NODE_NOT_ALLOW_SET_VALUE, Type));
+		}
+
+		if (string.Equals(Value, value))
+		{
+			return;
+		}
+
+		if (!string.IsNullOrWhiteSpace(value))
+		{
+			switch (Type)
+			{
+				case SettingNodeType.Number:
+					if (!value.IsDecimal())
+					{
+						throw new BadRequestException(Resources.IDS_ERROR_SETTING_NODE_VALUE_NOT_NUMBER);
+					}
+
+					Value = value;
+					break;
+				case SettingNodeType.Boolean:
+					if (!bool.TryParse(value, out var booleanValue))
+					{
+						throw new BadRequestException(Resources.IDS_ERROR_SETTING_NODE_VALUE_NOT_BOOLEAN);
+					}
+
+					value = booleanValue.ToString();
+					break;
+			}
+		}
+
+		Value = value;
+
+		Status = SettingNodeStatus.Pending;
+	}
+
+	internal void SetDescription(string description)
+	{
+		if (string.Equals(Description, description))
+		{
+			return;
+		}
+
+		Description = description;
 	}
 
 	private void CheckName(string name)

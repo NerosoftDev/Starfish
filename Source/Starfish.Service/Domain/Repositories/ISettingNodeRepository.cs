@@ -38,25 +38,6 @@ public interface ISettingNodeRepository : IRepository<SettingNode, long>
 	Task<List<SettingNode>> GetLeavesAsync(long appId, string environment, string key, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	/// 根据应用Id和环境查询所有节点
-	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<List<SettingNode>> GetNodesAsync(long appId, string environment, CancellationToken cancellationToken = default);
-
-	/// <summary>
-	/// 根据应用Id和环境查询所有节点
-	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
-	/// <param name="types"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<List<SettingNode>> GetNodesAsync(long appId, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default);
-
-	/// <summary>
 	/// 查询同级节点名称是否存在
 	/// </summary>
 	/// <param name="id"></param>

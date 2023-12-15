@@ -1,20 +1,31 @@
 ﻿using Nerosoft.Euonia.Domain;
-using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
 
 /// <summary>
 /// 更新配置节点命令
 /// </summary>
-public class SettingNodeUpdateCommand : Command<long, SettingNodeUpdateDto>
+public class SettingNodeUpdateCommand : Command
 {
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="data"></param>
-	public SettingNodeUpdateCommand(long id, SettingNodeUpdateDto data)
-		: base(id, data)
+	public SettingNodeUpdateCommand(long id, string intent, string value)
 	{
+		Id = id;
+		Intent = intent;
+		Value = value;
 	}
+
+	/// <summary>
+	/// 节点Id
+	/// </summary>
+	public long Id { get; set; }
+
+	/// <summary>
+	/// 更新的属性
+	/// </summary>
+	public string Intent { get; set; }
+
+	/// <summary>
+	/// 节点值
+	/// </summary>
+	public string Value { get; set; }
 }

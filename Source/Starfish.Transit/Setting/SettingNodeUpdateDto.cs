@@ -6,6 +6,11 @@
 public class SettingNodeUpdateDto
 {
 	/// <summary>
+	/// 名称
+	/// </summary>
+	public string Name { get; set; }
+
+	/// <summary>
 	/// 配置值
 	/// </summary>
 	public string Value { get; set; }
