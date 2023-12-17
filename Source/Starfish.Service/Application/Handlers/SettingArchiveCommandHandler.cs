@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace Nerosoft.Starfish.Application;
 
 public class SettingArchiveCommandHandler : CommandHandlerBase,
-                                            IHandler<SettingArchiveCreateCommand>
+											IHandler<SettingArchiveCreateCommand>
 {
 	public SettingArchiveCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
@@ -60,7 +60,7 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 
 		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
 
-		var leaves = await repository.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
+		var leaves = await repository.FindAsync(predicate, false, [], cancellationToken);
 
 		return Tuple.Create(root.AppId, root.AppCode, root.Environment, leaves);
 	}
@@ -71,16 +71,9 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 
 		var archive = await repository.GetAsync(appCode, environment, cancellationToken);
 
-		archive ??= new SettingArchive
-		{
-			AppId = appId,
-			AppCode = appCode,
-			Environment = environment,
-		};
+		archive ??= SettingArchive.Create(appId, appCode, environment);
 
-		archive.Data = data;
-		archive.Operator = userName;
-		archive.ArchiveTime = DateTime.Now;
+		archive.Update(data, userName);
 
 		if (archive.Id > 0)
 		{

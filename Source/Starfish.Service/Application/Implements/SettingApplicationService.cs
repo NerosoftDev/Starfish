@@ -16,7 +16,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeSearchUseCase>();
 		var input = new SettingNodeSearchInput(criteria, page, size);
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(t => t.Result.Result, cancellationToken);
+					  .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -25,7 +25,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeCountUseCase>();
 		var input = new SettingNodeCountInput(criteria);
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(t => t.Result.Result, cancellationToken);
+					  .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -34,7 +34,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodeGetDetailUseCase>();
 		var input = new SettingNodeGetDetailInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(t => t.Result.Result, cancellationToken);
+					  .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -43,7 +43,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingRootNodeCreateUseCase>();
 		var input = new SettingRootNodeCreationInput(appId, environment);
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(t => t.Result.Id, cancellationToken);
+					  .ContinueWith(t => t.Result.Id, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -52,7 +52,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingLeafNodeCreateUseCase>();
 		var input = new SettingLeafNodeCreationInput(parentId, type, data);
 		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(t => t.Result.Result, cancellationToken);
+					  .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -93,5 +93,14 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingNodePublishUseCase>();
 		var input = new SettingNodePublishInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	/// <inheritdoc />
+	public Task<string> GetSettingRawAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IGetSettingRawUseCase>();
+		var input = new GetSettingRawUseCaseInput(appId, environment);
+		return useCase.ExecuteAsync(input, cancellationToken)
+					  .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 }

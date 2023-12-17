@@ -97,4 +97,13 @@ public interface ISettingApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task PublishAsync(long id, SettingNodePublishDto data, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 获取已发布的配置
+	/// </summary>
+	/// <param name="appId">应用Id</param>
+	/// <param name="environment">环境名称</param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<string> GetSettingRawAsync(long appId, string environment, CancellationToken cancellationToken = default);
 }

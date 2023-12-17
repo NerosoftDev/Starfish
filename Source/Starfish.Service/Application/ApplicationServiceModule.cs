@@ -42,6 +42,8 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	{
 		context.Services.Register<ApplicationServiceContext>();
 
+		context.Services.AddSingleton<ConnectionContainer>();
+
 		ConfigureCachingServices(context.Services);
 
 		ConfigureBusServices(context.Services);

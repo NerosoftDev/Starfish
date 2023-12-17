@@ -5,8 +5,11 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置归档
 /// </summary>
-public class SettingArchive : Entity<long>
+public class SettingArchive : Aggregate<long>
 {
+	private SettingArchive()
+	{ }
+
 	/// <summary>
 	/// 应用Id
 	/// </summary>
@@ -36,4 +39,25 @@ public class SettingArchive : Entity<long>
 	/// 归档时间
 	/// </summary>
 	public DateTime ArchiveTime { get; set; }
+
+	internal static SettingArchive Create(long appId, string appCode, string environment)
+	{
+		var entity = new SettingArchive()
+		{
+			AppId = appId,
+			AppCode = appCode,
+			Environment = environment
+		};
+
+		return entity;
+	}
+
+	internal void Update(string data, string @operator)
+	{
+		Data = data;
+		Operator = @operator;
+		ArchiveTime = DateTime.Now;
+
+		RaiseEvent(new SettingArchiveUpdatedEvent());
+	}
 }

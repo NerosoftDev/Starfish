@@ -38,7 +38,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task<bool> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default)
+	public Task<long> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default)
 	{
 		var input = new AppInfoAuthorizeInput(code, secret);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoAuthorizeUseCase>();

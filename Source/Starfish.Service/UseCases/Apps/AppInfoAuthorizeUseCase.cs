@@ -19,7 +19,7 @@ public record AppInfoAuthorizeInput(string Code, string Secret) : IUseCaseInput;
 /// 应用信息认证输出
 /// </summary>
 /// <param name="Result"></param>
-public record AppInfoAuthorizeOutput(bool Result) : IUseCaseOutput;
+public record AppInfoAuthorizeOutput(long Result) : IUseCaseOutput;
 
 /// <summary>
 /// 应用信息认证用例
@@ -43,9 +43,14 @@ public class AppInfoAuthorizeUseCase : IAppInfoAuthorizeUseCase
 		var appInfo = await _repository.GetByCodeAsync(input.Code, cancellationToken);
 		if (appInfo == null)
 		{
-			return new AppInfoAuthorizeOutput(false);
+			throw new AppInfoNotFoundException(0);
 		}
 
-		return new AppInfoAuthorizeOutput(appInfo.Secret == input.Secret);
+		if (!string.Equals(appInfo.Secret, input.Secret))
+		{
+			throw new UnauthorizedAccessException();
+		}
+
+		return new AppInfoAuthorizeOutput(appInfo.Id);
 	}
 }

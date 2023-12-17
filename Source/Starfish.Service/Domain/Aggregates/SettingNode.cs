@@ -1,13 +1,15 @@
 ﻿using Nerosoft.Euonia.Domain;
 
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 配置信息
 /// </summary>
 public class SettingNode : Aggregate<long>,
-						   IHasCreateTime,
-						   IHasUpdateTime
+                           IHasCreateTime,
+                           IHasUpdateTime
 {
 	private readonly SettingNodeType[] _sealedTypes =
 	[
@@ -20,6 +22,11 @@ public class SettingNode : Aggregate<long>,
 	private SettingNode()
 	{
 	}
+
+	/// <summary>
+	/// 根节点Id
+	/// </summary>
+	public long RootId { get; set; }
 
 	/// <summary>
 	/// 父节点Id
@@ -127,6 +134,7 @@ public class SettingNode : Aggregate<long>,
 
 		entity = new SettingNode
 		{
+			RootId = Type == SettingNodeType.Root ? Id : RootId,
 			AppId = AppId,
 			AppCode = AppCode,
 			Environment = Environment,
@@ -156,6 +164,7 @@ public class SettingNode : Aggregate<long>,
 
 		entity = new SettingNode
 		{
+			RootId = Type == SettingNodeType.Root ? Id : RootId,
 			AppId = AppId,
 			AppCode = AppCode,
 			Environment = Environment,
@@ -185,6 +194,7 @@ public class SettingNode : Aggregate<long>,
 
 		entity = new SettingNode
 		{
+			RootId = Type == SettingNodeType.Root ? Id : RootId,
 			AppId = AppId,
 			AppCode = AppCode,
 			Environment = Environment,
@@ -220,6 +230,7 @@ public class SettingNode : Aggregate<long>,
 
 		entity = new SettingNode
 		{
+			RootId = Type == SettingNodeType.Root ? Id : RootId,
 			AppId = AppId,
 			AppCode = AppCode,
 			Environment = Environment,
@@ -255,6 +266,7 @@ public class SettingNode : Aggregate<long>,
 
 		entity = new SettingNode
 		{
+			RootId = Type == SettingNodeType.Root ? Id : RootId,
 			AppId = AppId,
 			AppCode = AppCode,
 			Environment = Environment,

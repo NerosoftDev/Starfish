@@ -41,7 +41,7 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="secret"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<bool> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default);
+	Task<long> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 创建应用

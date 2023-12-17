@@ -138,4 +138,14 @@ public static class SettingNodeSpecification
 	{
 		return new DirectSpecification<SettingNode>(x => x.Status == status);
 	}
+
+	/// <summary>
+	/// 根节点Id等于<paramref name="rootId"/>.
+	/// </summary>
+	/// <param name="rootId"></param>
+	/// <returns></returns>
+	public static Specification<SettingNode> RootIdEquals(long rootId)
+	{
+		return new DirectSpecification<SettingNode>(x => x.RootId == rootId);
+	}
 }

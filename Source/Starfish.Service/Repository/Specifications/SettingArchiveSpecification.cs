@@ -5,6 +5,11 @@ namespace Nerosoft.Starfish.Repository;
 
 public static class SettingArchiveSpecification
 {
+	public static Specification<SettingArchive> AppIdEquals(long appId)
+	{
+		return new DirectSpecification<SettingArchive>(x => x.AppId == appId);
+	}
+
 	public static Specification<SettingArchive> AppCodeEquals(string appCode)
 	{
 		appCode = appCode.Normalize(TextCaseType.Lower);
