@@ -407,7 +407,8 @@ FodyWeavers.xsd
 */Migrations
 package-lock.json
 */wwwroot/dist
-Resource.designer.cs
+*.designer.cs
+Resources.resources
 */wwwroot/index.html
 .DS_Store
 nupkg/
@@ -415,3 +416,4 @@ nupkg/
 .vscode/
 
 appsettings.Development.json
+!/Logs/*.cs

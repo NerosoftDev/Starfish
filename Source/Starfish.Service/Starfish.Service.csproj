@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\common.props" />
+
+    <PropertyGroup>
+        <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" />
+        <PackageReference Include="Dapper.Contrib" />
+        <PackageReference Include="Dapper.SqlBuilder" />
+        <PackageReference Include="Euonia.Application" />
+        <PackageReference Include="Euonia.Bus" />
+        <PackageReference Include="Euonia.Bus.InMemory" />
+        <PackageReference Include="Euonia.Bus.RabbitMq" />
+        <PackageReference Include="Euonia.Business" />
+        <PackageReference Include="Euonia.Core" />
+        <PackageReference Include="Euonia.Caching" />
+        <PackageReference Include="Euonia.Caching.Memory" />
+        <PackageReference Include="Euonia.Caching.Redis" />
+        <PackageReference Include="Euonia.Caching.Runtime" />
+        <PackageReference Include="Euonia.Domain" />
+        <PackageReference Include="Euonia.Mapping.Automapper" />
+        <PackageReference Include="Euonia.Pipeline" />
+        <PackageReference Include="Euonia.Repository.EfCore" />
+        <PackageReference Include="IdentityModel" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+        <PackageReference Include="MongoDB.EntityFrameworkCore" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\Starfish.Common\Starfish.Common.csproj" />
+        <ProjectReference Include="..\Starfish.Transit\Starfish.Transit.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="$(RootNamespace).Properties" />
+        <Using Include="Microsoft.Extensions.DependencyInjection" />
+        <Using Include="System.Diagnostics.CodeAnalysis" />
+    </ItemGroup>
+
+</Project>
