@@ -13,8 +13,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 
 	private readonly string _cacheFile;
 
-	private static readonly object _lockObject = new();
-	private static readonly EventWaitHandle _waitHandle = new ManualResetEvent(false);
+	private static readonly CountdownEvent _waitHandle = new(1);
 
 	private readonly IEnumerator<string> _hosts;
 
@@ -42,7 +41,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 
 	public override void Load()
 	{
-		_waitHandle.WaitOne(TimeSpan.FromSeconds(60));
+		_waitHandle.Wait(TimeSpan.FromSeconds(30));
 
 		if (!File.Exists(_cacheFile))
 		{
@@ -68,8 +67,14 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 			{
 				var json = Decompress(data, length);
 				File.WriteAllText(_cacheFile, json, Encoding.UTF8);
-				_waitHandle.Set();
-				OnReload();
+				if (_waitHandle.IsSet)
+				{
+					OnReload();
+				}
+				else
+				{
+					_waitHandle.Signal();
+				}
 			}, args.CancellationToken);
 		}
 		catch (Exception)
@@ -106,6 +111,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 	public void Dispose()
 	{
 		HostChanged -= OnHostChanged;
+		GC.SuppressFinalize(this);
 	}
 
 	public class HostChangedEventArgs : EventArgs
