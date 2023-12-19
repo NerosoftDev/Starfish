@@ -47,17 +47,22 @@ public class SettingNodeDetailDto
 	/// 配置节点类型
 	/// </summary>
 	public string Type { get; set; }
-	
+
+	/// <summary>
+	/// 节点类型描述
+	/// </summary>
+	public string TypeDescription { get; set; }
+
 	/// <summary>
 	/// 是否是根节点
 	/// </summary>
 	public string IsRoot { get; set; }
-	
+
 	/// <summary>
 	/// 配置节点排序
 	/// </summary>
 	public int Sort { get; set; }
-	
+
 	/// <summary>
 	/// 配置唯一键
 	/// </summary>
