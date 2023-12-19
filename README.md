@@ -18,17 +18,22 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
     - [ ] ⌛ SqlServer
     - [ ] ⌛ PostgreSQL
     - [ ] 🕝 MongoDB
+    - [ ] ⌛ Sqlite
+- [ ] ⌛ Support multiple platforms/支持多种平台
+    - [x] 💚 Web API/Web Application/gRPC Service in .NET6/7/8
+    - [x] 💚 .NET MAUI
+    - [ ] ⌛ WPF application
 - [ ] 🕝 Support multiple node deployment/支持多节点部署
-- [ ] 🕝 Support multiple environments/支持多环境
+- [x] 💚 Support multiple environments/支持多环境
 - [ ] ⌛ Deploy with docker/支持Docker部署
-- [ ] 🕝 Support client cache/支持客户端缓存
-- [ ] 🕝 Multiple protocols support/支持多种协议
-    - [ ] 🕝 HTTP
+- [x] 💚 Support client cache/支持客户端缓存
+- [ ] ⌛ Multiple protocols support/支持多种协议
+    - [x] 💚 HTTP
     - [ ] 🕝 gRPC
-    - [ ] 🕝 WebSocket
+    - [x] 💚 WebSocket
 - [ ] 🕝 Rollback to history version/回滚到历史版本
 - [ ] 🕝 Role-based access control/基于角色的访问控制
-- [ ] 🕝 Support multiple languages admin panel/支持多语言管理面板
+- [ ] ⌛ Support multiple languages admin panel/支持多语言管理面板
     - [ ] ⌛ en/英语
     - [ ] ⌛ zh-Hans/简体中文
     - [ ] 🕝 zh-Hant/繁体中文
@@ -68,14 +73,29 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE)
 ```
 Starfish
 ├──Sample
-├──Sourc
+├    ├──Starfish.Sample.Blazor
+├    ├──Starfish.Sample.MauiApp
+├    ├──Starfish.Sample.Webapi
+├──Source
 ├    ├──Starfish.Client
+├    ├──Starfish.Common
 ├    ├──Starfish.Service
 ├    ├──Starfish.Transit
 ├    ├──Starfish.Webapi
 ├──Tests
 ├    ├──Starfish.Client.Tests
 ├    ├──Starfish.Service.Tests
+```
+
+## Depdenencies Structure/依赖关系结构
+
+```mermaid
+graph TD
+    Starfish.Webapi --> Starfish.Service
+    Starfish.Service --> Starfish.Transit
+    Starfish.Service --> Starfish.Common
+    
+    Starfish.Client --> Starfish.Common
 ```
 
 ## Requirements/环境要求
@@ -114,6 +134,7 @@ Deploy & Run/部署与运行
 ### Deploy/部署
 
 ```bash
+docker pull nerosoft/starfish:latest
 ```
 
 ### Configuration/配置
@@ -126,11 +147,60 @@ Deploy & Run/部署与运行
 ### Install/安装
 
 ```bash
+dotnet add package Starfish.Client
+```
+
+or
+
+```powershell
+Install-Package Starfish.Client
+```
+
+or
+
+```xml
+<PackageReference Include="Starfish.Client" Version="1.0.0" />
 ```
 
 ### Configuration/配置
 
-```bash
+1. Add Starfish as a configuration source in Program.cs/在 Program.cs 中添加 Starfish 作为配置源
+
+```csharp
+// .NET 5
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((hostingContext, config) =>
+        {
+            config.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+        })
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
+```
+    
+```csharp
+// .NET 6 and above
+var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+// ...
+var app = builder.Build();
+// ...
+app.Run();
+```
+
+2. Add configuration in appsettings.json/在 appsettings.json 中添加配置
+
+```json
+{
+    "Starfish": {
+        "Host": "http://localhost:5000",
+        "AppId": "Starfish.Sample.Blazor",
+        "AppSecret": "123456",
+        "Environment": "Development"
+    }
+}
 ```
 
 

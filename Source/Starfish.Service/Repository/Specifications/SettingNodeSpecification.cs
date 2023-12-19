@@ -130,16 +130,6 @@ public static class SettingNodeSpecification
 	}
 
 	/// <summary>
-	/// 状态<paramref name="status"/>
-	/// </summary>
-	/// <param name="status"></param>
-	/// <returns></returns>
-	public static Specification<SettingNode> StatusEquals(SettingNodeStatus status)
-	{
-		return new DirectSpecification<SettingNode>(x => x.Status == status);
-	}
-
-	/// <summary>
 	/// 根节点Id等于<paramref name="rootId"/>.
 	/// </summary>
 	/// <param name="rootId"></param>

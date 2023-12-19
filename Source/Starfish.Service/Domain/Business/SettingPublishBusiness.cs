@@ -53,8 +53,7 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 		{
 			SettingNodeSpecification.AppIdEquals(aggregate.AppId),
 			SettingNodeSpecification.EnvironmentEquals(aggregate.Environment),
-			SettingNodeSpecification.TypeIn(types),
-			SettingNodeSpecification.StatusEquals(SettingNodeStatus.Pending)
+			SettingNodeSpecification.TypeIn(types)
 		};
 
 		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
@@ -62,14 +61,8 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 		var leaves = await _repository.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
 		nodes.AddRange(leaves);
 
-		if (nodes.All(t => t.Status != SettingNodeStatus.Pending))
-		{
-			throw new InvalidOperationException(Resources.IDS_ERROR_NO_PENDING_NODE);
-		}
-
 		foreach (var node in nodes)
 		{
-			node.ChangeStatus(SettingNodeStatus.Published);
 			node.ClearEvents();
 		}
 

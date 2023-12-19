@@ -18,5 +18,8 @@ public class SettingNodeUpdateDto
 	/// <summary>
 	/// 配置描述
 	/// </summary>
+	/// <remarks>
+	///	仅在更新节点描述时有效
+	/// </remarks>
 	public string Description { get; set; }
 }
