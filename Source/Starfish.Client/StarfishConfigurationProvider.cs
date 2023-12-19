@@ -1,0 +1,123 @@
+﻿using System.IO.Compression;
+using System.Text.Json;
+using Microsoft.Extensions.Configuration;
+
+namespace Nerosoft.Starfish.Client;
+
+public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
+{
+	public event EventHandler<HostChangedEventArgs> HostChanged;
+	public event EventHandler ConnectionLost;
+
+	private readonly ConfigurationClientOptions _options;
+
+	private readonly string _cacheFile;
+
+	private static readonly object _lockObject = new();
+	private static readonly EventWaitHandle _waitHandle = new ManualResetEvent(false);
+
+	private readonly IEnumerator<string> _hosts;
+
+	public StarfishConfigurationProvider(ConfigurationClientOptions options)
+	{
+		_options = options;
+		_cacheFile = Path.Combine(_options.CacheDirectory, $"{_options.AppId}.starfish.{_options.Environment}.cache");
+		HostChanged += OnHostChanged;
+		ConnectionLost += (_, _) =>
+		{
+			if (_hosts != null && _hosts.MoveNext())
+			{
+				HostChanged?.Invoke(this, new HostChangedEventArgs(_options.Host, CancellationToken.None));
+			}
+		};
+
+		_hosts = _options.Host
+		                 .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+		                 .Distinct()
+		                 .ToList()
+		                 .GetEnumerator();
+		_hosts.MoveNext();
+		HostChanged?.Invoke(this, new HostChangedEventArgs(_hosts.Current, CancellationToken.None));
+	}
+
+	public override void Load()
+	{
+		_waitHandle.WaitOne(TimeSpan.FromSeconds(60));
+
+		if (!File.Exists(_cacheFile))
+		{
+			return;
+		}
+
+		var data = File.ReadAllText(_cacheFile);
+		Data = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
+	}
+
+	private async void OnHostChanged(object sender, HostChangedEventArgs args)
+	{
+		var uri = new Uri(args.Host);
+		IConfigurationClient client = uri.Scheme switch
+		{
+			"http" or "https" => new HttpConfigurationClient(uri, _options.AppId, _options.AppSecret, _options.Environment),
+			"ws" or "wss" => new SocketConfigurationClient(uri, _options.AppId, _options.AppSecret, _options.Environment),
+			_ => throw new NotSupportedException($"Schema {uri.Scheme} is not supported."),
+		};
+		try
+		{
+			await client.GetConfigurationAsync((data, length) =>
+			{
+				var json = Decompress(data, length);
+				File.WriteAllText(_cacheFile, json, Encoding.UTF8);
+				_waitHandle.Set();
+				OnReload();
+			}, args.CancellationToken);
+		}
+		catch (Exception)
+		{
+			ConnectionLost?.Invoke(this, EventArgs.Empty);
+		}
+	}
+
+	private static string Decompress(byte[] data, int count)
+	{
+		var stream = new MemoryStream(data, 0, count);
+		var zip = new GZipStream(stream, CompressionMode.Decompress, true);
+		var destStream = new MemoryStream();
+		var buffer = new byte[0x1000];
+		while (true)
+		{
+			var reader = zip.Read(buffer, 0, buffer.Length);
+			if (reader <= 0)
+			{
+				break;
+			}
+
+			destStream.Write(buffer, 0, reader);
+		}
+
+		zip.Close();
+		stream.Close();
+		destStream.Position = 0;
+		buffer = destStream.ToArray();
+		destStream.Close();
+		return Encoding.UTF8.GetString(buffer);
+	}
+
+	public void Dispose()
+	{
+		HostChanged -= OnHostChanged;
+	}
+
+	public class HostChangedEventArgs : EventArgs
+	{
+		public HostChangedEventArgs(string host, CancellationToken cancellationToken)
+		{
+			Host = host;
+			CancellationToken = cancellationToken;
+		}
+
+		public string Host { get; }
+
+		public CancellationToken CancellationToken { get; }
+	}
+}
