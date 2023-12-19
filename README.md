@@ -73,14 +73,29 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE)
 ```
 Starfish
 ├──Sample
-├──Sourc
+├    ├──Starfish.Sample.Blazor
+├    ├──Starfish.Sample.MauiApp
+├    ├──Starfish.Sample.Webapi
+├──Source
 ├    ├──Starfish.Client
+├    ├──Starfish.Common
 ├    ├──Starfish.Service
 ├    ├──Starfish.Transit
 ├    ├──Starfish.Webapi
 ├──Tests
 ├    ├──Starfish.Client.Tests
 ├    ├──Starfish.Service.Tests
+```
+
+## Depdenencies Structure/依赖关系结构
+
+```mermaid
+graph TD
+    Starfish.Webapi --> Starfish.Service
+    Starfish.Service --> Starfish.Transit
+    Starfish.Service --> Starfish.Common
+    
+    Starfish.Client --> Starfish.Common
 ```
 
 ## Requirements/环境要求
@@ -119,6 +134,7 @@ Deploy & Run/部署与运行
 ### Deploy/部署
 
 ```bash
+docker pull nerosoft/starfish:latest
 ```
 
 ### Configuration/配置
@@ -131,11 +147,60 @@ Deploy & Run/部署与运行
 ### Install/安装
 
 ```bash
+dotnet add package Starfish.Client
+```
+
+or
+
+```powershell
+Install-Package Starfish.Client
+```
+
+or
+
+```xml
+<PackageReference Include="Starfish.Client" Version="1.0.0" />
 ```
 
 ### Configuration/配置
 
-```bash
+1. Add Starfish as a configuration source in Program.cs/在 Program.cs 中添加 Starfish 作为配置源
+
+```csharp
+// .NET 5
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((hostingContext, config) =>
+        {
+            config.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+        })
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
+```
+    
+```csharp
+// .NET 6 and above
+var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+// ...
+var app = builder.Build();
+// ...
+app.Run();
+```
+
+2. Add configuration in appsettings.json/在 appsettings.json 中添加配置
+
+```json
+{
+    "Starfish": {
+        "Host": "http://localhost:5000",
+        "AppId": "Starfish.Sample.Blazor",
+        "AppSecret": "123456",
+        "Environment": "Development"
+    }
+}
 ```
 
 
