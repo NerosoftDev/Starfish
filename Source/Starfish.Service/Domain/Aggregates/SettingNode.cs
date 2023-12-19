@@ -77,11 +77,6 @@ public class SettingNode : Aggregate<long>,
 	public SettingNodeType Type { get; set; }
 
 	/// <summary>
-	/// 配置节点状态
-	/// </summary>
-	public SettingNodeStatus Status { get; set; }
-
-	/// <summary>
 	/// 配置节点排序
 	/// </summary>
 	public int Sort { get; set; }
@@ -119,8 +114,7 @@ public class SettingNode : Aggregate<long>,
 			AppCode = appCode,
 			Environment = environment,
 			Name = $"{appCode}-{environment}",
-			Type = SettingNodeType.Root,
-			Status = SettingNodeStatus.Pending
+			Type = SettingNodeType.Root
 		};
 		entity.RaiseEvent(new SettingNodeCreatedEvent(entity));
 		return entity;
@@ -140,7 +134,6 @@ public class SettingNode : Aggregate<long>,
 			Environment = Environment,
 			ParentId = Id,
 			Type = SettingNodeType.Array,
-			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
@@ -170,7 +163,6 @@ public class SettingNode : Aggregate<long>,
 			Environment = Environment,
 			ParentId = Id,
 			Type = SettingNodeType.Object,
-			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
@@ -201,7 +193,6 @@ public class SettingNode : Aggregate<long>,
 			ParentId = Id,
 			Value = value,
 			Type = SettingNodeType.String,
-			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
@@ -237,7 +228,6 @@ public class SettingNode : Aggregate<long>,
 			ParentId = Id,
 			Value = result.ToString(),
 			Type = SettingNodeType.Boolean,
-			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
@@ -273,7 +263,6 @@ public class SettingNode : Aggregate<long>,
 			ParentId = Id,
 			Value = value,
 			Type = SettingNodeType.Number,
-			Status = SettingNodeStatus.Pending,
 			Sort = Children.Count + 1,
 			Key = GenerateKey(name, Children.Count + 1)
 		};
@@ -287,12 +276,6 @@ public class SettingNode : Aggregate<long>,
 		Children.Add(entity);
 
 		RaiseEvent(new SettingNodeCreatedEvent(entity));
-	}
-
-	internal void ChangeStatus(SettingNodeStatus status)
-	{
-		Status = status;
-		RaiseEvent(new SettingNodeStatusChangedEvent());
 	}
 
 	internal void SetName(string newName)
@@ -310,7 +293,6 @@ public class SettingNode : Aggregate<long>,
 		}
 
 		Key = key;
-		Status = SettingNodeStatus.Pending;
 	}
 
 	internal void SetValue(string value)
@@ -349,8 +331,6 @@ public class SettingNode : Aggregate<long>,
 		}
 
 		Value = value;
-
-		Status = SettingNodeStatus.Pending;
 	}
 
 	internal void SetDescription(string description)

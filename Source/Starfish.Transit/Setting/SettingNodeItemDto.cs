@@ -41,9 +41,9 @@ public class SettingNodeItemDto
 	public string Type { get; set; }
 
 	/// <summary>
-	/// 配置节点状态
+	/// 是否是根节点
 	/// </summary>
-	public string Status { get; set; }
+	public string IsRoot { get; set; }
 
 	/// <summary>
 	/// 配置唯一键

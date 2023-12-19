@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Bus;
+﻿using System.IO.Compression;
+using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
@@ -10,7 +11,7 @@ using Newtonsoft.Json;
 namespace Nerosoft.Starfish.Application;
 
 public class SettingArchiveCommandHandler : CommandHandlerBase,
-											IHandler<SettingArchiveCreateCommand>
+                                            IHandler<SettingArchiveCreateCommand>
 {
 	public SettingArchiveCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
@@ -72,7 +73,7 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 
 		archive ??= SettingArchive.Create(appId, appCode, environment);
 
-		archive.Update(data, userName);
+		archive.Update(Compress(data), userName);
 
 		if (archive.Id > 0)
 		{
@@ -82,5 +83,21 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 		{
 			await repository.InsertAsync(archive, true, cancellationToken);
 		}
+	}
+
+	private static string Compress(string source)
+	{
+		var data = Encoding.UTF8.GetBytes(source);
+
+		var stream = new MemoryStream();
+		var zip = new GZipStream(stream, CompressionMode.Compress, true);
+		zip.Write(data, 0, data.Length);
+		zip.Close();
+		var buffer = new byte[stream.Length];
+		stream.Position = 0;
+		_ = stream.Read(buffer, 0, buffer.Length);
+		stream.Close();
+
+		return Convert.ToBase64String(buffer);
 	}
 }
