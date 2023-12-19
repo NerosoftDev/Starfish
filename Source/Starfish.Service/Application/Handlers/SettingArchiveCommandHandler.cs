@@ -54,8 +54,7 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 		{
 			SettingNodeSpecification.AppIdEquals(root.AppId),
 			SettingNodeSpecification.EnvironmentEquals(root.Environment),
-			SettingNodeSpecification.TypeIn(types),
-			SettingNodeSpecification.StatusEquals(SettingNodeStatus.Pending)
+			SettingNodeSpecification.TypeIn(types)
 		};
 
 		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
