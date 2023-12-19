@@ -255,7 +255,16 @@
   <data name="IDS_ERROR_CANNOT_ADD_CHILD_NODE_IN_NODE_TYPE" xml:space="preserve">
     <value>Can not add child node in node of type '{0}'.</value>
   </data>
-    <data name="IDS_ERROR_SETTING_NODE_NOT_ALLOW_SET_VALUE" xml:space="preserve">
-        <value>Not allow to set value on node type of '{0}'.</value>
-    </data>
+  <data name="IDS_ERROR_SETTING_NODE_NOT_ALLOW_SET_VALUE" xml:space="preserve">
+    <value>Not allow to set value on node type of '{0}'.</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE" xml:space="preserve">
+    <value>The secret not matches rule.</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_SECRET_REQUIRED" xml:space="preserve">
+    <value>App secret is required.</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_NODE_DUPLICATE_ROOT" xml:space="preserve">
+    <value>Root node already exists.</value>
+  </data>
 </root>
