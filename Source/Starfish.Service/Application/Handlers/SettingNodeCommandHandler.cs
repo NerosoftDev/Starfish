@@ -47,7 +47,7 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
 			var exists = await SettingRepository.ExistsAsync(message.AppId, message.Environment, cancellationToken);
 			if (exists)
 			{
-				throw new ConflictException("根节点已存在");
+				throw new ConflictException(Resources.IDS_ERROR_SETTING_NODE_DUPLICATE_ROOT);
 			}
 
 			var entity = SettingNode.CreateRoot(appinfo.Id, appinfo.Code, message.Environment);
