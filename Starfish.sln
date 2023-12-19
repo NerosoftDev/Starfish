@@ -20,6 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{08B681B9
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{5FFE10B6-8023-4475-9A43-D4EF7AC99009}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\common.props = Samples\common.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Webapi", "Source\Starfish.Webapi\Starfish.Webapi.csproj", "{7480FA2F-24A4-47BE-AC3C-EC838BD26EE8}"
 EndProject
@@ -34,6 +37,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Client.Tests", "Tests\Starfish.Client.Tests\Starfish.Client.Tests.csproj", "{44053193-9C61-4E3E-AB1B-B55B3FDD9C29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Common", "Source\Starfish.Common\Starfish.Common.csproj", "{A580ACDF-990E-48CE-8E52-666DCC8AEF46}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Sample.Webapi", "Samples\Starfish.Sample.Webapi\Starfish.Sample.Webapi.csproj", "{6C29FD68-4D15-4D8B-A6DF-42216074CD1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfish.Sample.Blazor", "Samples\Starfish.Sample.Blazor\Starfish.Sample.Blazor.csproj", "{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfish.Sample.MauiApp", "Samples\Starfish.Sample.MauiApp\Starfish.Sample.MauiApp.csproj", "{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +78,20 @@ Global
 		{A580ACDF-990E-48CE-8E52-666DCC8AEF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A580ACDF-990E-48CE-8E52-666DCC8AEF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A580ACDF-990E-48CE-8E52-666DCC8AEF46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C29FD68-4D15-4D8B-A6DF-42216074CD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C29FD68-4D15-4D8B-A6DF-42216074CD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C29FD68-4D15-4D8B-A6DF-42216074CD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C29FD68-4D15-4D8B-A6DF-42216074CD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +104,9 @@ Global
 		{5671CFBD-84A9-43FD-8C8F-555B58AD9475} = {08B681B9-B5D2-439B-A913-B9DE5D374772}
 		{44053193-9C61-4E3E-AB1B-B55B3FDD9C29} = {08B681B9-B5D2-439B-A913-B9DE5D374772}
 		{A580ACDF-990E-48CE-8E52-666DCC8AEF46} = {31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}
+		{6C29FD68-4D15-4D8B-A6DF-42216074CD1B} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
+		{EA58AD06-DA8C-469A-81C3-DDF9C75F8872} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
+		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFF17094-761E-48C4-96A9-16248CBF46BA}
