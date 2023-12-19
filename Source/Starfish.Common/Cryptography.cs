@@ -242,13 +242,13 @@ public class Cryptography
 					count = reader.ReadByte();
 					break;
 				case 0x82:
-					{
-						var highByte = reader.ReadByte();
-						var lowByte = reader.ReadByte();
-						byte[] value = { lowByte, highByte, 0x00, 0x00 };
-						count = BitConverter.ToInt32(value, 0);
-						break;
-					}
+				{
+					var highByte = reader.ReadByte();
+					var lowByte = reader.ReadByte();
+					byte[] value = { lowByte, highByte, 0x00, 0x00 };
+					count = BitConverter.ToInt32(value, 0);
+					break;
+				}
 				default:
 					count = @byte;
 					break;
@@ -542,6 +542,26 @@ public class Cryptography
 		public static string Decrypt(string source)
 		{
 			return Encoding.UTF8.GetString(Convert.FromBase64String(source));
+		}
+	}
+
+	// ReSharper disable once InconsistentNaming
+	public class SHA
+	{
+		public static string Encrypt(string source)
+		{
+			var bytes = Encoding.UTF8.GetBytes(source);
+
+#if NETSTANDARD2_1
+			byte[] output;
+			using (var sha = SHA256.Create())
+			{
+				output = sha.ComputeHash(bytes);
+			}
+#else
+			var output = SHA256.HashData(bytes);
+#endif
+			return Convert.ToBase64String(output);
 		}
 	}
 }

@@ -10,11 +10,11 @@ namespace Nerosoft.Starfish.Application;
 /// 应用信息命令处理器
 /// </summary>
 public class AppInfoCommandHandler : CommandHandlerBase,
-									 IHandler<AppInfoCreateCommand>,
-									 IHandler<AppInfoUpdateCommand>,
-									 IHandler<AppInfoDeleteCommand>,
-									 IHandler<ChangeAppInfoStatusCommand>,
-									 IHandler<ResetAppInfoSecretCommand>
+                                     IHandler<AppInfoCreateCommand>,
+                                     IHandler<AppInfoUpdateCommand>,
+                                     IHandler<AppInfoDeleteCommand>,
+                                     IHandler<ChangeAppInfoStatusCommand>,
+                                     IHandler<AppInfoSetSecretCommand>
 {
 	private readonly IAppInfoRepository _repository;
 
@@ -36,7 +36,13 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			await CheckCodeAsync(message.Item1.Code);
-			var entity = AppInfo.Create(message.Item1.Name, message.Item1.Code, message.Item1.Description);
+			var entity = AppInfo.Create(message.Item1.Name, message.Item1.Code);
+			entity.SetSecret(message.Item1.Secret);
+			if (!string.IsNullOrWhiteSpace(message.Item1.Description))
+			{
+				entity.SetDescription(message.Item1.Description);
+			}
+
 			await _repository.InsertAsync(entity, true, cancellationToken);
 			return entity.Id;
 		}, context.Response);
@@ -63,6 +69,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 			}
 
 			entity.Update(message.Item2.Name, message.Item2.Description);
+
 			switch (message.Item2.IsEnabled)
 			{
 				case true:
@@ -122,7 +129,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(ResetAppInfoSecretCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(AppInfoSetSecretCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
@@ -132,7 +139,8 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 				throw new AppInfoNotFoundException(message.Item1);
 			}
 
-			entity.ResetSecret();
+			entity.SetSecret(message.Item2);
+			entity.RaiseEvent(new AppInfoSecretChangedEvent());
 			await _repository.UpdateAsync(entity, true, cancellationToken);
 		});
 	}

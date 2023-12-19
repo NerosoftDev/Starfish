@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Application;
+using Nerosoft.Starfish.Common;
 using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.UseCases;
@@ -46,7 +47,9 @@ public class AppInfoAuthorizeUseCase : IAppInfoAuthorizeUseCase
 			throw new AppInfoNotFoundException(0);
 		}
 
-		if (!string.Equals(appInfo.Secret, input.Secret))
+		var encryptedSecret = Cryptography.SHA.Encrypt(input.Secret);
+
+		if (!string.Equals(appInfo.Secret, encryptedSecret))
 		{
 			throw new UnauthorizedAccessException();
 		}

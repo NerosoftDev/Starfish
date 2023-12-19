@@ -86,4 +86,12 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 		var useCase = LazyServiceProvider.GetRequiredService<IChangeAppInfoStatusUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
+
+	/// <inheritdoc />
+	public Task SetSecretAsync(long id, string secret, CancellationToken cancellationToken = default)
+	{
+		var input = new AppInfoSetSecretInput(id, secret);
+		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoSetSecretUseCase>();
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
 }

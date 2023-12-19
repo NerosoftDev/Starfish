@@ -83,4 +83,13 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task DisableAsync(long id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 设置应用密钥
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="secret"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task SetSecretAsync(long id, string secret, CancellationToken cancellationToken = default);
 }

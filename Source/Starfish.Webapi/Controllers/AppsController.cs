@@ -124,4 +124,17 @@ public class AppsController : ControllerBase
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
 	}
+
+	/// <summary>
+	/// 设置应用密钥
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="model"></param>
+	/// <returns></returns>
+	[HttpPut("{id:long}/secret")]
+	public async Task<IActionResult> SetSecretAsync(long id, [FromBody] AppInfoSetSecretDto model)
+	{
+		await _service.SetSecretAsync(id, model.Secret, HttpContext.RequestAborted);
+		return Ok();
+	}
 }
