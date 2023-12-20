@@ -16,6 +16,11 @@ public class AppInfoCreateDto
 	public string Code { get; set; } = default!;
 
 	/// <summary>
+	/// 密钥
+	/// </summary>
+	public string Secret { get; set; }
+
+	/// <summary>
 	/// 应用描述
 	/// </summary>
 	public string Description { get; set; }

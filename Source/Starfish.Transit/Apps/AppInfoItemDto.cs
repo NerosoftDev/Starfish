@@ -10,7 +10,7 @@ public class AppInfoItemDto
 	/// Id
 	/// </summary>
 	public long Id { get; set; }
-	
+
 	/// <summary>
 	/// 名称
 	/// </summary>
@@ -22,14 +22,14 @@ public class AppInfoItemDto
 	public string Code { get; set; }
 
 	/// <summary>
-	/// 密钥
-	/// </summary>
-	public string Secret { get; set; }
-
-	/// <summary>
 	/// 状态
 	/// </summary>
 	public string Status { get; set; }
+
+	/// <summary>
+	/// 状态描述
+	/// </summary>
+	public string StatusDescription { get; set; }
 
 	/// <summary>
 	/// 创建时间

@@ -1,4 +1,6 @@
-﻿using Nerosoft.Euonia.Domain;
+﻿using System.Text.RegularExpressions;
+using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Common;
 
 namespace Nerosoft.Starfish.Domain;
 
@@ -9,6 +11,8 @@ public sealed class AppInfo : Aggregate<long>,
                               IHasCreateTime,
                               IHasUpdateTime
 {
+	private const string PATTERN_SECRET = @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$";
+
 	/// <summary>
 	/// 此构造方法仅提供给EntityFramework使用
 	/// </summary>
@@ -61,16 +65,13 @@ public sealed class AppInfo : Aggregate<long>,
 	/// </summary>
 	/// <param name="name"></param>
 	/// <param name="code"></param>
-	/// <param name="description"></param>
 	/// <returns></returns>
-	internal static AppInfo Create(string name, string code, string description)
+	internal static AppInfo Create(string name, string code)
 	{
 		var entity = new AppInfo
 		{
 			Name = name,
-			Code = code.Normalize(TextCaseType.Lower),
-			Secret = ObjectId.NewRandomId(DateTime.Now.Ticks),
-			Description = description
+			Code = code.Normalize(TextCaseType.Lower)
 		};
 		entity.RaiseEvent(new AppInfoCreatedEvent());
 		return entity;
@@ -101,18 +102,34 @@ public sealed class AppInfo : Aggregate<long>,
 	/// <param name="description"></param>
 	internal void Update(string name, string description)
 	{
+		if (string.Equals(Name, name, StringComparison.OrdinalIgnoreCase) && string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
+		{
+			return;
+		}
+
 		Name = name;
 		Description = description;
 		RaiseEvent(new AppInfoUpdatedEvent());
 	}
 
 	/// <summary>
-	/// 设置密钥
+	/// 设置APP密钥
 	/// </summary>
-	internal void ResetSecret()
+	/// <param name="secret"></param>
+	/// <exception cref="BadRequestException">密钥不符合规则时引发异常</exception>
+	internal void SetSecret(string secret)
 	{
-		Secret = ObjectId.NewRandomId(DateTime.Now.Ticks);
-		RaiseEvent(new AppInfoSecretResetEvent());
+		if (string.IsNullOrWhiteSpace(secret))
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_APPINFO_SECRET_REQUIRED);
+		}
+
+		if (!Regex.IsMatch(secret, PATTERN_SECRET))
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE);
+		}
+
+		Secret = Cryptography.SHA.Encrypt(secret);
 	}
 
 	/// <summary>

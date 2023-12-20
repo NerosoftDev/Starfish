@@ -13,14 +13,14 @@ public class SettingMappingProfile : Profile
 	public SettingMappingProfile()
 	{
 		CreateMap<SettingNode, SettingNodeItemDto>()
-			.ForMember(dest => dest.Type, options => options.MapFrom(src => GetSettingNodeTypeDescription(src.Type)))
+			.ForMember(dest => dest.TypeDescription, options => options.MapFrom(src => GetTypeDescription(src.Type)))
 			.ForMember(dest => dest.IsRoot, options => options.MapFrom(src => src.Type == SettingNodeType.Root));
 		CreateMap<SettingNode, SettingNodeDetailDto>()
-			.ForMember(dest => dest.Type, options => options.MapFrom(src => GetSettingNodeTypeDescription(src.Type)))
+			.ForMember(dest => dest.TypeDescription, options => options.MapFrom(src => GetTypeDescription(src.Type)))
 			.ForMember(dest => dest.IsRoot, options => options.MapFrom(src => src.Type == SettingNodeType.Root));
 	}
 
-	private static string GetSettingNodeTypeDescription(SettingNodeType type)
+	private static string GetTypeDescription(SettingNodeType type)
 	{
 		return type switch
 		{

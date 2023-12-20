@@ -41,6 +41,11 @@ public class SettingNodeItemDto
 	public string Type { get; set; }
 
 	/// <summary>
+	/// 节点类型描述
+	/// </summary>
+	public string TypeDescription { get; set; }
+	
+	/// <summary>
 	/// 是否是根节点
 	/// </summary>
 	public string IsRoot { get; set; }
