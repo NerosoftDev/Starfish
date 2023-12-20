@@ -29,9 +29,11 @@ public interface IUserApplicationService : IApplicationService
 	/// 查询符合条件的用户列表
 	/// </summary>
 	/// <param name="criteria"></param>
+	/// <param name="size"></param>
 	/// <param name="cancellationToken"></param>
+	/// <param name="page"></param>
 	/// <returns></returns>
-	Task<List<UserItemDto>> SearchAsync(UserCriteria criteria, CancellationToken cancellationToken = default);
+	Task<List<UserItemDto>> SearchAsync(UserCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询符合条件的用户数量
@@ -56,4 +58,13 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task DeleteAsync(int id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 设置用户角色
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="roles"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task SetRolesAsync(int id, List<string> roles, CancellationToken cancellationToken = default);
 }

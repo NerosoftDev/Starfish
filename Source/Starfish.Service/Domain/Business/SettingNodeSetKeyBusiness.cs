@@ -49,15 +49,15 @@ public class SettingNodeSetKeyBusiness : EditableObject<SettingNodeSetKeyBusines
 	}
 
 	[FactoryUpdate]
-	protected override async Task UpdateAsync()
+	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
-		var aggregate = await _repository.GetAsync(Id, true, Array.Empty<string>());
+		var aggregate = await _repository.GetAsync(Id, true, Array.Empty<string>(), cancellationToken);
 		if (aggregate == null)
 		{
 			throw new SettingNodeNotFoundException(Id);
 		}
 
-		var parent = await _repository.GetAsync(aggregate.ParentId);
+		var parent = await _repository.GetAsync(aggregate.ParentId, cancellationToken);
 
 		if (parent == null)
 		{
@@ -70,7 +70,7 @@ public class SettingNodeSetKeyBusiness : EditableObject<SettingNodeSetKeyBusines
 
 		if (aggregate.Type is SettingNodeType.Array or SettingNodeType.Object)
 		{
-			var leaves = await _repository.GetLeavesAsync(aggregate.AppId, aggregate.Environment, aggregate.Key);
+			var leaves = await _repository.GetLeavesAsync(aggregate.AppId, aggregate.Environment, aggregate.Key, cancellationToken);
 
 			foreach (var node in leaves)
 			{

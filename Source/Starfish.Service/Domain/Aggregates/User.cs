@@ -24,16 +24,12 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// <param name="userName"></param>
 	/// <param name="passwordHash"></param>
 	/// <param name="passwordSalt"></param>
-	/// <param name="email"></param>
-	/// <param name="roles"></param>
-	private User(string userName, string passwordHash, string passwordSalt, string email, string roles)
+	private User(string userName, string passwordHash, string passwordSalt)
 		: this()
 	{
 		UserName = userName;
 		PasswordHash = passwordHash;
 		PasswordSalt = passwordSalt;
-		Email = email;
-		Roles = roles;
 	}
 
 	/// <summary>
@@ -72,9 +68,10 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	public DateTime? LockoutEnd { get; set; }
 
 	/// <summary>
-	/// 用户角色
+	/// 是否是预留账号
 	/// </summary>
-	public string Roles { get; set; }
+	/// <remarks>预留账号不允许删除、设置角色等</remarks>
+	public bool Reserved { get; set; }
 
 	/// <summary>
 	/// 创建时间
@@ -97,18 +94,21 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	public DateTime? DeleteTime { get; set; }
 
 	/// <summary>
+	/// 用户角色
+	/// </summary>
+	public HashSet<UserRole> Roles { get; set; }
+
+	/// <summary>
 	/// 新建用户
 	/// </summary>
 	/// <param name="userName"></param>
 	/// <param name="password"></param>
-	/// <param name="email"></param>
-	/// <param name="roles"></param>
 	/// <returns></returns>
-	internal static User Create(string userName, string password, string email, params string[] roles)
+	internal static User Create(string userName, string password)
 	{
 		var salt = RandomUtility.CreateUniqueId();
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
-		var entity = new User(userName, hash, salt, email, roles.JoinAsString(","));
+		var entity = new User(userName, hash, salt);
 		return entity;
 	}
 
@@ -130,7 +130,18 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// <param name="roles"></param>
 	internal void SetRoles(params string[] roles)
 	{
-		Roles = roles?.JoinAsString(",");
+		if (Reserved)
+		{
+			throw new UnauthorizedAccessException("预留账号不允许设置角色");
+		}
+
+		Roles ??= [];
+		roles ??= [];
+		Roles.RemoveWhere(t => roles.Contains(t.Name, StringComparison.OrdinalIgnoreCase));
+		foreach (var role in roles)
+		{
+			Roles.Add(UserRole.Create(role));
+		}
 	}
 
 	/// <summary>
@@ -139,7 +150,7 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// <param name="email"></param>
 	internal void SetEmail(string email)
 	{
-		Email = email;
+		Email = email.Normalize(TextCaseType.Lower);
 	}
 
 	/// <summary>

@@ -1,29 +1,19 @@
 ﻿using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
 
 /// <summary>
 /// 创建用户命令
 /// </summary>
-public sealed class UserCreateCommand : Command
+public sealed class UserCreateCommand : Command<UserCreateDto>
 {
 	/// <summary>
-	/// 用户名
+	/// 构造函数
 	/// </summary>
-	public string UserName { get; set; }
-
-	/// <summary>
-	/// 用户密码
-	/// </summary>
-	public string Password { get; set; }
-
-	/// <summary>
-	/// 邮箱
-	/// </summary>
-	public string Email { get; set; }
-
-	/// <summary>
-	/// 用户角色
-	/// </summary>
-	public string[] Roles { get; set; }
+	/// <param name="data">用户创建数据传输对象</param>
+	public UserCreateCommand(UserCreateDto data)
+		: base(data)
+	{
+	}
 }

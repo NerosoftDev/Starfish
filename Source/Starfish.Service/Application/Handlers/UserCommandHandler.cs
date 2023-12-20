@@ -13,20 +13,17 @@ public sealed class UserCommandHandler : CommandHandlerBase,
                                          IHandler<UserCreateCommand>,
                                          IHandler<UserUpdateCommand>,
                                          IHandler<UserChangePasswordCommand>,
-                                         IHandler<UserDeleteCommand>
+                                         IHandler<UserDeleteCommand>,
+                                         IHandler<UserSetRoleCommand>
 {
-	private readonly IUserRepository _repository;
-
 	/// <summary>
 	/// 初始化<see cref="UserCommandHandler"/>.
 	/// </summary>
-	/// <param name="userRepository"></param>
 	/// <param name="unitOfWork"></param>
 	/// <param name="factory"></param>
-	public UserCommandHandler(IUserRepository userRepository, IUnitOfWorkManager unitOfWork, IObjectFactory factory)
+	public UserCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
 	{
-		_repository = userRepository;
 	}
 
 	/// <inheritdoc/>
@@ -34,22 +31,16 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var isUserNameAvailable = await CheckUserNameAsync(message.UserName);
-			if (!isUserNameAvailable)
-			{
-				throw new ConflictException(string.Format(Resources.IDS_ERROR_USERNAME_UNAVAILABLE, message.UserName));
-			}
+			var business = await Factory.CreateAsync<UserGeneralBusiness>();
+			business.UserName = message.Item1.UserName;
+			business.Password = message.Item1.Password;
+			business.NickName = message.Item1.NickName;
+			business.Email = message.Item1.Email;
+			business.Roles = message.Item1.Roles;
+			await business.SaveAsync(false, cancellationToken);
 
-			var user = User.Create(message.UserName, message.Password, message.Email, message.Roles);
-			await _repository.InsertAsync(user, true, cancellationToken);
-			return user.Id;
+			return business.Id;
 		}, context.Response);
-
-		Task<bool> CheckUserNameAsync(string userName)
-		{
-			return _repository.CheckUserNameExistsAsync(userName, cancellationToken)
-			                  .ContinueWith(task => !task.Result, cancellationToken);
-		}
 	}
 
 	/// <inheritdoc />
@@ -57,17 +48,13 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var user = await _repository.GetAsync(message.UserId, true, cancellationToken);
-			if (user == null)
-			{
-				throw new UserNotFoundException(message.UserId);
-			}
+			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.Item1, cancellationToken);
 
-			user.SetEmail(message.Email);
-			user.SetNickName(message.NickName);
-			user.SetRoles(message.Roles);
-
-			await _repository.UpdateAsync(user, true, cancellationToken);
+			business.Email = message.Item2.Email;
+			business.NickName = message.Item2.NickName;
+			business.Roles = message.Item2.Roles;
+			business.MarkAsUpdate();
+			await business.SaveAsync(true, cancellationToken);
 		});
 	}
 
@@ -76,15 +63,11 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var user = await _repository.GetAsync(message.UserId, true, cancellationToken);
-			if (user == null)
-			{
-				throw new UserNotFoundException(message.UserId);
-			}
+			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.UserId, cancellationToken);
 
-			user.ChangePassword(message.Password);
-
-			await _repository.UpdateAsync(user, true, cancellationToken);
+			business.Password = message.Password;
+			business.MarkAsUpdate();
+			await business.SaveAsync(true, cancellationToken);
 		});
 	}
 
@@ -93,13 +76,24 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var user = await _repository.GetAsync(message.Item1, true, cancellationToken);
-			if (user == null)
-			{
-				throw new UserNotFoundException(message.Item1);
-			}
+			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.Item1, cancellationToken);
+			business.MarkAsDelete();
+			await business.SaveAsync(true, cancellationToken);
+		});
+	}
 
-			await _repository.DeleteAsync(user, true, cancellationToken);
+	/// <inheritdoc />
+	public Task HandleAsync(UserSetRoleCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	{
+		return ExecuteAsync(async () =>
+		{
+			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.Item1, cancellationToken);
+
+			business.Roles = message.Item2;
+
+			business.MarkAsUpdate();
+
+			await business.SaveAsync(true, cancellationToken);
 		});
 	}
 }

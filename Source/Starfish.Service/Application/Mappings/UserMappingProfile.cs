@@ -15,15 +15,20 @@ public class UserMappingProfile : Profile
 	public UserMappingProfile()
 	{
 		CreateMap<User, UserItemDto>()
-			.ForMember(dest => dest.Roles, opt => opt.MapFrom(src => ResolveUserRoles(src.Roles)));
+			.ForMember(dest => dest.Roles, opt => opt.MapFrom(GetRoles));
 		CreateMap<User, UserDetailDto>()
-			.ForMember(dest => dest.Roles, opt => opt.MapFrom(src => ResolveUserRoles(src.Roles)));
+			.ForMember(dest => dest.Roles, opt => opt.MapFrom(GetRoles));
 		CreateMap<UserCreateDto, UserCreateCommand>();
 		CreateMap<UserUpdateDto, UserUpdateCommand>();
 	}
 
-	private static List<string> ResolveUserRoles(string roles)
+	private static List<string> GetRoles(User source, UserItemDto destination)
 	{
-		return roles.Split(",").ToList();
+		return source.Roles.Select(t => t.Name).ToList();
+	}
+
+	private static List<string> GetRoles(User source, UserDetailDto destination)
+	{
+		return source.Roles.Select(t => t.Name).ToList();
 	}
 }
