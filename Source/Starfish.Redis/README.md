@@ -39,7 +39,11 @@ The following example shows how to read application settings from the Redis.
 
 ### Install NuGet package
 
-NuGet package: [Starfish.Redis](https://www.nuget.org/packages/Starfish.Redis/)
+NuGet package: 
+
+| Package | Version| Downloads |
+|--|--|--|
+| [Starfish.Redis](https://www.nuget.org/packages/Starfish.Redis/) |![Nuget](https://img.shields.io/nuget/v/Starfish.Redis?label=Starfish.Redis)|![Nuget](https://img.shields.io/nuget/dt/Starfish.Redis)|
 
 ```bash
 Install-Package Starfish.Redis
