@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 删除配置节点用例接口
 /// </summary>
-public interface ISettingNodeDeleteUseCase : IUseCase<SettingNodeDeleteInput>;
+public interface ISettingNodeDeleteUseCase : INonOutputUseCase<SettingNodeDeleteInput>;
 
 /// <summary>
 /// 删除配置节点输入
@@ -22,16 +22,11 @@ public class SettingNodeDeleteUseCase : ISettingNodeDeleteUseCase
 {
 	private readonly IBus _bus;
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
 	public SettingNodeDeleteUseCase(IBus bus)
 	{
 		_bus = bus;
 	}
 
-	/// <inheritdoc />
 	public Task ExecuteAsync(SettingNodeDeleteInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new SettingNodeDeleteCommand(input.Id);

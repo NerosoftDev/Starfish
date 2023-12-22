@@ -4,7 +4,7 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserSetRoleUseCase : IUseCase<UserSetRoleInput>;
+public interface IUserSetRoleUseCase : INonOutputUseCase<UserSetRoleInput>;
 
 public record UserSetRoleInput(int Id, List<string> Roles) : IUseCaseInput;
 

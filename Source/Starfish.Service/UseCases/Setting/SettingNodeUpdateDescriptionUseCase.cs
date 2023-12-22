@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 配置节点更新用例接口
 /// </summary>
-public interface ISettingNodeUpdateDescriptionUseCase : IUseCase<SettingNodeUpdateDescriptionInput>;
+public interface ISettingNodeUpdateDescriptionUseCase : INonOutputUseCase<SettingNodeUpdateDescriptionInput>;
 
 /// <summary>
 /// 配置节点更新输入
@@ -23,16 +23,11 @@ public class SettingNodeUpdateDescriptionUseCase : ISettingNodeUpdateDescription
 {
 	private readonly IBus _bus;
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
 	public SettingNodeUpdateDescriptionUseCase(IBus bus)
 	{
 		_bus = bus;
 	}
-
-	/// <inheritdoc />
+	
 	public Task ExecuteAsync(SettingNodeUpdateDescriptionInput valueInput, CancellationToken cancellationToken = default)
 	{
 		var command = new SettingNodeUpdateCommand(valueInput.Id, "description", valueInput.Description);

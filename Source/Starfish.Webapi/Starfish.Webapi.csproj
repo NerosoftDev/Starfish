@@ -7,6 +7,7 @@
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
     </PropertyGroup>
     
     <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">

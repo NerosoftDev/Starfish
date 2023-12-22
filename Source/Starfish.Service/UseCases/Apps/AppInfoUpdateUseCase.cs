@@ -10,7 +10,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 应用信息更新用例接口
 /// </summary>
-public interface IAppInfoUpdateUseCase : IUseCase<AppInfoUpdateInput>;
+public interface IAppInfoUpdateUseCase : INonOutputUseCase<AppInfoUpdateInput>;
 
 /// <summary>
 /// 应用信息更新输入
@@ -32,18 +32,12 @@ public class AppInfoUpdateUseCase : IAppInfoUpdateUseCase
 	private readonly IBus _bus;
 	private readonly UserPrincipal _user;
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
-	/// <param name="user"></param>
 	public AppInfoUpdateUseCase(IBus bus, UserPrincipal user)
 	{
 		_bus = bus;
 		_user = user;
 	}
 
-	/// <inheritdoc />
 	public Task ExecuteAsync(AppInfoUpdateInput input, CancellationToken cancellationToken = default)
 	{
 		if (!_user.IsAuthenticated)

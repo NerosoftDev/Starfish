@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 重命名配置节点用例接口
 /// </summary>
-public interface ISettingNodeUpdateNameUseCase : IUseCase<SettingNodeUpdateNameInput>;
+public interface ISettingNodeUpdateNameUseCase : INonOutputUseCase<SettingNodeUpdateNameInput>;
 
 /// <summary>
 /// 重命名配置节点输入
@@ -32,7 +32,6 @@ public class SettingNodeUpdateNameUseCase : ISettingNodeUpdateNameUseCase
 		_bus = bus;
 	}
 
-	/// <inheritdoc />
 	public Task ExecuteAsync(SettingNodeUpdateNameInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new SettingNodeUpdateCommand(input.Id, "name", input.Name);

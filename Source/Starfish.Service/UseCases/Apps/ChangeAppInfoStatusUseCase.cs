@@ -10,7 +10,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 变更应用信息状态用例接口
 /// </summary>
-public interface IChangeAppInfoStatusUseCase : IUseCase<ChangeAppInfoStatusInput>;
+public interface IChangeAppInfoStatusUseCase : INonOutputUseCase<ChangeAppInfoStatusInput>;
 
 /// <summary>
 /// 变更应用信息状态输入
@@ -27,23 +27,17 @@ public class ChangeAppInfoStatusUseCase : IChangeAppInfoStatusUseCase
 	/// <summary>
 	/// 允许访问的角色
 	/// </summary>
-	private readonly string[] _roles = { "SA", "RW" };
+	private readonly string[] _roles = ["SA", "RW"];
 
 	private readonly IBus _bus;
 	private readonly UserPrincipal _user;
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
-	/// <param name="user"></param>
 	public ChangeAppInfoStatusUseCase(IBus bus, UserPrincipal user)
 	{
 		_bus = bus;
 		_user = user;
 	}
 
-	/// <inheritdoc />
 	public Task ExecuteAsync(ChangeAppInfoStatusInput input, CancellationToken cancellationToken = default)
 	{
 		if (!_user.IsAuthenticated)

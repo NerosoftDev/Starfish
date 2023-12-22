@@ -4,7 +4,7 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserDeleteUseCase : IUseCase<UserDeleteInput>;
+public interface IUserDeleteUseCase : INonOutputUseCase<UserDeleteInput>;
 
 public record UserDeleteInput(int Id) : IUseCaseInput;
 

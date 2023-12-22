@@ -4,7 +4,7 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IAppInfoSetSecretUseCase : IUseCase<AppInfoSetSecretInput>;
+public interface IAppInfoSetSecretUseCase : INonOutputUseCase<AppInfoSetSecretInput>;
 
 public record AppInfoSetSecretInput(long Id, string Secret) : IUseCaseInput;
 
