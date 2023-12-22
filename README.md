@@ -1,6 +1,6 @@
 # Overview/概览 ⚡
 
-[![Build Status](https://travis-ci.com/NerosoftDev/Starfish.svg?branch=master)]()
+[![Build Status](https://img.shields.io/github/actions/workflow/status/NerosoftDev/Starfish/dotnet.yml)]()
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/release/NerosoftDev/Starfish.svg)]()
 [![GitHub stars](https://img.shields.io/github/stars/NerosoftDev/Starfish.svg)]()
