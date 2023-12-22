@@ -123,7 +123,7 @@
   <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
     <value>Page size must be greater than 0.</value>
   </data>
-  <data name="IDS_ERROR_USERNAME_OR_PASSWORD_IS_INVALID" xml:space="preserve">
+  <data name="IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID" xml:space="preserve">
     <value>Username or password is invalid.</value>
   </data>
   <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
@@ -135,8 +135,8 @@
   <data name="IDS_ERROR_USER_LOCKOUT" xml:space="preserve">
     <value>The user was locked out.</value>
   </data>
-  <data name="IDS_ERROR_USERNAME_UNAVAILABLE" xml:space="preserve">
-    <value>UserName {0} not available.</value>
+  <data name="IDS_ERROR_USER_USERNAME_UNAVAILABLE" xml:space="preserve">
+    <value>UserName '{0}' not available.</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_EXISTS" xml:space="preserve">
     <value>User not exists, [Id]:{0}.</value>
@@ -266,5 +266,8 @@
   </data>
   <data name="IDS_ERROR_SETTING_NODE_DUPLICATE_ROOT" xml:space="preserve">
     <value>Root node already exists.</value>
+  </data>
+  <data name="IDS_ERROR_USER_EMAIL_UNAVAILABLE" xml:space="preserve">
+    <value>Email '{0}' not available.</value>
   </data>
 </root>

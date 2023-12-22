@@ -1,6 +1,4 @@
-﻿using Nerosoft.Euonia.Core;
-
-namespace Nerosoft.Starfish.Domain;
+﻿namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 用户锁定异常

@@ -16,7 +16,30 @@ public class SqliteModelBuilder : IModelBuilder
 		modelBuilder.Entity<User>(entity =>
 		{
 			entity.ToTable("user");
+
+			entity.HasKey(t => t.Id);
+
+			entity.HasIndex(t => t.UserName).IsUnique();
+
+			entity.HasMany(t => t.Roles)
+			      .WithOne(t => t.User)
+			      .HasForeignKey(t => t.UserId);
 		});
+
+		modelBuilder.Entity<UserRole>(entity =>
+		{
+			entity.ToTable("user_role");
+
+			entity.HasKey(t => t.Id);
+
+			entity.HasIndex([nameof(UserRole.UserId), nameof(UserRole.Name)], "IDX_USER_ROLE_UNIQUE")
+			      .IsUnique();
+
+			entity.HasOne(t => t.User)
+			      .WithMany(t => t.Roles)
+			      .HasForeignKey(t => t.UserId);
+		});
+
 		modelBuilder.Entity<Token>(entity =>
 		{
 			entity.ToTable("token");

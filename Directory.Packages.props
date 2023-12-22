@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
-        <EuoniaPackageVersion>8.1.13</EuoniaPackageVersion>
+        <EuoniaPackageVersion>8.1.14</EuoniaPackageVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="Dapper" Version="2.1.24" />

@@ -52,9 +52,9 @@ public class SettingNodeUpdateBusiness : EditableObject<SettingNodeUpdateBusines
 	#endregion
 
 	[FactoryFetch]
-	protected async Task FetchAsync(long id)
+	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await _repository.GetAsync(Id, true, []);
+		var aggregate = await _repository.GetAsync(Id, true, [], cancellationToken);
 
 		Aggregate = aggregate ?? throw new SettingNodeNotFoundException(Id);
 
@@ -62,7 +62,7 @@ public class SettingNodeUpdateBusiness : EditableObject<SettingNodeUpdateBusines
 	}
 
 	[FactoryUpdate]
-	protected override async Task UpdateAsync()
+	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
 		Func<SettingNode, Task> action = Intent switch
 		{
@@ -75,7 +75,7 @@ public class SettingNodeUpdateBusiness : EditableObject<SettingNodeUpdateBusines
 
 		await action(Aggregate);
 
-		await _repository.UpdateAsync(Aggregate);
+		await _repository.UpdateAsync(Aggregate, true, cancellationToken);
 	}
 
 	private async Task UpdateNameAsync(SettingNode aggregate)

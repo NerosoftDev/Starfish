@@ -106,4 +106,25 @@ public static class CriteriaExtensions
 
 		return specification;
 	}
+
+	public static Specification<User> GetSpecification(this UserCriteria criteria)
+	{
+		Specification<User> specification = new TrueSpecification<User>();
+		if (criteria == null)
+		{
+			return specification;
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
+		{
+			specification &= UserSpecification.UserNameContains(criteria.Keyword);
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Role))
+		{
+			specification &= UserSpecification.HasRole(criteria.Role);
+		}
+
+		return specification;
+	}
 }

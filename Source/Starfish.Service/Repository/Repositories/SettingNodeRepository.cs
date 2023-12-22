@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Service;
@@ -34,31 +33,6 @@ public class SettingNodeRepository : BaseRepository<DataContext, SettingNode, lo
 		var specification = SettingNodeSpecification.KeyStartsWith($"{key}:");
 		specification &= SettingNodeSpecification.AppIdEquals(appId);
 		specification &= SettingNodeSpecification.EnvironmentEquals(environment);
-		var predicate = specification.Satisfy();
-		return base.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
-	}
-
-	/// <inheritdoc />
-	public Task<List<SettingNode>> GetNodesAsync(long appId, string environment, CancellationToken cancellationToken = default)
-	{
-		var specification = SettingNodeSpecification.AppIdEquals(appId) & SettingNodeSpecification.EnvironmentEquals(environment);
-		var predicate = specification.Satisfy();
-		var set = Context.Set<SettingNode>()
-		                 .Include(t => t.Children);
-		return set.Where(predicate)
-		          .ToListAsync(cancellationToken);
-	}
-
-	/// <inheritdoc />
-	public Task<List<SettingNode>> GetNodesAsync(long appId, string environment, IEnumerable<SettingNodeType> types, CancellationToken cancellationToken = default)
-	{
-		ISpecification<SettingNode>[] specs = 
-		{
-			SettingNodeSpecification.AppIdEquals(appId),
-			SettingNodeSpecification.EnvironmentEquals(environment),
-			SettingNodeSpecification.TypeIn(types)
-		};
-		var specification = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specs);
 		var predicate = specification.Satisfy();
 		return base.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
 	}

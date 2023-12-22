@@ -17,7 +17,7 @@ public class AppInfoSetSecretUseCase : IAppInfoSetSecretUseCase
 		_bus = bus;
 	}
 
-	public Task ExecuteAsync(AppInfoSetSecretInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(AppInfoSetSecretInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new AppInfoSetSecretCommand(input.Id, input.Secret);
 		return _bus.SendAsync(command, cancellationToken);

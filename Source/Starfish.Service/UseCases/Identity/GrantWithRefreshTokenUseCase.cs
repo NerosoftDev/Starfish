@@ -1,5 +1,6 @@
 ﻿using System.Security.Authentication;
 using IdentityModel;
+using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Domain;
@@ -81,7 +82,7 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_EXPIRED);
 			}
 
-			var user = await UserRepository.GetAsync(int.Parse(token.Subject), false, cancellationToken);
+			var user = await UserRepository.GetAsync(int.Parse(token.Subject), false, query => query.Include(nameof(User.Roles)), cancellationToken);
 
 			if (user == null)
 			{
@@ -93,7 +94,9 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 				throw new AuthenticationException(Resources.IDS_ERROR_USER_LOCKOUT);
 			}
 
-			var roles = user.Roles.Split(',', StringSplitOptions.RemoveEmptyEntries);
+			var roles = user.Roles
+			                .Select(t => t.Name)
+			                .ToList();
 			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{

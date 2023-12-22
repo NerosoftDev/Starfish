@@ -102,7 +102,7 @@ public class SettingNodeCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<SettingNodeUpdateBusiness>(message.Id);
+			var business = await Factory.FetchAsync<SettingNodeUpdateBusiness>(message.Id, cancellationToken);
 			business.Intent = message.Intent;
 			business.Value = message.Value;
 			business.MarkAsUpdate();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nerosoft.Starfish.Transit;
+﻿namespace Nerosoft.Starfish.Transit;
 
 /// <summary>
 /// 用户编辑Dto

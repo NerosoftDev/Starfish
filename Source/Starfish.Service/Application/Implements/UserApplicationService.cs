@@ -1,7 +1,6 @@
 ﻿using Nerosoft.Euonia.Application;
-using Nerosoft.Euonia.Mapping;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
+using Nerosoft.Starfish.UseCases;
 
 namespace Nerosoft.Starfish.Application;
 
@@ -10,28 +9,30 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class UserApplicationService : BaseApplicationService, IUserApplicationService
 {
-	private UserRepository _userRepository;
-	private UserRepository UserRepository => _userRepository ??= LazyServiceProvider.GetService<UserRepository>();
-
 	/// <inheritdoc />
 	public Task<int> CreateAsync(UserCreateDto data, CancellationToken cancellationToken = default)
 	{
-		var command = new UserCreateCommand();
-		return Bus.SendAsync<UserCreateCommand, int>(command, cancellationToken)
-		          .ContinueWith(task => task.Result, cancellationToken);
+		var useCase = LazyServiceProvider.GetService<IUserCreateUseCase>();
+		var input = new UserCreateInput(data);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
 	public Task UpdateAsync(int id, UserUpdateDto data, CancellationToken cancellationToken = default)
 	{
-		var command = new UserUpdateCommand();
-		return Bus.SendAsync(command, cancellationToken);
+		var useCase = LazyServiceProvider.GetService<IUserUpdateUseCase>();
+		var input = new UserUpdateInput(id, data);
+		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<List<UserItemDto>> SearchAsync(UserCriteria criteria, CancellationToken cancellationToken = default)
+	public Task<List<UserItemDto>> SearchAsync(UserCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
 	{
-		throw new NotImplementedException();
+		var useCase = LazyServiceProvider.GetService<IUserSearchUseCase>();
+		var input = new UserSearchInput(criteria, page, size);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -43,14 +44,25 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	/// <inheritdoc />
 	public Task<UserDetailDto> GetAsync(int id, CancellationToken cancellationToken = default)
 	{
-		return UserRepository.GetAsync(id, false, cancellationToken)
-		                     .ContinueWith(task => TypeAdapter.ProjectedAs<UserDetailDto>(task.Result), cancellationToken);
+		var useCase = LazyServiceProvider.GetService<IUserDetailUseCase>();
+		var input = new UserDetailInput(id);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
 	public Task DeleteAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var command = new UserDeleteCommand(id);
-		return Bus.SendAsync(command, cancellationToken);
+		var useCase = LazyServiceProvider.GetService<IUserDeleteUseCase>();
+		var input = new UserDeleteInput(id);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	/// <inheritdoc />
+	public Task SetRolesAsync(int id, List<string> roles, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetService<IUserSetRoleUseCase>();
+		var input = new UserSetRoleInput(id, roles);
+		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 }

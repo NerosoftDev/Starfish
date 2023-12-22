@@ -69,20 +69,20 @@ public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 		{
 			if (string.IsNullOrWhiteSpace(input.UserName) || string.IsNullOrWhiteSpace(input.Password))
 			{
-				throw new BadRequestException(Resources.IDS_ERROR_USERNAME_OR_PASSWORD_IS_INVALID);
+				throw new BadRequestException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
 			}
 
 			var user = await UserRepository.FindByUserNameAsync(input.UserName, false, cancellationToken);
 			if (user == null)
 			{
-				throw new BadRequestException(Resources.IDS_ERROR_USERNAME_OR_PASSWORD_IS_INVALID);
+				throw new BadRequestException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
 			}
 
 			var passwordHash = Cryptography.DES.Encrypt(input.Password, Encoding.UTF8.GetBytes(user.PasswordSalt));
 
 			if (string.Equals(user.PasswordHash, passwordHash))
 			{
-				throw new AuthenticationException(Resources.IDS_ERROR_USERNAME_OR_PASSWORD_IS_INVALID);
+				throw new AuthenticationException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
 			}
 
 			if (user.LockoutEnd > DateTime.UtcNow)
@@ -90,7 +90,7 @@ public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 				throw new AuthenticationException(Resources.IDS_ERROR_USER_LOCKOUT);
 			}
 
-			var roles = user.Roles.Split(',', StringSplitOptions.RemoveEmptyEntries);
+			var roles = user.Roles.Select(t => t.Name).ToList();
 			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{

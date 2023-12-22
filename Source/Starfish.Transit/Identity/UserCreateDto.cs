@@ -24,4 +24,9 @@ public class UserCreateDto
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }
+
+	/// <summary>
+	/// 用户角色
+	/// </summary>
+	public List<string> Roles { get; set; }
 }

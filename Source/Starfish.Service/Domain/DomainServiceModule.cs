@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Nerosoft.Euonia.Modularity;
+﻿using Nerosoft.Euonia.Modularity;
 
 namespace Nerosoft.Starfish.Domain;
 
