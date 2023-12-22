@@ -1,9 +1,9 @@
 # Overview/概览 ⚡
 
-[![Build Status](https://travis-ci.com/realzhaorong/Starfish.svg?branch=master)]()
+[![Build Status](https://travis-ci.com/NerosoftDev/Starfish.svg?branch=master)]()
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/release/realzhaorong/Starfish.svg)]()
-[![GitHub stars](https://img.shields.io/github/stars/realzhaorong/Starfish.svg)]()
+[![GitHub release](https://img.shields.io/github/release/NerosoftDev/Starfish.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/NerosoftDev/Starfish.svg)]()
 
 Starfish is a lightweight powerful distributed configuration server for .NET application.
 
