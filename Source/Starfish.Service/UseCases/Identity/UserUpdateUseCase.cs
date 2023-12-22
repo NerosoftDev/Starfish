@@ -5,7 +5,7 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserUpdateUseCase : IUseCase<UserUpdateInput>;
+public interface IUserUpdateUseCase : INonOutputUseCase<UserUpdateInput>;
 
 public record UserUpdateInput(int Id, UserUpdateDto Data) : IUseCaseInput;
 

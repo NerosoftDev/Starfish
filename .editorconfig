@@ -34,3 +34,8 @@ resharper_convert_to_primary_constructor_highlighting = none # 去除构造函�
 
 [*.xaml.cs]
 resharper_redundant_extends_list_entry_highlighting = none # 去除xaml.cs文件的基类型重复警告。基类型不能删除，否则编译报错。
+
+[*.{cs,vb}]
+# Organize usings
+#按字母顺序对 System.* using 指令排序，并将它们放在其他 using 指令前面
+dotnet_sort_system_directives_first = true

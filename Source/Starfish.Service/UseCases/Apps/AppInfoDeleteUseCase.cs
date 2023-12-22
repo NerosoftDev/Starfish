@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 应用信息删除用例接口
 /// </summary>
-public interface IAppInfoDeleteUseCase : IUseCase<AppInfoDeleteInput>;
+public interface IAppInfoDeleteUseCase : INonOutputUseCase<AppInfoDeleteInput>;
 
 /// <summary>
 /// 应用信息删除输入
@@ -25,23 +25,17 @@ public class AppInfoDeleteUseCase : IAppInfoDeleteUseCase
 	/// <summary>
 	/// 允许访问的角色
 	/// </summary>
-	private readonly string[] _roles = { "SA", "RW" };
+	private readonly string[] _roles = ["SA", "RW"];
 
 	private readonly IBus _bus;
 	private readonly UserPrincipal _user;
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
-	/// <param name="user"></param>
 	public AppInfoDeleteUseCase(IBus bus, UserPrincipal user)
 	{
 		_bus = bus;
 		_user = user;
 	}
 
-	/// <inheritdoc />
 	public Task ExecuteAsync(AppInfoDeleteInput input, CancellationToken cancellationToken = default)
 	{
 		if (!_user.IsAuthenticated)

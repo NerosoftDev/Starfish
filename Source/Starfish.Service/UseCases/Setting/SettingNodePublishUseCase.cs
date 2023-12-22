@@ -1,7 +1,6 @@
 ﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Starfish.Application;
-using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
@@ -9,7 +8,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 配置节点发布用例接口
 /// </summary>
-public interface ISettingNodePublishUseCase : IUseCase<SettingNodePublishInput>;
+public interface ISettingNodePublishUseCase : INonOutputUseCase<SettingNodePublishInput>;
 
 /// <summary>
 /// 配置节点发布输入
@@ -23,20 +22,12 @@ public record SettingNodePublishInput(long Id, SettingNodePublishDto Data) : IUs
 public class SettingNodePublishUseCase : ISettingNodePublishUseCase
 {
 	private readonly IBus _bus;
-	private readonly ISettingNodeRepository _repository;
 
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="bus"></param>
-	/// <param name="repository"></param>
-	public SettingNodePublishUseCase(IBus bus, ISettingNodeRepository repository)
+	public SettingNodePublishUseCase(IBus bus)
 	{
 		_bus = bus;
-		_repository = repository;
 	}
-
-	/// <inheritdoc />
+	
 	public async Task ExecuteAsync(SettingNodePublishInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new SettingNodePublishCommand(input.Id);

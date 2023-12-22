@@ -106,7 +106,7 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// <returns></returns>
 	internal static User Create(string userName, string password)
 	{
-		var salt = RandomUtility.CreateUniqueId();
+		var salt = RandomUtility.GenerateUniqueId();
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
 		var entity = new User(userName, hash, salt);
 		return entity;
@@ -118,7 +118,7 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// <param name="password"></param>
 	internal void ChangePassword(string password)
 	{
-		var salt = RandomUtility.CreateUniqueId();
+		var salt = RandomUtility.GenerateUniqueId();
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
 		PasswordHash = hash;
 		PasswordSalt = salt;
