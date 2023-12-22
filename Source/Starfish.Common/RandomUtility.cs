@@ -3,7 +3,7 @@
 namespace Nerosoft.Starfish.Common;
 
 /// <summary>
-/// 随机数工具类
+/// A utility class for generating random numbers or strings.
 /// </summary>
 internal class RandomUtility : Random
 {
@@ -11,41 +11,14 @@ internal class RandomUtility : Random
 	private readonly byte[] _uint32Buffer = new byte[4];
 
 	/// <summary>
-	/// 创建随机数键值
+	/// Generate a random string with a given size.
 	/// </summary>
-	/// <param name="length">长度</param>
+	/// <param name="length"></param>
 	/// <returns></returns>
-	public static byte[] CreateRandomKey(int length)
-	{
-		var bytes = new byte[length];
-		_generator.GetBytes(bytes);
-
-		return bytes;
-	}
-
-	/// <summary>
-	/// 创建随机键值字符串
-	/// </summary>
-	/// <param name="length">长度</param>
-	/// <returns></returns>
-	public static string CreateRandomKeyString(int length)
-	{
-		var bytes = new byte[length];
-		_generator.GetBytes(bytes);
-
-		return Convert.ToBase64String(bytes);
-	}
-
-	/// <summary>
-	/// 创建唯一编号
-	/// </summary>
-	/// <param name="length">长度</param>
-	/// <returns></returns>
-	public static string CreateUniqueId(int length = 32)
+	public static string GenerateUniqueId(int length = 32)
 	{
 		var bytes = new byte[Convert.ToInt32(length / 2)];
 		_generator.GetBytes(bytes);
-		//转化为16进制
 		var hex = new StringBuilder(bytes.Length * 2);
 		foreach (var b in bytes)
 		{
@@ -53,21 +26,6 @@ internal class RandomUtility : Random
 		}
 
 		return hex.ToString();
-	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RandomUtility"/> class.
-	/// </summary>
-	public RandomUtility()
-	{
-	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="RandomUtility"/> class.
-	/// </summary>
-	/// <param name="ignoredSeed">seed (ignored)</param>
-	public RandomUtility(int ignoredSeed)
-	{
 	}
 
 	/// <summary>

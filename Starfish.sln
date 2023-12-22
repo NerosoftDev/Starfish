@@ -40,9 +40,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Common", "Source\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Sample.Webapi", "Samples\Starfish.Sample.Webapi\Starfish.Sample.Webapi.csproj", "{6C29FD68-4D15-4D8B-A6DF-42216074CD1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfish.Sample.Blazor", "Samples\Starfish.Sample.Blazor\Starfish.Sample.Blazor.csproj", "{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Sample.Blazor", "Samples\Starfish.Sample.Blazor\Starfish.Sample.Blazor.csproj", "{EA58AD06-DA8C-469A-81C3-DDF9C75F8872}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfish.Sample.MauiApp", "Samples\Starfish.Sample.MauiApp\Starfish.Sample.MauiApp.csproj", "{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Sample.MauiApp", "Samples\Starfish.Sample.MauiApp\Starfish.Sample.MauiApp.csproj", "{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Redis", "Source\Starfish.Redis\Starfish.Redis.csproj", "{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +94,10 @@ Global
 		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +113,7 @@ Global
 		{6C29FD68-4D15-4D8B-A6DF-42216074CD1B} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
 		{EA58AD06-DA8C-469A-81C3-DDF9C75F8872} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
 		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
+		{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE} = {31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFF17094-761E-48C4-96A9-16248CBF46BA}
