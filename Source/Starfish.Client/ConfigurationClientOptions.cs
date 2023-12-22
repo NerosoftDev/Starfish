@@ -38,55 +38,22 @@ public class ConfigurationClientOptions
 	public string CacheDirectory { get; set; }
 
 	/// <summary>
-	/// 从Json文件加载配置
-	/// </summary>
-	/// <param name="jsonSettingsFile"></param>
-	/// <returns></returns>
-	public static ConfigurationClientOptions LoadJson(string jsonSettingsFile = "appsettings.json")
-	{
-		ArgumentNullException.ThrowIfNull(jsonSettingsFile);
-
-		var configuration = new ConfigurationBuilder().AddJsonFile(jsonSettingsFile, true)
-													  .AddEnvironmentVariables()
-													  .Build();
-
-		return Load(configuration);
-	}
-
-	/// <summary>
-	/// 从Xml文件加载配置
-	/// </summary>
-	/// <param name="xmlSettingsFile"></param>
-	/// <returns></returns>
-	public static ConfigurationClientOptions LoadXml(string xmlSettingsFile = "config.xml")
-	{
-		ArgumentNullException.ThrowIfNull(xmlSettingsFile);
-
-		var configuration = new ConfigurationBuilder().AddXmlFile(xmlSettingsFile, true)
-													  .AddEnvironmentVariables()
-													  .Build();
-
-		return Load(configuration);
-	}
-
-	/// <summary>
 	/// 从字典加载配置
 	/// </summary>
 	/// <param name="dictionary"></param>
 	/// <returns></returns>
-	public static ConfigurationClientOptions LoadDictionary(Dictionary<string, string> dictionary)
+	public static ConfigurationClientOptions Load(Dictionary<string, string> dictionary)
 	{
 		ArgumentNullException.ThrowIfNull(dictionary);
 
 		var configuration = new ConfigurationBuilder().AddInMemoryCollection(dictionary)
-													  .AddEnvironmentVariables()
 													  .Build();
 
 		return Load(configuration);
 	}
 
 	/// <summary>
-	/// 
+	/// 从已有配置信息加载Starfish.Client配置
 	/// </summary>
 	/// <param name="configuration"></param>
 	/// <returns></returns>
@@ -97,20 +64,20 @@ public class ConfigurationClientOptions
 
 		if (!section.Exists())
 		{
-			throw new InvalidOperationException("Starfish section not found in configuration");
+			throw new InvalidOperationException(Resources.IDS_ERROR_STARFISH_SECTION_NOT_FOUND);
 		}
 
 		var appId = section[nameof(AppId)];
 
 		if (string.IsNullOrWhiteSpace(appId))
 		{
-			throw new InvalidOperationException("AppId not found in configuration");
+			throw new InvalidOperationException(Resources.IDS_ERROR_APP_ID_NOT_FOUND);
 		}
 
 		var host = section[nameof(Host)];
 		if (string.IsNullOrWhiteSpace(host))
 		{
-			throw new InvalidOperationException("Host not found in configuration");
+			throw new InvalidOperationException(Resources.IDS_ERROR_HOST_NOT_FOUND);
 		}
 
 		var options = new ConfigurationClientOptions

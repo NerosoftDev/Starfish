@@ -16,6 +16,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 	private static readonly CountdownEvent _waitHandle = new(1);
 
 	private readonly IEnumerator<string> _hosts;
+	private static readonly char[] _separator = [',', ';'];
 
 	public StarfishConfigurationProvider(ConfigurationClientOptions options)
 	{
@@ -31,7 +32,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 		};
 
 		_hosts = _options.Host
-		                 .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+		                 .Split(_separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
 		                 .Distinct()
 		                 .ToList()
 		                 .GetEnumerator();
@@ -69,6 +70,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 				File.WriteAllText(_cacheFile, json, Encoding.UTF8);
 				if (_waitHandle.IsSet)
 				{
+					Load();
 					OnReload();
 				}
 				else

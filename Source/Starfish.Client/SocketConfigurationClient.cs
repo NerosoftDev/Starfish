@@ -10,16 +10,16 @@ internal class SocketConfigurationClient : IConfigurationClient
 	public SocketConfigurationClient(Uri host, string appId, string appSecret, string environment)
 	{
 		_uri = new Uri($"{host.AbsoluteUri}ws");
-		_client.Options.SetRequestHeader("app-id", appId);
-		_client.Options.SetRequestHeader("app-secret", appSecret);
-		_client.Options.SetRequestHeader("app-env", environment);
+		_client.Options.SetRequestHeader(Constants.RequestHeaders.AppId, appId);
+		_client.Options.SetRequestHeader(Constants.RequestHeaders.AppSecret, appSecret);
+		_client.Options.SetRequestHeader(Constants.RequestHeaders.AppEnv, environment);
 	}
 
 	public async Task GetConfigurationAsync(Action<byte[], int> dataAction, CancellationToken cancellationToken = default)
 	{
 		var attempts = 0;
 
-		RUN:
+	RUN:
 		try
 		{
 			attempts++;
@@ -38,6 +38,10 @@ internal class SocketConfigurationClient : IConfigurationClient
 				else
 				{
 					dataAction(buffer, result.Count);
+
+#if __MOBILE__
+					await _client.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, cancellationToken);
+#endif
 				}
 			}
 		}
