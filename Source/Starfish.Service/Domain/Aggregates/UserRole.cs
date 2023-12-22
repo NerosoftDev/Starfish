@@ -12,6 +12,7 @@ public class UserRole : Entity<int>
 	}
 
 	private UserRole(string name)
+		: this()
 	{
 		Name = name;
 	}
