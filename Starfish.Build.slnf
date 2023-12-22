@@ -1,0 +1,15 @@
+{
+  "solution": {
+    "path": "Starfish.sln",
+    "projects": [
+      "Source\\Starfish.Client\\Starfish.Client.csproj",
+      "Source\\Starfish.Common\\Starfish.Common.csproj",
+      "Source\\Starfish.Redis\\Starfish.Redis.csproj",
+      "Source\\Starfish.Service\\Starfish.Service.csproj",
+      "Source\\Starfish.Transit\\Starfish.Transit.csproj",
+      "Source\\Starfish.Webapi\\Starfish.Webapi.csproj",
+      "Tests\\Starfish.Client.Tests\\Starfish.Client.Tests.csproj",
+      "Tests\\Starfish.Service.Tests\\Starfish.Service.Tests.csproj"
+    ]
+  }
+}
