@@ -13,10 +13,10 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 
 	private readonly string _cacheFile;
 
-	private static readonly CountdownEvent _waitHandle = new(1);
+	private readonly CountdownEvent _waitHandle = new(1);
 
 	private readonly IEnumerator<string> _hosts;
-	private static readonly char[] _separator = [',', ';'];
+	private readonly char[] _separator = [',', ';'];
 
 	public StarfishConfigurationProvider(ConfigurationClientOptions options)
 	{
@@ -112,6 +112,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 
 	public void Dispose()
 	{
+		_waitHandle.Dispose();
 		HostChanged -= OnHostChanged;
 		GC.SuppressFinalize(this);
 	}

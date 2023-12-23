@@ -3,7 +3,7 @@
 namespace Microsoft.Extensions.Configuration.Redis;
 
 /// <summary>
-/// 
+/// The configuration provider using Redis.
 /// </summary>
 public sealed class RedisConfigurationProvider : ConfigurationProvider, IAsyncDisposable
 {
@@ -11,6 +11,10 @@ public sealed class RedisConfigurationProvider : ConfigurationProvider, IAsyncDi
 
 	private readonly IDisposable _changeToken;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="RedisConfigurationProvider"/> class.
+	/// </summary>
+	/// <param name="source"></param>
 	public RedisConfigurationProvider(RedisConfigurationSource source)
 	{
 		_client = new RedisConfigurationClient(source.ConnectionString, source.Database, source.Key, source.KeyspaceEnabled);
@@ -21,6 +25,7 @@ public sealed class RedisConfigurationProvider : ConfigurationProvider, IAsyncDi
 		}
 	}
 
+	/// <inheritdoc />
 	public override void Load()
 	{
 		Data = _client.LoadAsync()
@@ -28,6 +33,7 @@ public sealed class RedisConfigurationProvider : ConfigurationProvider, IAsyncDi
 		              .GetResult();
 	}
 
+	/// <inheritdoc />
 	public async ValueTask DisposeAsync()
 	{
 		_changeToken?.Dispose();
