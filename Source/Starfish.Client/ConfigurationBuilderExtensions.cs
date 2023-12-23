@@ -4,6 +4,17 @@ namespace Microsoft.Extensions.Configuration;
 
 public static class ConfigurationBuilderExtensions
 {
+	public static ConfigurationManager AddStarfish(this ConfigurationManager manager)
+	{
+		manager.AddStarfish(manager);
+		return manager;
+	}
+
+	public static IConfigurationBuilder AddStarfish(this IConfigurationBuilder builder, IConfiguration configuration)
+	{
+		return builder.AddStarfish(ConfigurationClientOptions.Load(configuration));
+	}
+
 	public static IConfigurationBuilder AddStarfish(this IConfigurationBuilder builder, Action<ConfigurationClientOptions> optionsAction)
 	{
 		var options = new ConfigurationClientOptions();

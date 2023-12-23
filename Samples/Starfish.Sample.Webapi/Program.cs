@@ -14,7 +14,10 @@ public class Program
 		// 	["Starfish:Environment"] = "DEV",
 		// 	["Starfish:Host"] = "http://localhost:5229"
 		// }));
-		builder.Configuration.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+		//builder.Configuration.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+
+		builder.Configuration.AddStarfish(ConfigurationClientOptions.Load(builder.Configuration));
+		
 		// Add services to the container.
 
 		builder.Services.AddControllers();

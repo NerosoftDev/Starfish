@@ -13,9 +13,10 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 
 	private readonly string _cacheFile;
 
-	private static readonly CountdownEvent _waitHandle = new(1);
+	private readonly CountdownEvent _waitHandle = new(1);
 
 	private readonly IEnumerator<string> _hosts;
+	private readonly char[] _separator = [',', ';'];
 
 	public StarfishConfigurationProvider(ConfigurationClientOptions options)
 	{
@@ -31,7 +32,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 		};
 
 		_hosts = _options.Host
-		                 .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+		                 .Split(_separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
 		                 .Distinct()
 		                 .ToList()
 		                 .GetEnumerator();
@@ -69,6 +70,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 				File.WriteAllText(_cacheFile, json, Encoding.UTF8);
 				if (_waitHandle.IsSet)
 				{
+					Load();
 					OnReload();
 				}
 				else
@@ -110,6 +112,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 
 	public void Dispose()
 	{
+		_waitHandle.Dispose();
 		HostChanged -= OnHostChanged;
 		GC.SuppressFinalize(this);
 	}

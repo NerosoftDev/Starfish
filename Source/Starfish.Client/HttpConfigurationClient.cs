@@ -7,9 +7,9 @@ internal class HttpConfigurationClient : IConfigurationClient
 	public HttpConfigurationClient(Uri host, string appId, string appSecret, string environment)
 	{
 		_httpClient.BaseAddress = host;
-		_httpClient.DefaultRequestHeaders.Add("app-id", appId);
-		_httpClient.DefaultRequestHeaders.Add("app-secret", appSecret);
-		_httpClient.DefaultRequestHeaders.Add("app-env", environment);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.AppId, appId);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.AppSecret, appSecret);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.AppEnv, environment);
 	}
 
 	public async Task GetConfigurationAsync(Action<byte[], int> dataAction, CancellationToken cancellationToken = default)
@@ -29,7 +29,15 @@ internal class HttpConfigurationClient : IConfigurationClient
 			while ((length = await stream.ReadAsync(bytes, cancellationToken)) > 0)
 			{
 				dataAction(bytes, length);
+
+#if __MOBILE__
+				goto END;
+#endif
 			}
+#if __MOBILE__
+			END:
+			await Task.CompletedTask;
+#endif
 		}
 		catch (HttpRequestException exception)
 		{
