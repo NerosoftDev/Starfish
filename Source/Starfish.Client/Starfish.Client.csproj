@@ -4,7 +4,9 @@
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
-        <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
+        <Title>Sratfish configuration client</Title>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Description>Sratfish configuration client.</Description>
     </PropertyGroup>
 
     <ItemGroup>

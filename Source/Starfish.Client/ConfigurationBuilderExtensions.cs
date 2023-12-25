@@ -1,5 +1,7 @@
 ﻿using Nerosoft.Starfish.Client;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Microsoft.Extensions.Configuration;
 
 public static class ConfigurationBuilderExtensions
