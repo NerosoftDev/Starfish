@@ -44,6 +44,11 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageVersion>
     </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+        <PackageVersion Include="System.Text.Json" Version="8.0.0" />
+    </ItemGroup>
+    
     <ItemGroup Condition=" $(TargetFrameworkVersion.Equals('v6.0')) ">
         <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="[6.0.0]" />
         <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="[6.0.0]" />

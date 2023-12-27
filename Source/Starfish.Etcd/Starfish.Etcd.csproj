@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\common.props" />
+
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <Title>Microsoft.Extensions.Configuration.Etcd</Title>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Description>Redis configuration provider implementation for Microsoft.Extensions.Configuration. It's enables you to read your application's settings from etcd v3+.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Google.Api.CommonProtos" />
+        <PackageReference Include="Google.Protobuf" />
+        <PackageReference Include="Grpc.Net.Client" />
+        <PackageReference Include="Grpc.Tools">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="..\..\protos\etcd\auth.proto" Link="protos\etcd\auth.proto">
+            <ProtoRoot>../../</ProtoRoot>
+            <GrpcServices>Client</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <AdditionalImportDirs>.\protos</AdditionalImportDirs>
+            <AdditionalProtocArguments>--experimental_allow_proto3_optional</AdditionalProtocArguments>
+        </Protobuf>
+        <Protobuf Include="..\..\protos\etcd\rpc.proto" Link="protos\etcd\rpc.proto">
+            <ProtoRoot>../../</ProtoRoot>
+            <GrpcServices>Client</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <AdditionalImportDirs>.\protos</AdditionalImportDirs>
+            <AdditionalProtocArguments>--experimental_allow_proto3_optional</AdditionalProtocArguments>
+        </Protobuf>
+        <Protobuf Include="..\..\protos\etcd\version.proto" Link="protos\etcd\version.proto">
+            <ProtoRoot>../../</ProtoRoot>
+            <GrpcServices>Client</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <AdditionalImportDirs>.\protos</AdditionalImportDirs>
+            <AdditionalProtocArguments>--experimental_allow_proto3_optional</AdditionalProtocArguments>
+        </Protobuf>
+        <Protobuf Include="..\..\protos\gogoproto\gogo.proto" Link="protos\gogoproto\gogo.proto">
+            <ProtoRoot>../../</ProtoRoot>
+            <GrpcServices>Client</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <AdditionalImportDirs>.\protos</AdditionalImportDirs>
+            <AdditionalProtocArguments>--experimental_allow_proto3_optional</AdditionalProtocArguments>
+        </Protobuf>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Starfish.Common\Starfish.Common.csproj" />
+    </ItemGroup>
+
+</Project>
