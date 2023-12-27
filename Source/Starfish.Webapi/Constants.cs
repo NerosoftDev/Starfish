@@ -1,4 +1,4 @@
-﻿namespace Nerosoft.Starfish.Client;
+﻿namespace Nerosoft.Starfish.Webapi;
 
 internal class Constants
 {

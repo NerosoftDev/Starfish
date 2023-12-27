@@ -60,7 +60,7 @@ public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 		{
 			"http" or "https" => new HttpConfigurationClient(uri, _options.AppId, _options.AppSecret, _options.Environment),
 			"ws" or "wss" => new SocketConfigurationClient(uri, _options.AppId, _options.AppSecret, _options.Environment),
-			_ => throw new NotSupportedException($"Schema {uri.Scheme} is not supported."),
+			_ => throw new NotSupportedException(string.Format(Resources.IDS_ERROR_SCHEMA_NOT_SUPPORTED, uri.Scheme)),
 		};
 		try
 		{
