@@ -5,8 +5,8 @@
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <Title>Microsoft.Extensions.Configuration.Redis</Title>
-        <Description>Redis configuration provider implementation for Microsoft.Extensions.Configuration. It's enables you to read your application's settings from a specified Redis hash key.</Description>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Description>Redis configuration provider implementation for Microsoft.Extensions.Configuration. It's enables you to read your application's settings from a specified Redis hash key.</Description>
     </PropertyGroup>
 
     <ItemGroup>

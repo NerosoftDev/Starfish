@@ -4,6 +4,7 @@
     "projects": [
       "Source\\Starfish.Client\\Starfish.Client.csproj",
       "Source\\Starfish.Common\\Starfish.Common.csproj",
+	  "Source\\Starfish.Etcd\\Starfish.Etcd.csproj",
       "Source\\Starfish.Redis\\Starfish.Redis.csproj",
       "Source\\Starfish.Service\\Starfish.Service.csproj",
       "Source\\Starfish.Transit\\Starfish.Transit.csproj",
