@@ -3,8 +3,8 @@
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
-/// 配置节点状态变更领域事件
+/// 配置节点删除领域事件
 /// </summary>
-public class SettingNodeStatusChangedEvent : DomainEvent
+public class SettingDeletedEvent : DomainEvent
 {
 }

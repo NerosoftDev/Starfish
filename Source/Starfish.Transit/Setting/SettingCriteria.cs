@@ -3,8 +3,13 @@
 /// <summary>
 /// 配置节点查询条件
 /// </summary>
-public class SettingNodeCriteria
+public class SettingCriteria
 {
+	/// <summary>
+	/// 团队Id
+	/// </summary>
+	public long TeamId { get; set; }
+
 	/// <summary>
 	/// App唯一编码
 	/// </summary>
@@ -14,9 +19,4 @@ public class SettingNodeCriteria
 	/// 环境
 	/// </summary>
 	public string Environment { get; set; }
-
-	/// <summary>
-	/// 上级Id
-	/// </summary>
-	public long ParentId { get; set; }
 }

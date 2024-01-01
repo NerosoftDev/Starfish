@@ -1,9 +1,7 @@
 ﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 using Newtonsoft.Json;
 
@@ -21,13 +19,11 @@ public class SettingRevisionCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.RootId, cancellationToken);
+			var nodes = await GetNodesAsync(message.SettingId, cancellationToken);
 
 			var entity = new SettingRevision
 			{
-				AppId = appId,
-				AppCode = appCode,
-				Environment = environment,
+				SettingId = message.SettingId,
 				Version = message.Version,
 				Data = JsonConvert.SerializeObject(nodes, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
 				Operator = context?.User?.Identity?.Name,
@@ -38,28 +34,18 @@ public class SettingRevisionCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	private async Task<Tuple<long, string, string, List<SettingNode>>> GetNodesAsync(long rootId, CancellationToken cancellationToken = default)
+	private async Task<List<SettingNode>> GetNodesAsync(long id, CancellationToken cancellationToken = default)
 	{
-		var repository = UnitOfWork.Current.GetService<ISettingNodeRepository>();
+		var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 
-		var root = await repository.GetAsync(rootId, false, [], cancellationToken);
+		var aggregate = await repository.GetAsync(id, false, [nameof(Setting.Nodes)], cancellationToken);
 
-		if (root == null)
+		if (aggregate == null)
 		{
-			throw new SettingNodeNotFoundException(rootId);
+			throw new SettingNotFoundException(id);
 		}
 
-		ISpecification<SettingNode>[] specifications =
-		{
-			SettingNodeSpecification.AppIdEquals(root.AppId),
-			SettingNodeSpecification.EnvironmentEquals(root.Environment),
-		};
-
-		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
-
-		var leaves = await repository.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
-
-		return Tuple.Create(root.AppId, root.AppCode, root.Environment, leaves);
+		return aggregate.Nodes.ToList();
 	}
 
 	private Task<SettingRevision> SaveRevisionAsync(SettingRevision entity, CancellationToken cancellationToken = default)

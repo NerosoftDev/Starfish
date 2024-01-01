@@ -1,7 +1,5 @@
 ﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
-using Nerosoft.Euonia.Linq;
-using Nerosoft.Starfish.Repository;
 
 // ReSharper disable UnusedMember.Global
 
@@ -12,9 +10,9 @@ namespace Nerosoft.Starfish.Domain;
 /// </summary>
 public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDomainService
 {
-	private readonly ISettingNodeRepository _repository;
+	private readonly ISettingRepository _repository;
 
-	public SettingPublishBusiness(ISettingNodeRepository repository)
+	public SettingPublishBusiness(ISettingRepository repository)
 	{
 		_repository = repository;
 	}
@@ -26,46 +24,21 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 
 		if (aggregate == null)
 		{
-			throw new SettingNodeNotFoundException(id);
+			throw new SettingNotFoundException(id);
 		}
 
 		if (aggregate == null)
 		{
-			throw new SettingNodeNotFoundException(id);
+			throw new SettingNotFoundException(id);
 		}
 
-		if (aggregate.Type != SettingNodeType.Root)
+		if (aggregate.Status == SettingStatus.Disabled)
 		{
-			throw new InvalidOperationException(Resources.IDS_ERROR_ONLY_ALLOW_PUBLISH_ROOT_NODE);
+			throw new SettingDisabledException(id);
 		}
 
-		List<SettingNode> nodes = [aggregate];
+		aggregate.SetStatus(SettingStatus.Published);
 
-		var types = new[]
-		{
-			SettingNodeType.String,
-			SettingNodeType.Boolean,
-			SettingNodeType.Number,
-			SettingNodeType.Referer
-		};
-
-		ISpecification<SettingNode>[] specifications =
-		{
-			SettingNodeSpecification.AppIdEquals(aggregate.AppId),
-			SettingNodeSpecification.EnvironmentEquals(aggregate.Environment),
-			SettingNodeSpecification.TypeIn(types)
-		};
-
-		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
-
-		var leaves = await _repository.FindAsync(predicate, false, Array.Empty<string>(), cancellationToken);
-		nodes.AddRange(leaves);
-
-		foreach (var node in nodes)
-		{
-			node.ClearEvents();
-		}
-
-		await _repository.UpdateAsync(nodes, true, cancellationToken);
+		await _repository.UpdateAsync(aggregate, true, cancellationToken);
 	}
 }

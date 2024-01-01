@@ -1,9 +1,9 @@
 ﻿namespace Nerosoft.Starfish.Transit;
 
 /// <summary>
-/// 创建配置节点（根节点）
+/// 配置创建Dto
 /// </summary>
-public class SettingNodeCreateDto
+public class SettingCreateDto
 {
 	/// <summary>
 	/// 应用Id
@@ -14,19 +14,20 @@ public class SettingNodeCreateDto
 	/// 环境名称
 	/// </summary>
 	public string Environment { get; set; }
-	
-	/// <summary>
-	/// 节点名称
-	/// </summary>
-	public string Name { get; set; }
 
 	/// <summary>
-	/// 节点配置值
-	/// </summary>
-	public string Value { get; set; }
-
-	/// <summary>
-	/// 节点描述
+	/// 描述
 	/// </summary>
 	public string Description { get; set; }
+
+	/// <summary>
+	/// 数据类型
+	/// </summary>
+	/// <remarks>可选值json|text</remarks>
+	public string DataType { get; set; }
+
+	/// <summary>
+	/// 配置项内容
+	/// </summary>
+	public string ItemsData { get; set; }
 }

@@ -83,7 +83,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(UserSetRoleCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(UserSetRoleCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

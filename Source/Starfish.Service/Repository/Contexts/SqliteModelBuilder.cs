@@ -59,27 +59,55 @@ public class SqliteModelBuilder : IModelBuilder
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 
-		modelBuilder.Entity<SettingNode>(entity =>
+		modelBuilder.Entity<Setting>(entity =>
 		{
-			entity.ToTable("setting_node");
+			entity.ToTable("setting");
 			entity.HasKey(t => t.Id);
-			entity.HasIndex(t => t.ParentId);
 			entity.HasIndex(t => t.AppId);
 			entity.HasIndex(t => t.AppCode);
 			entity.HasIndex(t => t.Environment);
+
+			entity.HasIndex([nameof(Setting.AppId), nameof(Setting.Environment)], "IDX_SETTING_UNIQUE")
+			      .IsUnique();
 
 			entity.Property(t => t.Id)
 			      .IsRequired()
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
-			entity.HasMany(t => t.Children)
-			      .WithOne()
-			      .HasForeignKey(t => t.ParentId)
+			entity.HasOne(t => t.App)
+			      .WithMany()
+			      .HasForeignKey(t => t.AppId)
 			      .OnDelete(DeleteBehavior.Cascade);
 
-			entity.HasOne(t => t.Parent)
+			entity.HasMany(t => t.Nodes)
+			      .WithOne()
+			      .HasForeignKey(t => t.SettingId)
+			      .OnDelete(DeleteBehavior.Cascade);
+
+			entity.HasMany(t => t.Revisions)
+			      .WithOne()
+			      .HasForeignKey(t => t.SettingId)
+			      .OnDelete(DeleteBehavior.Cascade);
+		});
+
+		modelBuilder.Entity<SettingNode>(entity =>
+		{
+			entity.ToTable("setting_item");
+			entity.HasKey(t => t.Id);
+			entity.HasIndex(t => t.SettingId);
+
+			entity.HasIndex(t => t.Key);
+
+			entity.HasIndex([nameof(SettingNode.SettingId), nameof(SettingNode.Key)], "IDX_SETTING_ITEM_UNIQUE")
+			      .IsUnique();
+
+			entity.Property(t => t.Id)
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
+
+			entity.HasOne(t => t.Setting)
 			      .WithMany()
-			      .HasForeignKey(t => t.ParentId)
+			      .HasForeignKey(t => t.SettingId)
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
 
@@ -87,11 +115,16 @@ public class SqliteModelBuilder : IModelBuilder
 		{
 			entity.ToTable("setting_revision");
 			entity.HasKey(t => t.Id);
-			entity.HasIndex(t => t.AppId);
+			entity.HasIndex(t => t.SettingId);
 
 			entity.Property(t => t.Id)
 			      .IsRequired()
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
+
+			entity.HasOne(t => t.Setting)
+			      .WithMany()
+			      .HasForeignKey(t => t.SettingId)
+			      .OnDelete(DeleteBehavior.Cascade);
 		});
 
 		modelBuilder.Entity<SettingArchive>(entity =>

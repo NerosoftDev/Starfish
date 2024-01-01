@@ -5,9 +5,9 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 配置节点发布命令
 /// </summary>
-public class SettingNodePublishCommand : Command
+public class SettingPublishCommand : Command
 {
-	public SettingNodePublishCommand(long id)
+	public SettingPublishCommand(long id)
 	{
 		Id = id;
 	}

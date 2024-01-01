@@ -10,7 +10,7 @@ public sealed class LoggingEventSubscriber
 {
 	private readonly IBus _bus;
 	private readonly IServiceProvider _provider;
-	
+
 	public LoggingEventSubscriber(IBus bus, IServiceProvider provider)
 	{
 		_bus = bus;
@@ -141,9 +141,9 @@ public sealed class LoggingEventSubscriber
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(SettingNodeCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(SettingCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var description = $"创建配置节点({@event.Node.Type}) {@event.Node.Name}, AppId: {@event.Node.AppId}, AppCode: {@event.Node.AppCode}, Environment: {@event.Node.Environment}";
+		var description = $"创建配置节点, App: {@event.Setting.AppCode}, Environment: {@event.Setting.Environment}";
 
 		var command = new OperateLogCreateCommand
 		{
@@ -165,10 +165,10 @@ public sealed class LoggingEventSubscriber
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(SettingNodeDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(SettingDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<SettingNode>();
-		var description = $"删除配置节点({aggregate.Type}) {aggregate.Name}, AppId: {aggregate.AppId}, AppCode: {aggregate.AppCode}, Environment: {aggregate.Environment}";
+		var aggregate = @event.GetAggregate<Setting>();
+		var description = $"删除配置节点({aggregate.Id}), App: {aggregate.AppCode}, Environment: {aggregate.Environment}";
 
 		var command = new OperateLogCreateCommand
 		{
@@ -182,39 +182,16 @@ public sealed class LoggingEventSubscriber
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
-	/// <summary>
-	/// 处理配置节点重命名事件
-	/// </summary>
-	/// <param name="event"></param>
-	/// <param name="context"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	[Subscribe]
-	public Task HandleAsync(SettingNodeRenamedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
-	{
-		var aggregate = @event.GetAggregate<SettingNode>();
-		var command = new OperateLogCreateCommand
-		{
-			Module = "setting",
-			Type = "rename",
-			Description = $"节点{@event.OldName}重命名为{@event.NewName}, AppId: {aggregate.AppId}, AppCode: {aggregate.AppCode}, Environment: {aggregate.Environment}",
-			OperateTime = DateTime.Now,
-			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
-		};
-		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
-	}
-
 	[Subscribe]
 	public async Task HandleAsync(SettingPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var repository = _provider.GetService<ISettingNodeRepository>();
-		var node = await repository.GetAsync(@event.Id, false, [], cancellationToken);
+		var repository = _provider.GetService<ISettingRepository>();
+		var setting = await repository.GetAsync(@event.Id, false, [], cancellationToken);
 		var command = new OperateLogCreateCommand
 		{
 			Module = "setting",
 			Type = "publish",
-			Description = $"发布配置({@event.Version})，AppId: {node.AppId}, AppCode: {node.AppCode}, Environment: {node.Environment}",
+			Description = $"发布配置({@event.Version})，App: {setting.AppCode}, Environment: {setting.Environment}",
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name

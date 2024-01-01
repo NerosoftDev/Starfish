@@ -14,6 +14,14 @@ public class JsonConfigurationFileParser
 	private readonly Dictionary<string, string> _data = new(StringComparer.OrdinalIgnoreCase);
 	private readonly Stack<string> _paths = new();
 
+	public static IDictionary<string, string> Parse(string json)
+	{
+		using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+		{
+			return Parse(stream);
+		}
+	}
+
 	public static IDictionary<string, string> Parse(Stream input) => new JsonConfigurationFileParser().ParseStream(input);
 
 	private Dictionary<string, string> ParseStream(Stream input)

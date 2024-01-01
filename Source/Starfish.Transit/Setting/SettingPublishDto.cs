@@ -3,7 +3,7 @@
 /// <summary>
 /// 配置节点发布Dto
 /// </summary>
-public class SettingNodePublishDto
+public class SettingPublishDto
 {
 	/// <summary>
 	/// 版本号

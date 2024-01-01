@@ -8,29 +8,29 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 配置节点发布用例接口
 /// </summary>
-public interface ISettingNodePublishUseCase : INonOutputUseCase<SettingNodePublishInput>;
+public interface ISettingPublishUseCase : INonOutputUseCase<SettingPublishInput>;
 
 /// <summary>
 /// 配置节点发布输入
 /// </summary>
 /// <param name="Id"></param>
-public record SettingNodePublishInput(long Id, SettingNodePublishDto Data) : IUseCaseInput;
+public record SettingPublishInput(long Id, SettingPublishDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例
 /// </summary>
-public class SettingNodePublishUseCase : ISettingNodePublishUseCase
+public class SettingPublishUseCase : ISettingPublishUseCase
 {
 	private readonly IBus _bus;
 
-	public SettingNodePublishUseCase(IBus bus)
+	public SettingPublishUseCase(IBus bus)
 	{
 		_bus = bus;
 	}
 	
-	public async Task ExecuteAsync(SettingNodePublishInput input, CancellationToken cancellationToken = default)
+	public async Task ExecuteAsync(SettingPublishInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new SettingNodePublishCommand(input.Id);
+		var command = new SettingPublishCommand(input.Id);
 		await _bus.SendAsync(command, cancellationToken);
 
 		var @event = new SettingPublishedEvent(input.Id)

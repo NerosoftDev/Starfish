@@ -8,13 +8,13 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 获取符合条件的配置列表用例接口
 /// </summary>
-public interface ISettingNodeSearchUseCase : IUseCase<SettingNodeSearchInput, SettingNodeSearchOutput>;
+public interface ISettingSearchUseCase : IUseCase<SettingSearchInput, SettingSearchOutput>;
 
 /// <summary>
 /// 获取符合条件的配置列表用例输出
 /// </summary>
 /// <param name="Result"></param>
-public record SettingNodeSearchOutput(List<SettingNodeItemDto> Result) : IUseCaseOutput;
+public record SettingSearchOutput(List<SettingItemDto> Result) : IUseCaseOutput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例输入
@@ -22,26 +22,26 @@ public record SettingNodeSearchOutput(List<SettingNodeItemDto> Result) : IUseCas
 /// <param name="Criteria"></param>
 /// <param name="Page"></param>
 /// <param name="Size"></param>
-public record SettingNodeSearchInput(SettingNodeCriteria Criteria, int Page, int Size) : IUseCaseInput;
+public record SettingSearchInput(SettingCriteria Criteria, int Page, int Size) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例
 /// </summary>
-public class SettingNodeSearchUseCase : ISettingNodeSearchUseCase
+public class SettingSearchUseCase : ISettingSearchUseCase
 {
-	private readonly ISettingNodeRepository _repository;
+	private readonly ISettingRepository _repository;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="repository"></param>
-	public SettingNodeSearchUseCase(ISettingNodeRepository repository)
+	public SettingSearchUseCase(ISettingRepository repository)
 	{
 		_repository = repository;
 	}
 
 	/// <inheritdoc />
-	public Task<SettingNodeSearchOutput> ExecuteAsync(SettingNodeSearchInput input, CancellationToken cancellationToken = default)
+	public Task<SettingSearchOutput> ExecuteAsync(SettingSearchInput input, CancellationToken cancellationToken = default)
 	{
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
@@ -49,16 +49,14 @@ public class SettingNodeSearchUseCase : ISettingNodeSearchUseCase
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);
-			                  var result = task.Result.ProjectedAsCollection<SettingNodeItemDto>();
-			                  return new SettingNodeSearchOutput(result);
+			                  var result = task.Result.ProjectedAsCollection<SettingItemDto>();
+			                  return new SettingSearchOutput(result);
 		                  }, cancellationToken);
 	}
 
-	private static IOrderedQueryable<SettingNode> Collator(IQueryable<SettingNode> query)
+	private static IOrderedQueryable<Setting> Collator(IQueryable<Setting> query)
 	{
 		return query.OrderByDescending(t => t.AppId)
-		            .ThenBy(t => t.ParentId)
-		            .ThenBy(t => t.Sort)
 		            .ThenBy(t => t.Id);
 	}
 }

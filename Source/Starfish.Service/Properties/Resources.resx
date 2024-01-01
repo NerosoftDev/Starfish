@@ -192,13 +192,13 @@
   <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
     <value>Unsupported service bus provider '{0}'.</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_STATUS_DISABLED" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
     <value>Disabled</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_STATUS_PENDING" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_STATUS_PENDING" xml:space="preserve">
     <value>Pending</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_STATUS_PUBLISHED" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
     <value>Published</value>
   </data>
   <data name="IDS_ENUM_SETTING_NODE_TYPE_ARRAY" xml:space="preserve">
@@ -222,19 +222,13 @@
   <data name="IDS_ENUM_SETTING_NODE_TYPE_STRING" xml:space="preserve">
     <value>String</value>
   </data>
-  <data name="IDS_ERROR_NOT_ALLOW_RENAME_ARRAY_CHILD_NODE" xml:space="preserve">
-    <value>Not allow to rename array child node.</value>
-  </data>
-  <data name="IDS_ERROR_NOT_ALLOW_RENAME_ROOT_NODE" xml:space="preserve">
-    <value>Not allow to rename root node.</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_NODE_NAME_EXISTS" xml:space="preserve">
-    <value>Child node name exists.</value>
+  <data name="IDS_ERROR_SETTING_NODE_KEY_EXISTS" xml:space="preserve">
+    <value>Setting key '{0}' exists.</value>
   </data>
   <data name="IDS_ERROR_SETTING_NODE_NAME_REQUIRED" xml:space="preserve">
     <value>Node name is required.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NODE_NOT_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
     <value>Setting node not exists, [Id]:{0}.</value>
   </data>
   <data name="IDS_ERROR_SETTING_NODE_VALUE_NOT_BOOLEAN" xml:space="preserve">
@@ -269,5 +263,11 @@
   </data>
   <data name="IDS_ERROR_USER_EMAIL_UNAVAILABLE" xml:space="preserve">
     <value>Email '{0}' not available.</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
+    <value>Setting was disabled, [Id]:{0}.</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
+    <value>Setting was duplicated ,[App]:{0}, [Env]:{1}.</value>
   </data>
 </root>
