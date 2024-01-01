@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Nerosoft.Starfish.Application;
 
-public class JsonConfigurationFileParser
+internal partial class JsonConfigurationFileParser
 {
 	private const string KEY_DELIMITER = ":";
 
@@ -121,4 +121,81 @@ public class JsonConfigurationFileParser
 	private void EnterContext(string context) => _paths.Push(_paths.Count > 0 ? _paths.Peek() + KEY_DELIMITER + context : context);
 
 	private void ExitContext() => _paths.Pop();
+}
+
+internal partial class JsonConfigurationFileParser
+{
+	public static string InvertParsed(IDictionary<string, string> data)
+	{
+		var root = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+		foreach (var entry in data)
+		{
+			var path = entry.Key.Split(":");
+			var current = root;
+
+			for (var i = 0; i < path.Length - 1; i++)
+			{
+				if (!current.TryGetValue(path[i], out var child))
+				{
+					child = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+					current[path[i]] = child;
+				}
+
+				current = (Dictionary<string, object>)child;
+			}
+
+			current[path[^1]] = entry.Value;
+		}
+
+		var result = Rebuild(root);
+
+		return JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
+
+		object Rebuild(object source)
+		{
+			switch (source)
+			{
+				case IDictionary<string, object> dict:
+					if (DetectArray(dict))
+					{
+						object array = ConvertToArray(dict);
+						array = Rebuild(array);
+						return array;
+					}
+					else
+					{
+						var keys = dict.Keys.Select(x => x).ToList();
+						foreach (var key in keys)
+						{
+							var val = dict[key];
+							dict[key] = Rebuild(val);
+						}
+
+						return dict;
+					}
+
+				case object[] array:
+					for (var index = 0; index < array.Length; index++)
+					{
+						array[index] = Rebuild(array[index]);
+					}
+
+					return array;
+			}
+
+			return source;
+		}
+
+		bool DetectArray(IDictionary<string, object> dictionary)
+		{
+			var keys = Enumerable.Range(0, dictionary.Count).Select(t => t.ToString());
+			return dictionary.Keys.All(key => keys.Contains(key));
+		}
+
+		object[] ConvertToArray(IDictionary<string, object> dictionary)
+		{
+			return dictionary.Values.ToArray();
+		}
+	}
 }

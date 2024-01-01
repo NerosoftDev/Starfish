@@ -20,8 +20,8 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.RootId, cancellationToken);
-			var data = nodes.ToDictionary(t => t.Key, t => t.Value);
+			var (appId, appCode, environment, items) = await GetItemsAsync(message.RootId, cancellationToken);
+			var data = items.ToDictionary(t => t.Key, t => t.Value);
 			var json = JsonConvert.SerializeObject(data);
 
 			var userName = context?.User?.Identity?.Name;
@@ -30,7 +30,7 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	private async Task<Tuple<long, string, string, List<SettingItem>>> GetNodesAsync(long id, CancellationToken cancellationToken = default)
+	private async Task<Tuple<long, string, string, List<SettingItem>>> GetItemsAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 

@@ -1,6 +1,6 @@
 ﻿namespace Nerosoft.Starfish.Application;
 
-public class TextConfigurationFileParser
+public partial class TextConfigurationFileParser
 {
 	private TextConfigurationFileParser()
 	{
@@ -48,5 +48,19 @@ public class TextConfigurationFileParser
 		}
 
 		return data;
+	}
+}
+
+public partial class TextConfigurationFileParser
+{
+	public static string InvertParsed(IDictionary<string, string> data)
+	{
+		var builder = new StringBuilder();
+		foreach (var (key, value) in data)
+		{
+			builder.AppendLine($"{key}={value}");
+		}
+
+		return builder.ToString();
 	}
 }
