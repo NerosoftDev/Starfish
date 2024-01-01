@@ -30,18 +30,18 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	private async Task<Tuple<long, string, string, List<SettingNode>>> GetNodesAsync(long id, CancellationToken cancellationToken = default)
+	private async Task<Tuple<long, string, string, List<SettingItem>>> GetNodesAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 
-		var aggregate = await repository.GetAsync(id, false, [nameof(Setting.Nodes)], cancellationToken);
+		var aggregate = await repository.GetAsync(id, false, [nameof(Setting.Items)], cancellationToken);
 
 		if (aggregate == null)
 		{
 			throw new SettingNotFoundException(id);
 		}
 
-		return Tuple.Create(aggregate.AppId, aggregate.AppCode, aggregate.Environment, aggregate.Nodes.ToList());
+		return Tuple.Create(aggregate.AppId, aggregate.AppCode, aggregate.Environment, aggregate.Items.ToList());
 	}
 
 	private async Task SaveArchiveAsync(long appId, string appCode, string environment, string data, string userName, CancellationToken cancellationToken = default)

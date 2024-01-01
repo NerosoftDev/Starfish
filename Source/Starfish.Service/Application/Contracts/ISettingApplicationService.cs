@@ -43,12 +43,31 @@ public interface ISettingApplicationService : IApplicationService
 	Task<long> CreateAsync(SettingCreateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
+	/// 更新配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task UpdateAsync(long id, SettingUpdateDto data, CancellationToken cancellationToken = default);
+
+	/// <summary>
 	/// 删除节点
 	/// </summary>
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task DeleteAsync(long id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 更新配置项
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="key"></param>
+	/// <param name="value"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task UpdateAsync(long id, string key, string value, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 发布配置

@@ -79,7 +79,7 @@ public class SqliteModelBuilder : IModelBuilder
 			      .HasForeignKey(t => t.AppId)
 			      .OnDelete(DeleteBehavior.Cascade);
 
-			entity.HasMany(t => t.Nodes)
+			entity.HasMany(t => t.Items)
 			      .WithOne()
 			      .HasForeignKey(t => t.SettingId)
 			      .OnDelete(DeleteBehavior.Cascade);
@@ -90,7 +90,7 @@ public class SqliteModelBuilder : IModelBuilder
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
 
-		modelBuilder.Entity<SettingNode>(entity =>
+		modelBuilder.Entity<SettingItem>(entity =>
 		{
 			entity.ToTable("setting_item");
 			entity.HasKey(t => t.Id);
@@ -98,7 +98,7 @@ public class SqliteModelBuilder : IModelBuilder
 
 			entity.HasIndex(t => t.Key);
 
-			entity.HasIndex([nameof(SettingNode.SettingId), nameof(SettingNode.Key)], "IDX_SETTING_ITEM_UNIQUE")
+			entity.HasIndex([nameof(SettingItem.SettingId), nameof(SettingItem.Key)], "IDX_SETTING_ITEM_UNIQUE")
 			      .IsUnique();
 
 			entity.Property(t => t.Id)

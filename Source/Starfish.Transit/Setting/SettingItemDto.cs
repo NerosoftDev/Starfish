@@ -31,9 +31,9 @@ public class SettingItemDto
 	public string Environment { get; set; }
 
 	/// <summary>
-	/// 描述
+	/// 当前版本号
 	/// </summary>
-	public string Description { get; set; }
+	public string Version { get; set; }
 
 	/// <summary>
 	/// 状态

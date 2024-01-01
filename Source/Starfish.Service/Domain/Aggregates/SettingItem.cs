@@ -7,13 +7,18 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置信息
 /// </summary>
-public class SettingNode : Entity<long>
+public class SettingItem : Entity<long>
 {
-	private SettingNode()
+	private SettingItem()
 	{
 	}
 
-	internal SettingNode(string key, string value)
+	public SettingItem(string key)
+	{
+		Key = key;
+	}
+
+	internal SettingItem(string key, string value)
 		: this()
 	{
 		Key = key;

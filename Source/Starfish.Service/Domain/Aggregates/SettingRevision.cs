@@ -8,6 +8,18 @@ namespace Nerosoft.Starfish.Domain;
 public class SettingRevision : Entity<long>,
                                IHasCreateTime
 {
+	private SettingRevision()
+	{
+	}
+
+	internal SettingRevision(string version, string comment, string data, string @operator)
+	{
+		Version = version;
+		Comment = comment;
+		Data = data;
+		Operator = @operator;
+	}
+
 	public long SettingId { get; set; }
 
 	/// <summary>

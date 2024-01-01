@@ -41,7 +41,7 @@ public class SettingGetDetailUseCase : ISettingGetDetailUseCase
 	/// <inheritdoc />
 	public Task<SettingGetDetailOutput> ExecuteAsync(SettingGetDetailInput input, CancellationToken cancellationToken = default)
 	{
-		return _repository.GetAsync(input.Id, false, Array.Empty<string>(), cancellationToken)
+		return _repository.GetAsync(input.Id, false, [nameof(Setting.App)], cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

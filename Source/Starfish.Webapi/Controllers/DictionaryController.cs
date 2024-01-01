@@ -63,7 +63,7 @@ public class DictionaryController : ControllerBase
 	[HttpGet("setting-node-type")]
 	public async Task<IActionResult> GetSettingNodeTypeItemsAsync()
 	{
-		var result = await _service.GetSettingNodeTypeItemsAsync();
+		var result = await _service.GetSettingItemTypeItemsAsync();
 		return Ok(result);
 	}
 }

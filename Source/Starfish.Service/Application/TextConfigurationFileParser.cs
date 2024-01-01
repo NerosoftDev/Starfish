@@ -6,9 +6,6 @@ public class TextConfigurationFileParser
 	{
 	}
 
-	private readonly Dictionary<string, string> _data = new(StringComparer.OrdinalIgnoreCase);
-	private readonly Stack<string> _paths = new();
-
 	public static IDictionary<string, string> Parse(string json)
 	{
 		using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))

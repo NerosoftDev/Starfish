@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Application;
+using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
@@ -43,7 +44,8 @@ public class SettingCountUseCase : ISettingCountUseCase
 	{
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
-		return _repository.CountAsync(predicate, cancellationToken)
+		return _repository.Include(t => t.App)
+		                  .CountAsync(predicate, cancellationToken)
 		                  .ContinueWith(t => new SettingCountOutput(t.Result), cancellationToken);
 	}
 }

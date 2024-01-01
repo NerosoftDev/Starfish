@@ -1,5 +1,6 @@
 ﻿using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
+using Newtonsoft.Json;
 
 namespace Nerosoft.Starfish.Domain;
 
@@ -32,14 +33,14 @@ public class Setting : Aggregate<long>, IAuditing
 	public string Environment { get; set; }
 
 	/// <summary>
-	/// 描述
-	/// </summary>
-	public string Description { get; set; }
-
-	/// <summary>
 	/// 状态
 	/// </summary>
 	public SettingStatus Status { get; set; }
+
+	/// <summary>
+	/// 当前版本号
+	/// </summary>
+	public string Version { get; set; }
 
 	public DateTime CreateTime { get; set; }
 
@@ -58,7 +59,7 @@ public class Setting : Aggregate<long>, IAuditing
 	/// <summary>
 	/// 设置项
 	/// </summary>
-	public HashSet<SettingNode> Nodes { get; set; }
+	public HashSet<SettingItem> Items { get; set; }
 
 	/// <summary>
 	/// 历史版本
@@ -70,37 +71,46 @@ public class Setting : Aggregate<long>, IAuditing
 	/// </summary>
 	public AppInfo App { get; set; }
 
-	internal static Setting Create(long appId, string appCode, string environment, string description, IDictionary<string, string> nodes)
+	internal static Setting Create(long appId, string appCode, string environment, IDictionary<string, string> items)
 	{
 		var setting = new Setting
 		{
 			AppId = appId,
 			AppCode = appCode,
 			Environment = environment,
-			Status = SettingStatus.Pending,
-			Description = description,
-			Nodes = []
+			Status = SettingStatus.Pending
 		};
 
-		foreach (var (key, value) in nodes)
-		{
-			setting.AddNode(key, value);
-		}
+		setting.AddOrUpdateItem(items);
 
 		setting.RaiseEvent(new SettingCreatedEvent(setting));
 		return setting;
 	}
 
-	internal void AddNode(string key, string value)
+	internal void AddOrUpdateItem(IDictionary<string, string> items)
 	{
-		Nodes ??= [];
-		if (Nodes.Any(x => x.Key == key))
+		if (Status == SettingStatus.Disabled)
 		{
-			throw new ConflictException(string.Format(Resources.IDS_ERROR_SETTING_NODE_KEY_EXISTS, key));
+			throw new InvalidOperationException("");
 		}
 
-		var node = new SettingNode(key, value);
-		Nodes.Add(node);
+		Items ??= [];
+		Items.RemoveAll(t => !items.ContainsKey(t.Key));
+		foreach (var (key, value) in items)
+		{
+			var item = Items.FirstOrDefault(t => t.Key == key);
+			if (item == null)
+			{
+				item = new SettingItem(key, value);
+				Items.Add(item);
+			}
+			else
+			{
+				item.Value = value;
+			}
+		}
+
+		Status = SettingStatus.Pending;
 	}
 
 	internal void SetStatus(SettingStatus status)
@@ -113,13 +123,26 @@ public class Setting : Aggregate<long>, IAuditing
 		RaiseEvent(new SettingStatusChangedEvent(Status, status));
 	}
 
-	internal void SetDescription(string description)
+	internal void CreateRevision(string version, string comment, string @operator)
 	{
-		if (string.Equals(Description, description))
+		if (Items == null || Items.Count == 0)
 		{
 			return;
 		}
 
-		Description = description;
+		Revisions ??= [];
+
+		if (Revisions.Any(t => string.Equals(t.Version, version, StringComparison.OrdinalIgnoreCase)))
+		{
+			throw new InvalidOperationException($"版本号 {version} 已存在");
+		}
+
+		var data = JsonConvert.SerializeObject(Items, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
+		var revision = new SettingRevision(version, comment, data, @operator);
+
+		Revisions.Add(revision);
+
+		Version = version;
 	}
 }

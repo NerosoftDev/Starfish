@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nerosoft.Starfish.Application;
 using Nerosoft.Starfish.Transit;
@@ -8,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// <summary>
 /// 应用配置管理接口
 /// </summary>
-[Route("api/[controller]/node")]
+[Route("api/[controller]")]
 [ApiController, ApiExplorerSettings(GroupName = "setting")]
 [Authorize]
 public class SettingController : ControllerBase
@@ -76,6 +77,19 @@ public class SettingController : ControllerBase
 	}
 
 	/// <summary>
+	/// 更新配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPut("{id:long}")]
+	public async Task<IActionResult> UpdateAsync(long id, [FromBody] SettingUpdateDto data)
+	{
+		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
 	/// 删除配置节点
 	/// </summary>
 	/// <param name="id">节点Id</param>
@@ -84,6 +98,22 @@ public class SettingController : ControllerBase
 	public async Task<IActionResult> DeleteAsync(long id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
+	/// 更新配置项的值
+	/// </summary>
+	/// <param name="id">配置Id</param>
+	/// <param name="key">完整Key名称</param>
+	/// <param name="value"></param>
+	/// <returns></returns>
+	[HttpPut("{id:long}/{key}")]
+	[Consumes("plain/text")]
+	public async Task<IActionResult> UpdateItemAsync(long id, string key, [FromBody] string value)
+	{
+		key = HttpUtility.UrlDecode(key);
+		await _service.UpdateAsync(id, key, value, HttpContext.RequestAborted);
 		return Ok();
 	}
 

@@ -201,25 +201,25 @@
   <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
     <value>已发布</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_ARRAY" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_ARRAY" xml:space="preserve">
     <value>集合</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_BOOLEAN" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_BOOLEAN" xml:space="preserve">
     <value>布尔</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_NUMBER" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_NUMBER" xml:space="preserve">
     <value>数字</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_OBJECT" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_OBJECT" xml:space="preserve">
     <value>对象</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_REFERER" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_REFERER" xml:space="preserve">
     <value>引用</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_ROOT" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_ROOT" xml:space="preserve">
     <value>根节点</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_STRING" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_STRING" xml:space="preserve">
     <value>字符串</value>
   </data>
 </root>

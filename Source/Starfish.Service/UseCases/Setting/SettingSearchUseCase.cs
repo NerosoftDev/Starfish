@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Application;
+using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
@@ -45,7 +46,8 @@ public class SettingSearchUseCase : ISettingSearchUseCase
 	{
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
-		return _repository.FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken)
+		return _repository.Include(t => t.App)
+		                  .FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

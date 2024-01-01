@@ -34,5 +34,5 @@ public interface IDictionaryApplicationService : IApplicationService
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<DictionaryItemDto>> GetSettingNodeTypeItemsAsync(CancellationToken cancellationToken = default);
+	Task<List<DictionaryItemDto>> GetSettingItemTypeItemsAsync(CancellationToken cancellationToken = default);
 }

@@ -2,6 +2,7 @@
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Mapping;
 using Nerosoft.Starfish.Application;
+using Nerosoft.Starfish.Common;
 using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
@@ -19,11 +20,12 @@ public class SettingCreateUseCase : ISettingCreateUseCase
 
 	public Task<long> ExecuteAsync(SettingCreateDto input, CancellationToken cancellationToken = default)
 	{
+		var data = Cryptography.Base64.Decrypt(input.Data);
 		var command = TypeAdapter.ProjectedAs<SettingCreateCommand>(input);
-		command.Data = input.DataType switch
+		command.Data = input.Type switch
 		{
-			"json" => JsonConfigurationFileParser.Parse(input.ItemsData),
-			"text" => TextConfigurationFileParser.Parse(input.ItemsData),
+			"json" => JsonConfigurationFileParser.Parse(data),
+			"text" => TextConfigurationFileParser.Parse(data),
 			_ => default
 		};
 		return _bus.SendAsync<SettingCreateCommand, long>(command, cancellationToken)

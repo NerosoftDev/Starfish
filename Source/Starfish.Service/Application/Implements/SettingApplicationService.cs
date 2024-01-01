@@ -1,5 +1,4 @@
 ﻿using Nerosoft.Euonia.Application;
-using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Transit;
 using Nerosoft.Starfish.UseCases;
 
@@ -16,7 +15,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingSearchUseCase>();
 		var input = new SettingSearchInput(criteria, page, size);
 		return useCase.ExecuteAsync(input, cancellationToken)
-					  .ContinueWith(t => t.Result.Result, cancellationToken);
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -25,7 +24,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingCountUseCase>();
 		var input = new SettingCountInput(criteria);
 		return useCase.ExecuteAsync(input, cancellationToken)
-					  .ContinueWith(t => t.Result.Result, cancellationToken);
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -34,12 +33,21 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingGetDetailUseCase>();
 		var input = new SettingGetDetailInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken)
-					  .ContinueWith(t => t.Result.Result, cancellationToken);
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
-	public async Task<long> CreateAsync(SettingCreateDto data, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(SettingCreateDto data, CancellationToken cancellationToken = default)
 	{
-		throw new NotImplementedException();
+		var useCase = LazyServiceProvider.GetRequiredService<ISettingCreateUseCase>();
+		return useCase.ExecuteAsync(data, cancellationToken)
+		              .ContinueWith(t => t.Result, cancellationToken);
+	}
+
+	public async Task UpdateAsync(long id, SettingUpdateDto data, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<ISettingUpdateUseCase>();
+		var input = new SettingUpdateInput(id, data);
+		await useCase.ExecuteAsync(input, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -48,6 +56,11 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingDeleteUseCase>();
 		var input = new SettingDeleteInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	public Task UpdateAsync(long id, string key, string value, CancellationToken cancellationToken = default)
+	{
+		throw new NotImplementedException();
 	}
 
 	/// <inheritdoc />
@@ -64,6 +77,6 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		var useCase = LazyServiceProvider.GetRequiredService<IGetSettingRawUseCase>();
 		var input = new GetSettingRawUseCaseInput(appId, environment);
 		return useCase.ExecuteAsync(input, cancellationToken)
-					  .ContinueWith(t => t.Result.Result, cancellationToken);
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 }

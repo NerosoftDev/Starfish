@@ -3,7 +3,6 @@ using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Service;
-using Newtonsoft.Json;
 
 namespace Nerosoft.Starfish.Application;
 
@@ -19,39 +18,16 @@ public class SettingRevisionCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var nodes = await GetNodesAsync(message.SettingId, cancellationToken);
+			var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 
-			var entity = new SettingRevision
+			var aggregate = await repository.GetAsync(message.SettingId, false, [nameof(Setting.Items), nameof(Setting.Revisions)], cancellationToken);
+
+			if (aggregate == null)
 			{
-				SettingId = message.SettingId,
-				Version = message.Version,
-				Data = JsonConvert.SerializeObject(nodes, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-				Operator = context?.User?.Identity?.Name,
-				Comment = message.Comment
-			};
+				throw new SettingNotFoundException(message.SettingId);
+			}
 
-			await SaveRevisionAsync(entity, cancellationToken);
+			aggregate.CreateRevision(message.Version, message.Comment, context.User?.Identity?.Name);
 		});
-	}
-
-	private async Task<List<SettingNode>> GetNodesAsync(long id, CancellationToken cancellationToken = default)
-	{
-		var repository = UnitOfWork.Current.GetService<ISettingRepository>();
-
-		var aggregate = await repository.GetAsync(id, false, [nameof(Setting.Nodes)], cancellationToken);
-
-		if (aggregate == null)
-		{
-			throw new SettingNotFoundException(id);
-		}
-
-		return aggregate.Nodes.ToList();
-	}
-
-	private Task<SettingRevision> SaveRevisionAsync(SettingRevision entity, CancellationToken cancellationToken = default)
-	{
-		var repository = UnitOfWork.Current.GetService<ISettingRevisionRepository>();
-
-		return repository.InsertAsync(entity, true, cancellationToken);
 	}
 }

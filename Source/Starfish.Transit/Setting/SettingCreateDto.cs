@@ -24,10 +24,10 @@ public class SettingCreateDto
 	/// 数据类型
 	/// </summary>
 	/// <remarks>可选值json|text</remarks>
-	public string DataType { get; set; }
+	public string Type { get; set; }
 
 	/// <summary>
 	/// 配置项内容
 	/// </summary>
-	public string ItemsData { get; set; }
+	public string Data { get; set; }
 }

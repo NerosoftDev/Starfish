@@ -18,9 +18,7 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
 	public static readonly PropertyInfo<long> AppIdProperty = RegisterProperty<long>(p => p.AppId);
 	public static readonly PropertyInfo<string> EnvironmentProperty = RegisterProperty<string>(p => p.Environment);
-	public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(p => p.Description);
-	public static readonly PropertyInfo<SettingStatus> StatusProperty = RegisterProperty<SettingStatus>(p => p.Status);
-	public static readonly PropertyInfo<IDictionary<string, string>> NodesProperty = RegisterProperty<IDictionary<string, string>>(p => p.Nodes);
+	public static readonly PropertyInfo<IDictionary<string, string>> ItemsProperty = RegisterProperty<IDictionary<string, string>>(p => p.Items);
 
 	public long Id
 	{
@@ -40,22 +38,10 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 		set => SetProperty(EnvironmentProperty, value);
 	}
 
-	public string Description
+	public IDictionary<string, string> Items
 	{
-		get => GetProperty(DescriptionProperty);
-		set => SetProperty(DescriptionProperty, value);
-	}
-
-	public SettingStatus Status
-	{
-		get => GetProperty(StatusProperty);
-		set => SetProperty(StatusProperty, value);
-	}
-
-	public IDictionary<string, string> Nodes
-	{
-		get => GetProperty(NodesProperty);
-		set => SetProperty(NodesProperty, value);
+		get => GetProperty(ItemsProperty);
+		set => SetProperty(ItemsProperty, value);
 	}
 
 	protected override void AddRules()
@@ -81,7 +67,6 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 			Id = aggregate.Id;
 			AppId = aggregate.AppId;
 			Environment = aggregate.Environment;
-			Description = aggregate.Description;
 		}
 	}
 
@@ -89,7 +74,7 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
 		var appInfo = await AppInfoRepository.GetAsync(AppId, cancellationToken);
-		var aggregate = Setting.Create(AppId, appInfo.Code, Environment, Description, Nodes);
+		var aggregate = Setting.Create(AppId, appInfo.Code, Environment, Items);
 		await SettingRepository.InsertAsync(aggregate, true, cancellationToken);
 		Id = aggregate.Id;
 	}
@@ -97,14 +82,14 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	[FactoryUpdate]
 	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
-		if (ChangedProperties.Contains(DescriptionProperty))
+		if (!HasChangedProperties)
 		{
-			Aggregate.SetDescription(Description);
+			return;
 		}
 
-		if (ChangedProperties.Contains(StatusProperty))
+		if (ChangedProperties.Contains(ItemsProperty))
 		{
-			Aggregate.SetStatus(Status);
+			Aggregate.AddOrUpdateItem(Items);
 		}
 
 		await SettingRepository.UpdateAsync(Aggregate, true, cancellationToken);

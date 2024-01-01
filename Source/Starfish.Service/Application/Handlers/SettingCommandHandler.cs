@@ -11,6 +11,7 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class SettingCommandHandler : CommandHandlerBase,
                                      IHandler<SettingCreateCommand>,
+                                     IHandler<SettingUpdateCommand>,
                                      IHandler<SettingDeleteCommand>,
                                      IHandler<SettingPublishCommand>
 {
@@ -26,10 +27,20 @@ public class SettingCommandHandler : CommandHandlerBase,
 			var business = await Factory.CreateAsync<SettingGeneralBusiness>(cancellationToken);
 			business.AppId = message.AppId;
 			business.Environment = message.Environment;
-			business.Description = message.Description;
-			var _ = await business.SaveAsync(false, cancellationToken);
+			business.Items = message.Data;
+			_ = await business.SaveAsync(false, cancellationToken);
 			return business.Id;
 		}, context.Response);
+	}
+
+	public Task HandleAsync(SettingUpdateCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	{
+		return ExecuteAsync(async () =>
+		{
+			var business = await Factory.FetchAsync<SettingGeneralBusiness>(message.Id, cancellationToken);
+			business.Items = message.Data;
+			_ = await business.SaveAsync(true, cancellationToken);
+		});
 	}
 
 	/// <inheritdoc />

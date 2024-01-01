@@ -3,7 +3,7 @@
 /// <summary>
 /// 配置节点类型
 /// </summary>
-public enum SettingNodeType
+public enum SettingItemType
 {
 	/// <summary>
 	/// 根节点
