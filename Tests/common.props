@@ -1,15 +1,9 @@
 <Project>
+    <Import Project="..\global.props" />
+    
     <PropertyGroup>
         <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
 		<RootNamespace>Nerosoft.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-        <Version>1.0.0</Version>
-        <Authors>damon</Authors>
-        <Company>Nerosoft Co., Ltd.</Company>
-        <Product>Starfish</Product>
-        <Copyright>© 2018-2023 Nerosoft. All Rights Reserved.</Copyright>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
-        <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>

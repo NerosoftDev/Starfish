@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{9B
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
 		README.md = README.md
+		global.props = global.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}"

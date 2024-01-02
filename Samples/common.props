@@ -1,14 +1,8 @@
 <Project>
+    <Import Project="..\global.props" />
+
     <PropertyGroup>
         <RootNamespace>Nerosoft.Starfish.Sample</RootNamespace>
-        <Version>1.0.0</Version>
-        <Authors>damon</Authors>
-        <Company>Nerosoft Co., Ltd.</Company>
-        <Product>Starfish</Product>
-        <Copyright>© 2018-2023 Nerosoft. All Rights Reserved.</Copyright>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
-        <LangVersion>latest</LangVersion>
         <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
         <RepositoryUrl>https://github.com/NerosoftDev/Starfish/</RepositoryUrl>
     </PropertyGroup>
