@@ -4,8 +4,6 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <Nullable>disable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
     </PropertyGroup>
