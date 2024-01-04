@@ -3,7 +3,7 @@
 /// <summary>
 /// 登录请求Dto
 /// </summary>
-public class LoginRequestDto
+public class AuthRequestDto
 {
 	/// <summary>
 	/// 用户名
