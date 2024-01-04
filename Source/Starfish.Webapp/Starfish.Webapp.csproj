@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Blazored.LocalStorage" />
+        <PackageReference Include="Euonia.Core" />
         <PackageReference Include="IdentityModel" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
@@ -43,17 +44,23 @@
         <Watch Include="**\*.ts" />
         <Watch Include="**\*.cs" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <Content Remove="Layout\EmptyLayout.razor" />
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <Watch Remove="Layout\EmptyLayout.razor" />
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="Layout\EmptyLayout.razor" />
+        <Using Include="$(RootNamespace).Properties" />
     </ItemGroup>
-
 </Project>

@@ -6,8 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{9B36D7D2-4471-4286-8271-5CB679A71051}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
-		README.md = README.md
 		global.props = global.props
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}"
@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Redis", "Source\St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Etcd", "Source\Starfish.Etcd\Starfish.Etcd.csproj", "{88EE02A3-5A1F-48F9-AA0A-8733D555BB98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfish.Webapp", "Source\Starfish.Webapp\Starfish.Webapp.csproj", "{10681F31-2EBE-49B1-9152-AB7A5844DFD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Webapp", "Source\Starfish.Webapp\Starfish.Webapp.csproj", "{10681F31-2EBE-49B1-9152-AB7A5844DFD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
