@@ -1,3 +1,69 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+@attribute [Authorize]
+
+<FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office" />
+
+<FluentLayout>
+    <FluentHeader>
+        Starfish
+        <FluentSpacer />
+        <div style="display: flex; gap: 10px;">
+            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Alert())" />
+
+            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Settings())" />
+
+            <a href="/apps">
+                <FluentPersona Name="damon" Id="persona"
+                               ImageSize="36px"
+                               Status="PresenceStatus.Available"
+                               StatusSize="PresenceBadgeSize.Small" />
+            </a>
+        </div>
+    </FluentHeader>
+
+    <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
+        <FluentNavMenu Width="360" Collapsible="true">
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Href="/" Match="NavLinkMatch.All">@(Resources.IDS_MENU_TEXT_HOME)</FluentNavLink>
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.Apps())" Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentNavLink>
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.People())" Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentNavLink>
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleTeam())" Href="/team">@(Resources.IDS_MENU_TEXT_TEAM)</FluentNavLink>
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentText())" Href="/logs">@(Resources.IDS_MENU_TEXT_LOGS)</FluentNavLink>
+        </FluentNavMenu>
+        <FluentBodyContent>
+            <ErrorBoundary>
+                <ChildContent>
+                    <div class="content">
+                        @Body
+                    </div>
+                </ChildContent>
+                <ErrorContent Context="ex">
+                    <div class="blazor-error-boundary">@ex.Message</div>
+                </ErrorContent>
+            </ErrorBoundary>
+        </FluentBodyContent>
+    </FluentStack>
+
+    <FluentFooter>
+        <div class="link1">
+            <a href="https://www.fluentui-blazor.net" target="_blank">Documentation and demos</a>
+        </div>
+        <div class="link2">
+            <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor" target="_blank">About Blazor</a>
+        </div>
+    </FluentFooter>
+</FluentLayout>
+
+@code {
+    private bool ShowPersonaMenu { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    private void OnPersonaClicked()
+    {
+        ShowPersonaMenu = true;    
+    }
+}
