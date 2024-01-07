@@ -36,6 +36,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			business.Password = message.Item1.Password;
 			business.NickName = message.Item1.NickName;
 			business.Email = message.Item1.Email;
+			business.Phone = message.Item1.Phone;
 			business.Roles = message.Item1.Roles;
 			await business.SaveAsync(false, cancellationToken);
 

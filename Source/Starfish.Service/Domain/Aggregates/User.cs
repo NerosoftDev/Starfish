@@ -58,6 +58,11 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	public string Email { get; set; }
 
 	/// <summary>
+	/// 电话
+	/// </summary>
+	public string Phone { get; set; }
+
+	/// <summary>
 	/// 授权失败次数
 	/// </summary>
 	public int AccessFailedCount { get; set; }
@@ -151,6 +156,15 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	internal void SetEmail(string email)
 	{
 		Email = email.Normalize(TextCaseType.Lower);
+	}
+
+	/// <summary>
+	/// 设置电话
+	/// </summary>
+	/// <param name="phone"></param>
+	internal void SetPhone(string phone)
+	{
+		Phone = phone;
 	}
 
 	/// <summary>

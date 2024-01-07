@@ -3,15 +3,15 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
 
-/// <summary>
-/// 新建团队命令
-/// </summary>
-public sealed class TeamCreateCommand : Command
+public class TeamUpdateCommand : Command
 {
-	public TeamCreateCommand(TeamEditDto data)
+	public TeamUpdateCommand(int id, TeamEditDto data)
 	{
+		Id = id;
 		Data = data;
 	}
+
+	public int Id { get; set; }
 
 	public TeamEditDto Data { get; set; }
 }

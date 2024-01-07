@@ -127,4 +127,20 @@ public static class CriteriaExtensions
 
 		return specification;
 	}
+
+	public static Specification<Team> GetSpecification(this TeamCriteria criteria)
+	{
+		Specification<Team> specification = new TrueSpecification<Team>();
+		if (criteria == null)
+		{
+			return specification;
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
+		{
+			specification &= TeamSpecification.Matches(criteria.Keyword);
+		}
+
+		return specification;
+	}
 }

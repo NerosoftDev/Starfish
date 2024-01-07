@@ -33,7 +33,7 @@ public class SettingCommandHandler : CommandHandlerBase,
 		}, context.Response);
 	}
 
-	public Task HandleAsync(SettingUpdateCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(SettingUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

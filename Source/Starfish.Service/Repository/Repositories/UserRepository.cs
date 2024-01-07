@@ -39,10 +39,21 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 	public Task<bool> CheckEmailExistsAsync(string email, int ignoreId, CancellationToken cancellationToken = default)
 	{
 		ISpecification<User>[] specifications =
-		{
+		[
 			UserSpecification.EmailEquals(email),
 			UserSpecification.IdNotEquals(ignoreId)
-		};
+		];
+		var predicate = new CompositeSpecification<User>(PredicateOperator.AndAlso, specifications).Satisfy();
+		return ExistsAsync(predicate, cancellationToken);
+	}
+
+	public Task<bool> CheckPhoneExistsAsync(string phone, int ignoreId, CancellationToken cancellationToken = default)
+	{
+		ISpecification<User>[] specifications =
+		[
+			UserSpecification.EmailEquals(phone),
+			UserSpecification.IdNotEquals(ignoreId)
+		];
 		var predicate = new CompositeSpecification<User>(PredicateOperator.AndAlso, specifications).Satisfy();
 		return ExistsAsync(predicate, cancellationToken);
 	}

@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 用户映射配置
 /// </summary>
-public class UserMappingProfile : Profile
+internal class UserMappingProfile : Profile
 {
 	/// <summary>
 	/// 

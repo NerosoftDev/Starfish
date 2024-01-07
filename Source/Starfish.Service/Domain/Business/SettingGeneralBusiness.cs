@@ -104,7 +104,7 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 
 	public class DuplicateCheckRule : RuleBase
 	{
-		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = new CancellationToken())
+		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
 		{
 			var target = (SettingGeneralBusiness)context.Target;
 			if (!target.IsInsert)

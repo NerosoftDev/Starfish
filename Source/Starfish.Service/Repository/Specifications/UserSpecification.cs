@@ -81,11 +81,11 @@ public static class UserSpecification
 	public static Specification<User> Matches(string keyword)
 	{
 		ISpecification<User>[] specifications =
-		{
+		[
 			UserNameContains(keyword),
 			NickNameContains(keyword),
 			EmailContains(keyword)
-		};
+		];
 
 		return new CompositeSpecification<User>(PredicateOperator.OrElse, specifications);
 	}

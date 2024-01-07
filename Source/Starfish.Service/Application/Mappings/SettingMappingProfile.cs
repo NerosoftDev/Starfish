@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 配置节点映射配置
 /// </summary>
-public class SettingMappingProfile : Profile
+internal class SettingMappingProfile : Profile
 {
 	/// <inheritdoc />
 	public SettingMappingProfile()

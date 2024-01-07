@@ -19,7 +19,8 @@ public class SqliteModelBuilder : IModelBuilder
 
 			entity.HasKey(t => t.Id);
 
-			entity.HasIndex(t => t.UserName).IsUnique();
+			entity.HasIndex(t => t.UserName)
+			      .IsUnique();
 
 			entity.HasMany(t => t.Roles)
 			      .WithOne(t => t.User)
@@ -140,6 +141,37 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.Property(t => t.Id)
 			      .IsRequired()
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
+		});
+
+		modelBuilder.Entity<Team>(entity =>
+		{
+			entity.ToTable("team");
+			entity.HasKey(t => t.Id);
+
+			entity.HasIndex(t => t.Alias).IsUnique();
+			entity.HasIndex(t => t.Name);
+			entity.HasIndex(t => t.OwnerId);
+
+			entity.HasMany(t => t.Members)
+			      .WithOne(t => t.Team)
+			      .HasForeignKey(t => t.TeamId);
+		});
+
+		modelBuilder.Entity<TeamMember>(entity =>
+		{
+			entity.ToTable("team_member");
+			entity.HasKey(t => t.Id);
+
+			entity.HasIndex([nameof(TeamMember.TeamId), nameof(TeamMember.UserId)], "IDX_TEAM_MEMBER_UNIQUE")
+			      .IsUnique();
+
+			entity.HasOne(t => t.Team)
+			      .WithMany(t => t.Members)
+			      .HasForeignKey(t => t.TeamId);
+
+			entity.HasOne(t => t.User)
+			      .WithMany()
+			      .HasForeignKey(t => t.UserId);
 		});
 	}
 }

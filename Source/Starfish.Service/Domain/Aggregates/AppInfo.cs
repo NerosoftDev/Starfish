@@ -23,7 +23,7 @@ public sealed class AppInfo : Aggregate<long>,
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public long? TeamId { get; set; }
+	public int TeamId { get; set; }
 
 	/// <summary>
 	/// 名称
@@ -63,13 +63,15 @@ public sealed class AppInfo : Aggregate<long>,
 	/// <summary>
 	/// 创建应用
 	/// </summary>
+	/// <param name="teamId"></param>
 	/// <param name="name"></param>
 	/// <param name="code"></param>
 	/// <returns></returns>
-	internal static AppInfo Create(string name, string code)
+	internal static AppInfo Create(int teamId, string name, string code)
 	{
 		var entity = new AppInfo
 		{
+			TeamId = teamId,
 			Name = name,
 			Code = code.Normalize(TextCaseType.Lower)
 		};

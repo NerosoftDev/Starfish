@@ -19,7 +19,7 @@ public class SettingUpdateUseCase : ISettingUpdateUseCase
 		_bus = bus;
 	}
 
-	public Task ExecuteAsync(SettingUpdateInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(SettingUpdateInput input, CancellationToken cancellationToken = default)
 	{
 		var data = Cryptography.Base64.Decrypt(input.Data.Data);
 		var command = new SettingUpdateCommand(input.Id)

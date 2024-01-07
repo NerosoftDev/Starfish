@@ -6,6 +6,11 @@
 public class AppInfoCreateDto
 {
 	/// <summary>
+	/// 团队Id
+	/// </summary>
+	public int TeamId { get; set; }
+
+	/// <summary>
 	/// 应用名称
 	/// </summary>
 	public string Name { get; set; } = default!;

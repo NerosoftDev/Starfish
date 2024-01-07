@@ -34,6 +34,7 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 			options.AddProfile<LogsMappingProfile>();
 			options.AddProfile<AppsMappingProfile>();
 			options.AddProfile<SettingMappingProfile>();
+			options.AddProfile<TeamMappingProfile>();
 		});
 	}
 

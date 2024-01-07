@@ -1,19 +1,24 @@
 ﻿namespace Nerosoft.Starfish.Transit;
 
 /// <summary>
-/// 用户查询结果Dto
+/// 团队成员Dto
 /// </summary>
-public class UserItemDto
+public class TeamMemberDto
 {
 	/// <summary>
-	/// Id
+	/// 用户Id
 	/// </summary>
-	public int Id { get; set; }
+	public int UserId { get; set; }
 
 	/// <summary>
 	/// 用户名
 	/// </summary>
 	public string UserName { get; set; }
+
+	/// <summary>
+	/// 昵称
+	/// </summary>
+	public string NickName { get; set; }
 
 	/// <summary>
 	/// 邮箱
@@ -24,14 +29,4 @@ public class UserItemDto
 	/// 电话
 	/// </summary>
 	public string Phone { get; set; }
-
-	/// <summary>
-	/// 昵称
-	/// </summary>
-	public string NickName { get; set; }
-
-	/// <summary>
-	/// 用户角色
-	/// </summary>
-	public List<string> Roles { get; set; }
 }
