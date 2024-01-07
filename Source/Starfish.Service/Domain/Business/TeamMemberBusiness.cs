@@ -14,9 +14,6 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 	[Inject]
 	public IUserRepository UserRepository { get; set; }
 
-	[Inject]
-	public UserPrincipal Identity { get; set; }
-
 	private Team Aggregate { get; set; }
 
 	public static readonly PropertyInfo<int[]> UserIdsProperty = RegisterProperty<int[]>(p => p.UserIds);

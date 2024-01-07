@@ -1,19 +1,16 @@
 ﻿using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Claims;
+using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Nerosoft.Starfish.Domain;
 
-public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>
+public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDomainService
 {
 	[Inject]
 	public ITeamRepository TeamRepository { get; set; }
-
-	[Inject]
-	public UserPrincipal Identity { get; set; }
-
+	
 	private Team Aggregate { get; set; }
 
 	public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(p => p.Id);

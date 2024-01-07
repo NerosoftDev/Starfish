@@ -19,7 +19,7 @@ public class TeamMemberQueryUseCase : ITeamMemberQueryUseCase
 		_repository = repository;
 	}
 
-	public Task<TeamMemberQueryOutput> ExecuteAsync(TeamMemberQueryInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task<TeamMemberQueryOutput> ExecuteAsync(TeamMemberQueryInput input, CancellationToken cancellationToken = default)
 	{
 		return _repository.GetMembersAsync(input.Id, cancellationToken)
 		                  .ContinueWith(task =>

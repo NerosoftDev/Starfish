@@ -17,7 +17,7 @@ public class TeamMemberRemoveUseCase : ITeamMemberRemoveUseCase
 		_bus = bus;
 	}
 
-	public Task ExecuteAsync(TeamMemberRemoveInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(TeamMemberRemoveInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new TeamMemberEditCommand(input.Id, input.UserIds, "-");
 		return _bus.SendAsync(command, cancellationToken);

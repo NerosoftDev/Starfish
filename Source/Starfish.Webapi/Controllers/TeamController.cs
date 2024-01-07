@@ -52,6 +52,14 @@ public class TeamController : ControllerBase
 		return Ok(result);
 	}
 
+	[HttpGet("{id:int}")]
+	[Produces(typeof(TeamDetailDto))]
+	public async Task<IActionResult> GetAsync(int id)
+	{
+		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
+		return Ok(result);
+	}
+	
 	/// <summary>
 	/// 创建团队
 	/// </summary>

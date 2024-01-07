@@ -17,7 +17,7 @@ public class TeamMemberAppendUseCase : ITeamMemberAppendUseCase
 		_bus = bus;
 	}
 
-	public Task ExecuteAsync(TeamMemberAppendInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(TeamMemberAppendInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new TeamMemberEditCommand(input.Id, input.UserIds, "+");
 		return _bus.SendAsync(command, cancellationToken);

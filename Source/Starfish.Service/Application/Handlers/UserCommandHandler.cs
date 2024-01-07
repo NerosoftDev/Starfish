@@ -31,13 +31,14 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.CreateAsync<UserGeneralBusiness>();
+			var business = await Factory.CreateAsync<UserGeneralBusiness>(cancellationToken);
 			business.UserName = message.Item1.UserName;
 			business.Password = message.Item1.Password;
 			business.NickName = message.Item1.NickName;
 			business.Email = message.Item1.Email;
 			business.Phone = message.Item1.Phone;
 			business.Roles = message.Item1.Roles;
+			business.MarkAsInsert();
 			await business.SaveAsync(false, cancellationToken);
 
 			return business.Id;

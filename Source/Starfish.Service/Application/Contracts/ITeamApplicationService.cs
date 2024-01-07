@@ -9,6 +9,8 @@ public interface ITeamApplicationService : IApplicationService
 
 	Task<int> CountAsync(TeamCriteria criteria, CancellationToken cancellationToken = default);
 
+	Task<TeamDetailDto> GetAsync(int id, CancellationToken cancellationToken = default);
+	
 	Task<int> CreateAsync(TeamEditDto data, CancellationToken cancellationToken = default);
 
 	Task UpdateAsync(int id, TeamEditDto data, CancellationToken cancellationToken = default);

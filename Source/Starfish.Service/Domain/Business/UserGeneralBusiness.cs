@@ -2,12 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Nerosoft.Starfish.Domain;
 
-internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomainService
+internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, IDomainService
 {
 	private readonly IServiceProvider _provider;
 

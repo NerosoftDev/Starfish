@@ -17,7 +17,7 @@ public class TeamMemberQuitUseCase : ITeamMemberQuitUseCase
 		_bus = bus;
 	}
 
-	public Task ExecuteAsync(TeamMemberQuitInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(TeamMemberQuitInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new TeamMemberEditCommand(input.TeamId, [input.UserId], "-");
 		return _bus.SendAsync(command, cancellationToken);

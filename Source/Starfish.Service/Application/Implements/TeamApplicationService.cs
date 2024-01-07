@@ -22,6 +22,14 @@ public class TeamApplicationService : BaseApplicationService, ITeamApplicationSe
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
+	public Task<TeamDetailDto> GetAsync(int id, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetService<ITeamDetailUseCase>();
+		var input = new TeamDetailInput(id);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(task => task.Result.Result, cancellationToken);
+	}
+
 	public Task<int> CreateAsync(TeamEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<ITeamCreateUseCase>();
