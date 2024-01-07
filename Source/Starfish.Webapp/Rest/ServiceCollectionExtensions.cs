@@ -38,6 +38,7 @@ internal static class ServiceCollectionExtensions
 		services.AddTransient(provider => provider.GetRestService<IIdentityApi>(HTTP_CLIENT_NAME))
 		        .AddTransient(provider => provider.GetRestService<ILogsApi>(HTTP_CLIENT_NAME))
 		        .AddTransient(provider => provider.GetRestService<IUserApi>(HTTP_CLIENT_NAME))
+		        .AddTransient(provider => provider.GetRestService<ITeamApi>(HTTP_CLIENT_NAME))
 		        .AddTransient(provider => provider.GetRestService<IAppsApis>(HTTP_CLIENT_NAME))
 		        .AddTransient(provider => provider.GetRestService<ISettingApi>(HTTP_CLIENT_NAME));
 
