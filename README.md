@@ -96,6 +96,10 @@ graph TD
     Starfish.Service --> Starfish.Common
     
     Starfish.Client --> Starfish.Common
+    
+    Starfish.Webapp --> Starfish.Client
+    Starfish.Webapp --> Starfish.Common
+    Starfish.Webapp --> Starfish.Transit
 ```
 
 ## Requirements/环境要求
