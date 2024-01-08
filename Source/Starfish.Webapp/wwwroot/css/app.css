@@ -174,3 +174,7 @@ code {
         border: none;
     }
 }
+
+nav[class*="paginator-nav"] {
+    background-color: unset !important;
+}

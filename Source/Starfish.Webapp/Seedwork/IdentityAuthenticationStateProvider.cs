@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using IdentityModel;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
@@ -19,7 +20,7 @@ public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
 		await _storageService.SetItemAsStringAsync(Constants.LocalStorage.RefreshToken, refreshToken);
 
 		var jwt = TokenHelper.Resolve(accessToken);
-		var identity = new ClaimsIdentity(jwt.Claims, "jwt");
+		var identity = new ClaimsIdentity(jwt.Claims, "jwt", JwtClaimTypes.Name, JwtClaimTypes.Role);
 		var user = new ClaimsPrincipal(identity);
 
 		var authState = Task.FromResult(new AuthenticationState(user));
@@ -34,7 +35,7 @@ public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
 		var jwt = TokenHelper.Resolve(token);
 		if (jwt != null && jwt.ValidTo > DateTime.UtcNow)
 		{
-			identity = new ClaimsIdentity(jwt.Claims, "jwt");
+			identity = new ClaimsIdentity(jwt.Claims, "jwt", JwtClaimTypes.Name, JwtClaimTypes.Role);
 		}
 		else
 		{

@@ -1,0 +1,158 @@
+﻿@implements IDialogContentComponent<int>
+
+@inject IUserApi Api
+@inject IToastService ToastService
+
+<FluentDialogHeader ShowDismiss="true">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.People())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_USER_LABEL_USERNAME)"
+                         @bind-Value="UserName"
+                         ReadOnly="@(Content > 0)" />
+        @if (Content == 0)
+        {
+            <FluentTextField Style="width: 100%"
+                             Label="@(Resources.IDS_USER_LABEL_PASSWORD)"
+                             @bind-Value="Password"
+                             TextFieldType="TextFieldType.Password" />
+            <FluentTextField Style="width: 100%"
+                             Label="@(Resources.IDS_USER_LABEL_CONFIRM_PASSWORD)"
+                             @bind-Value="Confirm"
+                             TextFieldType="TextFieldType.Password" />
+        }
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_USER_LABEL_NICKNAME)"
+                         @bind-Value="NickName" />
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_USER_LABEL_EMAIL)"
+                         @bind-Value="Email"
+                         TextFieldType="TextFieldType.Email" />
+    </FluentStack>
+</FluentDialogBody>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync" Loading="Loading">@(Resources.IDS_COMMON_SAVE)</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">@(Resources.IDS_COMMON_CANCEL)</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter]
+    public int Content { get; set; }
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    private bool Loading { get; set; }
+
+    private string UserName { get; set; }
+
+    private string Password { get; set; }
+
+    private string Confirm { get; set; }
+
+    private string NickName { get; set; }
+
+    private string Email { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await LoadAsync(Content);
+    }
+
+    private async Task SaveAsync()
+    {
+        try
+        {
+            Loading = true;
+            if (Content > 0)
+            {
+
+                var request = new UserUpdateDto
+                    {
+                        NickName = NickName,
+                        Email = Email
+                    };
+
+                await Api.UpdateAsync(Content, request)
+                         .ContinueWith(task =>
+                         {
+                             task.WaitAndUnwrapException();
+                             task.Result.EnsureSuccess();
+                         });
+            }
+            else
+            {
+                if (!string.Equals(Password, Confirm))
+                {
+                    throw new Exception("Password not match.");
+                }
+
+                var request = new UserCreateDto
+                    {
+                        UserName = UserName,
+                        Password = Password,
+                        NickName = NickName,
+                        Email = Email
+                    };
+
+                await Api.CreateAsync(request)
+                         .ContinueWith(task =>
+                         {
+                             task.WaitAndUnwrapException();
+                             task.Result.EnsureSuccess();
+                         });
+            }
+            await Dialog.CloseAsync(Content);
+        }
+        catch (Exception exception)
+        {
+            var message = exception.GetPromptMessage();
+            ToastService.ShowError(message);
+        }
+        finally
+        {
+            Loading = false;
+        }
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+    private async Task LoadAsync(int id)
+    {
+        if (id <= 0)
+        {
+            return;
+        }
+
+        await Api.GetAsync(id)
+                  .ContinueWith(task =>
+                  {
+                      task.WaitAndUnwrapException();
+                      var result = task.Result.EnsureSuccess();
+                      if (result == null)
+                      {
+                          return;
+                      }
+
+                      Content = result.Id;
+                      UserName = result.UserName;
+                      NickName = result.NickName;
+                      Email = result.Email;
+                  });
+    }
+
+}

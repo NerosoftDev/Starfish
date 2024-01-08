@@ -2,22 +2,21 @@
 
 @attribute [Authorize]
 
-<FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office" />
-
+<FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office"/>
 <FluentLayout>
     <FluentHeader>
         Starfish
-        <FluentSpacer />
+        <FluentSpacer/>
         <div style="display: flex; gap: 10px;">
-            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Alert())" />
+            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Alert())"/>
 
-            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Settings())" />
+            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Settings())"/>
 
             <a href="/apps">
-                <FluentPersona Name="damon" Id="persona"
+                <FluentPersona Name="@(Identity?.Username ?? "starfish")" Id="persona"
                                ImageSize="36px"
                                Status="PresenceStatus.Available"
-                               StatusSize="PresenceBadgeSize.Small" />
+                               StatusSize="PresenceBadgeSize.Small"/>
             </a>
         </div>
     </FluentHeader>
@@ -26,7 +25,10 @@
         <FluentNavMenu Width="360" Collapsible="true">
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Href="/" Match="NavLinkMatch.All">@(Resources.IDS_MENU_TEXT_HOME)</FluentNavLink>
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Apps())" Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.People())" Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentNavLink>
+            @if (Identity?.IsInRole("SA") == true)
+            {
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.People())" Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentNavLink>
+            }
             <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleTeam())" Href="/team">@(Resources.IDS_MENU_TEXT_TEAM)</FluentNavLink>
             <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentText())" Href="/logs">@(Resources.IDS_MENU_TEXT_LOGS)</FluentNavLink>
         </FluentNavMenu>
@@ -49,21 +51,28 @@
             <a href="https://www.fluentui-blazor.net" target="_blank">Documentation and demos</a>
         </div>
         <div class="link2">
-            <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor" target="_blank">About Blazor</a>
+            <span>
+                Nerosoft © 2024. All rights reserved.
+            </span>
         </div>
     </FluentFooter>
+
+    <FluentToastProvider MaxToastCount="10"/>
+    <FluentDialogProvider/>
 </FluentLayout>
 
 @code {
-    private bool ShowPersonaMenu { get; set; }
 
-    protected override Task OnInitializedAsync()
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal Identity { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        return base.OnInitializedAsync();
+        var state = await AuthenticationState;
+        Identity = new UserPrincipal(state.User);
+        StateHasChanged();
     }
 
-    private void OnPersonaClicked()
-    {
-        ShowPersonaMenu = true;    
-    }
 }

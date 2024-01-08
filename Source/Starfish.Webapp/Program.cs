@@ -20,21 +20,22 @@ public class Program
 		builder.Services.AddOptions();
 		builder.Services.AddAuthorizationCore();
 		builder.Services
-		       .AddScoped<IdentityAuthenticationStateProvider>()
-		       .AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<IdentityAuthenticationStateProvider>())
-		       .AddBlazoredLocalStorageAsSingleton()
-		       .AddHttpClientApi(options =>
-		       {
-			       var baseUrl = builder.Configuration.GetValue<string>("Api:BaseUrl");
-			       var timeout = builder.Configuration.GetValue<int>("Api:Timeout");
-			       if (string.IsNullOrEmpty(baseUrl))
-			       {
-				       baseUrl = builder.HostEnvironment.BaseAddress;
-			       }
+			   .AddScoped<IdentityAuthenticationStateProvider>()
+			   .AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<IdentityAuthenticationStateProvider>())
+			   .AddCascadingAuthenticationState()
+			   .AddBlazoredLocalStorageAsSingleton()
+			   .AddHttpClientApi(options =>
+			   {
+				   var baseUrl = builder.Configuration.GetValue<string>("Api:BaseUrl");
+				   var timeout = builder.Configuration.GetValue<int>("Api:Timeout");
+				   if (string.IsNullOrEmpty(baseUrl))
+				   {
+					   baseUrl = builder.HostEnvironment.BaseAddress;
+				   }
 
-			       options.BaseUrl = baseUrl;
-			       options.Timeout = TimeSpan.FromMilliseconds(timeout);
-		       });
+				   options.BaseUrl = baseUrl;
+				   options.Timeout = TimeSpan.FromMilliseconds(timeout);
+			   });
 
 		var host = builder.Build();
 		Singleton<HostAccessor>.Get(() => new HostAccessor

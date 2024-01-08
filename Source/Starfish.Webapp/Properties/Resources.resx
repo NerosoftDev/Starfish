@@ -120,8 +120,20 @@
   <data name="IDS_COMMON_CANCEL" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="IDS_COMMON_CLOSE" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="IDS_COMMON_PLACEHOLDER_KEYWORD" xml:space="preserve">
+    <value>Keyword to search</value>
+  </data>
   <data name="IDS_COMMON_SAVE" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="IDS_COMMON_SEARCH" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>Login</value>
@@ -156,6 +168,39 @@
   <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_CONFIRM" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_EMAIL" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_NICK_NAME" xml:space="preserve">
+    <value>Name to display</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_PASSWORD" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_PHONE" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
+    <value>Alias</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_LABEL_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>Add new team</value>
+  </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
     <value>Add user</value>
   </data>
@@ -164,6 +209,9 @@
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
     <value>Edit user</value>
+  </data>
+  <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
+    <value>Confirm password</value>
   </data>
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
     <value>Email</value>

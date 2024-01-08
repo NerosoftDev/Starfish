@@ -1,0 +1,95 @@
+﻿@page "/register"
+
+@layout EmptyLayout
+
+@inject NavigationManager Navigation
+@inject IJSRuntime Script
+@inject IToastService ToastService
+
+<PageTitle>@(Resources.IDS_REGISTER_PAGE_TITLE)</PageTitle>
+
+<div class="main" style="width: 368px; margin: 50px auto auto;">
+    <FluentStack Orientation="Orientation.Vertical">
+        <div style="text-align:center;margin:32px auto;box-shadow:none;line-height: 36px;">
+            <div class="header" style="display: flex; align-items: center;gap: 10px;">
+                <img alt="logo" class="logo" src="logo.svg">
+                <span class="title" style="color:#fcab66; font-size: 24px;">Starfish</span>
+            </div>
+            <div class="desc">配置管理和服务发现</div>
+        </div>
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentTextField @bind-Value="UserName" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_USER_NAME)" Style="width: 100%" Required="true">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral"/>
+                </FluentTextField>
+                <FluentTextField @bind-Value="Password" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_PASSWORD)" Style="width: 100%" Required="true" TextFieldType="TextFieldType.Password">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.ShieldKeyhole())" Slot="start" Color="Color.Neutral"/>
+                </FluentTextField>
+                <FluentTextField @bind-Value="Confirm" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_CONFIRM)" Style="width: 100%" Required="true" TextFieldType="TextFieldType.Password">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.ShieldKeyhole())" Slot="start" Color="Color.Neutral"/>
+                </FluentTextField>
+                <FluentTextField @bind-Value="NickName" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_NICK_NAME)" Style="width: 100%" TextFieldType="TextFieldType.Password">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.ShieldKeyhole())" Slot="start" Color="Color.Neutral"/>
+                </FluentTextField>
+                <FluentTextField @bind-Value="Email" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_EMAIL)" Style="width: 100%" TextFieldType="TextFieldType.Email">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral"/>
+                </FluentTextField>
+                <FluentTextField @bind-Value="Phone" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_PHONE)" Style="width: 100%" TextFieldType="TextFieldType.Tel">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral"/>
+                </FluentTextField>
+            </FluentStack>
+            <FluentButton Style="width: 100px;" Loading="Loading" Appearance="Appearance.Accent" OnClick="@OnClick">@(Resources.IDS_COMMON_SUBMIT)</FluentButton>
+        </FluentCard>
+    </FluentStack>
+    <FluentToastProvider MaxToastCount="10"/>
+</div>
+
+@code {
+
+    private bool Loading { get; set; }
+
+    private string UserName { get; set; }
+
+    private string Password { get; set; }
+
+    private string Confirm { get; set; }
+
+    private string NickName { get; set; }
+
+    private string Email { get; set; }
+
+    private string Phone { get; set; }
+
+    private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
+
+    private async Task OnClick(MouseEventArgs args)
+    {
+        if (_semaphoreSlim.CurrentCount == 0)
+        {
+            return;
+        }
+
+        var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
+        try
+        {
+            Loading = true;
+            await _semaphoreSlim.WaitAsync(cancellationToken.Token);
+
+            Navigation.NavigateTo("/login");
+        }
+        catch (Exception exception)
+        {
+            var message = exception.GetPromptMessage();
+            ToastService.ShowError(message);
+            await Script.InvokeVoidAsync("console.log", cancellationToken.Token, message);
+        }
+        finally
+        {
+            _semaphoreSlim.Release();
+            Loading = false;
+            StateHasChanged();
+        }
+    }
+
+}

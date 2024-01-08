@@ -1,0 +1,122 @@
+﻿@page "/team"
+
+@attribute [Authorize]
+
+@inject IDialogService DialogService
+@inject NavigationManager Navigation
+@inject ITeamApi Api
+
+<FluentBreadcrumb Style="margin-bottom: 16px;">
+    <FluentBreadcrumbItem Href="/">
+        Home
+    </FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/team">
+        Team
+    </FluentBreadcrumbItem>
+</FluentBreadcrumb>
+
+<FluentCard>
+    <FluentGrid>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <div style="display: flex; width:100%;gap:10px;">
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
+                <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
+                <FluentSpacer/>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => HandleEditClicked(0))">@(Resources.IDS_TEAM_INDEX_BUTTON_ADD)</FluentButton>
+            </div>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" Virtualize="true" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="TeamItemDto">
+                <PropertyColumn Title="Id" Property="@(c => c.Id)"/>
+                <TemplateColumn Title="Name" Align="@Align.Start">
+                    <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => HandleDetailClicked(context.Id))">@(context.Name)</FluentButton>
+                </TemplateColumn>
+                <PropertyColumn Title="Alias" Property="@(c => c.Alias)"/>
+                <PropertyColumn Title="Description" Property="@(c => c.Description)"/>
+                <PropertyColumn Title="Owner" Property="@(c => c.OwnerId)"/>
+                <PropertyColumn Title="Members" Property="@(c => c.MemberCount)"/>
+                <TemplateColumn Title="Actions" Align="@Align.End">
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" Disabled="@(User?.GetUserIdOfInt32() != context.OwnerId)" OnClick="@(() => HandleEditClicked(context.Id))"/>
+                </TemplateColumn>
+            </FluentDataGrid>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGridPaginator State="@Pagination"/>
+        </FluentGridItem>
+    </FluentGrid>
+</FluentCard>
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal User { get; set; }
+
+    private GridItemsProvider<TeamItemDto> _provider;
+
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = 20 };
+
+    private TeamCriteria Criteria { get; } = new();
+
+    private int Total { get; set; }
+
+    private const int SIZE = 20;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthenticationState;
+
+        User = new UserPrincipal(user.User);
+
+        _provider = async request =>
+        {
+            List<TeamItemDto> items = null;
+            var tasks = new List<Task>
+            {
+                Api.QueryAsync(Criteria, request.StartIndex + 1, SIZE, request.CancellationToken)
+                   .ContinueWith(task =>
+                   {
+                       task.WaitAndUnwrapException(request.CancellationToken);
+                       items = task.Result.EnsureSuccess();
+                   }, request.CancellationToken)
+            };
+
+            if (request.StartIndex == 0)
+            {
+                tasks.Add(
+                    Api.CountAsync(Criteria, request.CancellationToken)
+                       .ContinueWith(task =>
+                       {
+                           task.WaitAndUnwrapException(request.CancellationToken);
+                           Total = task.Result.EnsureSuccess();
+                       }, request.CancellationToken)
+                );
+            }
+
+            await Task.WhenAll(tasks);
+            await Pagination.SetTotalItemCountAsync(Total);
+            return GridItemsProviderResult.From(items, Total);
+        };
+
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleDetailClicked(int id)
+    {
+        Navigation.NavigateTo($"/team/{id}");
+        await Task.CompletedTask;
+    }
+
+    private async Task HandleEditClicked(int id)
+    {
+        var title = id == 0 ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
+        await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+    }
+
+    private async Task OnSearchClicked()
+    {
+        await Pagination.SetCurrentPageIndexAsync(0);
+    }
+
+}

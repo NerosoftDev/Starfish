@@ -1,0 +1,79 @@
+﻿@implements IDialogContentComponent<int>
+
+@inject ITeamApi TeamApi
+@inject IUserApi UserApi
+@inject IToastService ToastService
+
+<FluentAutocomplete TOption="UserItemDto"
+                    AutoComplete="off"
+                    Label="Select a user"
+                    Width="100%"
+                    Placeholder="Select countries"
+                    OnOptionsSearch="@OnSearchAsync"
+                    OptionText="@(item => item.NickName)"
+                    @bind-SelectedOptions="@_selectedItems"/>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync" Loading="Loading">@(Resources.IDS_COMMON_SAVE)</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">@(Resources.IDS_COMMON_CANCEL)</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter]
+    public int Content { get; set; }
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    private bool Loading { get; set; }
+
+    private UserCriteria Criteria { get; } = new();
+
+    private IEnumerable<UserItemDto> _selectedItems = Array.Empty<UserItemDto>();
+
+    private async Task OnSearchAsync(OptionsSearchEventArgs<UserItemDto> e)
+    {
+        Criteria.Keyword = e.Text;
+        e.Items = await UserApi.SearchAsync(Criteria, 1, 20)
+                               .ContinueWith(task =>
+                               {
+                                   task.WaitAndUnwrapException();
+                                   return task.Result.EnsureSuccess();
+                               });
+    }
+
+    private async Task SaveAsync()
+    {
+        try
+        {
+            Loading = true;
+
+            var userIds = _selectedItems.Select(t => t.Id).ToList();
+
+            await TeamApi.AppendMemberAsync(Content, userIds)
+                         .ContinueWith(task =>
+                         {
+                             task.WaitAndUnwrapException();
+                             task.Result.EnsureSuccess();
+                         });
+
+            await Dialog.CloseAsync(Content);
+        }
+        catch (Exception exception)
+        {
+            var message = exception.GetPromptMessage();
+            ToastService.ShowError(message);
+        }
+        finally
+        {
+            Loading = false;
+        }
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+}
