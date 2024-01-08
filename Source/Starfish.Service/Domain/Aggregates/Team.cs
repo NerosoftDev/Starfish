@@ -1,11 +1,15 @@
 ﻿using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 团队聚合根对象
 /// </summary>
-public sealed class Team : Aggregate<int>
+public sealed class Team : Aggregate<int>,
+                           IHasCreateTime,
+                           IHasUpdateTime,
+                           IAuditing
 {
 	public string Alias { get; set; }
 
@@ -16,6 +20,14 @@ public sealed class Team : Aggregate<int>
 	public int OwnerId { get; set; }
 
 	public int MemberCount { get; set; }
+
+	public DateTime CreateTime { get; set; }
+
+	public DateTime UpdateTime { get; set; }
+
+	public string CreatedBy { get; set; }
+
+	public string UpdatedBy { get; set; }
 
 	public HashSet<TeamMember> Members { get; set; }
 
