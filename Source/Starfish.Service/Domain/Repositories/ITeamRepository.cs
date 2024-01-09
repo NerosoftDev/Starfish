@@ -10,9 +10,10 @@ public interface ITeamRepository : IRepository<Team, int>
 	/// </summary>
 	/// <param name="id"></param>
 	/// <param name="tracking"></param>
+	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<Team> GetAsync(int id, bool tracking, CancellationToken cancellationToken = default);
+	Task<Team> GetAsync(int id, bool tracking, string[] properties, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询指定用户所属团队

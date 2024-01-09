@@ -1,5 +1,6 @@
 ﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Claims;
+using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -33,7 +34,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 	[FactoryFetch]
 	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await TeamRepository.GetAsync(id, true, cancellationToken);
+		var aggregate = await TeamRepository.GetAsync(id, true, [nameof(Team.Members)], cancellationToken);
 
 		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
 	}

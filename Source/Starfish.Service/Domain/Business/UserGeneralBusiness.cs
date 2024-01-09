@@ -89,7 +89,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	[FactoryFetch]
 	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var user = await _repository.GetAsync(id, true, query => query.Include(nameof(User.Roles)), cancellationToken);
+		var user = await Repository.GetAsync(id, true, query => query.Include(nameof(User.Roles)), cancellationToken);
 
 		Aggregate = user ?? throw new UserNotFoundException(id);
 
@@ -124,12 +124,12 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			user.SetRoles(Roles.ToArray());
 		}
 
-		return _repository.InsertAsync(user, true, cancellationToken)
-		                  .ContinueWith(task =>
-		                  {
-			                  task.WaitAndUnwrapException(cancellationToken);
-			                  Id = task.Result.Id;
-		                  }, cancellationToken);
+		return Repository.InsertAsync(user, true, cancellationToken)
+		                 .ContinueWith(task =>
+		                 {
+			                 task.WaitAndUnwrapException(cancellationToken);
+			                 Id = task.Result.Id;
+		                 }, cancellationToken);
 	}
 
 	[FactoryUpdate]

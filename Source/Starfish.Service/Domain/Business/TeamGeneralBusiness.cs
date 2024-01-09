@@ -10,7 +10,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 {
 	[Inject]
 	public ITeamRepository TeamRepository { get; set; }
-	
+
 	private Team Aggregate { get; set; }
 
 	public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(p => p.Id);
@@ -56,7 +56,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 	[FactoryFetch]
 	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await TeamRepository.GetAsync(id, true, cancellationToken);
+		var aggregate = await TeamRepository.GetAsync(id, true, [], cancellationToken);
 
 		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
 
