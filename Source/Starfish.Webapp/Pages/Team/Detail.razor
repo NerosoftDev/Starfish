@@ -5,9 +5,9 @@
 @inject IDialogService DialogService
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
-    <FluentBreadcrumbItem Href="/">Home</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="/team">Team</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="@($"/team/{Id}")">Detail</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/team">@(Resources.IDS_MENU_TEXT_TEAM)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="@($"/team/{Id}")">@(Resources.IDS_BREADCRUMB_TEAM_DETAIL)</FluentBreadcrumbItem>
 </FluentBreadcrumb>
 
 <FluentCard>
@@ -16,32 +16,49 @@
             <FluentPersona Name="@Data.Name" Initials="N" ImageSize="50px"/>
             <FluentLabel>Alias: @Data.Alias</FluentLabel>
             <FluentLabel>Created at: @Data.CreateTime.Date</FluentLabel>
-            <FluentLabel>Updated at: @Data.CreateTime.Date</FluentLabel>
+            <FluentLabel>Updated at: @Data.UpdateTime.Date</FluentLabel>
             <FluentDivider Style="width: 100%;"/>
             <FluentLabel>@Data.Description</FluentLabel>
             <FluentDivider Style="width: 100%;"/>
-            <FluentLabel>Operations</FluentLabel>
-            <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
-                <FluentButton>编辑信息</FluentButton>
-                <FluentButton OnClick="@OnAppendMemberClicked">添加成员</FluentButton>
-            </FluentStack>
+            @if (Data.OwnerId != User?.GetUserIdOfInt32())
+            {
+                <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
+                <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
+                    <FluentButton OnClick="@OnEditClicked">@(Resources.IDS_TEAM_DETAIL_BUTTON_EDIT)</FluentButton>
+                    <FluentButton OnClick="@OnAppendMemberClicked">@(Resources.IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER)</FluentButton>
+                </FluentStack>
+            }
         </FluentStack>
         <FluentDivider Orientation="Orientation.Vertical" Style="height: 100%"></FluentDivider>
-        <FluentTabs Width="100%" Size="TabSize.Large">
-            <FluentTab Label="Member">
-                <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
-                    @foreach (var member in Members)
-                    {
-                        <FluentPersona Name="@member.NickName"
-                                       ImageSize="50px"
-                                       OnDismissClick="@(() => OnRemoveMemberClicked(member.UserId))"/>
-                    }
-                </FluentStack>
-            </FluentTab>
-            <FluentTab Label="Apps">
-                <FluentGrid></FluentGrid>
-            </FluentTab>
-        </FluentTabs>
+        <div style="width:100%">
+            <FluentTabs Width="100%" Size="TabSize.Large">
+                <FluentTab Label="Member">
+                    <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
+                        @foreach (var member in Members)
+                        {
+                            @if (Data.OwnerId != User?.GetUserIdOfInt32())
+                            {
+                                <FluentPersona Name="@member.NickName"
+                                               ImageSize="50px"
+                                               OnDismissClick="@(() => OnRemoveMemberClicked(member.UserId))"/>
+                            }
+                            else
+                            {
+                                <FluentPersona Name="@member.NickName" ImageSize="50px"/>
+                            }
+                        }
+                    </FluentStack>
+                </FluentTab>
+                <FluentTab Label="Apps">
+                    <FluentDataGrid Items="@QueryableApps" Style="width: 100%">
+                        <PropertyColumn Title="Id" Property="@(c => c.Id)"/>
+                        <PropertyColumn Title="Name" Property="@(c => c.Name)"/>
+                        <PropertyColumn Title="Code" Property="@(c => c.Code)"/>
+                        <PropertyColumn Title="Status" Property="@(c => c.StatusDescription)"/>
+                    </FluentDataGrid>
+                </FluentTab>
+            </FluentTabs>
+        </div>
     </FluentStack>
 </FluentCard>
 
@@ -50,12 +67,25 @@
     [Parameter]
     public int Id { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal User { get; set; }
+
     private TeamDetailDto Data { get; } = new();
 
-    private ObservableRangeCollection<TeamMemberDto> Members { get; } = new();
+    private ObservableRangeCollection<TeamMemberDto> Members { get; } = [];
+
+    private ObservableRangeCollection<AppInfoItemDto> Apps { get; } = [];
+
+    private IQueryable<AppInfoItemDto> QueryableApps => Apps.AsQueryable();
 
     protected override async Task OnInitializedAsync()
     {
+        var user = await AuthenticationState;
+
+        User = new UserPrincipal(user.User);
+
         await LoadAsync();
     }
 
@@ -64,7 +94,8 @@
         var tasks = new List<Task>
         {
             LoadDetailAsync(),
-            LoadMembersAsync()
+            LoadMembersAsync(),
+            LoadAppsAsync()
         };
 
         await InvokeAsync(() => Task.WhenAll(tasks));
@@ -97,9 +128,28 @@
                       });
     }
 
+    private Task LoadAppsAsync()
+    {
+        try
+        {
+            var criteria = new AppInfoCriteria { TeamId = Id };
+            return AppsApi.QueryAsync(criteria, 1, 100)
+                          .ContinueWith(task =>
+                          {
+                              task.WaitAndUnwrapException();
+                              var data = task.Result.EnsureSuccess();
+                              Apps.ReplaceRange(data);
+                          });
+        }
+        catch
+        {
+            return Task.CompletedTask;
+        }
+    }
+
     private async Task OnRemoveMemberClicked(int userId)
     {
-        var confirmation = await DialogService.ShowConfirmationAsync("Are you sure to remove this member?", title: "Remove member");
+        var confirmation = await DialogService.ShowConfirmationAsync(Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE);
         var result = await confirmation.Result;
         if (!result.Cancelled)
         {
@@ -116,7 +166,7 @@
 
     private async Task OnAppendMemberClicked()
     {
-        var reference = await DialogService.ShowDialogAsync<AppendMember>(Id, new DialogParameters { Title = "Add member", Modal = true });
+        var reference = await DialogService.ShowDialogAsync<AppendMember>(Id, new DialogParameters { Title = Resources.IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE, Modal = true });
         var result = await reference.Result;
         if (!result.Cancelled)
         {
@@ -125,4 +175,8 @@
         }
     }
 
+    private async Task OnEditClicked()
+    {
+        await DialogService.ShowDialogAsync<Edit>(Id, new DialogParameters { Title = Resources.IDS_TEAM_EDIT_TITLE_EDIT, Modal = true });
+    }
 }

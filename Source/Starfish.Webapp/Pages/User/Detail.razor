@@ -3,9 +3,9 @@
 @inject IUserApi Api
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
-    <FluentBreadcrumbItem Href="/">Home</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="/user">Users</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="@($"/user/{Id}")">Detail</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="@($"/user/{Id}")">@(Resources.IDS_BREADCRUMB_USER_DETAIL)</FluentBreadcrumbItem>
 </FluentBreadcrumb>
 
 <FluentCard>
@@ -15,14 +15,20 @@
             </FluentPersona>
             <FluentLabel>@Data.UserName</FluentLabel>
             <FluentLabel>@Data.CreateTime.Date</FluentLabel>
-            <FluentDivider Style="width: 100%;" />
+            <FluentDivider Style="width: 100%;"/>
             <FluentLabel>Roles</FluentLabel>
             <FluentOverflow Orientation="Orientation.Horizontal" Style="width: 100%">
-                <FluentOverflowItem><FluentBadge>Blazor</FluentBadge></FluentOverflowItem>
-                <FluentOverflowItem><FluentBadge>Microsoft</FluentBadge></FluentOverflowItem>
-                <FluentOverflowItem><FluentBadge>Azure</FluentBadge></FluentOverflowItem>
+                <FluentOverflowItem>
+                    <FluentBadge>Blazor</FluentBadge>
+                </FluentOverflowItem>
+                <FluentOverflowItem>
+                    <FluentBadge>Microsoft</FluentBadge>
+                </FluentOverflowItem>
+                <FluentOverflowItem>
+                    <FluentBadge>Azure</FluentBadge>
+                </FluentOverflowItem>
             </FluentOverflow>
-            <FluentDivider Style="width: 100%;" />
+            <FluentDivider Style="width: 100%;"/>
             <FluentLabel>Operations</FluentLabel>
             <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                 <FluentButton>编辑信息</FluentButton>

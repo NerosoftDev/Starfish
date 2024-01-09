@@ -5,12 +5,8 @@
 @inject IUserApi Api
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
-    <FluentBreadcrumbItem Href="/">
-        Home
-    </FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="/user">
-        User
-    </FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentBreadcrumbItem>
 </FluentBreadcrumb>
 
 <FluentCard>
@@ -24,14 +20,14 @@
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" Virtualize="true" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto">
-                <PropertyColumn Title="Id" Property="@(c => c.Id)" />
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto">
+                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)" />
                 <TemplateColumn Title="UserName" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnDetailClicked(context.Id))">@(context.UserName)</FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Title="NickName" Property="@(c => c.NickName)" />
-                <PropertyColumn Title="Email" Property="@(c => c.Email)" />
-                <PropertyColumn Title="Roles" Property="@(c => c.Roles.JoinAsString(", "))"></PropertyColumn>
+                <PropertyColumn Style="line-height: 32px" Title="NickName" Property="@(c => c.NickName)" />
+                <PropertyColumn Style="line-height: 32px" Title="Email" Property="@(c => c.Email)" />
+                <PropertyColumn Style="line-height: 32px" Title="Roles" Property="@(c => c.Roles.JoinAsString(", "))"></PropertyColumn>
                 <TemplateColumn Title="Actions" Align="@Align.End">
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))" />
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => Console.WriteLine("Delete clicked"))" />

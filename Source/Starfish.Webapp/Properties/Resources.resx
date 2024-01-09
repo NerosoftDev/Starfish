@@ -117,11 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
+    <value>Select a team</value>
+  </data>
+  <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
+    <value>Add app</value>
+  </data>
+  <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
+    <value>Edit app</value>
+  </data>
+  <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>Add app</value>
+  </data>
+  <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="IDS_BREADCRUMB_TEAM_DETAIL" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="IDS_BREADCRUMB_USER_DETAIL" xml:space="preserve">
+    <value>Detail</value>
+  </data>
   <data name="IDS_COMMON_CANCEL" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="IDS_COMMON_CLOSE" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="IDS_COMMON_NO" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="IDS_COMMON_OPERATIONS" xml:space="preserve">
+    <value>Operations</value>
   </data>
   <data name="IDS_COMMON_PLACEHOLDER_KEYWORD" xml:space="preserve">
     <value>Keyword to search</value>
@@ -134,6 +173,9 @@
   </data>
   <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="IDS_COMMON_YES" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>Login</value>
@@ -189,6 +231,21 @@
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>User name</value>
   </data>
+  <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
+    <value>Add member</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
+    <value>Add member</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
+    <value>Are you sure to remove this member?</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
+    <value>Remove member</value>
+  </data>
   <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
     <value>Alias</value>
   </data>
@@ -197,6 +254,12 @@
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_NAME" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_TITLE_ADD" xml:space="preserve">
+    <value>Add team</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_TITLE_EDIT" xml:space="preserve">
+    <value>Edit team</value>
   </data>
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add new team</value>

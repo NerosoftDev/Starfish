@@ -152,7 +152,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 		if (ChangedProperties.Contains(RolesProperty))
 		{
-			Aggregate.SetRoles(Roles.ToArray());
+			Aggregate.SetRoles(Roles?.ToArray());
 		}
 
 		if (ChangedProperties.Contains(PasswordProperty))

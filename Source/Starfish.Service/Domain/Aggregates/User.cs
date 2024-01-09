@@ -135,6 +135,11 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// <param name="roles"></param>
 	internal void SetRoles(params string[] roles)
 	{
+		if (roles == null)
+		{
+			return;
+		}
+
 		if (Reserved)
 		{
 			throw new UnauthorizedAccessException("预留账号不允许设置角色");

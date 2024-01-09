@@ -7,12 +7,8 @@
 @inject ITeamApi Api
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
-    <FluentBreadcrumbItem Href="/">
-        Home
-    </FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="/team">
-        Team
-    </FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/team">@(Resources.IDS_MENU_TEXT_TEAM)</FluentBreadcrumbItem>
 </FluentBreadcrumb>
 
 <FluentCard>
@@ -22,21 +18,21 @@
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
                 <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
                 <FluentSpacer/>
-                <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => HandleEditClicked(0))">@(Resources.IDS_TEAM_INDEX_BUTTON_ADD)</FluentButton>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(0))">@(Resources.IDS_TEAM_INDEX_BUTTON_ADD)</FluentButton>
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" Virtualize="true" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="TeamItemDto">
-                <PropertyColumn Title="Id" Property="@(c => c.Id)"/>
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="TeamItemDto">
+                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)"/>
                 <TemplateColumn Title="Name" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => HandleDetailClicked(context.Id))">@(context.Name)</FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Title="Alias" Property="@(c => c.Alias)"/>
-                <PropertyColumn Title="Description" Property="@(c => c.Description)"/>
-                <PropertyColumn Title="Owner" Property="@(c => c.OwnerId)"/>
-                <PropertyColumn Title="Members" Property="@(c => c.MemberCount)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Alias" Property="@(c => c.Alias)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Description" Property="@(c => c.Description)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Owner" Property="@(c => c.OwnerId)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Members" Property="@(c => c.MemberCount)"/>
                 <TemplateColumn Title="Actions" Align="@Align.End">
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" Disabled="@(User?.GetUserIdOfInt32() != context.OwnerId)" OnClick="@(() => HandleEditClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" Disabled="@(User?.GetUserIdOfInt32() != context.OwnerId)" OnClick="@(() => OnEditClicked(context.Id))"/>
                 </TemplateColumn>
             </FluentDataGrid>
         </FluentGridItem>
@@ -98,8 +94,6 @@
             await Pagination.SetTotalItemCountAsync(Total);
             return GridItemsProviderResult.From(items, Total);
         };
-
-        await Task.CompletedTask;
     }
 
     private async Task HandleDetailClicked(int id)
@@ -108,9 +102,9 @@
         await Task.CompletedTask;
     }
 
-    private async Task HandleEditClicked(int id)
+    private async Task OnEditClicked(int id)
     {
-        var title = id == 0 ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
+        var title = id == 0 ? Resources.IDS_TEAM_EDIT_TITLE_ADD : Resources.IDS_TEAM_EDIT_TITLE_EDIT;
         await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
     }
 

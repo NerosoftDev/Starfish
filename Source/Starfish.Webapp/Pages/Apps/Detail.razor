@@ -1,0 +1,12 @@
+﻿@page "/apps/{id:long}"
+
+
+@code {
+    [Parameter]
+    public long Id { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal User { get; set; }
+}
