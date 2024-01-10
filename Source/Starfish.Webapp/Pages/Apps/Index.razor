@@ -53,13 +53,11 @@
 
     private GridItemsProvider<AppInfoItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = 20 };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
 
     private AppInfoCriteria Criteria { get; } = new();
 
     private int Total { get; set; }
-
-    private const int SIZE = 20;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,7 +70,7 @@
             List<AppInfoItemDto> items = null;
             var tasks = new List<Task>
             {
-                Api.QueryAsync(Criteria, request.StartIndex + 1, SIZE, request.CancellationToken)
+                Api.QueryAsync(Criteria, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
                    .ContinueWith(task =>
                    {
                        task.WaitAndUnwrapException(request.CancellationToken);

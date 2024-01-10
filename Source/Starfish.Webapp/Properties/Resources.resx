@@ -168,6 +168,9 @@
   <data name="IDS_COMMON_CLOSE" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
+    <value>Actions</value>
+  </data>
   <data name="IDS_COMMON_NO" xml:space="preserve">
     <value>No</value>
   </data>
@@ -207,6 +210,24 @@
   <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
     <value>User name &amp; password</value>
   </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_ERROR" xml:space="preserve">
+    <value>Error message</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_OPERATE_TIME" xml:space="preserve">
+    <value>Operate time</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
+    <value>Trace Id</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_USER_NAME" xml:space="preserve">
+    <value>User name</value>
+  </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
     <value>Apps</value>
   </data>
@@ -221,6 +242,9 @@
   </data>
   <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="IDS_PAGINATOR_TOTAL_FORMAT" xml:space="preserve">
+    <value>Total &lt;strong&gt;{0}&lt;/strong&gt; rows</value>
   </data>
   <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
     <value>Register</value>
@@ -284,6 +308,24 @@
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
     <value>Edit user</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_PHONE" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_ROLES" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_USER_NAME" xml:space="preserve">
+    <value>User name</value>
   </data>
   <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
     <value>Confirm password</value>

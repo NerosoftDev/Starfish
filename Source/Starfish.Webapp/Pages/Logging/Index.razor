@@ -1,0 +1,88 @@
+﻿@page "/logs"
+
+@attribute [Authorize(Roles = "SA")]
+
+@inject ILogsApi LogsApi
+
+<FluentBreadcrumb Style="margin-bottom: 16px;">
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/user">@(Resources.IDS_MENU_TEXT_LOGS)</FluentBreadcrumbItem>
+</FluentBreadcrumb>
+
+<FluentCard>
+    <FluentGrid>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <div style="display: flex; width:100%;gap:10px;">
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.UserName"/>
+                <FluentDatePicker @bind-Value="@Criteria.MinTime"/>
+                <FluentDatePicker @bind-Value="@Criteria.MaxTime"/>
+                <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
+            </div>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="OperateLogDto">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_TYPE)" Property="@(c => c.Type)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_DESCRIPTION)" Property="@(c => c.Description)" Tooltip="true"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_USER_NAME)" Property="@(c => c.UserName)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_OPERATE_TIME)" Property="@(c => c.OperateTime)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_ERROR)" Property="@(c => c.Error)" Tooltip="true"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID)" Property="@(c => c.RequestTraceId)"/>
+            </FluentDataGrid>
+        </FluentGridItem>
+
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGridPaginator State="@Pagination"/>
+        </FluentGridItem>
+    </FluentGrid>
+</FluentCard>
+
+@code {
+    private GridItemsProvider<OperateLogDto> _provider;
+
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+
+    private OperateLogCriteria Criteria { get; } = new();
+
+    private int Total { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    private async Task OnSearchClicked()
+    {
+        _provider = async request =>
+        {
+            List<OperateLogDto> items = null;
+            var tasks = new List<Task>
+            {
+                LogsApi.QueryAsync(Criteria, request.StartIndex / Constants.Query.DefaultSize + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                       .ContinueWith(task =>
+                       {
+                           task.WaitAndUnwrapException(request.CancellationToken);
+                           items = task.Result.EnsureSuccess();
+                       }, request.CancellationToken)
+            };
+
+            if (request.StartIndex == 0)
+            {
+                tasks.Add(
+                    LogsApi.CountAsync(Criteria, request.CancellationToken)
+                           .ContinueWith(task =>
+                           {
+                               task.WaitAndUnwrapException(request.CancellationToken);
+                               Total = task.Result.EnsureSuccess();
+                           }, request.CancellationToken)
+                );
+            }
+
+            await Task.WhenAll(tasks);
+            await Pagination.SetTotalItemCountAsync(Total);
+            return GridItemsProviderResult.From(items, Total);
+        };
+
+        await Task.CompletedTask;
+    }
+
+}

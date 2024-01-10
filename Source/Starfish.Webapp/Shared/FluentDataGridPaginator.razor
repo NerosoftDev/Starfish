@@ -1,9 +1,9 @@
 ﻿<FluentPaginator State="@State" Style="width:100%;">
     <SummaryTemplate>
-        There are <strong>@(State.TotalItemCount ?? 0)</strong> rows
+        @((MarkupString)string.Format(Resources.IDS_PAGINATOR_TOTAL_FORMAT, State.TotalItemCount ?? 0))
     </SummaryTemplate>
     <PaginationTextTemplate>
-        This is page <strong>@(State.CurrentPageIndex + 1)</strong> out of a total of <strong>@(State.LastPageIndex + 1)</strong> pages
+        <strong>@(State.CurrentPageIndex + 1)</strong> / <strong>@(State.LastPageIndex + 1)</strong>
     </PaginationTextTemplate>
 </FluentPaginator>
 

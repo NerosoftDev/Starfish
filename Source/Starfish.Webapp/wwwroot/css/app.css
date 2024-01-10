@@ -178,3 +178,14 @@ code {
 nav[class*="paginator-nav"] {
     background-color: unset !important;
 }
+
+.nav-menu-panel
+{
+    height: 100%;
+    background-color: var(--neutral-fill-stealth-rest) !important;
+}
+
+.data-grid-column
+{
+    line-height: 32px !important;
+}

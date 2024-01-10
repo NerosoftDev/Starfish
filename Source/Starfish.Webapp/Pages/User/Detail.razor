@@ -1,5 +1,7 @@
 ﻿@page "/user/{Id:int}"
 
+@attribute [Authorize(Roles = "SA")]
+
 @inject IUserApi Api
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
