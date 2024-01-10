@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Blazored.LocalStorage" />
+        <PackageReference Include="CommunityToolkit.Mvvm" />
         <PackageReference Include="Euonia.Core" />
         <PackageReference Include="IdentityModel" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />

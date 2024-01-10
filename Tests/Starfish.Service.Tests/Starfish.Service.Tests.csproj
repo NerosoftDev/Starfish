@@ -2,6 +2,10 @@
 
     <Import Project="..\common.props" />
 
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
+    
     <ItemGroup>
         <ProjectReference Include="..\..\Source\Starfish.Service\Starfish.Service.csproj" />
     </ItemGroup>
