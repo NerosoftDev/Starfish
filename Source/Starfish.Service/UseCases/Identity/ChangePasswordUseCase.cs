@@ -1,0 +1,52 @@
+﻿using System.Security.Authentication;
+using Nerosoft.Euonia.Application;
+using Nerosoft.Euonia.Bus;
+using Nerosoft.Euonia.Claims;
+using Nerosoft.Starfish.Application;
+using Nerosoft.Starfish.Common;
+using Nerosoft.Starfish.Domain;
+
+namespace Nerosoft.Starfish.UseCases;
+
+public interface IChangePasswordUseCase : INonOutputUseCase<ChangePasswordInput>;
+
+public record ChangePasswordInput(string OldPassword, string NewPassword) : IUseCaseInput;
+
+public class ChangePasswordUseCase : IChangePasswordUseCase
+{
+	private readonly IUserRepository _repository;
+	private readonly IBus _bus;
+	private readonly UserPrincipal _user;
+
+	public ChangePasswordUseCase(IUserRepository repository, IBus bus, UserPrincipal user)
+	{
+		_repository = repository;
+		_bus = bus;
+		_user = user;
+	}
+
+	public async Task ExecuteAsync(ChangePasswordInput input, CancellationToken cancellationToken = default)
+	{
+		if (!_user.IsAuthenticated)
+		{
+			throw new AuthenticationException();
+		}
+
+		var user = await _repository.GetAsync(_user.GetUserIdOfInt32(), false, cancellationToken);
+
+		if (user == null)
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
+		}
+
+		var passwordHash = Cryptography.DES.Encrypt(input.OldPassword, Encoding.UTF8.GetBytes(user.PasswordSalt));
+
+		if (!string.Equals(user.PasswordHash, passwordHash))
+		{
+			throw new BadRequestException("Old password not correct.");
+		}
+
+		var command = new ChangePasswordCommand(user.Id, input.NewPassword);
+		await _bus.SendAsync(command, cancellationToken);
+	}
+}

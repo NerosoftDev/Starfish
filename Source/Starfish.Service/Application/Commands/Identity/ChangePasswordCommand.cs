@@ -5,8 +5,19 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 用户修改密码命令
 /// </summary>
-public class UserChangePasswordCommand : Command
+public class ChangePasswordCommand : Command
 {
+	public ChangePasswordCommand()
+	{
+	}
+
+	public ChangePasswordCommand(int userId, string password)
+		: this()
+	{
+		UserId = userId;
+		Password = password;
+	}
+
 	/// <summary>
 	/// 用户Id
 	/// </summary>

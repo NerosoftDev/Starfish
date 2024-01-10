@@ -115,4 +115,30 @@ public class UserController : ControllerBase
 		await _service.SetRolesAsync(id, roles, HttpContext.RequestAborted);
 		return Ok();
 	}
+
+	/// <summary>
+	/// 重置指定用户密码
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPut("{id:int}/password")]
+	[Authorize(Roles = "SA")]
+	public async Task<IActionResult> ResetPasswordAsync(int id, [FromBody] ResetPasswordRequestDto data)
+	{
+		await _service.ResetPasswordAsync(id, data.Password, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
+	/// 修改当前密码
+	/// </summary>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPut("password")]
+	public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordRequestDto data)
+	{
+		await _service.ChangePasswordAsync(data.OldPassword, data.NewPassword, HttpContext.RequestAborted);
+		return Ok();
+	}
 }

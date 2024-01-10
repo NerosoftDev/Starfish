@@ -40,7 +40,7 @@ public static class CriteriaExtensions
 
 		if (criteria.MaxTime > DateTime.MinValue)
 		{
-			specification &= OperateLogSpecification.TimeBefore(criteria.MaxTime.Value);
+			specification &= OperateLogSpecification.TimeBefore(criteria.MaxTime.Value.AddDays(1));
 		}
 
 		return specification;
