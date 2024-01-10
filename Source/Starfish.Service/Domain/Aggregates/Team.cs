@@ -7,8 +7,6 @@ namespace Nerosoft.Starfish.Domain;
 /// 团队聚合根对象
 /// </summary>
 public sealed class Team : Aggregate<int>,
-                           IHasCreateTime,
-                           IHasUpdateTime,
                            IAuditing
 {
 	public string Alias { get; set; }

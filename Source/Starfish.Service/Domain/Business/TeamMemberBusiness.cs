@@ -1,6 +1,4 @@
 ﻿using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Claims;
-using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global

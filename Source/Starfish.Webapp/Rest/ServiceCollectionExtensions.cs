@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Security.Authentication;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Extensions.Http;
