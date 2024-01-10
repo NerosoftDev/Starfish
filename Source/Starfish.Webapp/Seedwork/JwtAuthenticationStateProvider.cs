@@ -5,11 +5,11 @@ using System.Security.Claims;
 
 namespace Nerosoft.Starfish.Webapp;
 
-public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
+public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 {
 	private readonly ILocalStorageService _storageService;
 
-	public IdentityAuthenticationStateProvider(ILocalStorageService storageService)
+	public JwtAuthenticationStateProvider(ILocalStorageService storageService)
 	{
 		_storageService = storageService;
 	}
@@ -27,6 +27,15 @@ public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
 		NotifyAuthenticationStateChanged(authState);
 	}
 
+	public async Task LogoutAsync()
+	{
+		await _storageService.RemoveItemAsync(Constants.LocalStorage.AccessToken);
+		await _storageService.RemoveItemAsync(Constants.LocalStorage.RefreshToken);
+
+		var authState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
+		NotifyAuthenticationStateChanged(authState);
+	}
+	
 	public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
 		ClaimsIdentity identity;

@@ -19,4 +19,10 @@ internal interface IAppsApi
 
 	[Put("/api/apps/{id}")]
 	Task<IApiResponse> UpdateAsync(long id, [Body] AppInfoUpdateDto data, CancellationToken cancellationToken = default);
+
+	[Put("/api/apps/{id}/secret")]
+	Task<IApiResponse> SetSecretAsync(long id, [Body] AppInfoSetSecretDto data, CancellationToken cancellationToken = default);
+	
+	[Delete("/api/apps/{id}")]
+	Task<IApiResponse> DeleteAsync(long id, CancellationToken cancellationToken = default);
 }

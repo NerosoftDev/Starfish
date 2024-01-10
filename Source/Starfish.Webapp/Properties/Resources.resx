@@ -141,6 +141,18 @@
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add app</value>
   </data>
+  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
+    <value>Are you sure to remove this app '{0}'?</value>
+  </data>
+  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
+    <value>Remove App</value>
+  </data>
+  <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
+    <value>The system will encrypt the secret and can not be decrypted. You should keep the secret yourself. If you forget the origin secret, please reset it.</value>
+  </data>
+  <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
+    <value>Reset secret</value>
+  </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
     <value>Detail</value>
   </data>

@@ -23,7 +23,7 @@
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
             <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="AppInfoItemDto">
-                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)" />
+                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)"/>
                 <TemplateColumn Title="Name" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => HandleDetailClicked(context.Id))">@(context.Name)</FluentButton>
                 </TemplateColumn>
@@ -33,6 +33,8 @@
                 <PropertyColumn Style="line-height: 32px" Title="Update at" Property="@(c => c.UpdateTime)"/>
                 <TemplateColumn Title="Actions" Align="@Align.End">
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetSecretClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => OnDeleteClicked(context.Id, context.Name))"/>
                 </TemplateColumn>
             </FluentDataGrid>
         </FluentGridItem>
@@ -103,7 +105,34 @@
     private async Task OnEditClicked(long id)
     {
         var title = id == 0 ? Resources.IDS_APPS_EDIT_TITLE_ADD : Resources.IDS_APPS_EDIT_TITLE_EDIT;
-        await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        var result = await dialog.Result;
+        if (result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnDeleteClicked(long id, string name)
+    {
+        var message = string.Format(Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE, name);
+        var confirmation = await DialogService.ShowConfirmationAsync(message, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE);
+        var result = await confirmation.Result;
+        if (!result.Cancelled)
+        {
+            await Api.DeleteAsync(id)
+                     .ContinueWith(task =>
+                     {
+                         task.WaitAndUnwrapException();
+                         task.Result.EnsureSuccess();
+                     });
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnResetSecretClicked(long id)
+    {
+        await DialogService.ShowDialogAsync<ResetSecret>(id, new DialogParameters { Modal = true });
     }
 
     private async Task OnSearchClicked()

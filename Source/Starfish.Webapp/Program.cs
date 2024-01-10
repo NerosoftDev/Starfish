@@ -20,8 +20,8 @@ public class Program
 		builder.Services.AddOptions();
 		builder.Services.AddAuthorizationCore();
 		builder.Services
-			   .AddScoped<IdentityAuthenticationStateProvider>()
-			   .AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<IdentityAuthenticationStateProvider>())
+			   .AddScoped<JwtAuthenticationStateProvider>()
+			   .AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<JwtAuthenticationStateProvider>())
 			   .AddCascadingAuthenticationState()
 			   .AddBlazoredLocalStorageAsSingleton()
 			   .AddHttpClientApi(options =>

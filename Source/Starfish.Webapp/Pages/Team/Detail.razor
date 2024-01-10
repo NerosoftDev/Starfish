@@ -20,7 +20,7 @@
             <FluentDivider Style="width: 100%;"/>
             <FluentLabel>@Data.Description</FluentLabel>
             <FluentDivider Style="width: 100%;"/>
-            @if (Data.OwnerId != User?.GetUserIdOfInt32())
+            @if (Data.OwnerId != Identity?.GetUserIdOfInt32())
             {
                 <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
                 <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
@@ -36,7 +36,7 @@
                     <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                         @foreach (var member in Members)
                         {
-                            @if (Data.OwnerId != User?.GetUserIdOfInt32())
+                            @if (Data.OwnerId != Identity?.GetUserIdOfInt32())
                             {
                                 <FluentPersona Name="@member.NickName"
                                                ImageSize="50px"
@@ -70,7 +70,7 @@
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationState { get; set; }
 
-    private UserPrincipal User { get; set; }
+    private UserPrincipal Identity { get; set; }
 
     private TeamDetailDto Data { get; } = new();
 
@@ -84,7 +84,7 @@
     {
         var user = await AuthenticationState;
 
-        User = new UserPrincipal(user.User);
+        Identity = new UserPrincipal(user.User);
 
         await LoadAsync();
     }

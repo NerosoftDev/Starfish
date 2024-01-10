@@ -1,6 +1,10 @@
 ﻿@inherits LayoutComponentBase
-
+@implements IDisposable
 @attribute [Authorize]
+
+@inject JwtAuthenticationStateProvider Authentication
+@inject NavigationManager Navigation
+
 
 <FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office"/>
 <FluentLayout>
@@ -12,17 +16,16 @@
 
             <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Settings())"/>
 
-            <a href="/apps">
-                <FluentPersona Name="@(Identity?.Username ?? "starfish")" Id="persona"
-                               ImageSize="36px"
-                               Status="PresenceStatus.Available"
-                               StatusSize="PresenceBadgeSize.Small"/>
-            </a>
+            <FluentPersona Name="@(Identity?.Username ?? "starfish")" Id="persona"
+                           ImageSize="36px"
+                           Image="https://s.gravatar.com/avatar/38a519cc759f85fc814868d0656c0c18?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Frz.png"
+                           Status="PresenceStatus.Available"
+                           StatusSize="PresenceBadgeSize.Small"/>
         </div>
     </FluentHeader>
 
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
-        <FluentNavMenu Width="360" Collapsible="true">
+        <FluentNavMenu Width="360" Style="height: 100%; background-color: var(--neutral-fill-stealth-rest);" Collapsible="true">
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Href="/" Match="NavLinkMatch.All">@(Resources.IDS_MENU_TEXT_HOME)</FluentNavLink>
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Apps())" Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentNavLink>
             @if (Identity?.IsInRole("SA") == true)
@@ -48,12 +51,14 @@
 
     <FluentFooter>
         <div class="link1">
-            <a href="https://www.fluentui-blazor.net" target="_blank">Documentation and demos</a>
-        </div>
-        <div class="link2">
             <span>
                 Nerosoft © 2024. All rights reserved.
             </span>
+        </div>
+        <div class="link2">
+            <a href="javascript:void(0);" @onclick="@OnLogoutClicked">
+                Logout
+            </a>
         </div>
     </FluentFooter>
 
@@ -73,6 +78,28 @@
         var state = await AuthenticationState;
         Identity = new UserPrincipal(state.User);
         StateHasChanged();
+
+        Authentication.AuthenticationStateChanged += OnAuthenticationStateChanged;
+    }
+
+    private async void OnAuthenticationStateChanged(Task<AuthenticationState> task)
+    {
+        var state = await AuthenticationState;
+        if (state.User?.Identity?.IsAuthenticated != true)
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
+
+    private async Task OnLogoutClicked(MouseEventArgs args)
+    {
+        await Authentication.LogoutAsync();
+    }
+
+    public void Dispose()
+    {
+        Authentication.AuthenticationStateChanged -= OnAuthenticationStateChanged;
+        AuthenticationState?.Dispose();
     }
 
 }
