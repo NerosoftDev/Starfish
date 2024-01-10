@@ -36,7 +36,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			await CheckCodeAsync(message.Item1.Code);
-			var entity = AppInfo.Create(message.Item1.Name, message.Item1.Code);
+			var entity = AppInfo.Create(message.Item1.TeamId, message.Item1.Name, message.Item1.Code);
 			entity.SetSecret(message.Item1.Secret);
 			if (!string.IsNullOrWhiteSpace(message.Item1.Description))
 			{

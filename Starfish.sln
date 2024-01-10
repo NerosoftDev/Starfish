@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{9B36D7D2-4471-4286-8271-5CB679A71051}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
+		global.props = global.props
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -47,6 +48,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Redis", "Source\Starfish.Redis\Starfish.Redis.csproj", "{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Etcd", "Source\Starfish.Etcd\Starfish.Etcd.csproj", "{88EE02A3-5A1F-48F9-AA0A-8733D555BB98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Webapp", "Source\Starfish.Webapp\Starfish.Webapp.csproj", "{10681F31-2EBE-49B1-9152-AB7A5844DFD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +107,10 @@ Global
 		{88EE02A3-5A1F-48F9-AA0A-8733D555BB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88EE02A3-5A1F-48F9-AA0A-8733D555BB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88EE02A3-5A1F-48F9-AA0A-8733D555BB98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10681F31-2EBE-49B1-9152-AB7A5844DFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10681F31-2EBE-49B1-9152-AB7A5844DFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10681F31-2EBE-49B1-9152-AB7A5844DFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10681F31-2EBE-49B1-9152-AB7A5844DFD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +128,7 @@ Global
 		{A0B1FBB3-F4E5-4462-B855-DB8044D7D03E} = {5FFE10B6-8023-4475-9A43-D4EF7AC99009}
 		{4EF74AB0-401F-4FEF-BF5C-25CF1C8F5ECE} = {31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}
 		{88EE02A3-5A1F-48F9-AA0A-8733D555BB98} = {31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}
+		{10681F31-2EBE-49B1-9152-AB7A5844DFD3} = {31CE15C0-0BE0-4444-AC72-9E3C2B87BD7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFF17094-761E-48C4-96A9-16248CBF46BA}

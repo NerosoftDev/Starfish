@@ -1,0 +1,23 @@
+﻿@using System.Web
+
+@inject NavigationManager Navigation
+
+@code {
+
+    [Parameter]
+    public string Uri { get; set; }
+
+    [Parameter]
+    public bool ForceLoad { get; set; }
+
+    [Parameter]
+    public bool Replace { get; set; }
+
+    [Parameter]
+    public RouteData RouteData { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Navigation.NavigateTo($"{Uri}?redirect={HttpUtility.UrlEncode(Navigation.Uri)}", ForceLoad, Replace);
+    }
+}

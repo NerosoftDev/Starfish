@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 日志映射配置
 /// </summary>
-public class LogsMappingProfile : Profile
+internal class LogsMappingProfile : Profile
 {
 	/// <summary>
 	/// 初始化日志映射配置

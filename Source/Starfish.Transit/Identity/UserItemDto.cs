@@ -21,6 +21,11 @@ public class UserItemDto
 	public string Email { get; set; }
 
 	/// <summary>
+	/// 电话
+	/// </summary>
+	public string Phone { get; set; }
+
+	/// <summary>
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }

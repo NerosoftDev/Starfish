@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 应用信息映射配置
 /// </summary>
-public class AppsMappingProfile : Profile
+internal class AppsMappingProfile : Profile
 {
 	/// <summary>
 	/// 构造函数

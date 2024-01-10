@@ -1,0 +1,117 @@
+﻿@page "/login"
+
+@layout EmptyLayout
+
+@inject NavigationManager Navigation
+@inject JwtAuthenticationStateProvider Authentication
+@inject IJSRuntime Script
+@inject IToastService ToastService
+@inject IIdentityApi Api
+
+<PageTitle>@(Resources.IDS_LOGIN_PAGE_TITLE)</PageTitle>
+
+<div class="main" style="width: 368px; margin: 50px auto auto;">
+    <FluentStack Orientation="Orientation.Vertical">
+        <div style="text-align:center;margin:32px auto;box-shadow:none;line-height: 36px;">
+            <div class="header" style="display: flex; align-items: center;gap: 10px;">
+                <img alt="logo" class="logo" src="logo.svg">
+                <span class="title" style="color:#fcab66; font-size: 24px;">Starfish</span>
+            </div>
+            <div class="desc">配置管理和服务发现</div>
+        </div>
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Vertical" VerticalGap="12" HorizontalAlignment="HorizontalAlignment.Center">
+                <FluentBodyContent>
+                    <FluentTabs Size="TabSize.Large">
+                        <FluentTab Label="@(Resources.IDS_LOGIN_TAB_USERNAME)" Id="Tab-Password" Style="padding:16px 0">
+                            <FluentStack Orientation="Orientation.Vertical">
+                                <FluentTextField @bind-Value="UserName" Placeholder="@(Resources.IDS_LOGIN_PLACEHOLDER_USERNAME)" Style="width: 100%">
+                                    <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral"/>
+                                </FluentTextField>
+                                <FluentTextField @bind-Value="Password" Placeholder="@(Resources.IDS_LOGIN_PLACEHOLDER_PASSWORD)" Style="width: 100%" TextFieldType="TextFieldType.Password">
+                                    <FluentIcon Value="@(new Icons.Regular.Size24.ShieldKeyhole())" Slot="start" Color="Color.Neutral"/>
+                                </FluentTextField>
+                            </FluentStack>
+                        </FluentTab>
+                        <FluentTab Label="@(Resources.IDS_LOGIN_TAB_PINCODE)" Id="Tab-Pin" Disabled></FluentTab>
+                    </FluentTabs>
+                </FluentBodyContent>
+                <div style="width: 100%; display: flex;align-items: center;">
+                    <FluentButton Style="width: 100px;" Loading="Loading" Appearance="Appearance.Accent" OnClick="@OnClick">@(Resources.IDS_LOGIN_BUTTON_TEXT_LOGIN)</FluentButton>
+                    <FluentSpacer/>
+                    <a href="">Forget password?</a>
+                </div>
+
+                <FluentButton Appearance="Appearance.Lightweight" OnClick="@OnRegisterClicked">Register new user?</FluentButton>
+            </FluentStack>
+        </FluentCard>
+    </FluentStack>
+    <FluentToastProvider MaxToastCount="10"/>
+</div>
+
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "redirect")]
+    public string Redirect { get; set; }
+
+    private bool Loading { get; set; }
+
+    private string UserName { get; set; }
+
+    private string Password { get; set; }
+
+    private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
+
+    private async Task OnClick(MouseEventArgs args)
+    {
+        if (_semaphoreSlim.CurrentCount == 0)
+        {
+            return;
+        }
+
+        var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
+        try
+        {
+            Loading = true;
+            await _semaphoreSlim.WaitAsync(cancellationToken.Token);
+            var response = await SubmitAsync(cancellationToken.Token);
+            await Authentication.SetAuthenticationStateAsync(response.AccessToken, response.RefreshToken);
+            Navigation.NavigateTo(Redirect ?? "/");
+        }
+        catch (Exception exception)
+        {
+            var message = exception.GetPromptMessage();
+            ToastService.ShowError(message);
+            await Script.InvokeVoidAsync("console.log", cancellationToken.Token, message);
+        }
+        finally
+        {
+            _semaphoreSlim.Release();
+            Loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task<AuthResponseDto> SubmitAsync(CancellationToken cancellationToken = default)
+    {
+        var dto = new AuthRequestDto
+        {
+            UserName = UserName,
+            Password = Password
+        };
+        return await Api.GrantTokenAsync(dto, cancellationToken).ContinueWith(task =>
+        {
+            task.WaitAndUnwrapException(cancellationToken);
+            return task.Result.EnsureSuccess();
+        }, cancellationToken);
+    }
+
+    private async Task OnRegisterClicked()
+    {
+        Navigation.NavigateTo("/register");
+        await Task.CompletedTask;
+    }
+
+}

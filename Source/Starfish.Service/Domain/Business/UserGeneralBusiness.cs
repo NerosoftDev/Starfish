@@ -2,12 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Nerosoft.Starfish.Domain;
 
-internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomainService
+internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, IDomainService
 {
 	private readonly IServiceProvider _provider;
 
@@ -26,6 +27,7 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 	public static readonly PropertyInfo<string> PasswordProperty = RegisterProperty<string>(p => p.Password);
 	public static readonly PropertyInfo<string> NickNameProperty = RegisterProperty<string>(p => p.NickName);
 	public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(p => p.Email);
+	public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(p => p.Phone);
 	public static readonly PropertyInfo<List<string>> RolesProperty = RegisterProperty<List<string>>(p => p.Roles);
 
 	public int Id
@@ -58,6 +60,12 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 		set => SetProperty(EmailProperty, value);
 	}
 
+	public string Phone
+	{
+		get => GetProperty(PhoneProperty);
+		set => SetProperty(PhoneProperty, value);
+	}
+
 	public List<string> Roles
 	{
 		get => GetProperty(RolesProperty);
@@ -68,6 +76,7 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 	{
 		Rules.AddRule(new DuplicateUserNameCheckRule());
 		Rules.AddRule(new DuplicateEmailCheckRule());
+		Rules.AddRule(new DuplicatePhoneCheckRule());
 		Rules.AddRule(new PasswordStrengthRule());
 	}
 
@@ -80,7 +89,7 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 	[FactoryFetch]
 	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var user = await _repository.GetAsync(id, true, query => query.Include(nameof(User.Roles)), cancellationToken);
+		var user = await Repository.GetAsync(id, true, query => query.Include(nameof(User.Roles)), cancellationToken);
 
 		Aggregate = user ?? throw new UserNotFoundException(id);
 
@@ -90,6 +99,7 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 			UserName = user.UserName;
 			NickName = user.NickName;
 			Email = user.Email;
+			Phone = user.Phone;
 			Roles = user.Roles.Select(t => t.Name).ToList();
 		}
 	}
@@ -103,18 +113,23 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 			user.SetEmail(Email);
 		}
 
+		if (!string.IsNullOrWhiteSpace(Phone))
+		{
+			user.SetPhone(Phone);
+		}
+
 		user.SetNickName(NickName ?? UserName);
 		if (Roles?.Count > 0)
 		{
 			user.SetRoles(Roles.ToArray());
 		}
 
-		return _repository.InsertAsync(user, true, cancellationToken)
-		                  .ContinueWith(task =>
-		                  {
-			                  task.WaitAndUnwrapException(cancellationToken);
-			                  Id = task.Result.Id;
-		                  }, cancellationToken);
+		return Repository.InsertAsync(user, true, cancellationToken)
+		                 .ContinueWith(task =>
+		                 {
+			                 task.WaitAndUnwrapException(cancellationToken);
+			                 Id = task.Result.Id;
+		                 }, cancellationToken);
 	}
 
 	[FactoryUpdate]
@@ -125,6 +140,11 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 			Aggregate.SetEmail(Email);
 		}
 
+		if (ChangedProperties.Contains(PhoneProperty))
+		{
+			Aggregate.SetPhone(Phone);
+		}
+
 		if (ChangedProperties.Contains(NickNameProperty))
 		{
 			Aggregate.SetNickName(NickName);
@@ -132,7 +152,7 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 
 		if (ChangedProperties.Contains(RolesProperty))
 		{
-			Aggregate.SetRoles(Roles.ToArray());
+			Aggregate.SetRoles(Roles?.ToArray());
 		}
 
 		if (ChangedProperties.Contains(PasswordProperty))
@@ -191,6 +211,31 @@ internal class UserGeneralBusiness : EditableObject<UserGeneralBusiness>, IDomai
 
 			var repository = target.Repository;
 			var exists = await repository.CheckEmailExistsAsync(target.Email, target.Id, cancellationToken);
+			if (exists)
+			{
+				context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_EMAIL_UNAVAILABLE, target.Email));
+			}
+		}
+	}
+
+	public class DuplicatePhoneCheckRule : RuleBase
+	{
+		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
+		{
+			var target = (UserGeneralBusiness)context.Target;
+			if (string.IsNullOrWhiteSpace(target.Phone))
+			{
+				return;
+			}
+
+			var changed = target.ChangedProperties.Contains(PhoneProperty);
+			if (!changed)
+			{
+				return;
+			}
+
+			var repository = target.Repository;
+			var exists = await repository.CheckPhoneExistsAsync(target.Phone, target.Id, cancellationToken);
 			if (exists)
 			{
 				context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_EMAIL_UNAVAILABLE, target.Email));

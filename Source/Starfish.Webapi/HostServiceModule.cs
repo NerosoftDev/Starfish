@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.FeatureManagement;
 using Nerosoft.Euonia.Hosting;
 using Nerosoft.Euonia.Modularity;
 using Nerosoft.Starfish.Application;
@@ -26,6 +27,7 @@ public class HostServiceModule : ModuleContextBase
 		context.Services.AddControllers();
 		context.Services.AddAuthentication(Configuration);
 		context.Services.AddSwagger();
+		context.Services.AddFeatureManagement();
 	}
 
 	/// <inheritdoc />

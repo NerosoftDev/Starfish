@@ -1,10 +1,8 @@
 ﻿using System.IO.Compression;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 using Newtonsoft.Json;
 
@@ -22,8 +20,8 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var (appId, appCode, environment, nodes) = await GetNodesAsync(message.RootId, cancellationToken);
-			var data = nodes.ToDictionary(t => t.Key, t => t.Value);
+			var (appId, appCode, environment, items) = await GetItemsAsync(message.RootId, cancellationToken);
+			var data = items.ToDictionary(t => t.Key, t => t.Value);
 			var json = JsonConvert.SerializeObject(data);
 
 			var userName = context?.User?.Identity?.Name;
@@ -32,37 +30,18 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	private async Task<Tuple<long, string, string, List<SettingNode>>> GetNodesAsync(long rootId, CancellationToken cancellationToken = default)
+	private async Task<Tuple<long, string, string, List<SettingItem>>> GetItemsAsync(long id, CancellationToken cancellationToken = default)
 	{
-		var repository = UnitOfWork.Current.GetService<ISettingNodeRepository>();
+		var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 
-		var root = await repository.GetAsync(rootId, false, [], cancellationToken);
+		var aggregate = await repository.GetAsync(id, false, [nameof(Setting.Items)], cancellationToken);
 
-		if (root == null)
+		if (aggregate == null)
 		{
-			throw new SettingNodeNotFoundException(rootId);
+			throw new SettingNotFoundException(id);
 		}
 
-		var types = new[]
-		{
-			SettingNodeType.String,
-			SettingNodeType.Boolean,
-			SettingNodeType.Number,
-			SettingNodeType.Referer
-		};
-
-		ISpecification<SettingNode>[] specifications =
-		{
-			SettingNodeSpecification.AppIdEquals(root.AppId),
-			SettingNodeSpecification.EnvironmentEquals(root.Environment),
-			SettingNodeSpecification.TypeIn(types)
-		};
-
-		var predicate = new CompositeSpecification<SettingNode>(PredicateOperator.AndAlso, specifications).Satisfy();
-
-		var leaves = await repository.FindAsync(predicate, false, [], cancellationToken);
-
-		return Tuple.Create(root.AppId, root.AppCode, root.Environment, leaves);
+		return Tuple.Create(aggregate.AppId, aggregate.AppCode, aggregate.Environment, aggregate.Items.ToList());
 	}
 
 	private async Task SaveArchiveAsync(long appId, string appCode, string environment, string data, string userName, CancellationToken cancellationToken = default)

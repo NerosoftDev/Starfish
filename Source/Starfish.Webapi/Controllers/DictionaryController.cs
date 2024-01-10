@@ -60,10 +60,10 @@ public class DictionaryController : ControllerBase
 	/// 获取支持的配置节点类型列表
 	/// </summary>
 	/// <returns></returns>
-	[HttpGet("setting-node-type")]
-	public async Task<IActionResult> GetSettingNodeTypeItemsAsync()
+	[HttpGet("setting-item-type")]
+	public async Task<IActionResult> GetSettingItemTypeItemsAsync()
 	{
-		var result = await _service.GetSettingNodeTypeItemsAsync();
+		var result = await _service.GetSettingItemTypeItemsAsync();
 		return Ok(result);
 	}
 }

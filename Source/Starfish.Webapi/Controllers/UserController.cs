@@ -32,6 +32,7 @@ public class UserController : ControllerBase
 	/// <param name="size"></param>
 	/// <returns></returns>
 	[HttpGet]
+	[Produces(typeof(List<UserItemDto>))]
 	public async Task<IActionResult> SearchAsync([FromQuery] UserCriteria criteria, int page = 1, int size = 10)
 	{
 		var result = await _service.SearchAsync(criteria, page, size, HttpContext.RequestAborted);
@@ -44,6 +45,7 @@ public class UserController : ControllerBase
 	/// <param name="criteria"></param>
 	/// <returns></returns>
 	[HttpGet("count")]
+	[Produces(typeof(int))]
 	public async Task<IActionResult> CountAsync([FromQuery] UserCriteria criteria)
 	{
 		var result = await _service.CountAsync(criteria, HttpContext.RequestAborted);
@@ -56,6 +58,7 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <returns></returns>
 	[HttpGet("{id:int}")]
+	[Produces(typeof(UserDetailDto))]
 	public async Task<IActionResult> GetAsync(int id)
 	{
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
@@ -71,7 +74,8 @@ public class UserController : ControllerBase
 	public async Task<IActionResult> CreateAsync([FromBody] UserCreateDto data)
 	{
 		var result = await _service.CreateAsync(data, HttpContext.RequestAborted);
-		return Ok(result);
+		Response.Headers.Append("Entry", $"{result}");
+		return Ok();
 	}
 
 	/// <summary>

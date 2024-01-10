@@ -86,22 +86,22 @@ public static class CriteriaExtensions
 	/// </summary>
 	/// <param name="criteria"></param>
 	/// <returns></returns>
-	public static Specification<SettingNode> GetSpecification(this SettingNodeCriteria criteria)
+	public static Specification<Setting> GetSpecification(this SettingCriteria criteria)
 	{
-		Specification<SettingNode> specification = new TrueSpecification<SettingNode>();
+		Specification<Setting> specification = new TrueSpecification<Setting>();
 		if (criteria == null)
 		{
 			return specification;
 		}
 
-		if (criteria.ParentId > 0)
+		if (!string.IsNullOrWhiteSpace(criteria.AppCode))
 		{
-			specification &= SettingNodeSpecification.ParentIdEquals(criteria.ParentId);
+			specification &= SettingSpecification.AppCodeEquals(criteria.AppCode);
 		}
 
 		if (!string.IsNullOrWhiteSpace(criteria.Environment))
 		{
-			specification &= SettingNodeSpecification.EnvironmentEquals(criteria.Environment);
+			specification &= SettingSpecification.EnvironmentEquals(criteria.Environment);
 		}
 
 		return specification;
@@ -123,6 +123,22 @@ public static class CriteriaExtensions
 		if (!string.IsNullOrWhiteSpace(criteria.Role))
 		{
 			specification &= UserSpecification.HasRole(criteria.Role);
+		}
+
+		return specification;
+	}
+
+	public static Specification<Team> GetSpecification(this TeamCriteria criteria)
+	{
+		Specification<Team> specification = new TrueSpecification<Team>();
+		if (criteria == null)
+		{
+			return specification;
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
+		{
+			specification &= TeamSpecification.Matches(criteria.Keyword);
 		}
 
 		return specification;

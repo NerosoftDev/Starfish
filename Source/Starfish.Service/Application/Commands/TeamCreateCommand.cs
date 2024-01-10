@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
 
@@ -7,13 +8,10 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public sealed class TeamCreateCommand : Command
 {
-	/// <summary>
-	/// 名称
-	/// </summary>
-	public string Name { get; set; }
+	public TeamCreateCommand(TeamEditDto data)
+	{
+		Data = data;
+	}
 
-	/// <summary>
-	/// 描述
-	/// </summary>
-	public string Description { get; set; }
+	public TeamEditDto Data { get; set; }
 }

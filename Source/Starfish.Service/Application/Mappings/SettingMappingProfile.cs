@@ -7,31 +7,27 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 配置节点映射配置
 /// </summary>
-public class SettingMappingProfile : Profile
+internal class SettingMappingProfile : Profile
 {
 	/// <inheritdoc />
 	public SettingMappingProfile()
 	{
-		CreateMap<SettingNode, SettingNodeItemDto>()
-			.ForMember(dest => dest.TypeDescription, options => options.MapFrom(src => GetTypeDescription(src.Type)))
-			.ForMember(dest => dest.IsRoot, options => options.MapFrom(src => src.Type == SettingNodeType.Root));
-		CreateMap<SettingNode, SettingNodeDetailDto>()
-			.ForMember(dest => dest.TypeDescription, options => options.MapFrom(src => GetTypeDescription(src.Type)))
-			.ForMember(dest => dest.IsRoot, options => options.MapFrom(src => src.Type == SettingNodeType.Root));
+		CreateMap<Setting, SettingItemDto>()
+			.ForMember(dest => dest.StatusDescription, options => options.MapFrom(src => GetStatusDescription(src.Status)))
+			.ForMember(dest => dest.AppName, options => options.MapFrom(src => src.App.Name));
+		CreateMap<Setting, SettingDetailDto>()
+			.ForMember(dest => dest.StatusDescription, options => options.MapFrom(src => GetStatusDescription(src.Status)))
+			.ForMember(dest => dest.AppName, options => options.MapFrom(src => src.App.Name));
 	}
 
-	private static string GetTypeDescription(SettingNodeType type)
+	private static string GetStatusDescription(SettingStatus status)
 	{
-		return type switch
+		return status switch
 		{
-			SettingNodeType.Root => Resources.IDS_ENUM_SETTING_NODE_TYPE_ROOT,
-			SettingNodeType.Object => Resources.IDS_ENUM_SETTING_NODE_TYPE_OBJECT,
-			SettingNodeType.Array => Resources.IDS_ENUM_SETTING_NODE_TYPE_ARRAY,
-			SettingNodeType.String => Resources.IDS_ENUM_SETTING_NODE_TYPE_STRING,
-			SettingNodeType.Number => Resources.IDS_ENUM_SETTING_NODE_TYPE_NUMBER,
-			SettingNodeType.Boolean => Resources.IDS_ENUM_SETTING_NODE_TYPE_BOOLEAN,
-			SettingNodeType.Referer => Resources.IDS_ENUM_SETTING_NODE_TYPE_REFERER,
-			_ => type.ToString()
+			SettingStatus.Disabled => Resources.IDS_ENUM_SETTING_STATUS_DISABLED,
+			SettingStatus.Pending => Resources.IDS_ENUM_SETTING_STATUS_PENDING,
+			SettingStatus.Published => Resources.IDS_ENUM_SETTING_STATUS_PUBLISHED,
+			_ => status.ToString()
 		};
 	}
 }

@@ -44,6 +44,15 @@ public interface IUserRepository : IRepository<User, int>
 	Task<bool> CheckEmailExistsAsync(string email, int ignoreId, CancellationToken cancellationToken = default);
 
 	/// <summary>
+	/// 检查手机号是否存在
+	/// </summary>
+	/// <param name="phone"></param>
+	/// <param name="ignoreId"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<bool> CheckPhoneExistsAsync(string phone, int ignoreId, CancellationToken cancellationToken = default);
+
+	/// <summary>
 	/// 查询用户
 	/// </summary>
 	/// <param name="predicate"></param>
@@ -55,4 +64,6 @@ public interface IUserRepository : IRepository<User, int>
 	Task<List<User>> FindAsync(Expression<Func<User, bool>> predicate, Func<IQueryable<User>, IQueryable<User>> builder, int page, int size, CancellationToken cancellationToken = default);
 
 	Task<User> GetAsync(int id, bool tracking, Func<IQueryable<User>, IQueryable<User>> propertyAction, CancellationToken cancellationToken = default);
+
+	Task<List<User>> GetAsync(IEnumerable<int> ids, bool tracking, CancellationToken cancellationToken = default);
 }

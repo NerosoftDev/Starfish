@@ -8,20 +8,19 @@ namespace Nerosoft.Starfish.Domain;
 public class SettingRevision : Entity<long>,
                                IHasCreateTime
 {
-	/// <summary>
-	/// 应用Id
-	/// </summary>
-	public long AppId { get; set; }
+	private SettingRevision()
+	{
+	}
 
-	/// <summary>
-	/// 应用唯一编码
-	/// </summary>
-	public string AppCode { get; set; }
+	internal SettingRevision(string version, string comment, string data, string @operator)
+	{
+		Version = version;
+		Comment = comment;
+		Data = data;
+		Operator = @operator;
+	}
 
-	/// <summary>
-	/// 环境
-	/// </summary>
-	public string Environment { get; set; }
+	public long SettingId { get; set; }
 
 	/// <summary>
 	/// 配置数据
@@ -47,4 +46,9 @@ public class SettingRevision : Entity<long>,
 	/// 归档时间
 	/// </summary>
 	public DateTime CreateTime { get; set; }
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public Setting Setting { get; set; }
 }

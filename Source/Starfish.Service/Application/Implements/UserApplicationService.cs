@@ -38,7 +38,8 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	/// <inheritdoc />
 	public Task<int> CountAsync(UserCriteria criteria, CancellationToken cancellationToken = default)
 	{
-		throw new NotImplementedException();
+		var useCase = LazyServiceProvider.GetService<IUserCountUseCase>();
+		return useCase.ExecuteAsync(criteria, cancellationToken);
 	}
 
 	/// <inheritdoc />

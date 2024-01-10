@@ -30,7 +30,7 @@ public class IdentityController : ControllerBase
 	/// <param name="request"></param>
 	/// <returns></returns>
 	[HttpPost("grant")]
-	public async Task<IActionResult> GrantTokenAsync([FromBody] LoginRequestDto request)
+	public async Task<IActionResult> GrantTokenAsync([FromBody] AuthRequestDto request)
 	{
 		var data = new Dictionary<string, string>
 		{

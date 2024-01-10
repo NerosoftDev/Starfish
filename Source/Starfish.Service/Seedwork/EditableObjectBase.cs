@@ -18,5 +18,5 @@ public abstract class EditableObjectBase<T> : EditableObject<T>, IHasLazyService
 	/// <summary>
 	/// 当前授权用户信息
 	/// </summary>
-	protected virtual UserPrincipal User => LazyServiceProvider.GetRequiredService<UserPrincipal>();
+	protected virtual UserPrincipal Identity => LazyServiceProvider.GetRequiredService<UserPrincipal>();
 }

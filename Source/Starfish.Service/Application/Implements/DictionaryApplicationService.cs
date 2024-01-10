@@ -107,39 +107,39 @@ public class DictionaryApplicationService : BaseApplicationService, IDictionaryA
 	}
 
 	/// <inheritdoc />
-	public Task<List<DictionaryItemDto>> GetSettingNodeTypeItemsAsync(CancellationToken cancellationToken = default)
+	public Task<List<DictionaryItemDto>> GetSettingItemTypeItemsAsync(CancellationToken cancellationToken = default)
 	{
 		var items = new List<DictionaryItemDto>
 		{
 			new()
 			{
-				Name = nameof(SettingNodeType.Root),
-				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_ROOT
+				Name = nameof(SettingItemType.Root),
+				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_ROOT
 			},
 			new()
 			{
-				Name = nameof(SettingNodeType.Array),
-				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_ARRAY
+				Name = nameof(SettingItemType.Array),
+				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_ARRAY
 			},
 			new()
 			{
-				Name = nameof(SettingNodeType.Object),
-				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_OBJECT
+				Name = nameof(SettingItemType.Object),
+				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_OBJECT
 			},
 			new()
 			{
-				Name = nameof(SettingNodeType.String),
-				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_STRING
+				Name = nameof(SettingItemType.String),
+				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_STRING
 			},
 			new()
 			{
-				Name = nameof(SettingNodeType.Number),
-				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_NUMBER
+				Name = nameof(SettingItemType.Number),
+				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_NUMBER
 			},
 			new()
 			{
-				Name = nameof(SettingNodeType.Boolean),
-				Description = Resources.IDS_ENUM_SETTING_NODE_TYPE_BOOLEAN
+				Name = nameof(SettingItemType.Boolean),
+				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_BOOLEAN
 			}
 		};
 		return Task.FromResult(items);

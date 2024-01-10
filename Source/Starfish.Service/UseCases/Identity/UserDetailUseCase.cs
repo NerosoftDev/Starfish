@@ -21,7 +21,7 @@ public class UserDetailUseCase : IUserDetailUseCase
 		_repository = repository;
 	}
 
-	public Task<UserDetailOutput> ExecuteAsync(UserDetailInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task<UserDetailOutput> ExecuteAsync(UserDetailInput input, CancellationToken cancellationToken = default)
 	{
 		return _repository.GetAsync(input.Id, false, query => query.Include(nameof(User.Roles)), cancellationToken)
 		                  .ContinueWith(task =>

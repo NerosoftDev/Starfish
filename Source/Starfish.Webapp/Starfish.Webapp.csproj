@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <Import Project="..\common.props" />
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" />
+        <PackageReference Include="Euonia.Core" />
+        <PackageReference Include="IdentityModel" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Http" />
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" />
+        <PackageReference Include="Refit" />
+        <PackageReference Include="Refit.HttpClientFactory" />
+        <PackageReference Include="Refit.Newtonsoft.Json" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Starfish.Client\Starfish.Client.csproj" />
+        <ProjectReference Include="..\Starfish.Common\Starfish.Common.csproj" />
+        <ProjectReference Include="..\Starfish.Transit\Starfish.Transit.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Watch Include="**\*.cshtml" />
+        <Watch Include="**\*.razor" />
+        <Watch Include="**\*.razor.css" />
+        <Watch Include="**\*.razor.scss" />
+        <Watch Include="**\*.css" />
+        <Watch Include="**\*.scss" />
+        <Watch Include="**\*.js" />
+        <Watch Include="**\*.ts" />
+        <Watch Include="**\*.cs" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="$(RootNamespace).Properties" />
+    </ItemGroup>
+</Project>

@@ -53,6 +53,31 @@ public sealed class DataContext : DataContextBase<DataContext>
 	/// <inheritdoc />
 	public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
 	{
+		var entries = ChangeTracker.Entries().ToList();
+
+		foreach (var entry in entries)
+		{
+			if (entry.Entity is not IAuditing auditing)
+			{
+				continue;
+			}
+
+			switch (entry.State)
+			{
+				case EntityState.Unchanged:
+					continue;
+				case EntityState.Added:
+					auditing.UpdatedBy = auditing.CreatedBy = _request.Context.User?.Identity?.Name;
+					break;
+				case EntityState.Modified:
+					auditing.UpdatedBy = _request.Context.User?.Identity?.Name;
+					break;
+				case EntityState.Deleted:
+					auditing.UpdatedBy = _request.Context.User?.Identity?.Name;
+					break;
+			}
+		}
+
 		var events = GetTrackedEvents();
 		var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		if (result > 0 && events.Count > 0)

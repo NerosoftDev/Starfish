@@ -1,0 +1,17 @@
+﻿@page "/apps/{id:long}"
+
+<FluentBreadcrumb Style="margin-bottom: 16px;">
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="@($"/apps/{Id}")">@(Resources.IDS_BREADCRUMB_APPS_DETAIL)</FluentBreadcrumbItem>
+</FluentBreadcrumb>
+
+@code {
+    [Parameter]
+    public long Id { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal User { get; set; }
+}

@@ -1,0 +1,143 @@
+﻿@page "/apps"
+
+@attribute [Authorize]
+
+@inject IDialogService DialogService
+@inject NavigationManager Navigation
+@inject IAppsApi Api
+
+<FluentBreadcrumb Style="margin-bottom: 16px;">
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentBreadcrumbItem>
+</FluentBreadcrumb>
+
+<FluentCard>
+    <FluentGrid>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <div style="display: flex; width:100%;gap:10px;">
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
+                <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
+                <FluentSpacer/>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(0))">@(Resources.IDS_APPS_INDEX_BUTTON_ADD)</FluentButton>
+            </div>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="AppInfoItemDto">
+                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)"/>
+                <TemplateColumn Title="Name" Align="@Align.Start">
+                    <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => HandleDetailClicked(context.Id))">@(context.Name)</FluentButton>
+                </TemplateColumn>
+                <PropertyColumn Style="line-height: 32px" Title="Code" Property="@(c => c.Code)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Status" Property="@(c => c.StatusDescription)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Create at" Property="@(c => c.CreateTime)"/>
+                <PropertyColumn Style="line-height: 32px" Title="Update at" Property="@(c => c.UpdateTime)"/>
+                <TemplateColumn Title="Actions" Align="@Align.End">
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetSecretClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => OnDeleteClicked(context.Id, context.Name))"/>
+                </TemplateColumn>
+            </FluentDataGrid>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGridPaginator State="@Pagination"/>
+        </FluentGridItem>
+    </FluentGrid>
+</FluentCard>
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal User { get; set; }
+
+    private GridItemsProvider<AppInfoItemDto> _provider;
+
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = 20 };
+
+    private AppInfoCriteria Criteria { get; } = new();
+
+    private int Total { get; set; }
+
+    private const int SIZE = 20;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthenticationState;
+
+        User = new UserPrincipal(user.User);
+
+        _provider = async request =>
+        {
+            List<AppInfoItemDto> items = null;
+            var tasks = new List<Task>
+            {
+                Api.QueryAsync(Criteria, request.StartIndex + 1, SIZE, request.CancellationToken)
+                   .ContinueWith(task =>
+                   {
+                       task.WaitAndUnwrapException(request.CancellationToken);
+                       items = task.Result.EnsureSuccess();
+                   }, request.CancellationToken)
+            };
+
+            if (request.StartIndex == 0)
+            {
+                tasks.Add(Api.CountAsync(Criteria, request.CancellationToken)
+                             .ContinueWith(task =>
+                             {
+                                 task.WaitAndUnwrapException(request.CancellationToken);
+                                 Total = task.Result.EnsureSuccess();
+                             }, request.CancellationToken));
+            }
+
+            await Task.WhenAll(tasks);
+            await Pagination.SetTotalItemCountAsync(Total);
+            return GridItemsProviderResult.From(items, Total);
+        };
+    }
+
+    private async Task HandleDetailClicked(long id)
+    {
+        Navigation.NavigateTo($"/apps/{id}");
+        await Task.CompletedTask;
+    }
+
+    private async Task OnEditClicked(long id)
+    {
+        var title = id == 0 ? Resources.IDS_APPS_EDIT_TITLE_ADD : Resources.IDS_APPS_EDIT_TITLE_EDIT;
+        var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        var result = await dialog.Result;
+        if (result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnDeleteClicked(long id, string name)
+    {
+        var message = string.Format(Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE, name);
+        var confirmation = await DialogService.ShowConfirmationAsync(message, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE);
+        var result = await confirmation.Result;
+        if (!result.Cancelled)
+        {
+            await Api.DeleteAsync(id)
+                     .ContinueWith(task =>
+                     {
+                         task.WaitAndUnwrapException();
+                         task.Result.EnsureSuccess();
+                     });
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnResetSecretClicked(long id)
+    {
+        await DialogService.ShowDialogAsync<ResetSecret>(id, new DialogParameters { Modal = true });
+    }
+
+    private async Task OnSearchClicked()
+    {
+        await Pagination.SetCurrentPageIndexAsync(0);
+    }
+
+}

@@ -10,7 +10,7 @@ public class SettingRevisionCreateCommand : Command
 	/// <summary>
 	/// 配置根节点Id
 	/// </summary>
-	public long RootId { get; set; }
+	public long SettingId { get; set; }
 
 	/// <summary>
 	/// 说明

@@ -192,71 +192,44 @@
   <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
     <value>Unsupported service bus provider '{0}'.</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_STATUS_DISABLED" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
     <value>Disabled</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_STATUS_PENDING" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_STATUS_PENDING" xml:space="preserve">
     <value>Pending</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_STATUS_PUBLISHED" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
     <value>Published</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_ARRAY" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_ARRAY" xml:space="preserve">
     <value>Array</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_BOOLEAN" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_BOOLEAN" xml:space="preserve">
     <value>Boolean</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_NUMBER" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_NUMBER" xml:space="preserve">
     <value>Number</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_OBJECT" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_OBJECT" xml:space="preserve">
     <value>Object</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_REFERER" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_REFERER" xml:space="preserve">
     <value>Referer</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_ROOT" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_ROOT" xml:space="preserve">
     <value>Root</value>
   </data>
-  <data name="IDS_ENUM_SETTING_NODE_TYPE_STRING" xml:space="preserve">
+  <data name="IDS_ENUM_SETTING_ITEM_TYPE_STRING" xml:space="preserve">
     <value>String</value>
   </data>
-  <data name="IDS_ERROR_NOT_ALLOW_RENAME_ARRAY_CHILD_NODE" xml:space="preserve">
-    <value>Not allow to rename array child node.</value>
+  <data name="IDS_ERROR_SETTING_KEY_EXISTS" xml:space="preserve">
+    <value>Setting key '{0}' exists.</value>
   </data>
-  <data name="IDS_ERROR_NOT_ALLOW_RENAME_ROOT_NODE" xml:space="preserve">
-    <value>Not allow to rename root node.</value>
+  <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
+    <value>Setting not exists, [Id]:{0}.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NODE_NAME_EXISTS" xml:space="preserve">
-    <value>Child node name exists.</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_NODE_NAME_REQUIRED" xml:space="preserve">
-    <value>Node name is required.</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_NODE_NOT_EXISTS" xml:space="preserve">
-    <value>Setting node not exists, [Id]:{0}.</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_NODE_VALUE_NOT_BOOLEAN" xml:space="preserve">
-    <value>The node value is not valid boolean type.</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_NODE_VALUE_NOT_NUMBER" xml:space="preserve">
-    <value>The node value is not valid number type.</value>
-  </data>
-  <data name="IDS_ERROR_NOT_ALLOW_ADD_ROOT_IN_CHILD_NODE" xml:space="preserve">
-    <value>Not allow to add Root type node in child node.</value>
-  </data>
-  <data name="IDS_ERROR_NO_PENDING_NODE" xml:space="preserve">
-    <value>No pending node to publish.</value>
-  </data>
-  <data name="IDS_ERROR_ONLY_ALLOW_PUBLISH_ROOT_NODE" xml:space="preserve">
-    <value>Only allow publish root node.</value>
-  </data>
-  <data name="IDS_ERROR_CANNOT_ADD_CHILD_NODE_IN_NODE_TYPE" xml:space="preserve">
-    <value>Can not add child node in node of type '{0}'.</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_NODE_NOT_ALLOW_SET_VALUE" xml:space="preserve">
-    <value>Not allow to set value on node type of '{0}'.</value>
+  <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
+    <value>No pending item to publish.</value>
   </data>
   <data name="IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE" xml:space="preserve">
     <value>The secret not matches rule.</value>
@@ -264,10 +237,13 @@
   <data name="IDS_ERROR_APPINFO_SECRET_REQUIRED" xml:space="preserve">
     <value>App secret is required.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NODE_DUPLICATE_ROOT" xml:space="preserve">
-    <value>Root node already exists.</value>
-  </data>
   <data name="IDS_ERROR_USER_EMAIL_UNAVAILABLE" xml:space="preserve">
     <value>Email '{0}' not available.</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
+    <value>Setting was disabled, [Id]:{0}.</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
+    <value>Setting was duplicated ,[App]:{0}, [Env]:{1}.</value>
   </data>
 </root>
