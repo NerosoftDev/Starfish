@@ -18,23 +18,23 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 	}
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long id, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await _repository.GetAsync(id, true, Array.Empty<string>(), cancellationToken);
+		var aggregate = await _repository.GetAsync(appId, environment, true, Array.Empty<string>(), cancellationToken);
 
 		if (aggregate == null)
 		{
-			throw new SettingNotFoundException(id);
+			throw new SettingNotFoundException(appId);
 		}
 
 		if (aggregate == null)
 		{
-			throw new SettingNotFoundException(id);
+			throw new SettingNotFoundException(appId);
 		}
 
 		if (aggregate.Status == SettingStatus.Disabled)
 		{
-			throw new SettingDisabledException(id);
+			throw new SettingDisabledException(appId);
 		}
 
 		aggregate.SetStatus(SettingStatus.Published);

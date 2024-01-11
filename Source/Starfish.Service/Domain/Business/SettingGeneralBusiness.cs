@@ -56,11 +56,11 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await SettingRepository.GetAsync(id, false, Array.Empty<string>(), cancellationToken);
+		var aggregate = await SettingRepository.GetAsync(appId, environment, false, Array.Empty<string>(), cancellationToken);
 
-		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
+		Aggregate = aggregate ?? throw new SettingNotFoundException(appId);
 
 		using (BypassRuleChecks)
 		{

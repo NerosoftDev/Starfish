@@ -13,8 +13,10 @@ public interface ISettingPublishUseCase : INonOutputUseCase<SettingPublishInput>
 /// <summary>
 /// 配置节点发布输入
 /// </summary>
-/// <param name="Id"></param>
-public record SettingPublishInput(long Id, SettingPublishDto Data) : IUseCaseInput;
+/// <param name="AppId"></param>
+/// <param name="Environment"></param>
+/// <param name="Data"></param>
+public record SettingPublishInput(long AppId, string Environment, SettingPublishDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例
@@ -27,13 +29,13 @@ public class SettingPublishUseCase : ISettingPublishUseCase
 	{
 		_bus = bus;
 	}
-	
+
 	public async Task ExecuteAsync(SettingPublishInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new SettingPublishCommand(input.Id);
+		var command = new SettingPublishCommand(input.AppId, input.Environment);
 		await _bus.SendAsync(command, cancellationToken);
 
-		var @event = new SettingPublishedEvent(input.Id)
+		var @event = new SettingPublishedEvent(input.AppId, input.Environment)
 		{
 			Version = input.Data.Version,
 			Comment = input.Data.Comment

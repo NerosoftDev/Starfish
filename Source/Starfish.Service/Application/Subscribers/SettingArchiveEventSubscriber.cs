@@ -26,7 +26,7 @@ public class SettingArchiveEventSubscriber : IHandler<SettingPublishedEvent>
 	{
 		var command = new SettingArchiveCreateCommand
 		{
-			RootId = message.Id
+			RootId = message.AppId
 		};
 		
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);

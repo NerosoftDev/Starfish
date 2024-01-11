@@ -246,4 +246,7 @@
   <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
     <value>Setting was duplicated ,[App]:{0}, [Env]:{1}.</value>
   </data>
+  <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
+    <value>The password is not correct.</value>
+  </data>
 </root>

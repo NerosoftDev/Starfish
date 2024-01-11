@@ -186,7 +186,7 @@ public sealed class LoggingEventSubscriber
 	public async Task HandleAsync(SettingPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		var repository = _provider.GetService<ISettingRepository>();
-		var setting = await repository.GetAsync(@event.Id, false, [], cancellationToken);
+		var setting = await repository.GetAsync(@event.AppId, false, [], cancellationToken);
 		var command = new OperateLogCreateCommand
 		{
 			Module = "setting",

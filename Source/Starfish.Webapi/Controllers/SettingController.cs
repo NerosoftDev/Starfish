@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// <summary>
 /// 应用配置管理接口
 /// </summary>
-[Route("api/[controller]")]
+[Route("api/apps/{id:long}/[controller]/{environment}")]
 [ApiController, ApiExplorerSettings(GroupName = "setting")]
 [Authorize]
 public class SettingController : ControllerBase
@@ -26,52 +26,84 @@ public class SettingController : ControllerBase
 	}
 
 	/// <summary>
-	/// 查询符合条件的配置节点列表
+	/// 获取配置项列表
 	/// </summary>
-	/// <param name="criteria"></param>
+	/// <param name="id"></param>
+	/// <param name="environment"></param>
 	/// <param name="page"></param>
 	/// <param name="size"></param>
+	/// <param name="format"></param>
 	/// <returns></returns>
-	[HttpGet]
-	public async Task<IActionResult> SearchAsync([FromQuery] SettingCriteria criteria, int page = 1, int size = 10)
+	[HttpGet("item")]
+	[Produces(typeof(List<SettingItemDto>))]
+	public async Task<IActionResult> GetItemListAsync(long id, string environment, int page = 1, int size = 20, [FromHeader(Name = "x-format")] string format = null)
 	{
-		var result = await _service.SearchAsync(criteria, page, size, HttpContext.RequestAborted);
+		switch (format)
+		{
+			case "text/plain":
+				var text = await _service.GetItemsInTextAsync(id, environment, "text", HttpContext.RequestAborted);
+				return Ok(text);
+			case "text/json":
+				var json = await _service.GetItemsInTextAsync(id, environment, "json", HttpContext.RequestAborted);
+				return Ok(json);
+			default:
+				var result = await _service.GetItemListAsync(id, environment, page, size, HttpContext.RequestAborted);
+				return Ok(result);
+		}
+	}
+
+	/// <summary>
+	/// 获取配置项数量
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="environment"></param>
+	/// <returns></returns>
+	[HttpGet("item/count")]
+	[Produces(typeof(int))]
+	public async Task<IActionResult> GetItemCountAsync(long id, string environment)
+	{
+		var result = await _service.GetItemCountAsync(id, environment, HttpContext.RequestAborted);
 		return Ok(result);
 	}
 
 	/// <summary>
-	/// 获取符合条件的配置节点数量
+	/// 获取Json格式配置
 	/// </summary>
-	/// <param name="criteria"></param>
+	/// <param name="id"></param>
+	/// <param name="environment"></param>
 	/// <returns></returns>
-	[HttpGet("count")]
-	public async Task<IActionResult> CountAsync([FromQuery] SettingCriteria criteria)
+	[HttpGet("item/json")]
+	[Produces(typeof(string))]
+	public async Task<IActionResult> GetJsonAsync(long id, string environment)
 	{
-		var result = await _service.CountAsync(criteria, HttpContext.RequestAborted);
-		return Ok(result);
+		var json = await _service.GetItemsInTextAsync(id, environment, "json", HttpContext.RequestAborted);
+		return Ok(json);
 	}
 
 	/// <summary>
 	/// 获取配置节点详情
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">配置环境</param>
 	/// <returns></returns>
-	[HttpGet("{id:long}")]
-	public async Task<IActionResult> GetAsync(long id)
+	[HttpGet("detail")]
+	public async Task<IActionResult> GetAsync(long id, string environment)
 	{
-		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
+		var result = await _service.GetDetailAsync(id, environment, HttpContext.RequestAborted);
 		return Ok(result);
 	}
 
 	/// <summary>
-	/// 新增根节点
+	/// 新增配置
 	/// </summary>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">配置环境</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<IActionResult> CreateAsync([FromBody] SettingCreateDto data)
+	public async Task<IActionResult> CreateAsync(long id, string environment, [FromBody] SettingCreateDto data)
 	{
-		var result = await _service.CreateAsync(data, HttpContext.RequestAborted);
+		var result = await _service.CreateAsync(id, environment, data, HttpContext.RequestAborted);
 		Response.Headers.Append("Entry", $"{result}");
 		return Ok();
 	}
@@ -79,54 +111,58 @@ public class SettingController : ControllerBase
 	/// <summary>
 	/// 更新配置
 	/// </summary>
-	/// <param name="id"></param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">配置环境</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}")]
-	public async Task<IActionResult> UpdateAsync(long id, [FromBody] SettingUpdateDto data)
+	[HttpPut]
+	public async Task<IActionResult> UpdateAsync(long id, string environment, [FromBody] SettingUpdateDto data)
 	{
-		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
+		await _service.UpdateAsync(id, environment, data, HttpContext.RequestAborted);
 		return Ok();
 	}
 
 	/// <summary>
-	/// 删除配置节点
+	/// 删除配置
 	/// </summary>
-	/// <param name="id">节点Id</param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">配置环境</param>
 	/// <returns></returns>
-	[HttpDelete("{id:long}")]
-	public async Task<IActionResult> DeleteAsync(long id)
+	[HttpDelete]
+	public async Task<IActionResult> DeleteAsync(long id, string environment)
 	{
-		await _service.DeleteAsync(id, HttpContext.RequestAborted);
+		await _service.DeleteAsync(id, environment, HttpContext.RequestAborted);
 		return Ok();
 	}
 
 	/// <summary>
 	/// 更新配置项的值
 	/// </summary>
-	/// <param name="id">配置Id</param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">配置环境</param>
 	/// <param name="key">完整Key名称</param>
 	/// <param name="value"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/{key}")]
+	[HttpPut("{key}")]
 	[Consumes("plain/text")]
-	public async Task<IActionResult> UpdateItemAsync(long id, string key, [FromBody] string value)
+	public async Task<IActionResult> UpdateItemValueAsync(long id, string environment, string key, [FromBody] string value)
 	{
 		key = HttpUtility.UrlDecode(key);
-		await _service.UpdateAsync(id, key, value, HttpContext.RequestAborted);
+		await _service.UpdateAsync(id, environment, key, value, HttpContext.RequestAborted);
 		return Ok();
 	}
 
 	/// <summary>
 	/// 发布配置
 	/// </summary>
-	/// <param name="id">根节点Id</param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">配置环境</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPost("{id:long}/publish")]
-	public async Task<IActionResult> PublishAsync(long id, [FromBody] SettingPublishDto data)
+	[HttpPost("publish")]
+	public async Task<IActionResult> PublishAsync(long id, string environment, [FromBody] SettingPublishDto data)
 	{
-		await _service.PublishAsync(id, data, HttpContext.RequestAborted);
+		await _service.PublishAsync(id, environment, data, HttpContext.RequestAborted);
 		return Ok();
 	}
 }

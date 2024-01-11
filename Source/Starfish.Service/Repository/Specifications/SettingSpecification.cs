@@ -36,4 +36,14 @@ public static class SettingSpecification
 	{
 		return new DirectSpecification<Setting>(x => x.Status == status);
 	}
+
+	public static Specification<SettingItem> SettingAppIdEquals(long appId)
+	{
+		return new DirectSpecification<SettingItem>(x => x.Setting.AppId == appId);
+	}
+
+	public static Specification<SettingItem> SettingAppEnvironmentEquals(string environment)
+	{
+		return new DirectSpecification<SettingItem>(x => x.Setting.Environment == environment);
+	}
 }

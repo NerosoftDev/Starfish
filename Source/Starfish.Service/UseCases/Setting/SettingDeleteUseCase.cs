@@ -12,8 +12,9 @@ public interface ISettingDeleteUseCase : INonOutputUseCase<SettingDeleteInput>;
 /// <summary>
 /// 删除配置节点输入
 /// </summary>
-/// <param name="Id"></param>
-public record SettingDeleteInput(long Id) : IUseCaseInput;
+/// <param name="AppId"></param>
+/// <param name="Environment"></param>
+public record SettingDeleteInput(long AppId, string Environment) : IUseCaseInput;
 
 /// <summary>
 /// 删除配置节点用例
@@ -29,7 +30,7 @@ public class SettingDeleteUseCase : ISettingDeleteUseCase
 
 	public Task ExecuteAsync(SettingDeleteInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new SettingDeleteCommand(input.Id);
+		var command = new SettingDeleteCommand(input.AppId, input.Environment);
 		return _bus.SendAsync(command, cancellationToken);
 	}
 }

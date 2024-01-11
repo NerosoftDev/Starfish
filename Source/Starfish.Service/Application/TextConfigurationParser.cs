@@ -1,20 +1,16 @@
 ﻿namespace Nerosoft.Starfish.Application;
 
-public partial class TextConfigurationFileParser
+public partial class TextConfigurationParser : IConfigurationParser
 {
-	private TextConfigurationFileParser()
+	public IDictionary<string, string> Parse(string content)
 	{
-	}
-
-	public static IDictionary<string, string> Parse(string json)
-	{
-		using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+		using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(content)))
 		{
 			return Parse(stream);
 		}
 	}
 
-	public static IDictionary<string, string> Parse(Stream input) => new TextConfigurationFileParser().ParseStream(input);
+	public IDictionary<string, string> Parse(Stream input) => new TextConfigurationParser().ParseStream(input);
 
 	private Dictionary<string, string> ParseStream(Stream input)
 	{
@@ -51,10 +47,15 @@ public partial class TextConfigurationFileParser
 	}
 }
 
-public partial class TextConfigurationFileParser
+public partial class TextConfigurationParser
 {
-	public static string InvertParsed(IDictionary<string, string> data)
+	public string InvertParse(IDictionary<string, string> data)
 	{
+		if (data == null || data.Count == 0)
+		{
+			return string.Empty;
+		}
+
 		var builder = new StringBuilder();
 		foreach (var (key, value) in data)
 		{

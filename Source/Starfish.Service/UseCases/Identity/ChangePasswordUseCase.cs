@@ -36,14 +36,14 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
 
 		if (user == null)
 		{
-			throw new BadRequestException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
+			throw new BadRequestException(Resources.IDS_ERROR_USER_NOT_EXISTS);
 		}
 
 		var passwordHash = Cryptography.DES.Encrypt(input.OldPassword, Encoding.UTF8.GetBytes(user.PasswordSalt));
 
 		if (!string.Equals(user.PasswordHash, passwordHash))
 		{
-			throw new BadRequestException("Old password not correct.");
+			throw new BadRequestException(Resources.IDS_ERROR_PASSWORD_INCORRECT);
 		}
 
 		var command = new ChangePasswordCommand(user.Id, input.NewPassword);

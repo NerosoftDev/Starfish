@@ -37,7 +37,7 @@ public class SettingCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<SettingGeneralBusiness>(message.Id, cancellationToken);
+			var business = await Factory.FetchAsync<SettingGeneralBusiness>(message.AppId, message.Environment, cancellationToken);
 			business.Items = message.Data;
 			_ = await business.SaveAsync(true, cancellationToken);
 		});
@@ -48,7 +48,7 @@ public class SettingCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<SettingGeneralBusiness>(message.Item1, cancellationToken);
+			var business = await Factory.FetchAsync<SettingGeneralBusiness>(message.AppId, message.Environment, cancellationToken);
 			business.MarkAsDelete();
 			await business.SaveAsync(false, cancellationToken);
 		});
@@ -59,7 +59,7 @@ public class SettingCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			await Factory.ExecuteAsync<SettingPublishBusiness>(message.Id, cancellationToken);
+			await Factory.ExecuteAsync<SettingPublishBusiness>(message.AppId, message.Environment, cancellationToken);
 		});
 	}
 }

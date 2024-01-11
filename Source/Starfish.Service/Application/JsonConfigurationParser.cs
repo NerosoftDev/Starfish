@@ -3,18 +3,14 @@ using System.Text.Json;
 
 namespace Nerosoft.Starfish.Application;
 
-internal partial class JsonConfigurationFileParser
+internal partial class JsonConfigurationParser : IConfigurationParser
 {
 	private const string KEY_DELIMITER = ":";
-
-	private JsonConfigurationFileParser()
-	{
-	}
 
 	private readonly Dictionary<string, string> _data = new(StringComparer.OrdinalIgnoreCase);
 	private readonly Stack<string> _paths = new();
 
-	public static IDictionary<string, string> Parse(string json)
+	public IDictionary<string, string> Parse(string json)
 	{
 		using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
 		{
@@ -22,7 +18,7 @@ internal partial class JsonConfigurationFileParser
 		}
 	}
 
-	public static IDictionary<string, string> Parse(Stream input) => new JsonConfigurationFileParser().ParseStream(input);
+	public IDictionary<string, string> Parse(Stream input) => new JsonConfigurationParser().ParseStream(input);
 
 	private Dictionary<string, string> ParseStream(Stream input)
 	{
@@ -123,10 +119,15 @@ internal partial class JsonConfigurationFileParser
 	private void ExitContext() => _paths.Pop();
 }
 
-internal partial class JsonConfigurationFileParser
+internal partial class JsonConfigurationParser
 {
-	public static string InvertParsed(IDictionary<string, string> data)
+	public string InvertParse(IDictionary<string, string> data)
 	{
+		if (data == null || data.Count == 0)
+		{
+			return "{}";
+		}
+
 		var root = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
 		foreach (var entry in data)
