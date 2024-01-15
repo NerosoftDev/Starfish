@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Nerosoft.Euonia.Application;
+﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Starfish.Application;
 using Nerosoft.Starfish.Common;
@@ -24,11 +23,14 @@ public class SettingUpdateUseCase : ISettingUpdateUseCase
 
 	public Task ExecuteAsync(SettingUpdateInput input, CancellationToken cancellationToken = default)
 	{
-		var parserName = input.Format.ToLower(CultureInfo.CurrentCulture) switch
+		var format = input.Format?.Normalize(TextCaseType.Lower).Trim(TextTrimType.All);
+		var parserName = format switch
 		{
 			"text/plain" => "text",
 			"text/json" => "json",
-			_ => throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_UNSUPPORTED_DATA_FORMAT)
+			"" => throw new ArgumentNullException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED),
+			null => throw new ArgumentNullException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED),
+			_ => throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED)
 		};
 
 		var parser = _provider.GetNamedService<IConfigurationParser>(parserName);

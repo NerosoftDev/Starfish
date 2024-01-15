@@ -210,6 +210,12 @@
   <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
     <value>Token不能为空。</value>
   </data>
+  <data name="IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
+    <value>不支持的数据格式 '{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED" xml:space="preserve">
+    <value>数据格式不能为空。</value>
+  </data>
   <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
     <value>配置已被禁用，[Id]:{0}。</value>
   </data>
@@ -224,9 +230,6 @@
   </data>
   <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
     <value>没有待发布的配置。</value>
-  </data>
-  <data name="IDS_ERROR_SETTING_UNSUPPORTED_DATA_FORMAT" xml:space="preserve">
-    <value>不支持的数据格式 '{0}'。</value>
   </data>
   <data name="IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>版本号 '{0}' 已经存在。</value>
@@ -259,10 +262,10 @@
     <value>用户已锁定。</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER" xml:space="preserve">
-      <value>预留账号不允许设置角色。</value>
+    <value>预留账号不允许设置角色。</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER" xml:space="preserve">
-      <value>预留账号不允许删除。</value>
+    <value>预留账号不允许删除。</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_EXISTS" xml:space="preserve">
     <value>用户不存在，[Id]:{0}。</value>
