@@ -98,12 +98,13 @@ public class SettingController : ControllerBase
 	/// </summary>
 	/// <param name="id">应用Id</param>
 	/// <param name="environment">配置环境</param>
+	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<IActionResult> CreateAsync(long id, string environment, [FromBody] SettingCreateDto data)
+	public async Task<IActionResult> CreateAsync(long id, string environment, [FromHeader(Name = "x-format")] string format, [FromBody] SettingEditDto data)
 	{
-		var result = await _service.CreateAsync(id, environment, data, HttpContext.RequestAborted);
+		var result = await _service.CreateAsync(id, environment, format, data, HttpContext.RequestAborted);
 		Response.Headers.Append("Entry", $"{result}");
 		return Ok();
 	}
@@ -113,12 +114,13 @@ public class SettingController : ControllerBase
 	/// </summary>
 	/// <param name="id">应用Id</param>
 	/// <param name="environment">配置环境</param>
-	/// <param name="data"></param>
+	/// <param name="format">数据格式</param>
+	/// <param name="data">数据内容</param>
 	/// <returns></returns>
 	[HttpPut]
-	public async Task<IActionResult> UpdateAsync(long id, string environment, [FromBody] SettingUpdateDto data)
+	public async Task<IActionResult> UpdateAsync(long id, string environment, [FromHeader(Name = "x-format")] string format, [FromBody] SettingEditDto data)
 	{
-		await _service.UpdateAsync(id, environment, data, HttpContext.RequestAborted);
+		await _service.UpdateAsync(id, environment, format, data, HttpContext.RequestAborted);
 		return Ok();
 	}
 

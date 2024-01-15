@@ -42,20 +42,22 @@ public interface ISettingApplicationService : IApplicationService
 	/// </summary>
 	/// <param name="appId">应用Id</param>
 	/// <param name="environment">配置环境</param>
+	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> CreateAsync(long appId, string environment, SettingCreateDto data, CancellationToken cancellationToken = default);
+	Task<long> CreateAsync(long appId, string environment, string format, SettingEditDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新配置
 	/// </summary>
 	/// <param name="appId"></param>
 	/// <param name="environment"></param>
+	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long appId, string environment, SettingUpdateDto data, CancellationToken cancellationToken = default);
+	Task UpdateAsync(long appId, string environment, string format, SettingEditDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除节点

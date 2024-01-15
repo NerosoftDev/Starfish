@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface ISettingCreateUseCase : IUseCase<SettingCreateInput, long>;
 
-public record SettingCreateInput(long AppId, string Environment, SettingCreateDto Data) : IUseCaseInput;
+public record SettingCreateInput(long AppId, string Environment, string Format, SettingEditDto Data) : IUseCaseInput;
 
 public class SettingCreateUseCase : ISettingCreateUseCase
 {
@@ -24,7 +24,14 @@ public class SettingCreateUseCase : ISettingCreateUseCase
 
 	public Task<long> ExecuteAsync(SettingCreateInput input, CancellationToken cancellationToken = default)
 	{
-		var parser = _provider.GetNamedService<IConfigurationParser>(input.Data.Type.ToLower(CultureInfo.CurrentCulture));
+		var parserName = input.Format.ToLower(CultureInfo.CurrentCulture) switch
+		{
+			"text/plain" => "text",
+			"text/json" => "json",
+			_ => throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_UNSUPPORTED_DATA_FORMAT)
+		};
+
+		var parser = _provider.GetNamedService<IConfigurationParser>(parserName);
 		var data = Cryptography.Base64.Decrypt(input.Data.Data);
 		var command = new SettingCreateCommand(input.AppId, input.Environment)
 		{

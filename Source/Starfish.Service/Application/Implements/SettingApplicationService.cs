@@ -38,18 +38,18 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
-	public Task<long> CreateAsync(long appId, string environment, SettingCreateDto data, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(long appId, string environment, string format, SettingEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingCreateUseCase>();
-		var input = new SettingCreateInput(appId, environment, data);
+		var input = new SettingCreateInput(appId, environment,format, data);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result, cancellationToken);
 	}
 
-	public async Task UpdateAsync(long appId, string environment, SettingUpdateDto data, CancellationToken cancellationToken = default)
+	public async Task UpdateAsync(long appId, string environment, string format, SettingEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingUpdateUseCase>();
-		var input = new SettingUpdateInput(appId, environment, data);
+		var input = new SettingUpdateInput(appId, environment, format, data);
 		await useCase.ExecuteAsync(input, cancellationToken);
 	}
 

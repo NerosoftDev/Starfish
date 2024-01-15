@@ -20,7 +20,7 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 	[FactoryExecute]
 	protected async Task ExecuteAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await _repository.GetAsync(appId, environment, true, Array.Empty<string>(), cancellationToken);
+		var aggregate = await _repository.GetAsync(appId, environment, true, [], cancellationToken);
 
 		if (aggregate == null)
 		{
