@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,285 +118,285 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
-    <value>Code</value>
+    <value>应用代码</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>应用描述</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>应用名称</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
-    <value>Secret</value>
+    <value>访问密钥</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
-    <value>Select a team</value>
+    <value>选择所属团队</value>
   </data>
   <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>Add app</value>
+    <value>新增应用</value>
   </data>
   <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>Edit app</value>
+    <value>编辑应用</value>
   </data>
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>Add app</value>
+    <value>新增</value>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>Are you sure to remove this app '{0}'?</value>
+    <value>确定要删除应用 '{0}'？</value>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>Remove App</value>
+    <value>删除应用</value>
   </data>
   <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
-    <value>The system will encrypt the secret and can not be decrypted. You should keep the secret yourself. If you forget the origin secret, please reset it.</value>
+    <value>访问密钥将被加密存储且无法解密，请自行保管。如果忘记密钥，请重新设置。</value>
   </data>
   <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
-    <value>Reset secret</value>
+    <value>重置密钥</value>
   </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
-    <value>Detail</value>
+    <value>应用详情</value>
   </data>
   <data name="IDS_BREADCRUMB_SETTING" xml:space="preserve">
-    <value>setting</value>
+    <value>应用配置</value>
   </data>
   <data name="IDS_BREADCRUMB_TEAM_DETAIL" xml:space="preserve">
-    <value>Detail</value>
+    <value>团队详情</value>
   </data>
   <data name="IDS_BREADCRUMB_USER_DETAIL" xml:space="preserve">
-    <value>Detail</value>
+    <value>用户详情</value>
   </data>
   <data name="IDS_COMMON_CANCEL" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="IDS_COMMON_CLOSE" xml:space="preserve">
-    <value>Close</value>
+    <value>关闭</value>
   </data>
   <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
-    <value>Actions</value>
+    <value>操作</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
-    <value>Development</value>
+    <value>开发</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PET" xml:space="preserve">
-    <value>Performance Evaluation Testing</value>
+    <value>性能评估</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PRD" xml:space="preserve">
-    <value>Production</value>
+    <value>生产</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIM" xml:space="preserve">
-    <value>Simulation Testing</value>
+    <value>模拟测试</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIT" xml:space="preserve">
-    <value>System Integration Testing</value>
+    <value>系统集成测试</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_UAT" xml:space="preserve">
-    <value>User Acceptance Testing</value>
+    <value>用户验收测试</value>
   </data>
   <data name="IDS_COMMON_LOGOUT" xml:space="preserve">
-    <value>Logout</value>
+    <value>退出登录</value>
   </data>
   <data name="IDS_COMMON_NO" xml:space="preserve">
-    <value>No</value>
+    <value>否</value>
   </data>
   <data name="IDS_COMMON_OPERATIONS" xml:space="preserve">
-    <value>Operations</value>
+    <value>操作</value>
   </data>
   <data name="IDS_COMMON_PLACEHOLDER_KEYWORD" xml:space="preserve">
-    <value>Keyword to search</value>
+    <value>输入关键字搜索</value>
   </data>
   <data name="IDS_COMMON_SAVE" xml:space="preserve">
-    <value>Save</value>
+    <value>保存</value>
   </data>
   <data name="IDS_COMMON_SEARCH" xml:space="preserve">
-    <value>Search</value>
+    <value>搜索</value>
   </data>
   <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
-    <value>Submit</value>
+    <value>提交</value>
   </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
-    <value>Login</value>
+    <value>登录</value>
   </data>
   <data name="IDS_LOGIN_PAGE_TITLE" xml:space="preserve">
-    <value>Login</value>
+    <value>登录</value>
   </data>
   <data name="IDS_LOGIN_PLACEHOLDER_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>请输入密码</value>
   </data>
   <data name="IDS_LOGIN_PLACEHOLDER_USERNAME" xml:space="preserve">
-    <value>User name</value>
+    <value>请输入用户名</value>
   </data>
   <data name="IDS_LOGIN_TAB_PINCODE" xml:space="preserve">
-    <value>One time password</value>
+    <value>验证码登录</value>
   </data>
   <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
-    <value>User name &amp; password</value>
+    <value>用户名登录</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>日志内容</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_ERROR" xml:space="preserve">
-    <value>Error message</value>
+    <value>错误信息</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_OPERATE_TIME" xml:space="preserve">
-    <value>Operate time</value>
+    <value>操作时间</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
-    <value>Trace Id</value>
+    <value>请求跟踪Id</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
-    <value>Type</value>
+    <value>类型</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用户名</value>
   </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
-    <value>Apps</value>
+    <value>应用</value>
   </data>
   <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
-    <value>Home</value>
+    <value>首页</value>
   </data>
   <data name="IDS_MENU_TEXT_LOGS" xml:space="preserve">
-    <value>Logs</value>
+    <value>日志</value>
   </data>
   <data name="IDS_MENU_TEXT_TEAM" xml:space="preserve">
-    <value>Team</value>
+    <value>团队</value>
   </data>
   <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
-    <value>User</value>
+    <value>用户</value>
   </data>
   <data name="IDS_PAGINATOR_TOTAL_FORMAT" xml:space="preserve">
-    <value>Total &lt;strong&gt;{0}&lt;/strong&gt; rows</value>
+    <value>共 &lt;strong&gt;{0}&lt;/strong&gt; 条</value>
   </data>
   <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
-    <value>Register</value>
+    <value>注册</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_CONFIRM" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>确认密码</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_EMAIL" xml:space="preserve">
-    <value>Email</value>
+    <value>邮箱</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_NICK_NAME" xml:space="preserve">
-    <value>Name to display</value>
+    <value>昵称</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>密码</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_PHONE" xml:space="preserve">
-    <value>Phone number</value>
+    <value>手机号码</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用户名</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
-    <value>Create from Json</value>
+    <value>从Json创建</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
-    <value>Create from Text</value>
+    <value>从文本创建</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
-    <value>Edit as Json</value>
+    <value>编辑Json</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
-    <value>Edit as Text</value>
+    <value>编辑文本</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
-    <value>Edit value</value>
+    <value>编辑配置</value>
   </data>
   <data name="IDS_SETTING_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
-    <value>Environment</value>
+    <value>环境</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_DELETE" xml:space="preserve">
-    <value>Delete</value>
+    <value>删除</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
-    <value>Edit as Json</value>
+    <value>编辑Json</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
-    <value>Edit as Text</value>
+    <value>编辑文本</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_PUBLISH" xml:space="preserve">
-    <value>Publish</value>
+    <value>发布配置</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
-    <value>Sync to Redis</value>
+    <value>同步到Redis</value>
   </data>
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
-    <value>Add member</value>
+    <value>添加成员</value>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
-    <value>Add member</value>
+    <value>添加成员</value>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
-    <value>Edit</value>
+    <value>编辑</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>Are you sure to remove this member?</value>
+    <value>确定要移除团队成员吗？</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>Remove member</value>
+    <value>移除成员</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
-    <value>Alias</value>
+    <value>团队别名</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>团队介绍</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>团队名称</value>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>Add team</value>
+    <value>新增团队</value>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>Edit team</value>
+    <value>编辑团队</value>
   </data>
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>Add new team</value>
+    <value>新增团队</value>
   </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
-    <value>Add user</value>
+    <value>新增用户</value>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_ADD" xml:space="preserve">
-    <value>Add user</value>
+    <value>新增用户</value>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
-    <value>Edit user</value>
+    <value>编辑用户</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
-    <value>Email</value>
+    <value>邮箱</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_ID" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
-    <value>Nick name</value>
+    <value>昵称</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_PHONE" xml:space="preserve">
-    <value>Phone number</value>
+    <value>手机号码</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_ROLES" xml:space="preserve">
-    <value>Roles</value>
+    <value>角色</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用户名</value>
   </data>
   <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>确认密码</value>
   </data>
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
-    <value>Email</value>
+    <value>邮箱</value>
   </data>
   <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
-    <value>Nick name</value>
+    <value>昵称</value>
   </data>
   <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>密码</value>
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用户名</value>
   </data>
 </root>
