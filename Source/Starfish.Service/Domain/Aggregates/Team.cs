@@ -95,7 +95,7 @@ public sealed class Team : Aggregate<int>,
 
 		if (userId == OwnerId)
 		{
-			throw new InvalidOperationException("团队所有者不能被移除");
+			throw new InvalidOperationException(Resources.IDS_ERROR_TEAM_OWNER_CANNOT_REMOVED);
 		}
 
 		Members.RemoveWhere(t => t.UserId == userId);

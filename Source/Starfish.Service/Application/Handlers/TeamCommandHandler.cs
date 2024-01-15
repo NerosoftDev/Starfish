@@ -49,11 +49,11 @@ public class TeamCommandHandler : CommandHandlerBase,
 		{
 			if (message.UserIds == null || message.UserIds.Count == 0)
 			{
-				throw new ArgumentException("UserIds is empty");
+				throw new ArgumentException(Resources.IDS_ERROR_TEAM_USERID_REQUIRED);
 			}
 
 			var business = await Factory.FetchAsync<TeamMemberBusiness>(message.TeamId, cancellationToken);
-			business.UserIds = message.UserIds.ToArray();
+			business.UserIds = [.. message.UserIds];
 			switch (message.Type)
 			{
 				case "+":

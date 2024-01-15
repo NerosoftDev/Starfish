@@ -259,10 +259,10 @@
     <value>用户已锁定。</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER" xml:space="preserve">
-    <value>不允许修改预留账号的角色。</value>
+      <value>预留账号不允许设置角色。</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER" xml:space="preserve">
-    <value>不允许删除预留账号。</value>
+      <value>预留账号不允许删除。</value>
   </data>
   <data name="IDS_ERROR_USER_NOT_EXISTS" xml:space="preserve">
     <value>用户不存在，[Id]:{0}。</value>

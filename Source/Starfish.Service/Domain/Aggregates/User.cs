@@ -142,11 +142,10 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 
 		if (Reserved)
 		{
-			throw new UnauthorizedAccessException("预留账号不允许设置角色");
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER);
 		}
 
 		Roles ??= [];
-		roles ??= [];
 		Roles.RemoveWhere(t => roles.Contains(t.Name, StringComparison.OrdinalIgnoreCase));
 		foreach (var role in roles)
 		{

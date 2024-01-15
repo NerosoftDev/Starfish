@@ -168,7 +168,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	{
 		if (Aggregate.Reserved)
 		{
-			throw new UnauthorizedAccessException("预留账号不允许删除");
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER);
 		}
 
 		return _repository.DeleteAsync(Aggregate, true, cancellationToken);
@@ -255,16 +255,16 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			{
 				if (string.IsNullOrWhiteSpace(target.Password))
 				{
-					context.AddErrorResult("Password is required");
+					context.AddErrorResult(Resources.IDS_ERROR_USER_RULE_PASSWORD_REQUIRED);
 				}
 				else if (!Regex.IsMatch(target.Password, REGEX_PATTERN))
 				{
-					context.AddErrorResult("The password must be 8-32 characters long, contain at least one uppercase letter, one lowercase letter.");
+					context.AddErrorResult(Resources.IDS_ERROR_USER_RULE_PASSWORD_NOT_MARCHED_RULES);
 				}
 			}
 			else if (target.IsUpdate && target.ChangedProperties.Contains(PasswordProperty) && !Regex.IsMatch(target.Password, REGEX_PATTERN))
 			{
-				context.AddErrorResult("The password must be 8-32 characters long, contain at least one uppercase letter, one lowercase letter.");
+				context.AddErrorResult(Resources.IDS_ERROR_USER_RULE_PASSWORD_NOT_MARCHED_RULES);
 			}
 
 			return Task.CompletedTask;

@@ -91,7 +91,7 @@ public class Setting : Aggregate<long>, IAuditing
 	{
 		if (Status == SettingStatus.Disabled)
 		{
-			throw new InvalidOperationException("");
+			throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_DISABLED);
 		}
 
 		Items ??= [];
@@ -134,7 +134,7 @@ public class Setting : Aggregate<long>, IAuditing
 
 		if (Revisions.Any(t => string.Equals(t.Version, version, StringComparison.OrdinalIgnoreCase)))
 		{
-			throw new InvalidOperationException($"版本号 {version} 已存在");
+			throw new InvalidOperationException(string.Format(Resources.IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS, version));
 		}
 
 		var data = JsonConvert.SerializeObject(Items, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
