@@ -189,3 +189,11 @@ nav[class*="paginator-nav"] {
 {
     line-height: 32px !important;
 }
+
+.monaco-editor-container {
+    height: calc(100vh - 250px) !important;
+    width: 100% !important;
+    border: calc(var(--stroke-width) * 1px) solid transparent;
+    border-radius: calc(var(--control-corner-radius) * 1px);
+    background: padding-box linear-gradient(var(--neutral-fill-input-rest),var(--neutral-fill-input-rest)),border-box var(--neutral-stroke-input-rest);
+}

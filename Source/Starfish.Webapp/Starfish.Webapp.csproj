@@ -10,6 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Blazored.LocalStorage" />
+        <PackageReference Include="BlazorMonaco" />
         <PackageReference Include="CommunityToolkit.Mvvm" />
         <PackageReference Include="Euonia.Core" />
         <PackageReference Include="IdentityModel" />
