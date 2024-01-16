@@ -58,7 +58,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 	{
 		var aggregate = await TeamRepository.GetAsync(id, true, [], cancellationToken);
 
-		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
+		Aggregate = aggregate ?? throw new TeamNotFoundException(id);
 
 		using (BypassRuleChecks)
 		{

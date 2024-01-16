@@ -14,16 +14,6 @@ public interface ISettingRepository : IRepository<Setting, long>
 	/// <returns></returns>
 	Task<bool> ExistsAsync(long appId, string environment, CancellationToken cancellationToken = default);
 
-	/// <summary>
-	/// 获取指定配置
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="tracking"></param>
-	/// <param name="properties"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<Setting> GetAsync(long id, bool tracking, string[] properties, CancellationToken cancellationToken = default);
-
 	Task<Setting> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default);
 
 	Task<Setting> GetAsync(Expression<Func<Setting, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default);

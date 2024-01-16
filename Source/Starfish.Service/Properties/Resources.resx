@@ -217,7 +217,7 @@
     <value>Data format required.</value>
   </data>
   <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
-    <value>Setting was disabled, [Id]:{0}.</value>
+    <value>Setting was disabled, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
     <value>Setting was duplicated, [App]:{0}, [Env]:{1}.</value>
@@ -225,14 +225,20 @@
   <data name="IDS_ERROR_SETTING_KEY_EXISTS" xml:space="preserve">
     <value>Setting key '{0}' exists.</value>
   </data>
+  <data name="IDS_ERROR_SETTING_KEY_NOT_EXISTS" xml:space="preserve">
+    <value>Setting key '{0}' not exists.</value>
+  </data>
   <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
-    <value>Setting not exists, [Id]:{0}.</value>
+    <value>Setting not exists, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
     <value>No pending item to publish.</value>
   </data>
   <data name="IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>Version number '{0}' already exists.</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_NOT_EXISTS" xml:space="preserve">
+    <value>Team not exists, [Id]:{0}.</value>
   </data>
   <data name="IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER" xml:space="preserve">
     <value>Only allowed team owner to add/remove team member.</value>

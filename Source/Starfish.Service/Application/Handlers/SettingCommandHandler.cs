@@ -13,7 +13,8 @@ public class SettingCommandHandler : CommandHandlerBase,
                                      IHandler<SettingCreateCommand>,
                                      IHandler<SettingUpdateCommand>,
                                      IHandler<SettingDeleteCommand>,
-                                     IHandler<SettingPublishCommand>
+                                     IHandler<SettingPublishCommand>,
+                                     IHandler<SettingValueUpdateCommand>
 {
 	public SettingCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
@@ -60,6 +61,17 @@ public class SettingCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			await Factory.ExecuteAsync<SettingPublishBusiness>(message.AppId, message.Environment, cancellationToken);
+		});
+	}
+
+	public Task HandleAsync(SettingValueUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			var business = await Factory.FetchAsync<SettingGeneralBusiness>(message.AppId, message.Environment, cancellationToken);
+			business.Key = message.Key;
+			business.Value = message.Value;
+			_ = await business.SaveAsync(true, cancellationToken);
 		});
 	}
 }

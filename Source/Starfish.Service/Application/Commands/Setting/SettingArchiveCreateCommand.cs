@@ -8,7 +8,12 @@ namespace Nerosoft.Starfish.Application;
 public class SettingArchiveCreateCommand : Command
 {
 	/// <summary>
-	/// 配置根节点Id
+	/// 应用Id
 	/// </summary>
-	public long RootId { get; set; }
+	public long AppId { get; set; }
+
+	/// <summary>
+	/// 应用环境
+	/// </summary>
+	public string Environment { get; set; }
 }

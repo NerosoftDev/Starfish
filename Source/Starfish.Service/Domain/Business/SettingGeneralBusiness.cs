@@ -19,6 +19,8 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	public static readonly PropertyInfo<long> AppIdProperty = RegisterProperty<long>(p => p.AppId);
 	public static readonly PropertyInfo<string> EnvironmentProperty = RegisterProperty<string>(p => p.Environment);
 	public static readonly PropertyInfo<IDictionary<string, string>> ItemsProperty = RegisterProperty<IDictionary<string, string>>(p => p.Items);
+	public static readonly PropertyInfo<string> KeyProperty = RegisterProperty<string>(p => p.Key);
+	public static readonly PropertyInfo<string> ValueProperty = RegisterProperty<string>(p => p.Value);
 
 	public long Id
 	{
@@ -44,6 +46,18 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 		set => SetProperty(ItemsProperty, value);
 	}
 
+	public string Key
+	{
+		get => GetProperty(KeyProperty);
+		set => SetProperty(KeyProperty, value);
+	}
+
+	public string Value
+	{
+		get => GetProperty(ValueProperty);
+		set => SetProperty(ValueProperty, value);
+	}
+
 	protected override void AddRules()
 	{
 		Rules.AddRule(new DuplicateCheckRule());
@@ -58,9 +72,9 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	[FactoryFetch]
 	protected async Task FetchAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await SettingRepository.GetAsync(appId, environment, false, Array.Empty<string>(), cancellationToken);
+		var aggregate = await SettingRepository.GetAsync(appId, environment, true, [nameof(Setting.Items)], cancellationToken);
 
-		Aggregate = aggregate ?? throw new SettingNotFoundException(appId);
+		Aggregate = aggregate ?? throw new SettingNotFoundException(appId, environment);
 
 		using (BypassRuleChecks)
 		{
@@ -90,6 +104,10 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 		if (ChangedProperties.Contains(ItemsProperty))
 		{
 			Aggregate.AddOrUpdateItem(Items);
+		}
+		else if (ChangedProperties.Contains(KeyProperty) && ChangedProperties.Contains(ValueProperty))
+		{
+			Aggregate.UpdateItem(Key, Value);
 		}
 
 		await SettingRepository.UpdateAsync(Aggregate, true, cancellationToken);

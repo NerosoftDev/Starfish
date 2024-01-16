@@ -28,7 +28,7 @@ public class Setting : Aggregate<long>, IAuditing
 	public string AppCode { get; set; }
 
 	/// <summary>
-	/// 环境名称
+	/// 应用环境
 	/// </summary>
 	public string Environment { get; set; }
 
@@ -109,6 +109,27 @@ public class Setting : Aggregate<long>, IAuditing
 				item.Value = value;
 			}
 		}
+
+		Status = SettingStatus.Pending;
+	}
+
+	internal void UpdateItem(string key, string value)
+	{
+		if (Status == SettingStatus.Disabled)
+		{
+			throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_DISABLED);
+		}
+
+		Items ??= [];
+
+		var item = Items.FirstOrDefault(t => string.Equals(t.Key, key));
+
+		if (item == null)
+		{
+			throw new InvalidOperationException(string.Format(Resources.IDS_ERROR_SETTING_KEY_NOT_EXISTS, key));
+		}
+
+		item.Value = value;
 
 		Status = SettingStatus.Pending;
 	}

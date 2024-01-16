@@ -24,17 +24,17 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 
 		if (aggregate == null)
 		{
-			throw new SettingNotFoundException(appId);
+			throw new SettingNotFoundException(appId, environment);
 		}
 
 		if (aggregate == null)
 		{
-			throw new SettingNotFoundException(appId);
+			throw new SettingNotFoundException(appId, environment);
 		}
 
 		if (aggregate.Status == SettingStatus.Disabled)
 		{
-			throw new SettingDisabledException(appId);
+			throw new SettingDisabledException(appId, environment);
 		}
 
 		aggregate.SetStatus(SettingStatus.Published);

@@ -217,22 +217,28 @@
     <value>数据格式不能为空。</value>
   </data>
   <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
-    <value>配置已被禁用，[Id]:{0}。</value>
+    <value>配置已被禁用，[应用]:{0}，[环境]:{1}。</value>
   </data>
   <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
     <value>配置重复，[应用]:{0}，[环境]:{1}。</value>
   </data>
   <data name="IDS_ERROR_SETTING_KEY_EXISTS" xml:space="preserve">
-    <value>配置Key '{0}' 已经存在。</value>
+    <value>配置项 '{0}' 已经存在。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_KEY_NOT_EXISTS" xml:space="preserve">
+    <value>配置项 '{0}' 不存在。</value>
   </data>
   <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
-    <value>配置不存在，[Id]:{0}。</value>
+    <value>配置不存在，[应用]:{0}，[环境]:{1}。</value>
   </data>
   <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
     <value>没有待发布的配置。</value>
   </data>
   <data name="IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>版本号 '{0}' 已经存在。</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_NOT_EXISTS" xml:space="preserve">
+    <value>团队不存在，[Id]:{0}。</value>
   </data>
   <data name="IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER" xml:space="preserve">
     <value>仅允许团队负责人添加/移除团队成员。</value>

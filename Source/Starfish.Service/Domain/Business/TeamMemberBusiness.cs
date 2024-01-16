@@ -34,7 +34,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 	{
 		var aggregate = await TeamRepository.GetAsync(id, true, [nameof(Team.Members)], cancellationToken);
 
-		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
+		Aggregate = aggregate ?? throw new TeamNotFoundException(id);
 	}
 
 	[FactoryInsert]

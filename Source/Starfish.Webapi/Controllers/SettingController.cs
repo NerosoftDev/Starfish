@@ -28,8 +28,8 @@ public class SettingController : ControllerBase
 	/// <summary>
 	/// 获取配置项列表
 	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="environment"></param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="page"></param>
 	/// <param name="size"></param>
 	/// <param name="format"></param>
@@ -55,8 +55,8 @@ public class SettingController : ControllerBase
 	/// <summary>
 	/// 获取配置项数量
 	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="environment"></param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpGet("item/count")]
 	[Produces(typeof(int))]
@@ -69,8 +69,8 @@ public class SettingController : ControllerBase
 	/// <summary>
 	/// 获取Json格式配置
 	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="environment"></param>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpGet("item/json")]
 	[Produces(typeof(string))]
@@ -84,7 +84,7 @@ public class SettingController : ControllerBase
 	/// 获取配置节点详情
 	/// </summary>
 	/// <param name="id">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpGet("detail")]
 	public async Task<IActionResult> GetAsync(long id, string environment)
@@ -97,7 +97,7 @@ public class SettingController : ControllerBase
 	/// 新增配置
 	/// </summary>
 	/// <param name="id">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
@@ -113,7 +113,7 @@ public class SettingController : ControllerBase
 	/// 更新配置
 	/// </summary>
 	/// <param name="id">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="format">数据格式</param>
 	/// <param name="data">数据内容</param>
 	/// <returns></returns>
@@ -128,7 +128,7 @@ public class SettingController : ControllerBase
 	/// 删除配置
 	/// </summary>
 	/// <param name="id">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpDelete]
 	public async Task<IActionResult> DeleteAsync(long id, string environment)
@@ -141,16 +141,15 @@ public class SettingController : ControllerBase
 	/// 更新配置项的值
 	/// </summary>
 	/// <param name="id">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="key">完整Key名称</param>
-	/// <param name="value"></param>
+	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{key}")]
-	[Consumes("plain/text")]
-	public async Task<IActionResult> UpdateItemValueAsync(long id, string environment, string key, [FromBody] string value)
+	public async Task<IActionResult> UpdateItemValueAsync(long id, string environment, string key, [FromBody] SettingValueUpdateDto data)
 	{
 		key = HttpUtility.UrlDecode(key);
-		await _service.UpdateAsync(id, environment, key, value, HttpContext.RequestAborted);
+		await _service.UpdateAsync(id, environment, key, data.Value, HttpContext.RequestAborted);
 		return Ok();
 	}
 
@@ -158,7 +157,7 @@ public class SettingController : ControllerBase
 	/// 发布配置
 	/// </summary>
 	/// <param name="id">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("publish")]
@@ -166,5 +165,18 @@ public class SettingController : ControllerBase
 	{
 		await _service.PublishAsync(id, environment, data, HttpContext.RequestAborted);
 		return Ok();
+	}
+
+	/// <summary>
+	/// 获取发布的配置
+	/// </summary>
+	/// <param name="id">应用Id</param>
+	/// <param name="environment">应用环境</param>
+	/// <returns></returns>
+	[HttpGet("archive")]
+	public async Task<IActionResult> GetArchivedAsync(long id, string environment)
+	{
+		var result = await _service.GetSettingRawAsync(id, environment, HttpContext.RequestAborted);
+		return Ok(result);
 	}
 }

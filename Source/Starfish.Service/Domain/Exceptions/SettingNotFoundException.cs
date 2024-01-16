@@ -8,9 +8,10 @@ public class SettingNotFoundException : NotFoundException
 	/// <summary>
 	/// 构造函数
 	/// </summary>
-	/// <param name="id"></param>
-	public SettingNotFoundException(long id)
-		: base(string.Format(Resources.IDS_ERROR_SETTING_NOT_EXISTS, id))
+	/// <param name="appId">应用Id</param>
+	/// <param name="environment">应用环境</param>
+	public SettingNotFoundException(long appId, string environment)
+		: base(string.Format(Resources.IDS_ERROR_SETTING_NOT_EXISTS, appId, environment))
 	{
 	}
 }

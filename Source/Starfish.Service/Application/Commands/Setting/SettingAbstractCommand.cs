@@ -16,7 +16,7 @@ public abstract class SettingAbstractCommand : Command
 	public long AppId { get; set; }
 
 	/// <summary>
-	/// 环境名称
+	/// 应用环境
 	/// </summary>
 	public string Environment { get; set; }
 }

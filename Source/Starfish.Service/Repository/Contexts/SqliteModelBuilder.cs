@@ -123,7 +123,7 @@ public class SqliteModelBuilder : IModelBuilder
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Setting)
-			      .WithMany()
+			      .WithMany(t => t.Revisions)
 			      .HasForeignKey(t => t.SettingId)
 			      .OnDelete(DeleteBehavior.Cascade);
 		});

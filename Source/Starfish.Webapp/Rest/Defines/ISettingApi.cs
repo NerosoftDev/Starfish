@@ -27,9 +27,12 @@ internal interface ISettingApi
 	[Delete("/api/apps/{id}/setting/{environment}")]
 	Task<IApiResponse> DeleteAsync(long id, string environment, CancellationToken cancellationToken = default);
 
-	[Put("/api/apps/{id}/setting/{environment}/item/{key}")]
-	Task<IApiResponse> UpdateItemValueAsync(long id, string environment, string key, [Body] string value, CancellationToken cancellationToken = default);
+	[Put("/api/apps/{id}/setting/{environment}/{key}")]
+	Task<IApiResponse> UpdateItemValueAsync(long id, string environment, string key, [Body] SettingValueUpdateDto data, CancellationToken cancellationToken = default);
 
-	[Post("/api/apps/{id}/setting/{environment}/item/publish")]
+	[Post("/api/apps/{id}/setting/{environment}/publish")]
 	Task<IApiResponse> PublishAsync(long id, string environment, [Body] SettingPublishDto data, CancellationToken cancellationToken = default);
+
+	[Get("/api/apps/{id}/setting/{environment}/archive")]
+	Task<IApiResponse<string>> GetArchivedAsync(long id, string environment, CancellationToken cancellationToken = default);
 }
