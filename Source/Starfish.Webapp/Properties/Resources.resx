@@ -141,6 +141,15 @@
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add app</value>
   </data>
+  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>Are you sure to remove this app '{0}'?</value>
   </data>
@@ -173,6 +182,15 @@
   </data>
   <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
     <value>Actions</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_CREATE_TIME" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_UPDATE_TIME" xml:space="preserve">
+    <value>Updated</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
     <value>Development</value>
@@ -357,6 +375,21 @@
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add new team</value>
   </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
+    <value>Alias</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_MEMBERS" xml:space="preserve">
+    <value>Members</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_OWNER" xml:space="preserve">
+    <value>Owner</value>
+  </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
     <value>Add user</value>
   </data>
@@ -368,9 +401,6 @@
   </data>
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
     <value>Email</value>
-  </data>
-  <data name="IDS_USER_INDEX_COLUMN_ID" xml:space="preserve">
-    <value>Id</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
     <value>Nick name</value>

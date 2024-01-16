@@ -141,6 +141,15 @@
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>新增</value>
   </data>
+  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
+    <value>代码</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>状态</value>
+  </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>确定要删除应用 '{0}'？</value>
   </data>
@@ -173,6 +182,15 @@
   </data>
   <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
     <value>操作</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_CREATE_TIME" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_UPDATE_TIME" xml:space="preserve">
+    <value>修改时间</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
     <value>开发</value>
@@ -357,6 +375,21 @@
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>新增团队</value>
   </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
+    <value>别名</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_MEMBERS" xml:space="preserve">
+    <value>成员数</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_OWNER" xml:space="preserve">
+    <value>负责人</value>
+  </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
     <value>新增用户</value>
   </data>
@@ -368,9 +401,6 @@
   </data>
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
     <value>邮箱</value>
-  </data>
-  <data name="IDS_USER_INDEX_COLUMN_ID" xml:space="preserve">
-    <value>Id</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
     <value>昵称</value>
