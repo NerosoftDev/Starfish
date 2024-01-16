@@ -218,3 +218,11 @@ nav[class*="paginator-nav"] {
     width: 100%;
     gap: 10px;
 }
+
+.aside-right {
+    background-color: var(--neutral-fill-stealth-rest);
+}
+
+    .aside-right div[class*="region"] {
+        background-color: var(--neutral-fill-input-hover) !important;
+    }

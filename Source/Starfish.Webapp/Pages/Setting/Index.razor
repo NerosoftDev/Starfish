@@ -1,5 +1,262 @@
-﻿<h3>Setting</h3>
+﻿@page "/apps/{id:long}/settings"
+
+@attribute [Authorize]
+
+@inject IDialogService DialogService
+@inject ISettingApi SettingApi
+@inject IAppsApi AppsApi
+
+<FluentBreadcrumb Style="margin-bottom: 16px;">
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="@($"/apps/{Id}/settings")">@(Resources.IDS_BREADCRUMB_SETTING)</FluentBreadcrumbItem>
+</FluentBreadcrumb>
+
+<FluentGrid>
+    <FluentGridItem lg="9" sm="12" md="8">
+        <FluentCard>
+            <FluentGrid Style="width: 100%">
+                <FluentGridItem lg="12" sm="12" md="12">
+                    <div class="search-bar">
+                        <FluentSelect Multiple="false" Width="200px" TOption="string" ValueChanged="OnSelectedEnvironmentChanged">
+                            <FluentOption Value="DEV" Selected="true">DEV (@Resources.IDS_COMMON_ENVIRONMENT_DEV)</FluentOption>
+                            <FluentOption Value="SIT">SIT (@Resources.IDS_COMMON_ENVIRONMENT_SIT)</FluentOption>
+                            <FluentOption Value="UAT">UAT (@Resources.IDS_COMMON_ENVIRONMENT_UAT)</FluentOption>
+                            <FluentOption Value="PET">PET (@Resources.IDS_COMMON_ENVIRONMENT_PET)</FluentOption>
+                            <FluentOption Value="SIM">SIM (@Resources.IDS_COMMON_ENVIRONMENT_SIM)</FluentOption>
+                            <FluentOption Value="PRD">PRD (@Resources.IDS_COMMON_ENVIRONMENT_PRD)</FluentOption>
+                        </FluentSelect>
+                        <FluentSpacer/>
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.CodeText())" Appearance="Appearance.Accent" OnClick="@OnEditJsonClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_EDIT_JSON)</FluentButton>
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.SlideText())" Appearance="Appearance.Accent" OnClick="@OnEditTextClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_EDIT_TEXT)</FluentButton>
+                    </div>
+                </FluentGridItem>
+                <FluentGridItem lg="12" sm="12" md="12">
+                    <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="SettingItemDto">
+                        <PropertyColumn Class="data-grid-column" Title="Key" Property="@(c => c.Key)"/>
+                        <PropertyColumn Class="data-grid-column" Title="Value" Property="@(c => c.Value)"/>
+                        <TemplateColumn Title="Actions" Align="@Align.End">
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditValueClicked(context.Key, context.Value))"/>
+                        </TemplateColumn>
+                    </FluentDataGrid>
+                </FluentGridItem>
+                <FluentGridItem lg="12" sm="12" md="12">
+                    <FluentDataGridPaginator State="@Pagination"/>
+                </FluentGridItem>
+            </FluentGrid>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem lg="3" sm="12" md="4">
+        <div style="top: 0; position: sticky;">
+            <FluentAccordion>
+                <FluentAccordionItem Class="aside-right" Heading="App information" Expanded="true">
+                    <FluentStack Orientation="Orientation.Vertical">
+                        <FluentLabel>App name: @AppDetail?.Name</FluentLabel>
+                        <FluentLabel>App code: @AppDetail?.Code</FluentLabel>
+                        <FluentLabel>App name: @AppDetail?.StatusDescription</FluentLabel>
+                        <FluentDivider Style="width: 100%;"/>
+                        <FluentLabel>@AppDetail?.Description</FluentLabel>
+                    </FluentStack>
+                </FluentAccordionItem>
+                @if (SettingDetail != null)
+                {
+                    <FluentAccordionItem Class="aside-right" Heading="Setting information" Expanded="true" Style="background-color: var(--neutral-layer-1);">
+                        <FluentDivider Style="width: 100%;"/>
+                        <FluentLabel>Version: @SettingDetail?.Version</FluentLabel>
+                        <FluentDivider Style="width: 100%;"/>
+                        <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
+                        <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.SyncOff())" OnClick="@OnSyncRedisClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_SYNC_REDIS)</FluentButton>
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@OnDeleteClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_DELETE)</FluentButton>
+                        </FluentStack>
+                        @if (SettingDetail?.Status == "Pending")
+                        {
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Send())" Appearance="Appearance.Accent" OnClick="@OnPublishClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_PUBLISH)</FluentButton>
+                        }
+                    </FluentAccordionItem>
+                }
+                <FluentAccordionItem Class="aside-right" Expanded="true" Heading="Panel three">
+                    Panel three content
+                </FluentAccordionItem>
+
+            </FluentAccordion>
+        </div>
+    </FluentGridItem>
+</FluentGrid>
+
 
 @code {
+
+    [Parameter]
+    public long Id { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal Identity { get; set; }
+
+    private GridItemsProvider<SettingItemDto> _provider;
+
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+
+    private int Total { get; set; }
+
+    private SettingDetailDto SettingDetail { get; set; }
+
+    private AppInfoDetailDto AppDetail { get; set; }
+
+    private string Environment { get; set; } = "DEV";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthenticationState;
+
+        Identity = new UserPrincipal(user.User);
+
+        await LoadAppDetailAsync();
+        await LoadSettingDetailAsync();
+
+        _provider = async request =>
+        {
+            List<SettingItemDto> items = null;
+            var tasks = new List<Task>
+            {
+                SettingApi.GetItemListAsync(Id, Environment, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                          .ContinueWith(task =>
+                          {
+                              task.WaitAndUnwrapException(request.CancellationToken);
+                              items = task.Result.EnsureSuccess();
+                          }, request.CancellationToken)
+            };
+
+            if (request.StartIndex == 0)
+            {
+                tasks.Add(
+                    SettingApi.GetItemCountAsync(Id, Environment, request.CancellationToken)
+                              .ContinueWith(task =>
+                              {
+                                  task.WaitAndUnwrapException(request.CancellationToken);
+                                  Total = task.Result.EnsureSuccess();
+                              }, request.CancellationToken)
+                );
+            }
+
+            await Task.WhenAll(tasks);
+            await Pagination.SetTotalItemCountAsync(Total);
+            return GridItemsProviderResult.From(items, Total);
+        };
+    }
+
+    private async Task OnSelectedEnvironmentChanged(string value)
+    {
+        Environment = value;
+        var tasks = new List<Task>
+        {
+            Pagination.SetCurrentPageIndexAsync(0),
+            LoadSettingDetailAsync()
+        };
+        await Task.WhenAll(tasks);
+    }
+
+    private Task LoadSettingDetailAsync(CancellationToken cancellationToken = default)
+    {
+        return SettingApi.GetAsync(Id, Environment, cancellationToken)
+                         .ContinueWith(task =>
+                         {
+                             task.WaitAndUnwrapException(cancellationToken);
+                             SettingDetail = task.Result.EnsureSuccess();
+                         }, cancellationToken);
+    }
+
+    private Task LoadAppDetailAsync()
+    {
+        return AppsApi.GetAsync(Id)
+                      .ContinueWith(task =>
+                      {
+                          task.WaitAndUnwrapException();
+                          AppDetail = task.Result.EnsureSuccess();
+                      });
+    }
+
+    private async Task OnEditJsonClicked()
+    {
+        var args = new EditDialogArgs(Id, Environment)
+        {
+            Properties = new Dictionary<string, object>
+            {
+                ["mode"] = SettingDetail == null ? "create" : "update",
+                ["format"] = Constants.Setting.FormatJson
+            }
+        };
+        var title = SettingDetail == null ? Resources.IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON : Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON;
+
+        var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)" });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnEditTextClicked()
+    {
+        var args = new EditDialogArgs(Id, Environment)
+        {
+            Properties = new Dictionary<string, object>
+            {
+                ["mode"] = SettingDetail == null ? "create" : "update",
+                ["format"] = Constants.Setting.FormatText
+            }
+        };
+
+        var title = SettingDetail == null ? Resources.IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT : Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT;
+
+        var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)" });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnEditValueClicked(string key, string value)
+    {
+        var args = new EditDialogArgs(Id, Environment)
+        {
+            Properties = new Dictionary<string, object>
+            {
+                ["key"] = key,
+                ["value"] = value
+            }
+        };
+
+        var dialog = await DialogService.ShowDialogAsync<EditValue>(args, new DialogParameters { Title = Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnPublishClicked()
+    {
+        var args = new EditDialogArgs(Id, Environment);
+        var dialog = await DialogService.ShowDialogAsync<Publish>(args, new DialogParameters { Title = Resources.IDS_SETTING_PUBLISH_DIALOG_TITLE });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await LoadSettingDetailAsync();
+        }
+    }
+
+    private async Task OnSyncRedisClicked()
+    {
+        var args = new EditDialogArgs(Id, Environment);
+        var dialog = await DialogService.ShowDialogAsync<SyncRedis>(args, new DialogParameters { Title = Resources.IDS_SETTING_SYNC_REDIS_DIALOG_TITLE });
+    }
+
+    private async Task OnDeleteClicked()
+    {
+    }
 
 }

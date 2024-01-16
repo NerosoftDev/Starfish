@@ -50,6 +50,10 @@
                     {
                         <Redirect Uri="/login" />
                     }
+                    else if(ex is HttpRequestException e && e.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        <Redirect Uri="/login" />
+                    }
                     else
                     {
                         <div class="blazor-error-boundary">@ex.Message</div>
@@ -61,14 +65,10 @@
 
     <FluentFooter>
         <div class="link1">
-            <span>
-                Nerosoft © 2024. All rights reserved.
-            </span>
+            <span>Nerosoft © @(DateTime.Today.Year). All rights reserved.</span>
         </div>
         <div class="link2">
-            <a href="javascript:void(0);" @onclick="@OnLogoutClicked">
-                Logout
-            </a>
+            <a href="javascript:void(0);" @onclick="@OnLogoutClicked">@(Resources.IDS_COMMON_LOGOUT)</a>
         </div>
     </FluentFooter>
 

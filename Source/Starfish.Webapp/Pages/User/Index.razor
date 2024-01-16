@@ -14,7 +14,7 @@
 <FluentCard>
     <FluentGrid>
         <FluentGridItem lg="12" sm="12" md="12">
-            <div style="display: flex; width:100%;gap:10px;">
+            <div class="search-bar">
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
                 <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
                 <FluentSpacer/>
@@ -23,7 +23,7 @@
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
             <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto">
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_ID)" Property="@(c => c.Id)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)" Property="@(c => c.Id)"/>
                 <TemplateColumn Title="@(Resources.IDS_USER_INDEX_COLUMN_USER_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnDetailClicked(context.Id))">@(context.UserName)</FluentButton>
                 </TemplateColumn>
