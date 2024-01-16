@@ -12,9 +12,9 @@ namespace Nerosoft.Starfish.Application;
 public sealed class UserCommandHandler : CommandHandlerBase,
                                          IHandler<UserCreateCommand>,
                                          IHandler<UserUpdateCommand>,
-                                         IHandler<UserChangePasswordCommand>,
+                                         IHandler<ChangePasswordCommand>,
                                          IHandler<UserDeleteCommand>,
-                                         IHandler<UserSetRoleCommand>
+                                         IHandler<UserRoleSetCommand>
 {
 	/// <summary>
 	/// 初始化<see cref="UserCommandHandler"/>.
@@ -61,7 +61,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(UserChangePasswordCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ChangePasswordCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
@@ -85,7 +85,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(UserSetRoleCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(UserRoleSetCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

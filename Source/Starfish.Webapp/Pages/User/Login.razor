@@ -2,8 +2,10 @@
 
 @layout EmptyLayout
 
+@implements IDisposable
+
 @inject NavigationManager Navigation
-@inject JwtAuthenticationStateProvider Authentication
+@inject AuthenticationStateProvider Authentication
 @inject IJSRuntime Script
 @inject IToastService ToastService
 @inject IIdentityApi Api
@@ -61,6 +63,21 @@
 
     private string Password { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        Authentication.AuthenticationStateChanged += OnAuthenticationStateChanged;
+        await Task.CompletedTask;
+    }
+
+    private async void OnAuthenticationStateChanged(Task<AuthenticationState> task)
+    {
+        var state = await task;
+        if (state.User.Identity?.IsAuthenticated == true)
+        {
+            Navigation.NavigateTo(Redirect ?? "/");
+        }
+    }
+
     private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
 
     private async Task OnClick(MouseEventArgs args)
@@ -77,8 +94,7 @@
             Loading = true;
             await _semaphoreSlim.WaitAsync(cancellationToken.Token);
             var response = await SubmitAsync(cancellationToken.Token);
-            await Authentication.SetAuthenticationStateAsync(response.AccessToken, response.RefreshToken);
-            Navigation.NavigateTo(Redirect ?? "/");
+            WeakReferenceMessenger.Default.Send(new AuthenticationStateMessage("login") { AccessToken = response.AccessToken, RefreshToken = response.RefreshToken });
         }
         catch (Exception exception)
         {
@@ -112,6 +128,12 @@
     {
         Navigation.NavigateTo("/register");
         await Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _semaphoreSlim?.Dispose();
+        Authentication.AuthenticationStateChanged -= OnAuthenticationStateChanged;
     }
 
 }

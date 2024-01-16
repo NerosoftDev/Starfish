@@ -117,30 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>页码必须大于0。</value>
-  </data>
-  <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>数量必须大于0。</value>
-  </data>
-  <data name="IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID" xml:space="preserve">
-    <value>用户名或密码错误。</value>
-  </data>
-  <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
-    <value>无效的Token。</value>
-  </data>
-  <data name="IDS_ERROR_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
-    <value>Token已失效。</value>
-  </data>
-  <data name="IDS_ERROR_USER_LOCKOUT" xml:space="preserve">
-    <value>用户已锁定。</value>
-  </data>
-  <data name="IDS_ERROR_USER_USERNAME_UNAVAILABLE" xml:space="preserve">
-    <value>用户名'{0}'不可用。</value>
-  </data>
-  <data name="IDS_ERROR_USER_NOT_EXISTS" xml:space="preserve">
-    <value>用户不存在，[Id]:{0}。</value>
-  </data>
   <data name="IDS_DICTIONARY_ENVIRONMENT_DEV" xml:space="preserve">
     <value>开发环境</value>
   </data>
@@ -162,44 +138,11 @@
   <data name="IDS_DICTIONARY_NAME_SA" xml:space="preserve">
     <value>超级管理员</value>
   </data>
-  <data name="IDS_ERROR_APPINFO_CODE_UNAVAILABLE" xml:space="preserve">
-    <value>应用唯一编码不可用。</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
-    <value>应用信息不存在，[Id]:{0}。</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
-    <value>无效的应用状态。</value>
-  </data>
-  <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
-    <value>Token不能为空。</value>
-  </data>
-  <data name="IDS_ERROR_UNSUPPORTED_CACHE_PROVIDER" xml:space="preserve">
-    <value>不支持的缓存提供程序'{0}'。</value>
-  </data>
-  <data name="IDS_ERROR_UNSUPPORTED_DATABASE_PROVIDER" xml:space="preserve">
-    <value>不支持的数据库提供程序'{0}'。</value>
-  </data>
-  <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
-    <value>不支持的服务总线提供程序'{0}'。</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
-    <value>应用唯一编码不能为空。</value>
-  </data>
   <data name="IDS_ENUM_APPINFO_STATUS_DISABLED" xml:space="preserve">
     <value>禁用</value>
   </data>
   <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
     <value>启用</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
-    <value>禁用</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_STATUS_PENDING" xml:space="preserve">
-    <value>待发布</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
-    <value>已发布</value>
   </data>
   <data name="IDS_ENUM_SETTING_ITEM_TYPE_ARRAY" xml:space="preserve">
     <value>集合</value>
@@ -221,5 +164,161 @@
   </data>
   <data name="IDS_ENUM_SETTING_ITEM_TYPE_STRING" xml:space="preserve">
     <value>字符串</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_STATUS_PENDING" xml:space="preserve">
+    <value>待发布</value>
+  </data>
+  <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
+    <value>已发布</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
+    <value>应用唯一编码不能为空。</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_CODE_UNAVAILABLE" xml:space="preserve">
+    <value>应用唯一编码不可用。</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
+    <value>应用信息不存在，[Id]:{0}。</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE" xml:space="preserve">
+    <value>密钥不符合规则。</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_SECRET_REQUIRED" xml:space="preserve">
+    <value>应用访问密钥必须提供。</value>
+  </data>
+  <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
+    <value>无效的应用状态。</value>
+  </data>
+  <data name="IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
+    <value>页码必须大于0。</value>
+  </data>
+  <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
+    <value>数量必须大于0。</value>
+  </data>
+  <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
+    <value>密码不正确。</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
+    <value>Token已失效。</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
+    <value>无效的Token。</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
+    <value>Token不能为空。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
+    <value>不支持的数据格式 '{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED" xml:space="preserve">
+    <value>数据格式不能为空。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
+    <value>配置已被禁用，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
+    <value>配置重复，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_KEY_EXISTS" xml:space="preserve">
+    <value>配置项 '{0}' 已经存在。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_KEY_NOT_EXISTS" xml:space="preserve">
+    <value>配置项 '{0}' 不存在。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
+    <value>配置不存在，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
+    <value>没有待发布的配置。</value>
+  </data>
+  <data name="IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS" xml:space="preserve">
+    <value>版本号 '{0}' 已经存在。</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_NOT_EXISTS" xml:space="preserve">
+    <value>团队不存在，[Id]:{0}。</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER" xml:space="preserve">
+    <value>仅允许团队负责人添加/移除团队成员。</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE" xml:space="preserve">
+    <value>仅允许团队负责人更新信息。</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_OWNER_CANNOT_REMOVED" xml:space="preserve">
+    <value>不能移除团队负责人。</value>
+  </data>
+  <data name="IDS_ERROR_TEAM_USERID_REQUIRED" xml:space="preserve">
+    <value>用户Id(s)不能为空。</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_CACHE_PROVIDER" xml:space="preserve">
+    <value>不支持的缓存提供程序'{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_DATABASE_PROVIDER" xml:space="preserve">
+    <value>不支持的数据库提供程序'{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_UNSUPPORTED_SERVICE_BUS_PROVIDER" xml:space="preserve">
+    <value>不支持的服务总线提供程序'{0}'。</value>
+  </data>
+  <data name="IDS_ERROR_USER_EMAIL_UNAVAILABLE" xml:space="preserve">
+    <value>邮箱 '{0}' 不可用。</value>
+  </data>
+  <data name="IDS_ERROR_USER_LOCKOUT" xml:space="preserve">
+    <value>用户已锁定。</value>
+  </data>
+  <data name="IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER" xml:space="preserve">
+    <value>预留账号不允许设置角色。</value>
+  </data>
+  <data name="IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER" xml:space="preserve">
+    <value>预留账号不允许删除。</value>
+  </data>
+  <data name="IDS_ERROR_USER_NOT_EXISTS" xml:space="preserve">
+    <value>用户不存在，[Id]:{0}。</value>
+  </data>
+  <data name="IDS_ERROR_USER_RULE_PASSWORD_NOT_MARCHED_RULES" xml:space="preserve">
+    <value>密码长度为8 ~ 32个字符，至少包含一个大写字母和一个小写字母。</value>
+  </data>
+  <data name="IDS_ERROR_USER_RULE_PASSWORD_REQUIRED" xml:space="preserve">
+    <value>密码不能为空。</value>
+  </data>
+  <data name="IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID" xml:space="preserve">
+    <value>用户名或密码错误。</value>
+  </data>
+  <data name="IDS_ERROR_USER_USERNAME_UNAVAILABLE" xml:space="preserve">
+    <value>用户名'{0}'不可用。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_CREATE" xml:space="preserve">
+    <value>新增应用 {0}({1})。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_DELETE" xml:space="preserve">
+    <value>删除应用 {0}({1})。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_DISABLE" xml:space="preserve">
+    <value>禁用应用 {0}({1})。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_ENABLE" xml:space="preserve">
+    <value>启用应用 {0}({1})。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_UPDATE" xml:space="preserve">
+    <value>更新应用 {0}({1})。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_FAILED" xml:space="preserve">
+    <value>用户认证失败。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_SUCCEED" xml:space="preserve">
+    <value>用户认证成功。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_SETTING_CREATE" xml:space="preserve">
+    <value>新增配置，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_SETTING_DELETE" xml:space="preserve">
+    <value>删除配置，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_SETTING_PUBLISH" xml:space="preserve">
+    <value>发布配置，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_SETTING_UPDATE" xml:space="preserve">
+    <value>更新配置，[应用]:{0}，[环境]:{1}。</value>
   </data>
 </root>

@@ -12,9 +12,7 @@ internal class SettingMappingProfile : Profile
 	/// <inheritdoc />
 	public SettingMappingProfile()
 	{
-		CreateMap<Setting, SettingItemDto>()
-			.ForMember(dest => dest.StatusDescription, options => options.MapFrom(src => GetStatusDescription(src.Status)))
-			.ForMember(dest => dest.AppName, options => options.MapFrom(src => src.App.Name));
+		CreateMap<SettingItem, SettingItemDto>();
 		CreateMap<Setting, SettingDetailDto>()
 			.ForMember(dest => dest.StatusDescription, options => options.MapFrom(src => GetStatusDescription(src.Status)))
 			.ForMember(dest => dest.AppName, options => options.MapFrom(src => src.App.Name));

@@ -20,7 +20,7 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var (appId, appCode, environment, items) = await GetItemsAsync(message.RootId, cancellationToken);
+			var (appId, appCode, environment, items) = await GetItemsAsync(message.AppId, message.Environment, cancellationToken);
 			var data = items.ToDictionary(t => t.Key, t => t.Value);
 			var json = JsonConvert.SerializeObject(data);
 
@@ -30,15 +30,15 @@ public class SettingArchiveCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	private async Task<Tuple<long, string, string, List<SettingItem>>> GetItemsAsync(long id, CancellationToken cancellationToken = default)
+	private async Task<Tuple<long, string, string, List<SettingItem>>> GetItemsAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 
-		var aggregate = await repository.GetAsync(id, false, [nameof(Setting.Items)], cancellationToken);
+		var aggregate = await repository.GetAsync(appId, environment, false, [nameof(Setting.Items)], cancellationToken);
 
 		if (aggregate == null)
 		{
-			throw new SettingNotFoundException(id);
+			throw new SettingNotFoundException(appId, environment);
 		}
 
 		return Tuple.Create(aggregate.AppId, aggregate.AppCode, aggregate.Environment, aggregate.Items.ToList());

@@ -13,16 +13,22 @@ public class SettingPublishedEvent : ApplicationEvent
 	{
 	}
 
-	public SettingPublishedEvent(long id)
+	public SettingPublishedEvent(long appId, string environment)
 		: this()
 	{
-		Id = id;
+		AppId = appId;
+		Environment = environment;
 	}
 
 	/// <summary>
 	/// 根节点Id
 	/// </summary>
-	public long Id { get; set; }
+	public long AppId { get; set; }
+
+	/// <summary>
+	/// 环境名称
+	/// </summary>
+	public string Environment { get; set; }
 
 	/// <summary>
 	/// 版本号

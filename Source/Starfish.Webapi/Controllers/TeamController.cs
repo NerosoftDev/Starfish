@@ -52,6 +52,11 @@ public class TeamController : ControllerBase
 		return Ok(result);
 	}
 
+    /// <summary>
+    /// 获取团队详情
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
 	[HttpGet("{id:int}")]
 	[Produces(typeof(TeamDetailDto))]
 	public async Task<IActionResult> GetAsync(int id)

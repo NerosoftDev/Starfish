@@ -19,7 +19,7 @@ public class UserSetRoleUseCase : IUserSetRoleUseCase
 
 	public Task ExecuteAsync(UserSetRoleInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new UserSetRoleCommand(input.Id, input.Roles);
+		var command = new UserRoleSetCommand(input.Id, input.Roles);
 		return _bus.SendAsync(command, cancellationToken);
 	}
 }

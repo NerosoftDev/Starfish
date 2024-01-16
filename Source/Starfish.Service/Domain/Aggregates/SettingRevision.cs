@@ -13,6 +13,7 @@ public class SettingRevision : Entity<long>,
 	}
 
 	internal SettingRevision(string version, string comment, string data, string @operator)
+		: this()
 	{
 		Version = version;
 		Comment = comment;

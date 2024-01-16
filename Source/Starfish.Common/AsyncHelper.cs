@@ -11,7 +11,13 @@ public static class AsyncHelper
 		var context = new ExclusiveSynchronizationContext();
 		SynchronizationContext.SetSynchronizationContext(context);
 		TResult result = default;
-		context.Post(async _ =>
+
+		context.Post(Callback, null);
+		context.BeginMessageLoop();
+		SynchronizationContext.SetSynchronizationContext(oldContext);
+		return result;
+
+		async void Callback(object _)
 		{
 			try
 			{
@@ -26,10 +32,7 @@ public static class AsyncHelper
 			{
 				context.EndMessageLoop();
 			}
-		}, null);
-		context.BeginMessageLoop();
-		SynchronizationContext.SetSynchronizationContext(oldContext);
-		return result;
+		}
 	}
 
 	public static void RunSync(Func<Task> func)
@@ -37,7 +40,14 @@ public static class AsyncHelper
 		var oldContext = SynchronizationContext.Current;
 		var context = new ExclusiveSynchronizationContext();
 		SynchronizationContext.SetSynchronizationContext(context);
-		context.Post(async _ =>
+
+		context.Post(Callback, null);
+		context.BeginMessageLoop();
+
+		SynchronizationContext.SetSynchronizationContext(oldContext);
+		return;
+
+		async void Callback(object _)
 		{
 			try
 			{
@@ -52,18 +62,15 @@ public static class AsyncHelper
 			{
 				context.EndMessageLoop();
 			}
-		}, null);
-		context.BeginMessageLoop();
-
-		SynchronizationContext.SetSynchronizationContext(oldContext);
+		}
 	}
 
 	private class ExclusiveSynchronizationContext : SynchronizationContext
 	{
-		private bool done;
+		private bool _done;
 		public Exception Exception { get; set; }
-		readonly AutoResetEvent workItemsWaiting = new(false);
-		readonly Queue<Tuple<SendOrPostCallback, object>> items = new();
+		private readonly AutoResetEvent _workItemsWaiting = new(false);
+		private readonly Queue<Tuple<SendOrPostCallback, object>> _items = new();
 
 		public override void Send(SendOrPostCallback d, object state)
 		{
@@ -72,34 +79,37 @@ public static class AsyncHelper
 
 		public override void Post(SendOrPostCallback callback, object state)
 		{
-			lock (items)
+			lock (_items)
 			{
-				items.Enqueue(Tuple.Create(callback, state));
+				_items.Enqueue(Tuple.Create(callback, state));
 			}
-			workItemsWaiting.Set();
+
+			_workItemsWaiting.Set();
 		}
 
 		public void EndMessageLoop()
 		{
-			Post(_ => done = true, null);
+			Post(_ => _done = true, null);
 		}
 
 		public void BeginMessageLoop()
 		{
-			if (done)
+			if (_done)
 			{
 				return;
 			}
-			while (!done)
+
+			while (!_done)
 			{
 				Tuple<SendOrPostCallback, object> task = null;
-				lock (items)
+				lock (_items)
 				{
-					if (items.Count > 0)
+					if (_items.Count > 0)
 					{
-						task = items.Dequeue();
+						task = _items.Dequeue();
 					}
 				}
+
 				if (task != null)
 				{
 					task.Item1(task.Item2);
@@ -110,7 +120,7 @@ public static class AsyncHelper
 				}
 				else
 				{
-					workItemsWaiting.WaitOne();
+					_workItemsWaiting.WaitOne();
 				}
 			}
 		}

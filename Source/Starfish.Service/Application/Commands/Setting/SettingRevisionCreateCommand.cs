@@ -8,9 +8,9 @@ namespace Nerosoft.Starfish.Application;
 public class SettingRevisionCreateCommand : Command
 {
 	/// <summary>
-	/// 配置根节点Id
+	/// 应用Id
 	/// </summary>
-	public long SettingId { get; set; }
+	public long AppId { get; set; }
 
 	/// <summary>
 	/// 说明
@@ -21,4 +21,9 @@ public class SettingRevisionCreateCommand : Command
 	/// 版本号
 	/// </summary>
 	public string Version { get; set; }
+
+	/// <summary>
+	/// 应用环境
+	/// </summary>
+	public string Environment { get; set; }
 }

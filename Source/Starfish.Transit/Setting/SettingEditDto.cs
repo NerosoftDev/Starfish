@@ -3,7 +3,7 @@
 /// <summary>
 /// 配置更新Dto
 /// </summary>
-public class SettingUpdateDto
+public class SettingEditDto
 {
 	/// <summary>
 	/// 数据类型

@@ -26,7 +26,8 @@ public class SettingRevisionEventSubscriber : IHandler<SettingPublishedEvent>
 	{
 		var command = new SettingRevisionCreateCommand
 		{
-			SettingId = message.Id,
+			AppId = message.AppId,
+			Environment = message.Environment,
 			Version = message.Version,
 			Comment = message.Comment
 		};

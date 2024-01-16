@@ -4,12 +4,14 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <InvariantGlobalization>true</InvariantGlobalization>
+        <InvariantGlobalization>false</InvariantGlobalization>
         <Description>A lightweight powerful distributed configuration server for .NET application.</Description>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Blazored.LocalStorage" />
+        <PackageReference Include="BlazorMonaco" />
+        <PackageReference Include="CommunityToolkit.Mvvm" />
         <PackageReference Include="Euonia.Core" />
         <PackageReference Include="IdentityModel" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />

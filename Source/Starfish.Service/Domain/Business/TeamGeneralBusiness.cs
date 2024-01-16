@@ -58,7 +58,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 	{
 		var aggregate = await TeamRepository.GetAsync(id, true, [], cancellationToken);
 
-		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
+		Aggregate = aggregate ?? throw new TeamNotFoundException(id);
 
 		using (BypassRuleChecks)
 		{
@@ -117,7 +117,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 			{
 				if (target.Aggregate.OwnerId != target.Identity.GetUserIdOfInt32())
 				{
-					context.AddErrorResult("只有团队拥有者才能修改信息");
+					context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE);
 				}
 			}
 

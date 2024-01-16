@@ -1,6 +1,4 @@
 ﻿using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Claims;
-using Nerosoft.Euonia.Repository.EfCore;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -36,7 +34,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 	{
 		var aggregate = await TeamRepository.GetAsync(id, true, [nameof(Team.Members)], cancellationToken);
 
-		Aggregate = aggregate ?? throw new SettingNotFoundException(id);
+		Aggregate = aggregate ?? throw new TeamNotFoundException(id);
 	}
 
 	[FactoryInsert]
@@ -77,7 +75,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 
 			if (notExists.Length != 0)
 			{
-				context.AddErrorResult($"用户[{notExists.JoinAsString(", ")}]不存在");
+				context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_NOT_EXISTS, notExists.JoinAsString(", ")));
 			}
 		}
 	}
@@ -90,7 +88,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 
 			if (target.Aggregate.OwnerId != target.Identity.GetUserIdOfInt32())
 			{
-				context.AddErrorResult("只有团队拥有者才能添加/移除成员");
+				context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
 			}
 
 			return Task.CompletedTask;

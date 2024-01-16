@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
+    <value>应用代码</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>应用描述</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
+    <value>应用名称</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
+    <value>访问密钥</value>
+  </data>
+  <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
+    <value>选择所属团队</value>
+  </data>
+  <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
+    <value>新增应用</value>
+  </data>
+  <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
+    <value>编辑应用</value>
+  </data>
+  <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
+    <value>代码</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
+    <value>确定要删除应用 '{0}'？</value>
+  </data>
+  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
+    <value>删除应用</value>
+  </data>
+  <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
+    <value>访问密钥将被加密存储且无法解密，请自行保管。如果忘记密钥，请重新设置。</value>
+  </data>
+  <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
+    <value>重置密钥</value>
+  </data>
+  <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
+    <value>应用详情</value>
+  </data>
+  <data name="IDS_BREADCRUMB_SETTING" xml:space="preserve">
+    <value>应用配置</value>
+  </data>
+  <data name="IDS_BREADCRUMB_TEAM_DETAIL" xml:space="preserve">
+    <value>团队详情</value>
+  </data>
+  <data name="IDS_BREADCRUMB_USER_DETAIL" xml:space="preserve">
+    <value>用户详情</value>
+  </data>
+  <data name="IDS_COMMON_CANCEL" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="IDS_COMMON_CLOSE" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_CREATE_TIME" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_UPDATE_TIME" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
+    <value>开发</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_PET" xml:space="preserve">
+    <value>性能评估</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_PRD" xml:space="preserve">
+    <value>生产</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_SIM" xml:space="preserve">
+    <value>模拟测试</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_SIT" xml:space="preserve">
+    <value>系统集成测试</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_UAT" xml:space="preserve">
+    <value>用户验收测试</value>
+  </data>
+  <data name="IDS_COMMON_LOGOUT" xml:space="preserve">
+    <value>退出登录</value>
+  </data>
+  <data name="IDS_COMMON_NO" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="IDS_COMMON_OPERATIONS" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="IDS_COMMON_PLACEHOLDER_KEYWORD" xml:space="preserve">
+    <value>输入关键字搜索</value>
+  </data>
+  <data name="IDS_COMMON_SAVE" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="IDS_COMMON_SEARCH" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="IDS_COMMON_YES" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="IDS_LOGIN_PAGE_TITLE" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="IDS_LOGIN_PLACEHOLDER_PASSWORD" xml:space="preserve">
+    <value>请输入密码</value>
+  </data>
+  <data name="IDS_LOGIN_PLACEHOLDER_USERNAME" xml:space="preserve">
+    <value>请输入用户名</value>
+  </data>
+  <data name="IDS_LOGIN_TAB_PINCODE" xml:space="preserve">
+    <value>验证码登录</value>
+  </data>
+  <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
+    <value>用户名登录</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>日志内容</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_ERROR" xml:space="preserve">
+    <value>错误信息</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_OPERATE_TIME" xml:space="preserve">
+    <value>操作时间</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
+    <value>请求跟踪Id</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_USER_NAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="IDS_MENU_TEXT_LOGS" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="IDS_MENU_TEXT_TEAM" xml:space="preserve">
+    <value>团队</value>
+  </data>
+  <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="IDS_PAGINATOR_TOTAL_FORMAT" xml:space="preserve">
+    <value>共 &lt;strong&gt;{0}&lt;/strong&gt; 条</value>
+  </data>
+  <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
+    <value>注册</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_CONFIRM" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_EMAIL" xml:space="preserve">
+    <value>邮箱</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_NICK_NAME" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_PASSWORD" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_PHONE" xml:space="preserve">
+    <value>手机号码</value>
+  </data>
+  <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
+    <value>从Json创建</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
+    <value>从文本创建</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
+    <value>编辑Json</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
+    <value>编辑文本</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
+    <value>编辑配置</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
+    <value>环境</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_DELETE" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
+    <value>编辑Json</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
+    <value>编辑文本</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_PUBLISH" xml:space="preserve">
+    <value>发布配置</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
+    <value>同步到Redis</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
+    <value>发布</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
+    <value>更新内容</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>版本号</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_TITLE" xml:space="preserve">
+    <value>发布配置</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
+    <value>开始同步</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
+    <value>连接字符串</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
+    <value>数据库</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
+    <value>Redis Key名称</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
+    <value>同步到Redis</value>
+  </data>
+  <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
+    <value>添加成员</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
+    <value>添加成员</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
+    <value>确定要移除团队成员吗？</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
+    <value>移除成员</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
+    <value>团队别名</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>团队介绍</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_LABEL_NAME" xml:space="preserve">
+    <value>团队名称</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_TITLE_ADD" xml:space="preserve">
+    <value>新增团队</value>
+  </data>
+  <data name="IDS_TEAM_EDIT_TITLE_EDIT" xml:space="preserve">
+    <value>编辑团队</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>新增团队</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
+    <value>别名</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_MEMBERS" xml:space="preserve">
+    <value>成员数</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_OWNER" xml:space="preserve">
+    <value>负责人</value>
+  </data>
+  <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
+    <value>新增用户</value>
+  </data>
+  <data name="IDS_USER_DIALOG_TITLE_ADD" xml:space="preserve">
+    <value>新增用户</value>
+  </data>
+  <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
+    <value>编辑用户</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
+    <value>邮箱</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_PHONE" xml:space="preserve">
+    <value>手机号码</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_ROLES" xml:space="preserve">
+    <value>角色</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_USER_NAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
+    <value>邮箱</value>
+  </data>
+  <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+</root>

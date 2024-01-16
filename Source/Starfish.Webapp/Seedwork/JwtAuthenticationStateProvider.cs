@@ -2,6 +2,7 @@
 using IdentityModel;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Nerosoft.Starfish.Webapp;
 
@@ -12,30 +13,28 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 	public JwtAuthenticationStateProvider(ILocalStorageService storageService)
 	{
 		_storageService = storageService;
+		if (!WeakReferenceMessenger.Default.IsRegistered<JwtAuthenticationStateProvider>(this))
+		{
+			WeakReferenceMessenger.Default.Register<AuthenticationStateMessage>(this, OnReceiveMessage);
+		}
 	}
 
-	public async Task SetAuthenticationStateAsync(string accessToken, string refreshToken)
+	private async void OnReceiveMessage(object recipient, AuthenticationStateMessage message)
 	{
-		await _storageService.SetItemAsStringAsync(Constants.LocalStorage.AccessToken, accessToken);
-		await _storageService.SetItemAsStringAsync(Constants.LocalStorage.RefreshToken, refreshToken);
+		switch (message.Type)
+		{
+			case "logout":
+				await _storageService.RemoveItemsAsync([Constants.LocalStorage.AccessToken, Constants.LocalStorage.RefreshToken]);
+				break;
+			case "login":
+				await _storageService.SetItemAsStringAsync(Constants.LocalStorage.AccessToken, message.AccessToken);
+				await _storageService.SetItemAsStringAsync(Constants.LocalStorage.RefreshToken, message.RefreshToken);
+				break;
+		}
 
-		var jwt = TokenHelper.Resolve(accessToken);
-		var identity = new ClaimsIdentity(jwt.Claims, "jwt", JwtClaimTypes.Name, JwtClaimTypes.Role);
-		var user = new ClaimsPrincipal(identity);
-
-		var authState = Task.FromResult(new AuthenticationState(user));
-		NotifyAuthenticationStateChanged(authState);
+		NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
 	}
 
-	public async Task LogoutAsync()
-	{
-		await _storageService.RemoveItemAsync(Constants.LocalStorage.AccessToken);
-		await _storageService.RemoveItemAsync(Constants.LocalStorage.RefreshToken);
-
-		var authState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
-		NotifyAuthenticationStateChanged(authState);
-	}
-	
 	public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
 		ClaimsIdentity identity;
@@ -53,4 +52,23 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 
 		return new AuthenticationState(new ClaimsPrincipal(identity));
 	}
+
+	~JwtAuthenticationStateProvider()
+	{
+		WeakReferenceMessenger.Default.UnregisterAll(this);
+	}
+}
+
+internal class AuthenticationStateMessage
+{
+	public AuthenticationStateMessage(string type)
+	{
+		Type = type;
+	}
+
+	public string Type { get; }
+
+	public string AccessToken { get; init; }
+
+	public string RefreshToken { get; init; }
 }

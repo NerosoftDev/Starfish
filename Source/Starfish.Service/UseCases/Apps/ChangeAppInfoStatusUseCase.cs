@@ -50,7 +50,7 @@ public class ChangeAppInfoStatusUseCase : IChangeAppInfoStatusUseCase
 			throw new UnauthorizedAccessException();
 		}
 
-		var command = new ChangeAppInfoStatusCommand(input.Id, input.Status);
+		var command = new ChangeAppStatusCommand(input.Id, input.Status);
 		return _bus.SendAsync(command, cancellationToken);
 	}
 }

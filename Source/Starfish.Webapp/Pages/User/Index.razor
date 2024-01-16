@@ -1,5 +1,7 @@
 ﻿@page "/user"
 
+@attribute [Authorize(Roles = "SA")]
+
 @inject IDialogService DialogService
 @inject NavigationManager Navigation
 @inject IUserApi Api
@@ -12,31 +14,32 @@
 <FluentCard>
     <FluentGrid>
         <FluentGridItem lg="12" sm="12" md="12">
-            <div style="display: flex; width:100%;gap:10px;">
-                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword" />
+            <div class="search-bar">
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
                 <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
-                <FluentSpacer />
+                <FluentSpacer/>
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(0))">@(Resources.IDS_USER_BUTTON_TEXT_ADD)</FluentButton>
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
             <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto">
-                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)" />
-                <TemplateColumn Title="UserName" Align="@Align.Start">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)" Property="@(c => c.Id)"/>
+                <TemplateColumn Title="@(Resources.IDS_USER_INDEX_COLUMN_USER_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnDetailClicked(context.Id))">@(context.UserName)</FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Style="line-height: 32px" Title="NickName" Property="@(c => c.NickName)" />
-                <PropertyColumn Style="line-height: 32px" Title="Email" Property="@(c => c.Email)" />
-                <PropertyColumn Style="line-height: 32px" Title="Roles" Property="@(c => c.Roles.JoinAsString(", "))"></PropertyColumn>
-                <TemplateColumn Title="Actions" Align="@Align.End">
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))" />
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => Console.WriteLine("Delete clicked"))" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_NICK_NAME)" Property="@(c => c.NickName)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_EMAIL)" Property="@(c => c.Email)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_PHONE)" Property="@(c => c.Phone)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_ROLES)" Property="@(c => c.Roles.JoinAsString(", "))"></PropertyColumn>
+                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.End">
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetPasswordClicked(context.Id))"/>
                 </TemplateColumn>
             </FluentDataGrid>
         </FluentGridItem>
 
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGridPaginator State="@Pagination" />
+            <FluentDataGridPaginator State="@Pagination"/>
         </FluentGridItem>
     </FluentGrid>
 </FluentCard>
@@ -44,13 +47,11 @@
 @code {
     private GridItemsProvider<UserItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new PaginationState { ItemsPerPage = SIZE };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
 
     private UserCriteria Criteria { get; } = new();
 
     private int Total { get; set; }
-
-    private const int SIZE = 20;
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,14 +59,14 @@
         {
             List<UserItemDto> items = null;
             var tasks = new List<Task>
-                {
-                Api.SearchAsync(Criteria, request.StartIndex + 1, SIZE, request.CancellationToken)
+            {
+                Api.SearchAsync(Criteria, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
                    .ContinueWith(task =>
                    {
                        task.WaitAndUnwrapException(request.CancellationToken);
                        items = task.Result.EnsureSuccess();
                    }, request.CancellationToken)
-                };
+            };
 
             if (request.StartIndex == 0)
             {
@@ -96,12 +97,22 @@
     private async Task OnEditClicked(int id)
     {
         var title = id == 0 ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
-        await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
     }
 
     private async Task OnSearchClicked()
     {
         await Pagination.SetCurrentPageIndexAsync(0);
+    }
+
+    private async Task OnResetPasswordClicked(int id)
+    {
+        await DialogService.ShowDialogAsync<ResetPassword>(id, new DialogParameters { Modal = true });
     }
 
 }

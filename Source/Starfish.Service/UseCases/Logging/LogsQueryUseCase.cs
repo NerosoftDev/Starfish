@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 日志搜索用例
 /// </summary>
-public interface ILogsSearchUseCase : IUseCase<LogsSearchUseCaseInput, LogsSearchUseCaseOutput>
+public interface ILogsQueryUseCase : IUseCase<LogsQueryUseCaseInput, LogsQueryUseCaseOutput>
 {
 }
 
@@ -19,18 +19,18 @@ public interface ILogsSearchUseCase : IUseCase<LogsSearchUseCaseInput, LogsSearc
 /// <param name="Criteria"></param>
 /// <param name="Page"></param>
 /// <param name="Size"></param>
-public record LogsSearchUseCaseInput(OperateLogCriteria Criteria, int Page, int Size) : IUseCaseInput;
+public record LogsQueryUseCaseInput(OperateLogCriteria Criteria, int Page, int Size) : IUseCaseInput;
 
 /// <summary>
 /// 日志搜索用例输出
 /// </summary>
 /// <param name="Logs"></param>
-public record LogsSearchUseCaseOutput(List<OperateLogDto> Logs) : IUseCaseOutput;
+public record LogsQueryUseCaseOutput(List<OperateLogDto> Logs) : IUseCaseOutput;
 
 /// <summary>
 /// 日志搜索用例
 /// </summary>
-public class LogsSearchUseCase : ILogsSearchUseCase
+public class LogsQueryUseCase : ILogsQueryUseCase
 {
 	private readonly IOperateLogRepository _repository;
 	private readonly UserPrincipal _user;
@@ -40,14 +40,14 @@ public class LogsSearchUseCase : ILogsSearchUseCase
 	/// </summary>
 	/// <param name="repository"></param>
 	/// <param name="user"></param>
-	public LogsSearchUseCase(IOperateLogRepository repository, UserPrincipal user)
+	public LogsQueryUseCase(IOperateLogRepository repository, UserPrincipal user)
 	{
 		_repository = repository;
 		_user = user;
 	}
 
 	/// <inheritdoc />
-	public async Task<LogsSearchUseCaseOutput> ExecuteAsync(LogsSearchUseCaseInput input, CancellationToken cancellationToken = default)
+	public async Task<LogsQueryUseCaseOutput> ExecuteAsync(LogsQueryUseCaseInput input, CancellationToken cancellationToken = default)
 	{
 		if (input.Page <= 0)
 		{
@@ -70,7 +70,7 @@ public class LogsSearchUseCase : ILogsSearchUseCase
 
 		var entities = await _repository.FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken);
 		var items = entities.ProjectedAsCollection<OperateLogDto>();
-		return new LogsSearchUseCaseOutput(items);
+		return new LogsQueryUseCaseOutput(items);
 
 		static IOrderedQueryable<OperateLog> Collator(IQueryable<OperateLog> query) => query.OrderByDescending(t => t.OperateTime);
 	}

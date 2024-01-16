@@ -22,4 +22,10 @@ internal interface IUserApi
 
 	[Delete("/api/user/{id}")]
 	Task<IApiResponse> DeleteAsync(int id, CancellationToken cancellationToken = default);
+
+	[Put("/api/user/{id}/password")]
+	Task<IApiResponse> ResetPassword(int id, [Body] ResetPasswordRequestDto data, CancellationToken cancellationToken = default);
+
+	[Put("/api/user/password")]
+	Task<IApiResponse> ChangePassword([Body] ChangePasswordRequestDto data, CancellationToken cancellationToken = default);
 }

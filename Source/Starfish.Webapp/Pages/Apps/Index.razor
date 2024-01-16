@@ -14,7 +14,7 @@
 <FluentCard>
     <FluentGrid>
         <FluentGridItem lg="12" sm="12" md="12">
-            <div style="display: flex; width:100%;gap:10px;">
+            <div class="search-bar">
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
                 <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
                 <FluentSpacer/>
@@ -23,15 +23,15 @@
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
             <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="AppInfoItemDto">
-                <PropertyColumn Style="line-height: 32px" Title="Id" Property="@(c => c.Id)"/>
-                <TemplateColumn Title="Name" Align="@Align.Start">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)" Property="@(c => c.Id)"/>
+                <TemplateColumn Title="@(Resources.IDS_APPS_INDEX_COLUMN_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => HandleDetailClicked(context.Id))">@(context.Name)</FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Style="line-height: 32px" Title="Code" Property="@(c => c.Code)"/>
-                <PropertyColumn Style="line-height: 32px" Title="Status" Property="@(c => c.StatusDescription)"/>
-                <PropertyColumn Style="line-height: 32px" Title="Create at" Property="@(c => c.CreateTime)"/>
-                <PropertyColumn Style="line-height: 32px" Title="Update at" Property="@(c => c.UpdateTime)"/>
-                <TemplateColumn Title="Actions" Align="@Align.End">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_CODE)" Property="@(c => c.Code)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_STATUS)" Property="@(c => c.StatusDescription)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_CREATE_TIME)" Property="@(c => c.CreateTime)" Format="yyyy-MM-dd HH:mm:ss" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_UPDATE_TIME)" Property="@(c => c.UpdateTime)" Format="yyyy-MM-dd HH:mm:ss" />
+                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.End">
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetSecretClicked(context.Id))"/>
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => OnDeleteClicked(context.Id, context.Name))"/>
@@ -53,13 +53,11 @@
 
     private GridItemsProvider<AppInfoItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = 20 };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
 
     private AppInfoCriteria Criteria { get; } = new();
 
     private int Total { get; set; }
-
-    private const int SIZE = 20;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,7 +70,7 @@
             List<AppInfoItemDto> items = null;
             var tasks = new List<Task>
             {
-                Api.QueryAsync(Criteria, request.StartIndex + 1, SIZE, request.CancellationToken)
+                Api.QueryAsync(Criteria, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
                    .ContinueWith(task =>
                    {
                        task.WaitAndUnwrapException(request.CancellationToken);
@@ -98,7 +96,7 @@
 
     private async Task HandleDetailClicked(long id)
     {
-        Navigation.NavigateTo($"/apps/{id}");
+        Navigation.NavigateTo($"/apps/{id}/settings");
         await Task.CompletedTask;
     }
 

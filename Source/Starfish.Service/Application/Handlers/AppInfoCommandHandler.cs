@@ -13,7 +13,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
                                      IHandler<AppInfoCreateCommand>,
                                      IHandler<AppInfoUpdateCommand>,
                                      IHandler<AppInfoDeleteCommand>,
-                                     IHandler<ChangeAppInfoStatusCommand>,
+                                     IHandler<ChangeAppStatusCommand>,
                                      IHandler<AppInfoSetSecretCommand>
 {
 	private readonly IAppInfoRepository _repository;
@@ -101,7 +101,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	}
 
 	/// <inheritdoc />
-	public Task HandleAsync(ChangeAppInfoStatusCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ChangeAppStatusCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

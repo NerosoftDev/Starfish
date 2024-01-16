@@ -19,9 +19,9 @@
             <FluentLabel>Updated at: @Data.UpdateTime.Date</FluentLabel>
             <FluentDivider Style="width: 100%;"/>
             <FluentLabel>@Data.Description</FluentLabel>
-            <FluentDivider Style="width: 100%;"/>
             @if (Data.OwnerId != Identity?.GetUserIdOfInt32())
             {
+                <FluentDivider Style="width: 100%;" />
                 <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
                 <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                     <FluentButton OnClick="@OnEditClicked">@(Resources.IDS_TEAM_DETAIL_BUTTON_EDIT)</FluentButton>

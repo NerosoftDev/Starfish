@@ -2,7 +2,7 @@
 @implements IDisposable
 @attribute [Authorize]
 
-@inject JwtAuthenticationStateProvider Authentication
+@inject AuthenticationStateProvider Authentication
 @inject NavigationManager Navigation
 
 
@@ -18,14 +18,14 @@
 
             <FluentPersona Name="@(Identity?.Username ?? "starfish")" Id="persona"
                            ImageSize="36px"
-                           Image="https://s.gravatar.com/avatar/38a519cc759f85fc814868d0656c0c18?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Frz.png"
+                           Image="https://s.gravatar.com/avatar/38a519cc759f85fc814868d0656c0c18?s=480"
                            Status="PresenceStatus.Available"
                            StatusSize="PresenceBadgeSize.Small"/>
         </div>
     </FluentHeader>
 
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
-        <FluentNavMenu Width="360" Style="height: 100%; background-color: var(--neutral-fill-stealth-rest);" Collapsible="true">
+        <FluentNavMenu Width="360" Class="nav-menu-panel" Collapsible="true">
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Href="/" Match="NavLinkMatch.All">@(Resources.IDS_MENU_TEXT_HOME)</FluentNavLink>
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Apps())" Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentNavLink>
             @if (Identity?.IsInRole("SA") == true)
@@ -33,7 +33,10 @@
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.People())" Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentNavLink>
             }
             <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleTeam())" Href="/team">@(Resources.IDS_MENU_TEXT_TEAM)</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentText())" Href="/logs">@(Resources.IDS_MENU_TEXT_LOGS)</FluentNavLink>
+            @if (Identity?.IsInRole("SA") == true)
+            {
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentText())" Href="/logs">@(Resources.IDS_MENU_TEXT_LOGS)</FluentNavLink>
+            }
         </FluentNavMenu>
         <FluentBodyContent>
             <ErrorBoundary>
@@ -43,7 +46,18 @@
                     </div>
                 </ChildContent>
                 <ErrorContent Context="ex">
-                    <div class="blazor-error-boundary">@ex.Message</div>
+                    @if (ex is UnauthorizedAccessException)
+                    {
+                        <Redirect Uri="/login" />
+                    }
+                    else if(ex is HttpRequestException e && e.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        <Redirect Uri="/login" />
+                    }
+                    else
+                    {
+                        <div class="blazor-error-boundary">@ex.Message</div>
+                    }
                 </ErrorContent>
             </ErrorBoundary>
         </FluentBodyContent>
@@ -51,14 +65,10 @@
 
     <FluentFooter>
         <div class="link1">
-            <span>
-                Nerosoft © 2024. All rights reserved.
-            </span>
+            <span>Nerosoft © @(DateTime.Today.Year). All rights reserved.</span>
         </div>
         <div class="link2">
-            <a href="javascript:void(0);" @onclick="@OnLogoutClicked">
-                Logout
-            </a>
+            <a href="javascript:void(0);" @onclick="@OnLogoutClicked">@(Resources.IDS_COMMON_LOGOUT)</a>
         </div>
     </FluentFooter>
 
@@ -85,15 +95,16 @@
     private async void OnAuthenticationStateChanged(Task<AuthenticationState> task)
     {
         var state = await AuthenticationState;
-        if (state.User?.Identity?.IsAuthenticated != true)
+        if (state.User.Identity?.IsAuthenticated != true)
         {
             Navigation.NavigateTo("/login");
         }
     }
 
-    private async Task OnLogoutClicked(MouseEventArgs args)
+    private static async Task OnLogoutClicked(MouseEventArgs args)
     {
-        await Authentication.LogoutAsync();
+        WeakReferenceMessenger.Default.Send(new AuthenticationStateMessage("logout"));
+        await Task.CompletedTask;
     }
 
     public void Dispose()

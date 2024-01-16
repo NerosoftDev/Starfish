@@ -67,4 +67,22 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task SetRolesAsync(int id, List<string> roles, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 修改密码
+	/// </summary>
+	/// <param name="oldPassword"></param>
+	/// <param name="newPassword"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task ChangePasswordAsync(string oldPassword, string newPassword, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 重置密码
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="password"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task ResetPasswordAsync(int id, string password, CancellationToken cancellationToken = default);
 }

@@ -20,11 +20,11 @@ public class SettingRevisionCommandHandler : CommandHandlerBase,
 		{
 			var repository = UnitOfWork.Current.GetService<ISettingRepository>();
 
-			var aggregate = await repository.GetAsync(message.SettingId, false, [nameof(Setting.Items), nameof(Setting.Revisions)], cancellationToken);
+			var aggregate = await repository.GetAsync(message.AppId, message.Environment, false, [nameof(Setting.Items), nameof(Setting.Revisions)], cancellationToken);
 
 			if (aggregate == null)
 			{
-				throw new SettingNotFoundException(message.SettingId);
+				throw new SettingNotFoundException(message.AppId, message.Environment);
 			}
 
 			aggregate.CreateRevision(message.Version, message.Comment, context.User?.Identity?.Name);

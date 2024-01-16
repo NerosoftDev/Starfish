@@ -44,9 +44,4 @@ public class SettingDetailDto
 	/// 状态名称
 	/// </summary>
 	public string StatusDescription { get; set; }
-
-	/// <summary>
-	/// 配置项
-	/// </summary>
-	public Dictionary<string, string> Items { get; set; }
 }

@@ -66,4 +66,18 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 		var input = new UserSetRoleInput(id, roles);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
+
+	public Task ChangePasswordAsync(string oldPassword, string newPassword, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetService<IChangePasswordUseCase>();
+		var input = new ChangePasswordInput(oldPassword, newPassword);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	public Task ResetPasswordAsync(int id, string password, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetService<IResetPasswordUseCase>();
+		var input = new ResetPasswordInput(id, password);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
 }

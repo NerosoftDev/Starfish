@@ -8,28 +8,36 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface ISettingUpdateUseCase : INonOutputUseCase<SettingUpdateInput>;
 
-public record SettingUpdateInput(long Id, SettingUpdateDto Data);
+public record SettingUpdateInput(long AppId, string Environment, string Format, SettingEditDto Data);
 
 public class SettingUpdateUseCase : ISettingUpdateUseCase
 {
 	private readonly IBus _bus;
+	private readonly IServiceProvider _provider;
 
-	public SettingUpdateUseCase(IBus bus)
+	public SettingUpdateUseCase(IBus bus, IServiceProvider provider)
 	{
 		_bus = bus;
+		_provider = provider;
 	}
 
 	public Task ExecuteAsync(SettingUpdateInput input, CancellationToken cancellationToken = default)
 	{
-		var data = Cryptography.Base64.Decrypt(input.Data.Data);
-		var command = new SettingUpdateCommand(input.Id)
+		var format = input.Format?.Normalize(TextCaseType.Lower).Trim(TextTrimType.All);
+		var parserName = format switch
 		{
-			Data = input.Data.Type switch
-			{
-				"json" => JsonConfigurationFileParser.Parse(data),
-				"text" => TextConfigurationFileParser.Parse(data),
-				_ => default
-			}
+			"text/plain" => "text",
+			"text/json" => "json",
+			"" => throw new ArgumentNullException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED),
+			null => throw new ArgumentNullException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED),
+			_ => throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED)
+		};
+
+		var parser = _provider.GetNamedService<IConfigurationParser>(parserName);
+		var data = Cryptography.Base64.Decrypt(input.Data.Data);
+		var command = new SettingUpdateCommand(input.AppId, input.Environment)
+		{
+			Data = parser.Parse(data)
 		};
 		return _bus.SendAsync(command, cancellationToken)
 		           .ContinueWith(task =>

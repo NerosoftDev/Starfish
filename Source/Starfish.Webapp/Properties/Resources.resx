@@ -141,6 +141,15 @@
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add app</value>
   </data>
+  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>Are you sure to remove this app '{0}'?</value>
   </data>
@@ -156,6 +165,9 @@
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="IDS_BREADCRUMB_SETTING" xml:space="preserve">
+    <value>setting</value>
+  </data>
   <data name="IDS_BREADCRUMB_TEAM_DETAIL" xml:space="preserve">
     <value>Detail</value>
   </data>
@@ -167,6 +179,39 @@
   </data>
   <data name="IDS_COMMON_CLOSE" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_CREATE_TIME" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_COMMON_COLUMN_UPDATE_TIME" xml:space="preserve">
+    <value>Updated</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
+    <value>Development</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_PET" xml:space="preserve">
+    <value>Performance Evaluation Testing</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_PRD" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_SIM" xml:space="preserve">
+    <value>Simulation Testing</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_SIT" xml:space="preserve">
+    <value>System Integration Testing</value>
+  </data>
+  <data name="IDS_COMMON_ENVIRONMENT_UAT" xml:space="preserve">
+    <value>User Acceptance Testing</value>
+  </data>
+  <data name="IDS_COMMON_LOGOUT" xml:space="preserve">
+    <value>Logout</value>
   </data>
   <data name="IDS_COMMON_NO" xml:space="preserve">
     <value>No</value>
@@ -207,6 +252,24 @@
   <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
     <value>User name &amp; password</value>
   </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_ERROR" xml:space="preserve">
+    <value>Error message</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_OPERATE_TIME" xml:space="preserve">
+    <value>Operate time</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
+    <value>Trace Id</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_COLUMN_USER_NAME" xml:space="preserve">
+    <value>User name</value>
+  </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
     <value>Apps</value>
   </data>
@@ -221,6 +284,9 @@
   </data>
   <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="IDS_PAGINATOR_TOTAL_FORMAT" xml:space="preserve">
+    <value>Total &lt;strong&gt;{0}&lt;/strong&gt; rows</value>
   </data>
   <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
     <value>Register</value>
@@ -242,6 +308,66 @@
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>User name</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
+    <value>Create from Json</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
+    <value>Create from Text</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
+    <value>Edit as Json</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
+    <value>Edit as Text</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
+    <value>Edit value</value>
+  </data>
+  <data name="IDS_SETTING_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
+    <value>Environment</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_DELETE" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
+    <value>Edit as Json</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
+    <value>Edit as Text</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_PUBLISH" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
+    <value>Sync to Redis</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>Version number</value>
+  </data>
+  <data name="IDS_SETTING_PUBLISH_DIALOG_TITLE" xml:space="preserve">
+    <value>Publish setting</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
+    <value>Connection string</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
+    <value>Key name</value>
+  </data>
+  <data name="IDS_SETTING_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
+    <value>Sync to Redis</value>
   </data>
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
     <value>Add member</value>
@@ -276,6 +402,21 @@
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add new team</value>
   </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
+    <value>Alias</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_MEMBERS" xml:space="preserve">
+    <value>Members</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_TEAM_INDEX_COLUMN_OWNER" xml:space="preserve">
+    <value>Owner</value>
+  </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
     <value>Add user</value>
   </data>
@@ -284,6 +425,21 @@
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
     <value>Edit user</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_PHONE" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_ROLES" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="IDS_USER_INDEX_COLUMN_USER_NAME" xml:space="preserve">
+    <value>User name</value>
   </data>
   <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
     <value>Confirm password</value>
@@ -299,8 +455,5 @@
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>User name</value>
-  </data>
-  <data name="IDS_USER_PLACEHOLDER_KEYWORD" xml:space="preserve">
-    <value>Keyword to search</value>
   </data>
 </root>
