@@ -12,4 +12,10 @@ internal class Constants
 	{
 		public const int DefaultSize = 20;
 	}
+	
+	public static class Setting
+	{
+		public const string FormatJson = "text/json";
+		public const string FormatText = "text/plain";
+	}
 }
