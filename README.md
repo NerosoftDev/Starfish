@@ -34,8 +34,8 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 - [ ] 🕝 Rollback to history version/回滚到历史版本
 - [ ] 🕝 Role-based access control/基于角色的访问控制
 - [ ] ⌛ Support multiple languages admin panel/支持多语言管理面板
-    - [ ] ⌛ en/英语
-    - [ ] ⌛ zh-Hans/简体中文
+    - [x] 💚 en/英语
+    - [x] 💚 zh-Hans/简体中文
     - [ ] 🕝 zh-Hant/繁体中文
     
 ## 💰 Donate/捐助 
@@ -82,6 +82,7 @@ Starfish
 ├    ├──Starfish.Service
 ├    ├──Starfish.Transit
 ├    ├──Starfish.Webapi
+├    ├──Starfish.Webapp
 ├──Tests
 ├    ├──Starfish.Client.Tests
 ├    ├──Starfish.Service.Tests
@@ -176,7 +177,7 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration((hostingContext, config) =>
         {
-            config.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+            config.AddStarfish(ConfigurationClientOptions.Load(config));
         })
         .ConfigureWebHostDefaults(webBuilder =>
         {
@@ -187,7 +188,7 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 ```csharp
 // .NET 6 and above
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddStarfish(ConfigurationClientOptions.LoadJson($"appsettings.{builder.Environment.EnvironmentName}.json"));
+builder.Configuration.AddStarfish(ConfigurationClientOptions.Load(builder.Configuration));
 // ...
 var app = builder.Build();
 // ...
@@ -200,9 +201,9 @@ app.Run();
 {
     "Starfish": {
         "Host": "http://localhost:5000",
-        "AppId": "Starfish.Sample.Blazor",
-        "AppSecret": "123456",
-        "Environment": "Development"
+        "App": "Starfish.Sample.Blazor",
+        "Secret": "123456",
+        "Env": "Development"
     }
 }
 ```
