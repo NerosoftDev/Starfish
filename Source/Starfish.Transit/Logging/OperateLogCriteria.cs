@@ -6,6 +6,11 @@
 public class OperateLogCriteria
 {
 	/// <summary>
+	/// 模块
+	/// </summary>
+	public string Module { get; set; }
+
+	/// <summary>
 	/// 类型
 	/// </summary>
 	public string Type { get; set; }

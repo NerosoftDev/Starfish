@@ -28,6 +28,11 @@ public static class CriteriaExtensions
 			specification &= OperateLogSpecification.UserNameContains(criteria.UserName);
 		}
 
+		if (!string.IsNullOrWhiteSpace(criteria.Module))
+		{
+			specification &= OperateLogSpecification.ModuleEquals(criteria.Module);
+		}
+		
 		if (!string.IsNullOrWhiteSpace(criteria.Type))
 		{
 			specification &= OperateLogSpecification.TypeEquals(criteria.Type);

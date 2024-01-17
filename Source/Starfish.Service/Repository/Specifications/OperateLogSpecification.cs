@@ -28,6 +28,12 @@ public class OperateLogSpecification
 		return new DirectSpecification<OperateLog>(x => x.UserName.Contains(userName));
 	}
 
+	public static Specification<OperateLog> ModuleEquals(string module)
+	{
+		module = module.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<OperateLog>(t => t.Module == module);
+	}
+
 	/// <summary>
 	/// 类型等于
 	/// </summary>
