@@ -23,7 +23,7 @@ public class UserDetailUseCase : IUserDetailUseCase
 
 	public Task<UserDetailOutput> ExecuteAsync(UserDetailInput input, CancellationToken cancellationToken = default)
 	{
-		return _repository.GetAsync(input.Id, false, query => query.Include(nameof(User.Roles)), cancellationToken)
+		return _repository.GetAsync(input.Id, query => query.AsNoTracking().Include(nameof(User.Roles)), cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

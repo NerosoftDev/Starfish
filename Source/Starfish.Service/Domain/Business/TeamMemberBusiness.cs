@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Business;
+﻿using Microsoft.EntityFrameworkCore;
+using Nerosoft.Euonia.Business;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -69,7 +70,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 				return;
 			}
 
-			var users = await target.UserRepository.GetAsync(target.UserIds, false, cancellationToken);
+			var users = await target.UserRepository.FindAsync(target.UserIds, query => query.AsNoTracking(), cancellationToken);
 
 			var notExists = target.UserIds.Except(users.Select(t => t.Id)).ToArray();
 

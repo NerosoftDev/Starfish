@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Application;
+using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
@@ -28,21 +29,42 @@ public record AppInfoCountInput(AppInfoCriteria Criteria) : IUseCaseInput;
 public class AppInfoCountUseCase : IAppInfoCountUseCase
 {
 	private readonly IAppInfoRepository _repository;
+	private readonly UserPrincipal _user;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="repository"></param>
-	public AppInfoCountUseCase(IAppInfoRepository repository)
+	/// <param name="user"></param>
+	public AppInfoCountUseCase(IAppInfoRepository repository, UserPrincipal user)
 	{
 		_repository = repository;
+		_user = user;
 	}
 
 	/// <inheritdoc />
 	public async Task<AppInfoCountOutput> ExecuteAsync(AppInfoCountInput input, CancellationToken cancellationToken = default)
 	{
 		var predicate = input.Criteria.GetSpecification().Satisfy();
-		var count = await _repository.CountAsync(predicate, cancellationToken);
+		var count = await _repository.CountAsync(predicate, Permission, cancellationToken);
 		return new AppInfoCountOutput(count);
+
+		IQueryable<AppInfo> Permission(IQueryable<AppInfo> query)
+		{
+			if (!_user.IsInRole("SA"))
+			{
+				var userId = _user.GetUserIdOfInt32();
+				var teamQuery = _repository.SetOf<TeamMember>();
+				query = from app in query
+				        join member in teamQuery on app.TeamId equals member.TeamId
+				        where member.UserId == userId
+				        select app;
+			}
+
+			{
+			}
+
+			return query;
+		}
 	}
 }

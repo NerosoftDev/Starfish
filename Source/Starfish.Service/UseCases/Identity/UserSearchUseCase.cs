@@ -26,7 +26,7 @@ public class UserSearchUseCase : IUserSearchUseCase
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
 
-		return _repository.FindAsync(predicate, query => query.Include(nameof(User.Roles)).OrderByDescending(t => t.Id), input.Page, input.Size, cancellationToken)
+		return _repository.FetchAsync(predicate, query => query.Include(nameof(User.Roles)).OrderByDescending(t => t.Id), input.Page, input.Size, cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

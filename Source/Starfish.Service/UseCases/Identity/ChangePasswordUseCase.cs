@@ -32,7 +32,7 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
 			throw new AuthenticationException();
 		}
 
-		var user = await _repository.GetAsync(_user.GetUserIdOfInt32(), false, cancellationToken);
+		var user = await _repository.GetAsync(_user.GetUserIdOfInt32(), null, cancellationToken);
 
 		if (user == null)
 		{

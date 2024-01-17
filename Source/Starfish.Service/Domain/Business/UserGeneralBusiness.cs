@@ -89,7 +89,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	[FactoryFetch]
 	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var user = await Repository.GetAsync(id, true, query => query.Include(nameof(User.Roles)), cancellationToken);
+		var user = await Repository.GetAsync(id, query => query.AsTracking().Include(nameof(User.Roles)), cancellationToken);
 
 		Aggregate = user ?? throw new UserNotFoundException(id);
 

@@ -17,6 +17,7 @@ namespace Nerosoft.Starfish.Service;
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TKey"></typeparam>
 public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository<TContext, TEntity, TKey>,
+                                                                IBaseRepository<TEntity, TKey>,
                                                                 ITransientDependency
 	where TContext : DbContext, IRepositoryContext
 	where TEntity : class, IEntity<TKey>
@@ -31,6 +32,12 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	{
 	}
 
+	public IQueryable<T> SetOf<T>()
+		where T : class
+	{
+		return Context.SetOf<T>();
+	}
+
 	/// <summary>
 	/// 根据指定的条件表达式查询数据并返回符合条件的数据集合
 	/// </summary>
@@ -41,68 +48,19 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	/// <returns></returns>
 	public virtual Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		query = tracking ? query.AsTracking() : query.AsNoTracking();
+		return FindAsync(predicate, QueryBuilder, cancellationToken);
 
-		if (properties is { Length: > 0 })
+		IQueryable<TEntity> QueryBuilder(IQueryable<TEntity> query)
 		{
-			query = properties.Aggregate(query, (current, property) => current.Include(property));
+			query = tracking ? query.AsTracking() : query.AsNoTracking();
+
+			if (properties is { Length: > 0 })
+			{
+				query = properties.Aggregate(query, (current, property) => current.Include(property));
+			}
+
+			return query;
 		}
-
-		return query.Where(predicate).ToListAsync(cancellationToken);
-	}
-
-	/// <summary>
-	/// 根据指定的条件表达式查询数据并返回符合条件的数据集合
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="tracking"></param>
-	/// <param name="propertyAction"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
-	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		query = tracking ? query.AsTracking() : query.AsNoTracking();
-
-		if (propertyAction != null)
-		{
-			query = propertyAction(query);
-		}
-
-		return query.Where(predicate).ToListAsync(cancellationToken);
-	}
-
-	/// <summary>
-	/// 根据指定的条件表达式查询数据并返回符合条件的数据集合
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="collator"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	/// <exception cref="ArgumentOutOfRangeException"></exception>
-	public virtual Task<List<TEntity>> FetchAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> collator, int page, int size, CancellationToken cancellationToken = default)
-	{
-		if (page <= 0)
-		{
-			throw new ArgumentOutOfRangeException(nameof(page), Resources.IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0);
-		}
-
-		if (size <= 0)
-		{
-			throw new ArgumentOutOfRangeException(nameof(size), Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
-		}
-
-		var query = Context.Set<TEntity>().AsQueryable();
-		if (collator != null)
-		{
-			query = collator(query);
-		}
-
-		query = query.Where(predicate).Skip((page - 1) * size).Take(size);
-		return query.ToListAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -113,8 +71,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	/// <returns></returns>
 	public override Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
 	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		return query.CountAsync(predicate, cancellationToken);
+		return CountAsync(predicate, null, cancellationToken);
 	}
 
 	/// <summary>
@@ -144,21 +101,6 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 
 		//var lambda = predicate.Compile();
 		return GetAsync(predicate, tracking, properties, cancellationToken);
-	}
-
-	/// <summary>
-	/// 根据指定的Id查询数据
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="tracking"></param>
-	/// <param name="propertyAction"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual Task<TEntity> GetAsync(TKey id, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
-	{
-		var predicate = BuildIdEqualsExpression(id);
-
-		return GetAsync(predicate, tracking, propertyAction, cancellationToken);
 	}
 
 	/// <summary>
@@ -195,27 +137,6 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	}
 
 	/// <summary>
-	/// 根据指定的条件表达式查询数据并返回符合条件的第一条数据
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="tracking"></param>
-	/// <param name="propertyAction"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
-	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		query = tracking ? query.AsTracking() : query.AsNoTracking();
-
-		if (propertyAction != null)
-		{
-			query = propertyAction(query);
-		}
-
-		return query.FirstOrDefaultAsync(predicate, cancellationToken: cancellationToken);
-	}
-
-	/// <summary>
 	/// 根据Id集合查询数据并返回符合条件的数据集合
 	/// </summary>
 	/// <param name="ids"></param>
@@ -240,21 +161,6 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 		var predicate = BuildIdInArrayExpression(ids);
 
 		return FindAsync(predicate, tracking, properties, cancellationToken);
-	}
-
-	/// <summary>
-	/// 根据Id集合查询数据并返回符合条件的数据集合
-	/// </summary>
-	/// <param name="ids"></param>
-	/// <param name="tracking"></param>
-	/// <param name="propertyAction"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, Func<IQueryable<TEntity>, IQueryable<TEntity>> propertyAction, CancellationToken cancellationToken = default)
-	{
-		var predicate = BuildIdInArrayExpression(ids);
-
-		return FindAsync(predicate, tracking, propertyAction, cancellationToken);
 	}
 
 	/// <summary>
@@ -416,6 +322,87 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 		return DeleteAsync(entity, autoSave, cancellationToken);
 	}
 
+	public Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
+	{
+		var query = Context.Set<TEntity>().AsQueryable();
+		if (builder != null)
+		{
+			query = builder(query);
+		}
+
+		return query.Where(predicate).ToListAsync(cancellationToken);
+	}
+
+	public Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, int page, int size, CancellationToken cancellationToken = default)
+	{
+		var skipCount = GetSkipCount(page, size);
+		var query = Context.Set<TEntity>().AsQueryable();
+		if (builder != null)
+		{
+			query = builder(query);
+		}
+
+		return query.Where(predicate)
+		            .Paginate(page, size)
+		            .ToListAsync(cancellationToken);
+	}
+
+	public Task<List<TEntity>> FindAsync(IEnumerable<TKey> keys, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
+	{
+		var predicate = BuildIdInArrayExpression(keys);
+		return FindAsync(predicate, builder, cancellationToken);
+	}
+
+	public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
+	{
+		var query = Context.Set<TEntity>().AsQueryable();
+		if (builder != null)
+		{
+			query = builder(query);
+		}
+
+		return query.FirstOrDefaultAsync(predicate, cancellationToken);
+	}
+
+	public Task<TEntity> GetAsync(TKey key, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder = null, CancellationToken cancellationToken = default)
+	{
+		var predicate = BuildIdEqualsExpression(key);
+		return GetAsync(predicate, builder, cancellationToken);
+	}
+
+	public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
+	{
+		var query = Context.Set<TEntity>().AsQueryable();
+		if (builder != null)
+		{
+			query = builder(query);
+		}
+
+		return query.CountAsync(cancellationToken);
+	}
+
+	public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
+	{
+		var query = Context.Set<TEntity>().AsQueryable();
+		if (builder != null)
+		{
+			query = builder(query);
+		}
+
+		return query.AnyAsync(cancellationToken);
+	}
+
+	/// <summary>
+	/// 根据分页参数获计算跳过的数量
+	/// </summary>
+	/// <param name="page"></param>
+	/// <param name="size"></param>
+	/// <returns></returns>
+	protected virtual int GetSkipCount(int page, int size)
+	{
+		return (page - 1) * size;
+	}
+
 	/// <summary>
 	/// 获取实体Id
 	/// </summary>
@@ -446,19 +433,8 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	{
 		var parameter = Expression.Parameter(typeof(TEntity), "entity");
 		var member = Expression.PropertyOrField(parameter, "Id");
-		var expression = Expression.Call(typeof(Enumerable), nameof(Enumerable.Contains), new[] { member.Type }, Expression.Constant(ids), member);
+		var expression = Expression.Call(typeof(Enumerable), nameof(Enumerable.Contains), [member.Type], Expression.Constant(ids), member);
 		var predicate = Expression.Lambda<Func<TEntity, bool>>(expression, parameter);
 		return predicate;
-	}
-
-	/// <summary>
-	/// 根据分页参数获计算跳过的数量
-	/// </summary>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
-	/// <returns></returns>
-	protected int GetSkipCount(int page, int size)
-	{
-		return (page - 1) * size;
 	}
 }
