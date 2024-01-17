@@ -35,7 +35,7 @@ public class DictionaryController : ControllerBase
 	}
 
 	/// <summary>
-	/// 获取环境列表
+	/// 获取应用环境列表
 	/// </summary>
 	/// <returns></returns>
 	[HttpGet("environment")]

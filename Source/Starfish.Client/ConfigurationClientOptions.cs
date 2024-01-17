@@ -8,26 +8,31 @@ namespace Nerosoft.Starfish.Client;
 public class ConfigurationClientOptions
 {
 	/// <summary>
+	/// 团队别名
+	/// </summary>
+	public string Team { get; set; }
+
+	/// <summary>
 	/// 应用Id
 	/// </summary>
-	public string AppId { get; set; }
+	public string App { get; set; }
+
+	/// <summary>
+	/// 应用环境
+	/// </summary>
+	public string Env { get; set; }
 
 	/// <summary>
 	/// 密钥
 	/// </summary>
-	public string AppSecret { get; set; }
-
-	/// <summary>
-	/// 环境名称
-	/// </summary>
-	public string Environment { get; set; }
+	public string Secret { get; set; }
 
 	/// <summary>
 	/// 配置中心主机地址
 	/// </summary>
 	/// <remarks>
 	/// <para>多个主机地址使用半角逗号或分号分割</para>
-	/// <para> http://localhost:5000, ws://localhost:5000, https://localhost:5000, wss://localhost:5000, localhost:5000</para>
+	/// <para> http://localhost:5000, ws://localhost:5000, https://localhost:5000, wss://localhost:5000</para>
 	/// <para>支持的协议类型包括http,https,ws,wss</para>
 	/// </remarks>
 	public string Host { get; set; }
@@ -47,7 +52,7 @@ public class ConfigurationClientOptions
 		ArgumentNullException.ThrowIfNull(dictionary);
 
 		var configuration = new ConfigurationBuilder().AddInMemoryCollection(dictionary)
-													  .Build();
+		                                              .Build();
 
 		return Load(configuration);
 	}
@@ -67,25 +72,26 @@ public class ConfigurationClientOptions
 			throw new InvalidOperationException(Resources.IDS_ERROR_STARFISH_SECTION_NOT_FOUND);
 		}
 
-		var appId = section[nameof(AppId)];
+		var app = section[nameof(App)];
 
-		if (string.IsNullOrWhiteSpace(appId))
+		if (string.IsNullOrWhiteSpace(app))
 		{
-			throw new InvalidOperationException(Resources.IDS_ERROR_APP_ID_NOT_FOUND);
+			throw new InvalidOperationException(Resources.IDS_ERROR_APP_SECTION_NOT_FOUND);
 		}
 
 		var host = section[nameof(Host)];
 		if (string.IsNullOrWhiteSpace(host))
 		{
-			throw new InvalidOperationException(Resources.IDS_ERROR_HOST_NOT_FOUND);
+			throw new InvalidOperationException(Resources.IDS_ERROR_HOST_SECTION_NOT_FOUND);
 		}
 
 		var options = new ConfigurationClientOptions
 		{
-			AppId = appId,
-			AppSecret = section[nameof(AppSecret)],
-			Environment = section[nameof(Environment)] ?? System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
 			Host = host,
+			Team = section[nameof(Team)] ?? string.Empty,
+			App = app,
+			Env = section[nameof(Env)] ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+			Secret = section[nameof(Secret)],
 			CacheDirectory = section[nameof(CacheDirectory)] ?? AppDomain.CurrentDomain.BaseDirectory
 		};
 

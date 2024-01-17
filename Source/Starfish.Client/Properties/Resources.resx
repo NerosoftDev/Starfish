@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_ERROR_APP_ID_NOT_FOUND" xml:space="preserve">
-    <value>AppId not found in configuration.</value>
+  <data name="IDS_ERROR_APP_SECTION_NOT_FOUND" xml:space="preserve">
+    <value>App section not found in configuration under Starfish.</value>
   </data>
-  <data name="IDS_ERROR_HOST_NOT_FOUND" xml:space="preserve">
-    <value>Host not found in configuration.</value>
+  <data name="IDS_ERROR_HOST_SECTION_NOT_FOUND" xml:space="preserve">
+    <value>Host section not found in configuration under Starfish.</value>
   </data>
   <data name="IDS_ERROR_SCHEMA_NOT_SUPPORTED" xml:space="preserve">
-      <value>Schema {0} is not supported.</value>
+    <value>Schema {0} is not supported.</value>
   </data>
   <data name="IDS_ERROR_STARFISH_SECTION_NOT_FOUND" xml:space="preserve">
     <value>Starfish section not found in configuration.</value>

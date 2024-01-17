@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_ERROR_APP_ID_NOT_FOUND" xml:space="preserve">
-    <value>未找到AppId配置信息。</value>
+  <data name="IDS_ERROR_APP_SECTION_NOT_FOUND" xml:space="preserve">
+    <value>没有在Starfish找到App配置项。</value>
   </data>
-  <data name="IDS_ERROR_HOST_NOT_FOUND" xml:space="preserve">
-    <value>未找到Host配置信息。</value>
+  <data name="IDS_ERROR_HOST_SECTION_NOT_FOUND" xml:space="preserve">
+    <value>没有在Starfish找到Host配置项。</value>
   </data>
   <data name="IDS_ERROR_SCHEMA_NOT_SUPPORTED" xml:space="preserve">
     <value>不支持协议{0}。</value>

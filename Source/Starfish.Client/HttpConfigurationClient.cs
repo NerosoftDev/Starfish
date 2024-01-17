@@ -4,12 +4,13 @@ internal class HttpConfigurationClient : IConfigurationClient
 {
 	private readonly HttpClient _httpClient = new();
 
-	public HttpConfigurationClient(Uri host, string appId, string appSecret, string environment)
+	public HttpConfigurationClient(Uri host, string team, string app, string secret, string env)
 	{
 		_httpClient.BaseAddress = host;
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.AppId, appId);
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.AppSecret, appSecret);
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.AppEnv, environment);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Team, team);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.App, app);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Secret, secret);
+		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Env, env);
 	}
 
 	public async Task GetConfigurationAsync(Action<byte[], int> dataAction, CancellationToken cancellationToken = default)
