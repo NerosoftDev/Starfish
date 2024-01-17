@@ -60,11 +60,16 @@
                 </FluentAccordionItem>
                 @if (SettingDetail != null)
                 {
-                    <FluentAccordionItem Class="aside-right" Heading="Setting information" Expanded="true" Style="background-color: var(--neutral-layer-1);">
-                        <FluentDivider Style="width: 100%;"/>
-                        <FluentLabel>Version: @SettingDetail?.Version</FluentLabel>
-                        <FluentDivider Style="width: 100%;"/>
-                        <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
+                    <FluentAccordionItem Class="aside-right" Heading="Setting information" Expanded="true">
+                        <FluentStack Orientation="Orientation.Vertical">
+                            <FluentLabel>Version: @(SettingDetail?.Version ?? "--")</FluentLabel>
+                            <FluentLabel>Publish: @(SettingDetail?.PublishTime)</FluentLabel>
+                            <FluentLabel>Last update: @(SettingDetail?.UpdateTime)</FluentLabel>
+                        </FluentStack>
+                    </FluentAccordionItem>
+                }
+                <FluentAccordionItem Class="aside-right" Expanded="true" Heading="@(Resources.IDS_COMMON_OPERATIONS)">
+                    <FluentStack Orientation="Orientation.Vertical">
                         <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                             <FluentButton IconStart="@(new Icons.Regular.Size16.SyncOff())" OnClick="@OnSyncRedisClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_SYNC_REDIS)</FluentButton>
                             <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@OnDeleteClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_DELETE)</FluentButton>
@@ -73,10 +78,7 @@
                         {
                             <FluentButton IconStart="@(new Icons.Regular.Size16.Send())" Appearance="Appearance.Accent" OnClick="@OnPublishClicked">@(Resources.IDS_SETTING_INDEX_BUTTON_PUBLISH)</FluentButton>
                         }
-                    </FluentAccordionItem>
-                }
-                <FluentAccordionItem Class="aside-right" Expanded="true" Heading="Panel three">
-                    Panel three content
+                    </FluentStack>
                 </FluentAccordionItem>
 
             </FluentAccordion>

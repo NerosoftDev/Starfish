@@ -1,5 +1,55 @@
-﻿<h3>Detail</h3>
+﻿@implements IDialogContentComponent<OperateLogDto>
+
+<FluentDialogHeader ShowDismiss="true">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.DocumentText())"/>
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_LOGS_DETAIL_LABEL_MODULE)"
+                         Value="@Content.Module" ReadOnly="true"/>
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_LOGS_DETAIL_LABEL_TYPE)"
+                         Value="@Content.Type" ReadOnly="true"/>
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_LOGS_DETAIL_LABEL_USER_NAME)"
+                         Value="@(Content.UserName ?? "--")" ReadOnly="true"/>
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_LOGS_DETAIL_LABEL_OPERATE_TIME)"
+                         Value="@Content.OperateTime.ToString("yyyy-MM-dd HH:mm:ss")" ReadOnly="true"/>
+        <FluentTextArea Style="width: 100%"
+                        Label="@(Resources.IDS_LOGS_DETAIL_LABEL_DESCRIPTION)"
+                        Value="@Content.Description"/>
+        <FluentTextArea Style="width: 100%"
+                        Label="@(Resources.IDS_LOGS_DETAIL_LABEL_ERROR)"
+                        Value="@Content.Error"/>
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID)"
+                         Value="@Content.RequestTraceId" ReadOnly="true"/>
+    </FluentStack>
+</FluentDialogBody>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">@(Resources.IDS_COMMON_CLOSE)</FluentButton>
+</FluentDialogFooter>
 
 @code {
-    
+
+    [Parameter]
+    public OperateLogDto Content { get; set; }
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
 }

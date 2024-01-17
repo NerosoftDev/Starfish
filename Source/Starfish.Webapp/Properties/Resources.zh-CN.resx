@@ -325,7 +325,7 @@
     <value>编辑配置</value>
   </data>
   <data name="IDS_SETTING_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
-    <value>环境</value>
+    <value>应用环境</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_DELETE" xml:space="preserve">
     <value>删除</value>
@@ -455,5 +455,32 @@
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用户名</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL" xml:space="preserve">
+    <value>查看详情</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>日志详情</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>日志内容</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_ERROR" xml:space="preserve">
+    <value>错误信息</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_MODULE" xml:space="preserve">
+    <value>模块</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_OPERATE_TIME" xml:space="preserve">
+    <value>操作时间</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_TYPE" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_USER_NAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID" xml:space="preserve">
+    <value>请求识别Id</value>
   </data>
 </root>
