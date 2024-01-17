@@ -17,7 +17,7 @@ public class ConnectionContainer
 	{
 		_service = service;
 
-		this.OnConnected += OnClientConnected;
+		OnConnected += OnClientConnected;
 	}
 
 	private async void OnClientConnected(object sender, ClientConnectedEventArgs e)
@@ -83,9 +83,9 @@ public class ConnectionContainer
 
 public class ConnectionInfo
 {
-	public List<string> Clients { get; set; } = new();
+	public List<string> Clients { get; } = [];
 
-	public Channel<Tuple<string, string>> Channel { get; set; }
+	public Channel<Tuple<string, string>> Channel { get; private init; }
 
 	public static ConnectionInfo New(string connectionId)
 	{

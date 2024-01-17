@@ -42,6 +42,11 @@ public class Setting : Aggregate<long>, IAuditing
 	/// </summary>
 	public string Version { get; set; }
 
+	/// <summary>
+	/// 发布时间
+	/// </summary>
+	public DateTime? PublishTime { get; set; }
+
 	public DateTime CreateTime { get; set; }
 
 	public DateTime UpdateTime { get; set; }
@@ -165,5 +170,10 @@ public class Setting : Aggregate<long>, IAuditing
 		Revisions.Add(revision);
 
 		Version = version;
+		PublishTime = DateTime.Now;
+	}
+
+	internal void Archive(string @operator)
+	{
 	}
 }

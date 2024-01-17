@@ -16,7 +16,7 @@ public class SettingCriteria
 	public string AppCode { get; set; }
 
 	/// <summary>
-	/// 环境
+	/// 应用环境
 	/// </summary>
 	public string Environment { get; set; }
 }

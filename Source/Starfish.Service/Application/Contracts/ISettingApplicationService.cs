@@ -41,7 +41,7 @@ public interface ISettingApplicationService : IApplicationService
 	/// 新建配置
 	/// </summary>
 	/// <param name="appId">应用Id</param>
-	/// <param name="environment">配置环境</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
@@ -93,7 +93,7 @@ public interface ISettingApplicationService : IApplicationService
 	/// 获取已发布的配置
 	/// </summary>
 	/// <param name="appId">应用Id</param>
-	/// <param name="environment">环境名称</param>
+	/// <param name="environment">应用环境</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<string> GetSettingRawAsync(long appId, string environment, CancellationToken cancellationToken = default);
