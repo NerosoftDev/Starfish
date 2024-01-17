@@ -1,11 +1,12 @@
-﻿using Nerosoft.Starfish.Service;
+﻿using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 应用信息仓储接口
 /// </summary>
-public interface IAppInfoRepository : IBaseRepository<AppInfo, long>
+public interface IAppInfoRepository : IBaseRepository<DataContext, AppInfo, long>
 {
 	/// <summary>
 	/// 通过Code获取应用信息

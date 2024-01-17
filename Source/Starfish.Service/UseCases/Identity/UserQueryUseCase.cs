@@ -6,17 +6,17 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserSearchUseCase : IUseCase<UserSearchInput, UserSearchOutput>;
+public interface IUserQueryUseCase : IUseCase<UserSearchInput, UserSearchOutput>;
 
 public record UserSearchOutput(List<UserItemDto> Result) : IUseCaseOutput;
 
 public record UserSearchInput(UserCriteria Criteria, int Page, int Size) : IUseCaseInput;
 
-public class UserSearchUseCase : IUserSearchUseCase
+public class UserQueryUseCase : IUserQueryUseCase
 {
 	private readonly IUserRepository _repository;
 
-	public UserSearchUseCase(IUserRepository repository)
+	public UserQueryUseCase(IUserRepository repository)
 	{
 		_repository = repository;
 	}
@@ -26,7 +26,7 @@ public class UserSearchUseCase : IUserSearchUseCase
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
 
-		return _repository.FetchAsync(predicate, query => query.Include(nameof(User.Roles)).OrderByDescending(t => t.Id), input.Page, input.Size, cancellationToken)
+		return _repository.FindAsync(predicate, query => query.Include(nameof(User.Roles)).OrderByDescending(t => t.Id), input.Page, input.Size, cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

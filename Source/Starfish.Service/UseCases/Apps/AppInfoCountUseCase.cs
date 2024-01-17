@@ -54,7 +54,7 @@ public class AppInfoCountUseCase : IAppInfoCountUseCase
 			if (!_user.IsInRole("SA"))
 			{
 				var userId = _user.GetUserIdOfInt32();
-				var teamQuery = _repository.SetOf<TeamMember>();
+				var teamQuery = _repository.Context.Set<TeamMember>();
 				query = from app in query
 				        join member in teamQuery on app.TeamId equals member.TeamId
 				        where member.UserId == userId

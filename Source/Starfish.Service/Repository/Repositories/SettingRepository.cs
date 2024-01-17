@@ -22,7 +22,7 @@ public class SettingRepository : BaseRepository<DataContext, Setting, long>, ISe
 		];
 
 		var predicate = new CompositeSpecification<Setting>(PredicateOperator.AndAlso, specifications).Satisfy();
-		return ExistsAsync(predicate, cancellationToken);
+		return AnyAsync(predicate, null, cancellationToken);
 	}
 
 	public Task<Setting> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default)
@@ -37,7 +37,7 @@ public class SettingRepository : BaseRepository<DataContext, Setting, long>, ISe
 
 		return GetAsync(predicate, tracking, properties, cancellationToken);
 	}
-	
+
 	public Task<List<SettingItem>> GetItemListAsync(long id, string environment, int page, int size, CancellationToken cancellationToken = default)
 	{
 		ISpecification<SettingItem>[] specifications =

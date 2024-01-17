@@ -1,7 +1,8 @@
-﻿using Nerosoft.Euonia.Repository;
+﻿using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
-public interface ISettingRevisionRepository : IRepository<SettingRevision, long>
+public interface ISettingRevisionRepository : IBaseRepository<DataContext, SettingRevision, long>
 {
 }

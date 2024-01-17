@@ -1,11 +1,12 @@
-﻿using Nerosoft.Starfish.Service;
+﻿using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 用户仓储接口
 /// </summary>
-public interface IUserRepository : IBaseRepository<User, int>
+public interface IUserRepository : IBaseRepository<DataContext, User, int>
 {
 	/// <summary>
 	/// 根据用户名查询用户

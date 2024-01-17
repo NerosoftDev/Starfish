@@ -14,14 +14,14 @@ public class SettingArchiveRepository : BaseRepository<DataContext, SettingArchi
 
 	public Task<SettingArchive> GetAsync(string appCode, string environment, CancellationToken cancellationToken = default)
 	{
-		ISpecification<SettingArchive>[] specs = 
-		{
+		ISpecification<SettingArchive>[] specs =
+		[
 			SettingArchiveSpecification.AppCodeEquals(appCode),
 			SettingArchiveSpecification.EnvironmentEquals(environment)
-		};
-		
-		var specification = new CompositeSpecification<SettingArchive>(PredicateOperator.AndAlso,specs);
-		
+		];
+
+		var specification = new CompositeSpecification<SettingArchive>(PredicateOperator.AndAlso, specs);
+
 		var predicate = specification.Satisfy();
 
 		return GetAsync(predicate, true, cancellationToken);

@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Domain;
+using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Euonia.Repository.EfCore;
 
@@ -17,7 +18,7 @@ namespace Nerosoft.Starfish.Service;
 /// <typeparam name="TEntity"></typeparam>
 /// <typeparam name="TKey"></typeparam>
 public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository<TContext, TEntity, TKey>,
-                                                                IBaseRepository<TEntity, TKey>,
+                                                                IBaseRepository<TContext, TEntity, TKey>,
                                                                 ITransientDependency
 	where TContext : DbContext, IRepositoryContext
 	where TEntity : class, IEntity<TKey>
@@ -36,42 +37,6 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 		where T : class
 	{
 		return Context.SetOf<T>();
-	}
-
-	/// <summary>
-	/// 根据指定的条件表达式查询数据并返回符合条件的数据集合
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="tracking"></param>
-	/// <param name="properties"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
-	{
-		return FindAsync(predicate, QueryBuilder, cancellationToken);
-
-		IQueryable<TEntity> QueryBuilder(IQueryable<TEntity> query)
-		{
-			query = tracking ? query.AsTracking() : query.AsNoTracking();
-
-			if (properties is { Length: > 0 })
-			{
-				query = properties.Aggregate(query, (current, property) => current.Include(property));
-			}
-
-			return query;
-		}
-	}
-
-	/// <summary>
-	/// 根据指定的条件表达式查询数量
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public override Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-	{
-		return CountAsync(predicate, null, cancellationToken);
 	}
 
 	/// <summary>
@@ -97,7 +62,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	/// <returns></returns>
 	public virtual Task<TEntity> GetAsync(TKey id, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
-		var predicate = BuildIdEqualsExpression(id);
+		var predicate = PredicateBuilder.PropertyEqual<TEntity, TKey>(nameof(IEntity<TKey>.Id), id);
 
 		//var lambda = predicate.Compile();
 		return GetAsync(predicate, tracking, properties, cancellationToken);
@@ -125,54 +90,32 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	/// <returns></returns>
 	public virtual Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		query = tracking ? query.AsTracking() : query.AsNoTracking();
-
-		if (properties is { Length: > 0 })
-		{
-			query = properties.Aggregate(query, (current, property) => current.Include(property));
-		}
-
-		return query.FirstOrDefaultAsync(predicate, cancellationToken);
+		return base.GetAsync(predicate, query => BuildQuery(query, tracking, properties), cancellationToken);
 	}
 
 	/// <summary>
 	/// 根据Id集合查询数据并返回符合条件的数据集合
 	/// </summary>
 	/// <param name="ids"></param>
-	/// <param name="tracking"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public virtual Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, CancellationToken cancellationToken = default)
-	{
-		return GetAsync(ids, tracking, Array.Empty<string>(), cancellationToken);
-	}
-
-	/// <summary>
-	/// 根据Id集合查询数据并返回符合条件的数据集合
-	/// </summary>
-	/// <param name="ids"></param>
-	/// <param name="tracking"></param>
 	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual Task<List<TEntity>> GetAsync(IEnumerable<TKey> ids, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> FindAsync(IEnumerable<TKey> ids, string[] properties, CancellationToken cancellationToken = default)
 	{
-		var predicate = BuildIdInArrayExpression(ids);
-
-		return FindAsync(predicate, tracking, properties, cancellationToken);
+		var predicate = PredicateBuilder.PropertyInRange<TEntity, TKey>(nameof(IEntity<TKey>.Id), ids.ToArray());
+		return FindAsync(predicate, properties, cancellationToken);
 	}
 
 	/// <summary>
-	/// 检查符合条件的数据是否存在
+	/// 根据指定的条件表达式查询数据并返回符合条件的数据集合
 	/// </summary>
-	/// <param name="predicate">条件表达式</param>
+	/// <param name="predicate"></param>
+	/// <param name="properties"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public virtual Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+	public virtual Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, string[] properties, CancellationToken cancellationToken = default)
 	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		return query.AnyAsync(predicate, cancellationToken: cancellationToken);
+		return base.FindAsync(predicate, query => BuildQuery(query, false, properties), cancellationToken);
 	}
 
 	/// <summary>
@@ -184,7 +127,7 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	/// <returns></returns>
 	public virtual async Task<Dictionary<TKey, string>> LookupAsync(IEnumerable<TKey> ids, Expression<Func<TEntity, KeyValuePair<TKey, string>>> selector, CancellationToken cancellationToken = default)
 	{
-		var predicate = BuildIdInArrayExpression(ids);
+		var predicate = PredicateBuilder.PropertyInRange<TEntity, TKey>(nameof(IEntity<TKey>.Id), ids.ToArray());
 		var query = Context.Set<TEntity>().AsNoTracking()
 		                   .Where(predicate)
 		                   .Select(selector);
@@ -194,23 +137,6 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 		var result = items.ToDictionary(x => x.Key, x => x.Value);
 
 		return result;
-	}
-
-	/// <summary>
-	/// 更新实体
-	/// </summary>
-	/// <param name="entity"></param>
-	/// <param name="autoSave"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public override async Task UpdateAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
-	{
-		var set = Context.Set<TEntity>();
-		set.Update(entity);
-		if (autoSave)
-		{
-			await SaveChangesAsync(cancellationToken);
-		}
 	}
 
 	/// <summary>
@@ -274,24 +200,6 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 	}
 
 	/// <summary>
-	/// 删除指定实体对象
-	/// </summary>
-	/// <param name="entity"></param>
-	/// <param name="autoSave"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	public override async Task DeleteAsync(TEntity entity, bool autoSave = true, CancellationToken cancellationToken = default)
-	{
-		var set = Context.Set<TEntity>();
-
-		set.Remove(entity);
-		if (autoSave)
-		{
-			await SaveChangesAsync(cancellationToken);
-		}
-	}
-
-	/// <summary>
 	/// 保存更改
 	/// </summary>
 	/// <param name="cancellationToken"></param>
@@ -322,119 +230,15 @@ public abstract class BaseRepository<TContext, TEntity, TKey> : EfCoreRepository
 		return DeleteAsync(entity, autoSave, cancellationToken);
 	}
 
-	public Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
+	protected virtual IQueryable<TEntity> BuildQuery(IQueryable<TEntity> query, bool tracking, string[] properties)
 	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		if (builder != null)
+		query = tracking ? query.AsTracking() : query.AsNoTracking();
+
+		if (properties is { Length: > 0 })
 		{
-			query = builder(query);
+			query = properties.Aggregate(query, (current, property) => current.Include(property));
 		}
 
-		return query.Where(predicate).ToListAsync(cancellationToken);
-	}
-
-	public Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, int page, int size, CancellationToken cancellationToken = default)
-	{
-		var skipCount = GetSkipCount(page, size);
-		var query = Context.Set<TEntity>().AsQueryable();
-		if (builder != null)
-		{
-			query = builder(query);
-		}
-
-		return query.Where(predicate)
-		            .Paginate(page, size)
-		            .ToListAsync(cancellationToken);
-	}
-
-	public Task<List<TEntity>> FindAsync(IEnumerable<TKey> keys, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
-	{
-		var predicate = BuildIdInArrayExpression(keys);
-		return FindAsync(predicate, builder, cancellationToken);
-	}
-
-	public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
-	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		if (builder != null)
-		{
-			query = builder(query);
-		}
-
-		return query.FirstOrDefaultAsync(predicate, cancellationToken);
-	}
-
-	public Task<TEntity> GetAsync(TKey key, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder = null, CancellationToken cancellationToken = default)
-	{
-		var predicate = BuildIdEqualsExpression(key);
-		return GetAsync(predicate, builder, cancellationToken);
-	}
-
-	public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
-	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		if (builder != null)
-		{
-			query = builder(query);
-		}
-
-		return query.CountAsync(cancellationToken);
-	}
-
-	public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> builder, CancellationToken cancellationToken = default)
-	{
-		var query = Context.Set<TEntity>().AsQueryable();
-		if (builder != null)
-		{
-			query = builder(query);
-		}
-
-		return query.AnyAsync(cancellationToken);
-	}
-
-	/// <summary>
-	/// 根据分页参数获计算跳过的数量
-	/// </summary>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
-	/// <returns></returns>
-	protected virtual int GetSkipCount(int page, int size)
-	{
-		return (page - 1) * size;
-	}
-
-	/// <summary>
-	/// 获取实体Id
-	/// </summary>
-	/// <param name="entity"></param>
-	/// <returns></returns>
-	protected virtual TKey GetId(TEntity entity)
-	{
-		var property = Expression.PropertyOrField(Expression.Constant(entity), "Id");
-		var lambda = Expression.Lambda<Func<TEntity, TKey>>(property, Expression.Parameter(typeof(TEntity), "entity")).Compile();
-		return lambda(entity);
-	}
-
-	private static Expression<Func<TEntity, bool>> BuildIdEqualsExpression(TKey id)
-	{
-		// var parameter = Expression.Parameter(typeof(TEntity), "entity");
-		// var member = Expression.PropertyOrField(parameter, "Id");
-		// var expression = Expression.Call(typeof(object), nameof(Equals), new[] { member.Type }, member, Expression.Constant(id));
-		// return Expression.Lambda<Func<TEntity, bool>>(expression, parameter);
-
-		var parameter = Expression.Parameter(typeof(TEntity), "entity");
-		var member = Expression.PropertyOrField(parameter, "Id");
-		var expression = Expression.Equal(member, Expression.Constant(id, member.Type));
-		var predicate = Expression.Lambda<Func<TEntity, bool>>(expression, parameter);
-		return predicate;
-	}
-
-	private static Expression<Func<TEntity, bool>> BuildIdInArrayExpression(IEnumerable<TKey> ids)
-	{
-		var parameter = Expression.Parameter(typeof(TEntity), "entity");
-		var member = Expression.PropertyOrField(parameter, "Id");
-		var expression = Expression.Call(typeof(Enumerable), nameof(Enumerable.Contains), [member.Type], Expression.Constant(ids), member);
-		var predicate = Expression.Lambda<Func<TEntity, bool>>(expression, parameter);
-		return predicate;
+		return query;
 	}
 }

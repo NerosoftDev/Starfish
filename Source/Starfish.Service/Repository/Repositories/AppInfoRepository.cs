@@ -28,6 +28,6 @@ public class AppInfoRepository : BaseRepository<DataContext, AppInfo, long>, IAp
 
 		code = code.Normalize(TextCaseType.Lower);
 		var predicate = AppInfoSpecification.CodeEquals(code).Satisfy();
-		return GetAsync(predicate, false, cancellationToken);
+		return GetAsync(predicate, null, cancellationToken);
 	}
 }

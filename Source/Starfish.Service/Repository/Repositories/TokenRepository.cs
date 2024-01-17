@@ -25,7 +25,7 @@ public class TokenRepository : BaseRepository<DataContext, Token, int>, ITokenRe
 	/// <param name="tracking"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task<Token> FindAsync(string key, bool tracking, CancellationToken cancellationToken = default)
+	public async Task<Token> GetAsync(string key, bool tracking, CancellationToken cancellationToken = default)
 	{
 		return await GetAsync(t => t.Key == key, tracking, cancellationToken);
 	}

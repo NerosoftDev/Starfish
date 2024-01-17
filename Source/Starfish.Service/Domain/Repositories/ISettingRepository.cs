@@ -1,9 +1,9 @@
-﻿using System.Linq.Expressions;
-using Nerosoft.Euonia.Repository;
+﻿using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
-public interface ISettingRepository : IRepository<Setting, long>
+public interface ISettingRepository : IBaseRepository<DataContext, Setting, long>
 {
 	/// <summary>
 	/// 检查配置是否存在
@@ -15,9 +15,7 @@ public interface ISettingRepository : IRepository<Setting, long>
 	Task<bool> ExistsAsync(long appId, string environment, CancellationToken cancellationToken = default);
 
 	Task<Setting> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default);
-
-	Task<Setting> GetAsync(Expression<Func<Setting, bool>> predicate, bool tracking, string[] properties, CancellationToken cancellationToken = default);
-
+	
 	Task<List<SettingItem>> GetItemListAsync(long id, string environment, int page, int size, CancellationToken cancellationToken = default);
 
 	Task<int> GetItemCountAsync(long id, string environment, CancellationToken cancellationToken = default);

@@ -30,7 +30,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 	{
 		var specification = UserSpecification.UserNameEquals(userName);
 		var predicate = specification.Satisfy();
-		return ExistsAsync(predicate, cancellationToken);
+		return AnyAsync(predicate, null, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -42,7 +42,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 			UserSpecification.IdNotEquals(ignoreId)
 		];
 		var predicate = new CompositeSpecification<User>(PredicateOperator.AndAlso, specifications).Satisfy();
-		return ExistsAsync(predicate, cancellationToken);
+		return AnyAsync(predicate, null, cancellationToken);
 	}
 
 	public Task<bool> CheckPhoneExistsAsync(string phone, int ignoreId, CancellationToken cancellationToken = default)
@@ -53,6 +53,6 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 			UserSpecification.IdNotEquals(ignoreId)
 		];
 		var predicate = new CompositeSpecification<User>(PredicateOperator.AndAlso, specifications).Satisfy();
-		return ExistsAsync(predicate, cancellationToken);
+		return AnyAsync(predicate, null, cancellationToken);
 	}
 }
