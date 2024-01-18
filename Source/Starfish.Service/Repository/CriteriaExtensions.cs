@@ -98,12 +98,7 @@ public static class CriteriaExtensions
 		{
 			return specification;
 		}
-
-		if (!string.IsNullOrWhiteSpace(criteria.AppCode))
-		{
-			specification &= SettingSpecification.AppCodeEquals(criteria.AppCode);
-		}
-
+		
 		if (!string.IsNullOrWhiteSpace(criteria.Environment))
 		{
 			specification &= SettingSpecification.EnvironmentEquals(criteria.Environment);

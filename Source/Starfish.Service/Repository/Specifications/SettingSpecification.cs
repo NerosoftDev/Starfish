@@ -20,18 +20,6 @@ public static class SettingSpecification
 		return new DirectSpecification<Setting>(x => x.Environment == environment);
 	}
 
-	public static Specification<Setting> AppCodeEquals(string appCode)
-	{
-		appCode = appCode.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<Setting>(x => x.AppCode == appCode);
-	}
-
-	public static Specification<Setting> AppCodeContains(string appCode)
-	{
-		appCode = appCode.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<Setting>(x => x.AppCode.Contains(appCode));
-	}
-
 	public static Specification<Setting> StatusEquals(SettingStatus status)
 	{
 		return new DirectSpecification<Setting>(x => x.Status == status);

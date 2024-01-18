@@ -26,9 +26,9 @@ public class SettingArchiveBusiness : CommandObject<SettingArchiveBusiness>, IDo
 		var data = aggregate.Items.ToDictionary(t => t.Key, t => t.Value);
 		var json = JsonConvert.SerializeObject(data);
 
-		var archive = await ArchiveRepository.GetAsync(aggregate.AppCode, environment, cancellationToken);
+		var archive = await ArchiveRepository.GetAsync(appId, environment, cancellationToken);
 
-		archive ??= SettingArchive.Create(appId, aggregate.AppCode, environment);
+		archive ??= SettingArchive.Create(appId, environment);
 
 		archive.Update(Compress(json), userName);
 

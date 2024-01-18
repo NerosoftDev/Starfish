@@ -65,7 +65,6 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.ToTable("setting");
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.AppId);
-			entity.HasIndex(t => t.AppCode);
 			entity.HasIndex(t => t.Environment);
 
 			entity.HasIndex([nameof(Setting.AppId), nameof(Setting.Environment)], "IDX_SETTING_UNIQUE")
@@ -136,7 +135,6 @@ public class SqliteModelBuilder : IModelBuilder
 			      .HasDatabaseName("IDX_SETTING_ARCHIVE_APP_ID");
 			entity.HasIndex([nameof(SettingArchive.AppId), nameof(SettingArchive.Environment)], "IDX_SETTING_ARCHIVE_UNIQUE")
 			      .IsUnique();
-			entity.HasIndex([nameof(SettingArchive.AppCode), nameof(SettingArchive.Environment)], "IDX_SETTING_ARCHIVE_COMPOSE");
 
 			entity.Property(t => t.Id)
 			      .IsRequired()

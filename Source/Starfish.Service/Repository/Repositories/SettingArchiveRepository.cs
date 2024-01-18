@@ -12,11 +12,11 @@ public class SettingArchiveRepository : BaseRepository<DataContext, SettingArchi
 	{
 	}
 
-	public Task<SettingArchive> GetAsync(string appCode, string environment, CancellationToken cancellationToken = default)
+	public Task<SettingArchive> GetAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
 		ISpecification<SettingArchive>[] specs =
 		[
-			SettingArchiveSpecification.AppCodeEquals(appCode),
+			SettingArchiveSpecification.AppIdEquals(appId),
 			SettingArchiveSpecification.EnvironmentEquals(environment)
 		];
 

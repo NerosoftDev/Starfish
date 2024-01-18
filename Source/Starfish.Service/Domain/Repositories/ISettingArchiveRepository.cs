@@ -5,5 +5,5 @@ namespace Nerosoft.Starfish.Domain;
 
 public interface ISettingArchiveRepository : IBaseRepository<DataContext, SettingArchive, long>
 {
-	Task<SettingArchive> GetAsync(string appCode, string environment, CancellationToken cancellationToken = default);
+	Task<SettingArchive> GetAsync(long appId, string environment, CancellationToken cancellationToken = default);
 }
