@@ -213,7 +213,7 @@ app.Run();
 
 ## API
 
-See [API.md](Documents/API.md)
+See the Swagger UI at [http://localhost:5229/swagger](http://localhost:5229/swagger) after running the server.
 
 ## Scripts/脚本
 
