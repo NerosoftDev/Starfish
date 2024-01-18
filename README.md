@@ -213,6 +213,16 @@ app.Run();
 
 ## API
 
+See [API.md](Documents/API.md)
+
+## Scripts/脚本
+
+- MySQL: [SCRIPTS_MYSQL.md](Documents/SCRIPTS_MYSQL.md)
+- SQL Server: [SCRIPTS_MSSQL.md](Documents/SCRIPTS_MSSQL.md)
+- PostgreSQL: [SCRIPTS_PGSQL.md](Documents/SCRIPTS_PGSQL.md)
+- Sqlite: [SCRIPTS_SQLITE.md](Documents/SCRIPTS_SQLITE.md)
+- ~~Mongo: *not needed. / 不需要*~~
+
 ## Resources/资源
 
 ## Release Notes/发布日志

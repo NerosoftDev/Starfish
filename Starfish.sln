@@ -51,6 +51,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Etcd", "Source\Sta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starfish.Webapp", "Source\Starfish.Webapp\Starfish.Webapp.csproj", "{10681F31-2EBE-49B1-9152-AB7A5844DFD3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{4E834BF6-2005-4295-8765-A23476108488}"
+	ProjectSection(SolutionItems) = preProject
+		Documents\API.md = Documents\API.md
+		Documents\SCRIPTS_MSSQL.md = Documents\SCRIPTS_MSSQL.md
+		Documents\SCRIPTS_MYSQL.md = Documents\SCRIPTS_MYSQL.md
+		Documents\SCRIPTS_PGSQL.md = Documents\SCRIPTS_PGSQL.md
+		Documents\SCRIPTS_SQLITE.md = Documents\SCRIPTS_SQLITE.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
