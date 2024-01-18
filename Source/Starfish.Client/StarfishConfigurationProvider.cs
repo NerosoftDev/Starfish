@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Nerosoft.Starfish.Client;
 
-public class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
+internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposable
 {
 	public event EventHandler<HostChangedEventArgs> HostChanged;
 	public event EventHandler ConnectionLost;
