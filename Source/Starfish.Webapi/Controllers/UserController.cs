@@ -33,7 +33,7 @@ public class UserController : ControllerBase
 	/// <returns></returns>
 	[HttpGet]
 	[Produces(typeof(List<UserItemDto>))]
-	public async Task<IActionResult> SearchAsync([FromQuery] UserCriteria criteria, int page = 1, int size = 10)
+	public async Task<IActionResult> QueryAsync([FromQuery] UserCriteria criteria, int page = 1, int size = 10)
 	{
 		var result = await _service.SearchAsync(criteria, page, size, HttpContext.RequestAborted);
 		return Ok(result);

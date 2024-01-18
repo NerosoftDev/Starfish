@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Nerosoft.Starfish.Client;
 using Nerosoft.Starfish.Webapp.Rest;
 
 namespace Nerosoft.Starfish.Webapp;
@@ -12,6 +13,9 @@ public class Program
 	public static async Task Main(string[] args)
 	{
 		var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+		builder.Configuration.AddStarfish(ConfigurationClientOptions.Load(builder.Configuration));
+		
 		builder.RootComponents.Add<App>("#app");
 		builder.RootComponents.Add<HeadOutlet>("head::after");
 

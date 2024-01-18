@@ -1,19 +1,11 @@
-﻿using System.Linq.Expressions;
-using Nerosoft.Euonia.Repository;
+﻿using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 令牌仓储接口
 /// </summary>
-public interface ITokenRepository : IRepository<Token, int>
+public interface ITokenRepository : IBaseRepository<DataContext, Token, int>
 {
-	/// <summary>
-	/// 跟据指定条件查询令牌
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="tracking"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<Token> GetAsync(Expression<Func<Token, bool>> predicate, bool tracking, CancellationToken cancellationToken = default);
 }

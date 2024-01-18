@@ -16,7 +16,7 @@
         <FluentGridItem lg="12" sm="12" md="12">
             <div class="search-bar">
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
-                <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
                 <FluentSpacer/>
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(0))">@(Resources.IDS_USER_BUTTON_TEXT_ADD)</FluentButton>
             </div>
@@ -31,7 +31,7 @@
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_EMAIL)" Property="@(c => c.Email)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_PHONE)" Property="@(c => c.Phone)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_ROLES)" Property="@(c => c.Roles.JoinAsString(", "))"></PropertyColumn>
-                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.End">
+                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetPasswordClicked(context.Id))"/>
                 </TemplateColumn>

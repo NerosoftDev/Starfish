@@ -44,12 +44,7 @@ public class AppInfoUpdateUseCase : IAppInfoUpdateUseCase
 		{
 			throw new AuthenticationException();
 		}
-
-		if (!_user.IsInRoles(_roles))
-		{
-			throw new UnauthorizedAccessException();
-		}
-
+		
 		var command = new AppInfoUpdateCommand(input.Id, input.Model);
 		return _bus.SendAsync(command, cancellationToken);
 	}

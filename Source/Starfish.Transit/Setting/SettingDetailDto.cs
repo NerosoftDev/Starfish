@@ -26,7 +26,7 @@ public class SettingDetailDto
 	public string AppName { get; set; }
 
 	/// <summary>
-	/// 环境名称
+	/// 应用环境
 	/// </summary>
 	public string Environment { get; set; }
 
@@ -34,6 +34,11 @@ public class SettingDetailDto
 	/// 当前版本号
 	/// </summary>
 	public string Version { get; set; }
+
+	/// <summary>
+	/// 发布时间
+	/// </summary>
+	public DateTime? PublishTime { get; set; }
 
 	/// <summary>
 	/// 状态
@@ -44,4 +49,9 @@ public class SettingDetailDto
 	/// 状态名称
 	/// </summary>
 	public string StatusDescription { get; set; }
+
+	/// <summary>
+	/// 修改时间
+	/// </summary>
+	public DateTime UpdateTime { get; set; }
 }

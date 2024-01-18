@@ -1,22 +1,13 @@
-﻿using System.Linq.Expressions;
-using Nerosoft.Euonia.Repository;
+﻿using Nerosoft.Starfish.Repository;
+using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
 /// 用户仓储接口
 /// </summary>
-public interface IUserRepository : IRepository<User, int>
+public interface IUserRepository : IBaseRepository<DataContext, User, int>
 {
-	/// <summary>
-	/// 根据用户ID查询用户
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="tracking"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<User> GetAsync(int id, bool tracking, CancellationToken cancellationToken = default);
-
 	/// <summary>
 	/// 根据用户名查询用户
 	/// </summary>
@@ -51,19 +42,4 @@ public interface IUserRepository : IRepository<User, int>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<bool> CheckPhoneExistsAsync(string phone, int ignoreId, CancellationToken cancellationToken = default);
-
-	/// <summary>
-	/// 查询用户
-	/// </summary>
-	/// <param name="predicate"></param>
-	/// <param name="builder"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<List<User>> FindAsync(Expression<Func<User, bool>> predicate, Func<IQueryable<User>, IQueryable<User>> builder, int page, int size, CancellationToken cancellationToken = default);
-
-	Task<User> GetAsync(int id, bool tracking, Func<IQueryable<User>, IQueryable<User>> propertyAction, CancellationToken cancellationToken = default);
-
-	Task<List<User>> GetAsync(IEnumerable<int> ids, bool tracking, CancellationToken cancellationToken = default);
 }

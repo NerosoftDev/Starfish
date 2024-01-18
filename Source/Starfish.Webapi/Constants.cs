@@ -4,9 +4,9 @@ internal class Constants
 {
 	public class RequestHeaders
 	{
-		public const string TeamId = "starfish-team-id";
-		public const string AppId = "starfish-app-id";
-		public const string AppSecret = "starfish-app-secret";
-		public const string AppEnv = "starfish-app-env";
+		public const string Team = "starfish-team";
+		public const string App = "starfish-app";
+		public const string Secret = "starfish-secret";
+		public const string Env = "starfish-env";
 	}
 }

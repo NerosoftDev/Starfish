@@ -16,12 +16,7 @@ public class SettingArchive : Aggregate<long>
 	public long AppId { get; set; }
 
 	/// <summary>
-	/// 应用唯一编码
-	/// </summary>
-	public string AppCode { get; set; }
-
-	/// <summary>
-	/// 环境
+	/// 应用环境
 	/// </summary>
 	public string Environment { get; set; }
 
@@ -40,12 +35,11 @@ public class SettingArchive : Aggregate<long>
 	/// </summary>
 	public DateTime ArchiveTime { get; set; }
 
-	internal static SettingArchive Create(long appId, string appCode, string environment)
+	internal static SettingArchive Create(long appId, string environment)
 	{
 		var entity = new SettingArchive()
 		{
 			AppId = appId,
-			AppCode = appCode,
 			Environment = environment
 		};
 

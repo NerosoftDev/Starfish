@@ -3,6 +3,7 @@
 @attribute [Authorize(Roles = "SA")]
 
 @inject ILogsApi LogsApi
+@inject IDialogService DialogService
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
     <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
@@ -16,17 +17,24 @@
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.UserName"/>
                 <FluentDatePicker @bind-Value="@Criteria.MinTime"/>
                 <FluentDatePicker @bind-Value="@Criteria.MaxTime"/>
-                <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="OperateLogDto">
+            <FluentDataGrid ItemsProvider="_provider" 
+                            Pagination="Pagination" 
+                            ItemSize="46" 
+                            GenerateHeader="GenerateHeaderOption.Sticky" 
+                            TGridItem="OperateLogDto"
+                            GridTemplateColumns="0.2fr 1fr 0.8fr 0.2fr 0.4fr 0.2fr">
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_TYPE)" Property="@(c => c.Type)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_DESCRIPTION)" Property="@(c => c.Description)" Tooltip="true"/>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_USER_NAME)" Property="@(c => c.UserName)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_ERROR)" Property="@(c => c.Error)" Tooltip="true" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_USER_NAME)" Property="@(c => c.UserName)" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_OPERATE_TIME)" Property="@(c => c.OperateTime)" Format="yyyy-MM-dd HH:mm:ss"/>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_ERROR)" Property="@(c => c.Error)" Tooltip="true"/>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID)" Property="@(c => c.RequestTraceId)"/>
+                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
+                    <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnGotoDetailClicked(context))">@(Resources.IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL)</FluentButton>
+                </TemplateColumn>
             </FluentDataGrid>
         </FluentGridItem>
 
@@ -85,4 +93,8 @@
         await Task.CompletedTask;
     }
 
+    private async Task OnGotoDetailClicked(OperateLogDto dto)
+    {
+        await DialogService.ShowDialogAsync<Detail>(dto, new DialogParameters { Title = Resources.IDS_LOGS_DETAIL_DIALOG_TITLE, Modal = true });
+    }
 }

@@ -14,7 +14,9 @@ public class SettingCommandHandler : CommandHandlerBase,
                                      IHandler<SettingUpdateCommand>,
                                      IHandler<SettingDeleteCommand>,
                                      IHandler<SettingPublishCommand>,
-                                     IHandler<SettingValueUpdateCommand>
+                                     IHandler<SettingValueUpdateCommand>,
+                                     IHandler<SettingRevisionCreateCommand>,
+                                     IHandler<SettingArchiveCreateCommand>
 {
 	public SettingCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
@@ -72,6 +74,23 @@ public class SettingCommandHandler : CommandHandlerBase,
 			business.Key = message.Key;
 			business.Value = message.Value;
 			_ = await business.SaveAsync(true, cancellationToken);
+		});
+	}
+
+	public Task HandleAsync(SettingRevisionCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			var argument = new SettingRevisionArgument(message.Version, message.Comment, context.User?.Identity?.Name);
+			await Factory.ExecuteAsync<SettingRevisionBusiness>(message.AppId, message.Environment, argument, cancellationToken);
+		});
+	}
+
+	public Task HandleAsync(SettingArchiveCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			await Factory.ExecuteAsync<SettingArchiveBusiness>(message.AppId, message.Environment, context.User?.Identity?.Name, cancellationToken);
 		});
 	}
 }

@@ -32,6 +32,7 @@ public class LogsController : ControllerBase
 	/// <param name="size">数量</param>
 	/// <returns>符合条件的日志列表</returns>
 	[HttpGet]
+	[Produces<List<OperateLogDto>>]
 	public async Task<IActionResult> QueryAsync([FromQuery] OperateLogCriteria criteria, int page = 1, int size = 10)
 	{
 		var result = await _service.QueryAsync(criteria, page, size);
@@ -44,6 +45,7 @@ public class LogsController : ControllerBase
 	/// <param name="criteria">查询条件</param>
 	/// <returns>符合条件的日志数量</returns>
 	[HttpGet("count")]
+	[Produces<int>]
 	public async Task<IActionResult> CountAsync([FromQuery] OperateLogCriteria criteria)
 	{
 		var result = await _service.CountAsync(criteria);

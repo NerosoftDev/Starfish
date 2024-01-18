@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
@@ -23,7 +22,7 @@ public class SettingRepository : BaseRepository<DataContext, Setting, long>, ISe
 		];
 
 		var predicate = new CompositeSpecification<Setting>(PredicateOperator.AndAlso, specifications).Satisfy();
-		return ExistsAsync(predicate, cancellationToken);
+		return AnyAsync(predicate, null, cancellationToken);
 	}
 
 	public Task<Setting> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default)
@@ -37,18 +36,6 @@ public class SettingRepository : BaseRepository<DataContext, Setting, long>, ISe
 		var predicate = new CompositeSpecification<Setting>(PredicateOperator.AndAlso, specifications).Satisfy();
 
 		return GetAsync(predicate, tracking, properties, cancellationToken);
-	}
-
-	public Task<List<Setting>> FindAsync(Expression<Func<Setting, bool>> predicate, Func<IQueryable<Setting>, IQueryable<Setting>> action, int page, int size, CancellationToken cancellationToken = default)
-	{
-		var query = Context.Set<Setting>().AsQueryable();
-		query = query.Where(predicate);
-		if (action != null)
-		{
-			query = action(query);
-		}
-
-		return query.Paginate(page, size).ToListAsync(cancellationToken);
 	}
 
 	public Task<List<SettingItem>> GetItemListAsync(long id, string environment, int page, int size, CancellationToken cancellationToken = default)

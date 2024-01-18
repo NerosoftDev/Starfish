@@ -12,16 +12,16 @@ public class SettingArchiveRepository : BaseRepository<DataContext, SettingArchi
 	{
 	}
 
-	public Task<SettingArchive> GetAsync(string appCode, string environment, CancellationToken cancellationToken = default)
+	public Task<SettingArchive> GetAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
-		ISpecification<SettingArchive>[] specs = 
-		{
-			SettingArchiveSpecification.AppCodeEquals(appCode),
+		ISpecification<SettingArchive>[] specs =
+		[
+			SettingArchiveSpecification.AppIdEquals(appId),
 			SettingArchiveSpecification.EnvironmentEquals(environment)
-		};
-		
-		var specification = new CompositeSpecification<SettingArchive>(PredicateOperator.AndAlso,specs);
-		
+		];
+
+		var specification = new CompositeSpecification<SettingArchive>(PredicateOperator.AndAlso, specs);
+
 		var predicate = specification.Satisfy();
 
 		return GetAsync(predicate, true, cancellationToken);

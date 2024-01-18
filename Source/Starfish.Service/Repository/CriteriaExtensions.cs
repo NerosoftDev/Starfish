@@ -28,6 +28,11 @@ public static class CriteriaExtensions
 			specification &= OperateLogSpecification.UserNameContains(criteria.UserName);
 		}
 
+		if (!string.IsNullOrWhiteSpace(criteria.Module))
+		{
+			specification &= OperateLogSpecification.ModuleEquals(criteria.Module);
+		}
+		
 		if (!string.IsNullOrWhiteSpace(criteria.Type))
 		{
 			specification &= OperateLogSpecification.TypeEquals(criteria.Type);
@@ -93,12 +98,7 @@ public static class CriteriaExtensions
 		{
 			return specification;
 		}
-
-		if (!string.IsNullOrWhiteSpace(criteria.AppCode))
-		{
-			specification &= SettingSpecification.AppCodeEquals(criteria.AppCode);
-		}
-
+		
 		if (!string.IsNullOrWhiteSpace(criteria.Environment))
 		{
 			specification &= SettingSpecification.EnvironmentEquals(criteria.Environment);

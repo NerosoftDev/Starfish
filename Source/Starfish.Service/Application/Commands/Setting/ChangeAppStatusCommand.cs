@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 修改应用信息状态命令
 /// </summary>
-public class ChangeAppStatusCommand : Command<long, AppStatus>
+public class ChangeAppStatusCommand : Command
 {
 	/// <summary>
 	/// 构造函数
@@ -14,7 +14,12 @@ public class ChangeAppStatusCommand : Command<long, AppStatus>
 	/// <param name="id"></param>
 	/// <param name="status"></param>
 	public ChangeAppStatusCommand(long id, AppStatus status)
-		: base(id, status)
 	{
+		Id = id;
+		Status = status;
 	}
+
+	public long Id { get; set; }
+
+	public AppStatus Status { get; set; }
 }

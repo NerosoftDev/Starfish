@@ -34,7 +34,7 @@ public class EventStreamController : ControllerBase
 	public async Task HandleAsync()
 	{
 		var appId = await AuthAsync();
-		var environment = HttpContext.Request.Headers[Constants.RequestHeaders.AppEnv];
+		var environment = HttpContext.Request.Headers[Constants.RequestHeaders.Env];
 		Response.Headers.Append(HeaderNames.ContentType, "text/event-stream");
 		Response.Headers.Append(HeaderNames.Connection, "close");
 		try
@@ -71,10 +71,10 @@ public class EventStreamController : ControllerBase
 
 	private Task<long> AuthAsync()
 	{
-		var appId = HttpContext.Request.Headers[Constants.RequestHeaders.AppId];
-		var appSecret = HttpContext.Request.Headers[Constants.RequestHeaders.AppSecret];
+		var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
+		var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
 		var service = HttpContext.RequestServices.GetRequiredService<IAppsApplicationService>();
-		return service.AuthorizeAsync(appId, appSecret, HttpContext.RequestAborted);
+		return service.AuthorizeAsync(app, secret, HttpContext.RequestAborted);
 	}
 }

@@ -1,4 +1,6 @@
-﻿using Nerosoft.Euonia.Application;
+﻿using System.Security.Authentication;
+using Nerosoft.Euonia.Application;
+using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
@@ -30,15 +32,18 @@ public record AppInfoSearchOutput(List<AppInfoItemDto> Result) : IUseCaseOutput;
 public class AppInfoSearchUseCase : IAppInfoSearchUseCase
 {
 	private readonly IAppInfoRepository _repository;
+	private readonly UserPrincipal _user;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="repository"></param>
+	/// <param name="user"></param>
 	/// 
-	public AppInfoSearchUseCase(IAppInfoRepository repository)
+	public AppInfoSearchUseCase(IAppInfoRepository repository, UserPrincipal user)
 	{
 		_repository = repository;
+		_user = user;
 	}
 
 	/// <inheritdoc />
@@ -54,10 +59,31 @@ public class AppInfoSearchUseCase : IAppInfoSearchUseCase
 			throw new BadRequestException(Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
 		}
 
-		var predicate = input.Criteria.GetSpecification().Satisfy();
-		return _repository.FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken)
-						  .ContinueWith(task => new AppInfoSearchOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
+		if (!_user.IsAuthenticated)
+		{
+			throw new AuthenticationException();
+		}
 
-		static IOrderedQueryable<AppInfo> Collator(IQueryable<AppInfo> query) => query.OrderByDescending(t => t.Id);
+		var predicate = input.Criteria.GetSpecification().Satisfy();
+		return _repository.FindAsync(predicate, Permission, input.Page, input.Size, cancellationToken)
+		                  .ContinueWith(task => new AppInfoSearchOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
+
+		IQueryable<AppInfo> Permission(IQueryable<AppInfo> query)
+		{
+			if (!_user.IsInRole("SA"))
+			{
+				var userId = _user.GetUserIdOfInt32();
+				var teamQuery = _repository.Context.Set<TeamMember>();
+				query = from app in query
+				        join member in teamQuery on app.TeamId equals member.TeamId
+				        where member.UserId == userId
+				        select app;
+			}
+
+			{
+			}
+
+			return query.OrderByDescending(t => t.Id);
+		}
 	}
 }

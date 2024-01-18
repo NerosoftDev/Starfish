@@ -87,6 +87,7 @@ public class SettingController : ControllerBase
 	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpGet("detail")]
+	[Produces<SettingDetailDto>]
 	public async Task<IActionResult> GetAsync(long id, string environment)
 	{
 		var result = await _service.GetDetailAsync(id, environment, HttpContext.RequestAborted);
@@ -174,6 +175,7 @@ public class SettingController : ControllerBase
 	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpGet("archive")]
+	[Produces<string>]
 	public async Task<IActionResult> GetArchivedAsync(long id, string environment)
 	{
 		var result = await _service.GetSettingRawAsync(id, environment, HttpContext.RequestAborted);

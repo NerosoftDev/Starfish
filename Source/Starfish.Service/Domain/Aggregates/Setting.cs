@@ -23,11 +23,6 @@ public class Setting : Aggregate<long>, IAuditing
 	public long AppId { get; set; }
 
 	/// <summary>
-	/// 应用编码
-	/// </summary>
-	public string AppCode { get; set; }
-
-	/// <summary>
 	/// 应用环境
 	/// </summary>
 	public string Environment { get; set; }
@@ -41,6 +36,11 @@ public class Setting : Aggregate<long>, IAuditing
 	/// 当前版本号
 	/// </summary>
 	public string Version { get; set; }
+
+	/// <summary>
+	/// 发布时间
+	/// </summary>
+	public DateTime? PublishTime { get; set; }
 
 	public DateTime CreateTime { get; set; }
 
@@ -71,12 +71,11 @@ public class Setting : Aggregate<long>, IAuditing
 	/// </summary>
 	public AppInfo App { get; set; }
 
-	internal static Setting Create(long appId, string appCode, string environment, IDictionary<string, string> items)
+	internal static Setting Create(long appId, string environment, IDictionary<string, string> items)
 	{
 		var setting = new Setting
 		{
 			AppId = appId,
-			AppCode = appCode,
 			Environment = environment,
 			Status = SettingStatus.Pending
 		};
@@ -165,5 +164,10 @@ public class Setting : Aggregate<long>, IAuditing
 		Revisions.Add(revision);
 
 		Version = version;
+		PublishTime = DateTime.Now;
+	}
+
+	internal void Archive(string @operator)
+	{
 	}
 }

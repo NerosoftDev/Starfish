@@ -36,7 +36,7 @@ public class WebSocketController : ControllerBase
 			var appId = await AuthAsync();
 
 			using var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-			var environment = HttpContext.Request.Headers[Constants.RequestHeaders.AppEnv];
+			var environment = HttpContext.Request.Headers[Constants.RequestHeaders.Env];
 
 			var connection = _container.GetOrAdd(appId, environment, HttpContext.Connection.Id);
 
@@ -94,10 +94,10 @@ public class WebSocketController : ControllerBase
 
 	private Task<long> AuthAsync()
 	{
-		var appId = HttpContext.Request.Headers[Constants.RequestHeaders.AppId];
-		var appSecret = HttpContext.Request.Headers[Constants.RequestHeaders.AppSecret];
+		var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
+		var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
 		var service = HttpContext.RequestServices.GetRequiredService<IAppsApplicationService>();
-		return service.AuthorizeAsync(appId, appSecret, HttpContext.RequestAborted);
+		return service.AuthorizeAsync(app, secret, HttpContext.RequestAborted);
 	}
 }

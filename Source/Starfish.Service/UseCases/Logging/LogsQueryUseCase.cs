@@ -68,7 +68,7 @@ public class LogsQueryUseCase : ILogsQueryUseCase
 
 		var predicate = specification.Satisfy();
 
-		var entities = await _repository.FetchAsync(predicate, Collator, input.Page, input.Size, cancellationToken);
+		var entities = await _repository.FindAsync(predicate, Collator, input.Page, input.Size, cancellationToken);
 		var items = entities.ProjectedAsCollection<OperateLogDto>();
 		return new LogsQueryUseCaseOutput(items);
 

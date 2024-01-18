@@ -30,6 +30,7 @@ public class IdentityController : ControllerBase
 	/// <param name="request"></param>
 	/// <returns></returns>
 	[HttpPost("grant")]
+	[Produces(typeof(AuthResponseDto))]
 	public async Task<IActionResult> GrantTokenAsync([FromBody] AuthRequestDto request)
 	{
 		var data = new Dictionary<string, string>
@@ -48,6 +49,7 @@ public class IdentityController : ControllerBase
 	/// <param name="token"></param>
 	/// <returns></returns>
 	[HttpPost("refresh")]
+	[Produces(typeof(AuthResponseDto))]
 	public async Task<IActionResult> RefreshTokenAsync(string token)
 	{
 		var data = new Dictionary<string, string>

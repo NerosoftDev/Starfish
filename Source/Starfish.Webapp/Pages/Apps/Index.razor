@@ -16,7 +16,7 @@
         <FluentGridItem lg="12" sm="12" md="12">
             <div class="search-bar">
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
-                <FluentButton OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
                 <FluentSpacer/>
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(0))">@(Resources.IDS_APPS_INDEX_BUTTON_ADD)</FluentButton>
             </div>
@@ -31,7 +31,7 @@
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_STATUS)" Property="@(c => c.StatusDescription)" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_CREATE_TIME)" Property="@(c => c.CreateTime)" Format="yyyy-MM-dd HH:mm:ss" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_UPDATE_TIME)" Property="@(c => c.UpdateTime)" Format="yyyy-MM-dd HH:mm:ss" />
-                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.End">
+                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetSecretClicked(context.Id))"/>
                     <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => OnDeleteClicked(context.Id, context.Name))"/>

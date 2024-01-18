@@ -82,7 +82,7 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_EXPIRED);
 			}
 
-			var user = await UserRepository.GetAsync(int.Parse(token.Subject), false, query => query.Include(nameof(User.Roles)), cancellationToken);
+			var user = await UserRepository.GetAsync(int.Parse(token.Subject), query => query.AsNoTracking().Include(nameof(User.Roles)), cancellationToken);
 
 			if (user == null)
 			{
