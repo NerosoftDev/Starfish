@@ -35,26 +35,20 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			await CheckCodeAsync(message.Item1.Code);
-			var entity = AppInfo.Create(message.Item1.TeamId, message.Item1.Name, message.Item1.Code);
-			entity.SetSecret(message.Item1.Secret);
-			if (!string.IsNullOrWhiteSpace(message.Item1.Description))
-			{
-				entity.SetDescription(message.Item1.Description);
-			}
+			var business = await Factory.CreateAsync<AppInfoGeneralBusiness>(cancellationToken);
 
-			await _repository.InsertAsync(entity, true, cancellationToken);
-			return entity.Id;
+			business.TeamId = message.Item1.TeamId;
+			business.Name = message.Item1.Name;
+			business.Code = message.Item1.Code;
+			business.Description = message.Item1.Description;
+			business.Secret = message.Item1.Secret;
+
+			business.MarkAsInsert();
+
+			_ = await business.SaveAsync(false, cancellationToken);
+
+			return business.Id;
 		}, context.Response);
-
-		async Task CheckCodeAsync(string code)
-		{
-			var exists = await _repository.GetByCodeAsync(code, cancellationToken);
-			if (exists != null)
-			{
-				throw new ConflictException(Resources.IDS_ERROR_APPINFO_CODE_UNAVAILABLE);
-			}
-		}
 	}
 
 	/// <inheritdoc />
@@ -62,25 +56,15 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var entity = await _repository.GetAsync(message.Item1, cancellationToken);
-			if (entity == null)
-			{
-				throw new AppInfoNotFoundException(message.Item1);
-			}
+			var business = await Factory.FetchAsync<AppInfoGeneralBusiness>(message.Item1, cancellationToken);
 
-			entity.Update(message.Item2.Name, message.Item2.Description);
+			business.Code = message.Item2.Code;
+			business.Name = message.Item2.Name;
+			business.Description = message.Item2.Description;
 
-			switch (message.Item2.IsEnabled)
-			{
-				case true:
-					entity.Enable();
-					break;
-				case false:
-					entity.Disable();
-					break;
-			}
+			business.MarkAsUpdate();
 
-			await _repository.UpdateAsync(entity, true, cancellationToken);
+			_ = await business.SaveAsync(true, cancellationToken);
 		});
 	}
 
@@ -89,14 +73,11 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var entity = await _repository.GetAsync(message.Item1, cancellationToken);
-			if (entity == null)
-			{
-				throw new AppInfoNotFoundException(message.Item1);
-			}
+			var business = await Factory.FetchAsync<AppInfoGeneralBusiness>(message.Item1, cancellationToken);
 
-			entity.RaiseEvent(new AppInfoDeletedEvent());
-			await _repository.DeleteAsync(entity, true, cancellationToken);
+			business.MarkAsDelete();
+
+			_ = await business.SaveAsync(true, cancellationToken);
 		});
 	}
 
@@ -105,26 +86,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var entity = await _repository.GetAsync(message.Item1, cancellationToken);
-			if (entity == null)
-			{
-				throw new AppInfoNotFoundException(message.Item1);
-			}
-
-			switch (message.Item2)
-			{
-				case AppStatus.Disabled:
-					entity.Disable();
-					break;
-				case AppStatus.Enabled:
-					entity.Enable();
-					break;
-				case AppStatus.None:
-				default:
-					throw new InvalidAppInfoStatusException(Resources.IDS_ERROR_APPINFO_STATUS_INVALID);
-			}
-
-			await _repository.UpdateAsync(entity, true, cancellationToken);
+			await Factory.ExecuteAsync<AppInfoStatusBusiness>(message.Id, message.Status, cancellationToken);
 		});
 	}
 
@@ -133,15 +95,7 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var entity = await _repository.GetAsync(message.Item1, cancellationToken);
-			if (entity == null)
-			{
-				throw new AppInfoNotFoundException(message.Item1);
-			}
-
-			entity.SetSecret(message.Item2);
-			entity.RaiseEvent(new AppInfoSecretChangedEvent());
-			await _repository.UpdateAsync(entity, true, cancellationToken);
+			await Factory.ExecuteAsync<AppInfoSecretBusiness>(message.Id, message.Secret, cancellationToken);
 		});
 	}
 }

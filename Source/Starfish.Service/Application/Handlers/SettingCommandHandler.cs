@@ -77,7 +77,7 @@ public class SettingCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	public Task HandleAsync(SettingRevisionCreateCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(SettingRevisionCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
@@ -86,7 +86,7 @@ public class SettingCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	public Task HandleAsync(SettingArchiveCreateCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(SettingArchiveCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

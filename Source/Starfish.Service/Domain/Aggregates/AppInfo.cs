@@ -20,6 +20,12 @@ public sealed class AppInfo : Aggregate<long>,
 	{
 	}
 
+	private AppInfo(int teamId)
+		: this()
+	{
+		TeamId = teamId;
+	}
+
 	/// <summary>
 	/// 团队Id
 	/// </summary>
@@ -69,12 +75,9 @@ public sealed class AppInfo : Aggregate<long>,
 	/// <returns></returns>
 	internal static AppInfo Create(int teamId, string name, string code)
 	{
-		var entity = new AppInfo
-		{
-			TeamId = teamId,
-			Name = name,
-			Code = code.Normalize(TextCaseType.Lower)
-		};
+		var entity = new AppInfo(teamId);
+		entity.SetCode(code);
+		entity.SetName(name);
 		entity.RaiseEvent(new AppInfoCreatedEvent());
 		return entity;
 	}
@@ -85,7 +88,18 @@ public sealed class AppInfo : Aggregate<long>,
 	/// <param name="name"></param>
 	internal void SetName(string name)
 	{
+		ArgumentNullException.ThrowIfNull(name);
 		Name = name;
+	}
+
+	/// <summary>
+	/// 设置唯一编码
+	/// </summary>
+	/// <param name="code"></param>
+	internal void SetCode(string code)
+	{
+		ArgumentNullException.ThrowIfNull(code);
+		Code = code.Normalize(TextCaseType.Lower);
 	}
 
 	/// <summary>
@@ -132,6 +146,10 @@ public sealed class AppInfo : Aggregate<long>,
 		}
 
 		Secret = Cryptography.SHA.Encrypt(secret);
+		if (Id > 0)
+		{
+			RaiseEvent(new AppInfoSecretChangedEvent());
+		}
 	}
 
 	/// <summary>
