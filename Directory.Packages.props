@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
-        <EuoniaPackageVersion>8.1.17</EuoniaPackageVersion>
+        <EuoniaPackageVersion>8.1.20</EuoniaPackageVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="Blazored.LocalStorage" Version="4.4.0" />
