@@ -32,6 +32,7 @@ public class AppsController : ControllerBase
 	/// <param name="size"></param>
 	/// <returns></returns>
 	[HttpGet]
+	[Produces<List<AppInfoItemDto>>]
 	public async Task<IActionResult> SearchAsync([FromQuery] AppInfoCriteria criteria, int page = 1, int size = 10)
 	{
 		var result = await _service.SearchAsync(criteria, page, size, HttpContext.RequestAborted);
@@ -44,6 +45,7 @@ public class AppsController : ControllerBase
 	/// <param name="criteria"></param>
 	/// <returns></returns>
 	[HttpGet("count")]
+	[Produces<int>]
 	public async Task<IActionResult> CountAsync([FromQuery] AppInfoCriteria criteria)
 	{
 		var result = await _service.CountAsync(criteria, HttpContext.RequestAborted);
@@ -56,6 +58,7 @@ public class AppsController : ControllerBase
 	/// <param name="id"></param>
 	/// <returns></returns>
 	[HttpGet("{id:long}")]
+	[Produces<AppInfoDetailDto>]
 	public async Task<IActionResult> GetAsync(long id)
 	{
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);

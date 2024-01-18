@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nerosoft.Starfish.Application;
+using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Webapi.Controllers;
 
@@ -28,6 +29,7 @@ public class DictionaryController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[HttpGet("role")]
+	[Produces<List<DictionaryItemDto>>]
 	public async Task<IActionResult> GetRoleItemsAsync()
 	{
 		var result = await _service.GetRoleItemsAsync();
@@ -39,6 +41,7 @@ public class DictionaryController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[HttpGet("environment")]
+	[Produces<List<DictionaryItemDto>>]
 	public async Task<IActionResult> GetEnvironmentItemsAsync()
 	{
 		var result = await _service.GetEnvironmentItemsAsync();
@@ -50,6 +53,7 @@ public class DictionaryController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[HttpGet("database-type")]
+	[Produces<List<DictionaryItemDto>>]
 	public async Task<IActionResult> GetDatabaseTypeItemsAsync()
 	{
 		var result = await _service.GetDatabaseTypeItemsAsync();
@@ -61,6 +65,7 @@ public class DictionaryController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[HttpGet("setting-item-type")]
+	[Produces<List<DictionaryItemDto>>]
 	public async Task<IActionResult> GetSettingItemTypeItemsAsync()
 	{
 		var result = await _service.GetSettingItemTypeItemsAsync();
