@@ -47,7 +47,7 @@
 @code {
     private GridItemsProvider<UserItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
 
     private UserCriteria Criteria { get; } = new();
 
@@ -60,7 +60,7 @@
             List<UserItemDto> items = null;
             var tasks = new List<Task>
             {
-                Api.SearchAsync(Criteria, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                Api.SearchAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                    .ContinueWith(task =>
                    {
                        task.WaitAndUnwrapException(request.CancellationToken);

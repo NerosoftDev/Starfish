@@ -7,7 +7,7 @@ internal interface ISettingApi
 {
 	[Get("/api/apps/{id}/setting/{environment}/item")]
 	[Headers("x-format: application/json")]
-	Task<IApiResponse<List<SettingItemDto>>> GetItemListAsync(long id, string environment, int page, int size, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<SettingItemDto>>> GetItemListAsync(long id, string environment, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
 
 	[Get("/api/apps/{id}/setting/{environment}/item/count")]
 	Task<IApiResponse<int>> GetItemCountAsync(long id, string environment, CancellationToken cancellationToken = default);

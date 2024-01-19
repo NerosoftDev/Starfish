@@ -3,6 +3,7 @@
 @attribute [Authorize]
 
 @inject IDialogService DialogService
+@inject IToastService ToastService
 @inject NavigationManager Navigation
 @inject IAppsApi Api
 
@@ -53,7 +54,7 @@
 
     private GridItemsProvider<AppInfoItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
 
     private AppInfoCriteria Criteria { get; } = new();
 
@@ -70,7 +71,7 @@
             List<AppInfoItemDto> items = null;
             var tasks = new List<Task>
             {
-                Api.QueryAsync(Criteria, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                Api.QueryAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                    .ContinueWith(task =>
                    {
                        task.WaitAndUnwrapException(request.CancellationToken);
@@ -113,19 +114,27 @@
 
     private async Task OnDeleteClicked(long id, string name)
     {
-        var message = string.Format(Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE, name);
-        var confirmation = await DialogService.ShowConfirmationAsync(message, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE);
+        var confirmationMessage = string.Format(Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE, name);
+        var confirmation = await DialogService.ShowConfirmationAsync(confirmationMessage, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE);
         var result = await confirmation.Result;
         if (!result.Cancelled)
         {
-            await Api.DeleteAsync(id)
-                     .ContinueWith(task =>
-                     {
-                         task.WaitAndUnwrapException();
-                         task.Result.EnsureSuccess();
-                     });
-            await Pagination.SetCurrentPageIndexAsync(0);
-        }
+            try
+            {
+                await Api.DeleteAsync(id)
+                         .ContinueWith(task =>
+                         {
+                             task.WaitAndUnwrapException();
+                             task.Result.EnsureSuccess();
+                         });
+                await Pagination.SetCurrentPageIndexAsync(0);
+            }
+            catch (Exception exception)
+            {
+                var message = exception.GetPromptMessage();
+                ToastService.ShowError(message);
+            }
+    }
     }
 
     private async Task OnResetSecretClicked(long id)

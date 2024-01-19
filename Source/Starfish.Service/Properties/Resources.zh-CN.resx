@@ -192,11 +192,11 @@
   <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
     <value>无效的应用状态。</value>
   </data>
-  <data name="IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>页码必须大于0。</value>
+  <data name="IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0" xml:space="preserve">
+    <value>请求参数'count'必须大于0。</value>
   </data>
-  <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>数量必须大于0。</value>
+  <data name="IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE" xml:space="preserve">
+    <value>请求参数'skip'不能是负数。</value>
   </data>
   <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
     <value>密码不正确。</value>
@@ -320,5 +320,8 @@
   </data>
   <data name="IDS_MESSAGE_LOGS_SETTING_UPDATE" xml:space="preserve">
     <value>更新配置，[应用]:{0}，[环境]:{1}。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_RESET_SECRET" xml:space="preserve">
+    <value>重置应用密钥 {0}({1})。</value>
   </data>
 </root>

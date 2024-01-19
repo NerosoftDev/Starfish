@@ -12,11 +12,11 @@ public interface IAppsApplicationService : IApplicationService
 	/// 获取符合条件的应用列表
 	/// </summary>
 	/// <param name="criteria">查询条件</param>
-	/// <param name="page">页码</param>
-	/// <param name="size">数量</param>
+	/// <param name="skip">页码</param>
+	/// <param name="count">数量</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<AppInfoItemDto>> SearchAsync(AppInfoCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<AppInfoItemDto>> QueryAsync(AppInfoCriteria criteria, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取符合条件的应用数量

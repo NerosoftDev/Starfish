@@ -10,69 +10,69 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 应用信息搜索用例接口
 /// </summary>
-public interface IAppInfoSearchUseCase : IUseCase<AppInfoSearchInput, AppInfoSearchOutput>;
+public interface IAppInfoQueryUseCase : IUseCase<AppInfoQueryInput, AppInfoQueryOutput>;
 
 /// <summary>
 /// 应用信息搜索用例输入
 /// </summary>
 /// <param name="Criteria"></param>
-/// <param name="Page"></param>
-/// <param name="Size"></param>
-public record AppInfoSearchInput(AppInfoCriteria Criteria, int Page, int Size) : IUseCaseInput;
+/// <param name="Skip"></param>
+/// <param name="Count"></param>
+public record AppInfoQueryInput(AppInfoCriteria Criteria, int Skip, int Count) : IUseCaseInput;
 
 /// <summary>
 /// 应用信息搜索用例输出
 /// </summary>
 /// <param name="Result"></param>
-public record AppInfoSearchOutput(List<AppInfoItemDto> Result) : IUseCaseOutput;
+public record AppInfoQueryOutput(List<AppInfoItemDto> Result) : IUseCaseOutput;
 
 /// <summary>
 /// 应用信息搜索用例
 /// </summary>
-public class AppInfoSearchUseCase : IAppInfoSearchUseCase
+public class AppInfoQueryUseCase : IAppInfoQueryUseCase
 {
 	private readonly IAppInfoRepository _repository;
-	private readonly UserPrincipal _user;
+	private readonly UserPrincipal _identity;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="repository"></param>
-	/// <param name="user"></param>
+	/// <param name="identity"></param>
 	/// 
-	public AppInfoSearchUseCase(IAppInfoRepository repository, UserPrincipal user)
+	public AppInfoQueryUseCase(IAppInfoRepository repository, UserPrincipal identity)
 	{
 		_repository = repository;
-		_user = user;
+		_identity = identity;
 	}
 
 	/// <inheritdoc />
-	public Task<AppInfoSearchOutput> ExecuteAsync(AppInfoSearchInput input, CancellationToken cancellationToken = default)
+	public Task<AppInfoQueryOutput> ExecuteAsync(AppInfoQueryInput input, CancellationToken cancellationToken = default)
 	{
-		if (input.Page <= 0)
+		if (input.Skip < 0)
 		{
-			throw new BadRequestException(Resources.IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0);
+			throw new BadRequestException(Resources.IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE);
 		}
 
-		if (input.Size <= 0)
+		if (input.Count <= 0)
 		{
-			throw new BadRequestException(Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
+			throw new BadRequestException(Resources.IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0);
 		}
 
-		if (!_user.IsAuthenticated)
+		if (!_identity.IsAuthenticated)
 		{
 			throw new AuthenticationException();
 		}
 
 		var predicate = input.Criteria.GetSpecification().Satisfy();
-		return _repository.FindAsync(predicate, Permission, input.Page, input.Size, cancellationToken)
-		                  .ContinueWith(task => new AppInfoSearchOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
+		return _repository.FindAsync(predicate, Permission, input.Skip, input.Count, cancellationToken)
+		                  .ContinueWith(task => new AppInfoQueryOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
 
 		IQueryable<AppInfo> Permission(IQueryable<AppInfo> query)
 		{
-			if (!_user.IsInRole("SA"))
+			if (!_identity.IsInRole("SA"))
 			{
-				var userId = _user.GetUserIdOfInt32();
+				var userId = _identity.GetUserIdOfInt32();
 				var teamQuery = _repository.Context.Set<TeamMember>();
 				query = from app in query
 				        join member in teamQuery on app.TeamId equals member.TeamId

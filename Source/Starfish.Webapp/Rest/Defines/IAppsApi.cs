@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Webapp.Rest;
 internal interface IAppsApi
 {
 	[Get("/api/apps")]
-	Task<IApiResponse<List<AppInfoItemDto>>> QueryAsync([Query] AppInfoCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<AppInfoItemDto>>> QueryAsync([Query] AppInfoCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
 
 	[Get("/api/apps/count")]
 	Task<IApiResponse<int>> CountAsync([Query] AppInfoCriteria criteria, CancellationToken cancellationToken = default);

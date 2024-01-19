@@ -28,14 +28,14 @@ public class AppsController : ControllerBase
 	/// 搜索应用信息
 	/// </summary>
 	/// <param name="criteria"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
+	/// <param name="skip"></param>
+	/// <param name="count"></param>
 	/// <returns></returns>
 	[HttpGet]
 	[Produces<List<AppInfoItemDto>>]
-	public async Task<IActionResult> SearchAsync([FromQuery] AppInfoCriteria criteria, int page = 1, int size = 10)
+	public async Task<IActionResult> SearchAsync([FromQuery] AppInfoCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count)
 	{
-		var result = await _service.SearchAsync(criteria, page, size, HttpContext.RequestAborted);
+		var result = await _service.QueryAsync(criteria, skip, count, HttpContext.RequestAborted);
 		return Ok(result);
 	}
 

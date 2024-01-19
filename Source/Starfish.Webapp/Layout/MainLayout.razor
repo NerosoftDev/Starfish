@@ -33,10 +33,7 @@
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.People())" Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentNavLink>
             }
             <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleTeam())" Href="/team">@(Resources.IDS_MENU_TEXT_TEAM)</FluentNavLink>
-            @if (Identity?.IsInRole("SA") == true)
-            {
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentText())" Href="/logs">@(Resources.IDS_MENU_TEXT_LOGS)</FluentNavLink>
-            }
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentText())" Href="/logs">@(Resources.IDS_MENU_TEXT_LOGS)</FluentNavLink>
         </FluentNavMenu>
         <FluentBodyContent>
             <ErrorBoundary>

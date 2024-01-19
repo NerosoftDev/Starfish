@@ -192,11 +192,11 @@
   <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
     <value>Invalid app status.</value>
   </data>
-  <data name="IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>Page must be greater than 0.</value>
+  <data name="IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0" xml:space="preserve">
+    <value>The query parameter 'count' must be greater than 0.</value>
   </data>
-  <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>Page size must be greater than 0.</value>
+  <data name="IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE" xml:space="preserve">
+    <value>The query parameter 'skip' can not be a negative number.</value>
   </data>
   <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
     <value>The password is not correct.</value>
@@ -299,6 +299,9 @@
   </data>
   <data name="IDS_MESSAGE_LOGS_APPS_ENABLE" xml:space="preserve">
     <value>Enable app {0}({1}).</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_RESET_SECRET" xml:space="preserve">
+    <value>Reset app secret {0}({1}).</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_APPS_UPDATE" xml:space="preserve">
     <value>Update app {0}({1}).</value>

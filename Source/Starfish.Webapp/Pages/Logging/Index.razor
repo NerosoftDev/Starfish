@@ -1,6 +1,6 @@
 ﻿@page "/logs"
 
-@attribute [Authorize(Roles = "SA")]
+@attribute [Authorize]
 
 @inject ILogsApi LogsApi
 @inject IDialogService DialogService
@@ -47,7 +47,7 @@
 @code {
     private GridItemsProvider<OperateLogDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
 
     private OperateLogCriteria Criteria { get; } = new();
 
@@ -65,7 +65,7 @@
             List<OperateLogDto> items = null;
             var tasks = new List<Task>
             {
-                LogsApi.QueryAsync(Criteria, request.StartIndex / Constants.Query.DefaultSize + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                LogsApi.QueryAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                        .ContinueWith(task =>
                        {
                            task.WaitAndUnwrapException(request.CancellationToken);

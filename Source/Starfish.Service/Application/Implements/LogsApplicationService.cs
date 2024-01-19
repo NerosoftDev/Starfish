@@ -10,10 +10,10 @@ namespace Nerosoft.Starfish.Application;
 public class LogsApplicationService : BaseApplicationService, ILogsApplicationService
 {
 	/// <inheritdoc />
-	public Task<List<OperateLogDto>> QueryAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
+	public Task<List<OperateLogDto>> QueryAsync(OperateLogCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<ILogsQueryUseCase>();
-		return useCase.ExecuteAsync(new LogsQueryUseCaseInput(criteria, page, size), cancellationToken)
+		return useCase.ExecuteAsync(new LogsQueryUseCaseInput(criteria, skip, count), cancellationToken)
 					  .ContinueWith(task => task.Result.Logs, cancellationToken);
 	}
 

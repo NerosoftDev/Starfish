@@ -12,10 +12,10 @@ namespace Nerosoft.Starfish.Application;
 public class SettingApplicationService : BaseApplicationService, ISettingApplicationService
 {
 	/// <inheritdoc />
-	public Task<List<SettingItemDto>> GetItemListAsync(long appId, string environment, int page, int size, CancellationToken cancellationToken = default)
+	public Task<List<SettingItemDto>> GetItemListAsync(long appId, string environment, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetSettingItemListUseCase>();
-		var input = new GetSettingItemListInput(appId, environment, page, size);
+		var input = new GetSettingItemListInput(appId, environment, skip, count);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
@@ -88,7 +88,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 	public Task<string> GetItemsInTextAsync(long appId, string environment, string type, CancellationToken cancellationToken = default)
 	{
 		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>().GetNamedService<IConfigurationParser>(type.ToLower(CultureInfo.CurrentCulture));
-		return GetItemListAsync(appId, environment, 1, int.MaxValue, cancellationToken)
+		return GetItemListAsync(appId, environment, 0, int.MaxValue, cancellationToken)
 			.ContinueWith(task =>
 			{
 				task.WaitAndUnwrapException(cancellationToken);
