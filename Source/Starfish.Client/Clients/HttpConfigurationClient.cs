@@ -4,13 +4,23 @@ internal class HttpConfigurationClient : IConfigurationClient
 {
 	private readonly HttpClient _httpClient = new();
 
+	private readonly string _team;
+	private readonly string _app;
+	private readonly string _secret;
+	private readonly string _env;
+
 	public HttpConfigurationClient(Uri host, string team, string app, string secret, string env)
 	{
 		_httpClient.BaseAddress = host;
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Team, team);
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.App, app);
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Secret, secret);
-		_httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Env, env);
+		_team = team;
+		_app = app;
+		_secret = secret;
+		_env = env;
+
+		// _httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Team, team);
+		// _httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.App, app);
+		// _httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Secret, secret);
+		// _httpClient.DefaultRequestHeaders.Add(Constants.RequestHeaders.Env, env);
 	}
 
 	public async Task GetConfigurationAsync(Action<byte[], int> dataAction, CancellationToken cancellationToken = default)
@@ -20,7 +30,7 @@ internal class HttpConfigurationClient : IConfigurationClient
 		try
 		{
 			attempts++;
-			using var request = new HttpRequestMessage(HttpMethod.Get, "es");
+			using var request = new HttpRequestMessage(HttpMethod.Get, $"es?team={_team}&app={_app}&secret={_secret}&env={_env}");
 
 			var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 

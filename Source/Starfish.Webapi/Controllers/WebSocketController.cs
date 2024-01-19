@@ -29,22 +29,21 @@ public class WebSocketController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[Route("/ws")]
-	public async Task Handle()
+	public async Task HandleAsync(string team, string app, string secret, string env)
 	{
 		if (HttpContext.WebSockets.IsWebSocketRequest)
 		{
-			var appId = await AuthAsync();
+			var appId = await AuthAsync(team, app, secret);
 
 			using var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-			var environment = HttpContext.Request.Headers[Constants.RequestHeaders.Env];
 
-			var connection = _container.GetOrAdd(appId, environment, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(appId, env, HttpContext.Connection.Id);
 
 			await Task.WhenAny(MonitorChannelAsync(connection.Channel, socket), MonitorClientAsync(socket));
 
 			await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
 
-			_container.Remove(appId, environment, HttpContext.Connection.Id);
+			_container.Remove(appId, env, HttpContext.Connection.Id);
 		}
 		else
 		{
@@ -92,10 +91,10 @@ public class WebSocketController : ControllerBase
 		}
 	}
 
-	private Task<long> AuthAsync()
+	private Task<long> AuthAsync(string team, string app, string secret)
 	{
-		var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
-		var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
+		// var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
+		// var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
 		var service = HttpContext.RequestServices.GetRequiredService<IAppsApplicationService>();
 		return service.AuthorizeAsync(app, secret, HttpContext.RequestAborted);
