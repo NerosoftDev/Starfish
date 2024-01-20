@@ -105,43 +105,4 @@ public class DictionaryApplicationService : BaseApplicationService, IDictionaryA
 		};
 		return Task.FromResult(items);
 	}
-
-	/// <inheritdoc />
-	public Task<List<DictionaryItemDto>> GetSettingItemTypeItemsAsync(CancellationToken cancellationToken = default)
-	{
-		var items = new List<DictionaryItemDto>
-		{
-			new()
-			{
-				Name = nameof(SettingItemType.Root),
-				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_ROOT
-			},
-			new()
-			{
-				Name = nameof(SettingItemType.Array),
-				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_ARRAY
-			},
-			new()
-			{
-				Name = nameof(SettingItemType.Object),
-				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_OBJECT
-			},
-			new()
-			{
-				Name = nameof(SettingItemType.String),
-				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_STRING
-			},
-			new()
-			{
-				Name = nameof(SettingItemType.Number),
-				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_NUMBER
-			},
-			new()
-			{
-				Name = nameof(SettingItemType.Boolean),
-				Description = Resources.IDS_ENUM_SETTING_ITEM_TYPE_BOOLEAN
-			}
-		};
-		return Task.FromResult(items);
-	}
 }

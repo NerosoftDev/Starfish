@@ -59,16 +59,4 @@ public class DictionaryController : ControllerBase
 		var result = await _service.GetDatabaseTypeItemsAsync();
 		return Ok(result);
 	}
-
-	/// <summary>
-	/// 获取支持的配置节点类型列表
-	/// </summary>
-	/// <returns></returns>
-	[HttpGet("setting-item-type")]
-	[Produces<List<DictionaryItemDto>>]
-	public async Task<IActionResult> GetSettingItemTypeItemsAsync()
-	{
-		var result = await _service.GetSettingItemTypeItemsAsync();
-		return Ok(result);
-	}
 }
