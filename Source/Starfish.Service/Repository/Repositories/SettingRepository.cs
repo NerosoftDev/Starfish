@@ -38,7 +38,7 @@ public class SettingRepository : BaseRepository<DataContext, Setting, long>, ISe
 		return GetAsync(predicate, tracking, properties, cancellationToken);
 	}
 
-	public Task<List<SettingItem>> GetItemListAsync(long id, string environment, int page, int size, CancellationToken cancellationToken = default)
+	public Task<List<SettingItem>> GetItemListAsync(long id, string environment, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		ISpecification<SettingItem>[] specifications =
 		[
@@ -52,7 +52,8 @@ public class SettingRepository : BaseRepository<DataContext, Setting, long>, ISe
 		                   .AsQueryable()
 		                   .Include(t => t.Setting);
 		return query.Where(predicate)
-		            .Paginate(page, size)
+		            .Skip(skip)
+		            .Take(count)
 		            .ToListAsync(cancellationToken);
 	}
 

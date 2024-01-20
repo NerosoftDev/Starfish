@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Application;
+﻿using System.Security.Authentication;
+using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Repository;
@@ -17,9 +18,9 @@ public interface ILogsQueryUseCase : IUseCase<LogsQueryUseCaseInput, LogsQueryUs
 /// 日志搜索用例输入
 /// </summary>
 /// <param name="Criteria"></param>
-/// <param name="Page"></param>
-/// <param name="Size"></param>
-public record LogsQueryUseCaseInput(OperateLogCriteria Criteria, int Page, int Size) : IUseCaseInput;
+/// <param name="Skip"></param>
+/// <param name="Count"></param>
+public record LogsQueryUseCaseInput(OperateLogCriteria Criteria, int Skip, int Count) : IUseCaseInput;
 
 /// <summary>
 /// 日志搜索用例输出
@@ -33,42 +34,47 @@ public record LogsQueryUseCaseOutput(List<OperateLogDto> Logs) : IUseCaseOutput;
 public class LogsQueryUseCase : ILogsQueryUseCase
 {
 	private readonly IOperateLogRepository _repository;
-	private readonly UserPrincipal _user;
+	private readonly UserPrincipal _identity;
 
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="repository"></param>
-	/// <param name="user"></param>
-	public LogsQueryUseCase(IOperateLogRepository repository, UserPrincipal user)
+	/// <param name="identity"></param>
+	public LogsQueryUseCase(IOperateLogRepository repository, UserPrincipal identity)
 	{
 		_repository = repository;
-		_user = user;
+		_identity = identity;
 	}
 
 	/// <inheritdoc />
 	public async Task<LogsQueryUseCaseOutput> ExecuteAsync(LogsQueryUseCaseInput input, CancellationToken cancellationToken = default)
 	{
-		if (input.Page <= 0)
+		if (input.Skip < 0)
 		{
-			throw new BadRequestException(Resources.IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0);
+			throw new BadRequestException(Resources.IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE);
 		}
 
-		if (input.Size <= 0)
+		if (input.Count <= 0)
 		{
-			throw new BadRequestException(Resources.IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0);
+			throw new BadRequestException(Resources.IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0);
+		}
+
+		if (!_identity.IsAuthenticated)
+		{
+			throw new AuthenticationException();
 		}
 
 		var specification = input.Criteria.GetSpecification();
 
-		if (!_user.IsInRole("SA"))
+		if (!_identity.IsInRole("SA"))
 		{
-			specification &= OperateLogSpecification.UserNameEquals(_user.Username);
+			specification &= OperateLogSpecification.UserNameEquals(_identity.Username);
 		}
 
 		var predicate = specification.Satisfy();
 
-		var entities = await _repository.FindAsync(predicate, Collator, input.Page, input.Size, cancellationToken);
+		var entities = await _repository.FindAsync(predicate, Collator, input.Skip, input.Count, cancellationToken);
 		var items = entities.ProjectedAsCollection<OperateLogDto>();
 		return new LogsQueryUseCaseOutput(items);
 

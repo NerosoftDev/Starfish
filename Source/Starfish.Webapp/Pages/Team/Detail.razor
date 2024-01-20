@@ -3,6 +3,7 @@
 @inject ITeamApi TeamApi
 @inject IAppsApi AppsApi
 @inject IDialogService DialogService
+@inject IToastService ToastService
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
     <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
@@ -153,15 +154,23 @@
         var result = await confirmation.Result;
         if (!result.Cancelled)
         {
-            await TeamApi.RemoveMemberAsync(Id, [userId])
-                         .ContinueWith(task =>
-                         {
-                             task.WaitAndUnwrapException();
-                             task.Result.EnsureSuccess();
-                         });
-            await LoadMembersAsync();
-            StateHasChanged();
-        }
+            try
+            {
+                await TeamApi.RemoveMemberAsync(Id, [userId])
+                             .ContinueWith(task =>
+                             {
+                                 task.WaitAndUnwrapException();
+                                 task.Result.EnsureSuccess();
+                             });
+                await LoadMembersAsync();
+                StateHasChanged();
+            }
+            catch (Exception exception)
+            {
+                var message = exception.GetPromptMessage();
+                ToastService.ShowError(message);
+            }
+    }
     }
 
     private async Task OnAppendMemberClicked()

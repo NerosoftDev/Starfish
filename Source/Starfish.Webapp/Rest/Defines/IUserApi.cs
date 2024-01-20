@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Webapp.Rest;
 internal interface IUserApi
 {
 	[Get("/api/user")]
-	Task<IApiResponse<List<UserItemDto>>> SearchAsync([Query] UserCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<UserItemDto>>> SearchAsync([Query] UserCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
 
 	[Get("/api/user/count")]
 	Task<IApiResponse<int>> CountAsync([Query] UserCriteria criteria, CancellationToken cancellationToken = default);

@@ -136,34 +136,13 @@
     <value>用户验收测试</value>
   </data>
   <data name="IDS_DICTIONARY_NAME_SA" xml:space="preserve">
-    <value>超级管理员</value>
+    <value>系统管理员</value>
   </data>
   <data name="IDS_ENUM_APPINFO_STATUS_DISABLED" xml:space="preserve">
     <value>禁用</value>
   </data>
   <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
     <value>启用</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_ARRAY" xml:space="preserve">
-    <value>集合</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_BOOLEAN" xml:space="preserve">
-    <value>布尔</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_NUMBER" xml:space="preserve">
-    <value>数字</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_OBJECT" xml:space="preserve">
-    <value>对象</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_REFERER" xml:space="preserve">
-    <value>引用</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_ROOT" xml:space="preserve">
-    <value>根节点</value>
-  </data>
-  <data name="IDS_ENUM_SETTING_ITEM_TYPE_STRING" xml:space="preserve">
-    <value>字符串</value>
   </data>
   <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
     <value>禁用</value>
@@ -181,7 +160,7 @@
     <value>应用唯一编码不可用。</value>
   </data>
   <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
-    <value>应用信息不存在，[Id]:{0}。</value>
+    <value>应用不存在，[Id]:{0}。</value>
   </data>
   <data name="IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE" xml:space="preserve">
     <value>密钥不符合规则。</value>
@@ -192,20 +171,20 @@
   <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
     <value>无效的应用状态。</value>
   </data>
-  <data name="IDS_ERROR_PAGE_NUMBER_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>页码必须大于0。</value>
+  <data name="IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0" xml:space="preserve">
+    <value>请求参数'count'必须大于0。</value>
   </data>
-  <data name="IDS_ERROR_PAGE_SIZE_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>数量必须大于0。</value>
+  <data name="IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE" xml:space="preserve">
+    <value>请求参数'skip'不能是负数。</value>
   </data>
   <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
     <value>密码不正确。</value>
   </data>
   <data name="IDS_ERROR_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
-    <value>Token已失效。</value>
+    <value>刷新令牌已过期。</value>
   </data>
   <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
-    <value>无效的Token。</value>
+    <value>刷新令牌无效。</value>
   </data>
   <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
     <value>Token不能为空。</value>
@@ -299,6 +278,9 @@
   </data>
   <data name="IDS_MESSAGE_LOGS_APPS_ENABLE" xml:space="preserve">
     <value>启用应用 {0}({1})。</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_APPS_RESET_SECRET" xml:space="preserve">
+    <value>重置应用密钥 {0}({1})。</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_APPS_UPDATE" xml:space="preserve">
     <value>更新应用 {0}({1})。</value>

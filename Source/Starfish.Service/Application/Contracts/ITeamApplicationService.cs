@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Application;
 
 public interface ITeamApplicationService : IApplicationService
 {
-	Task<List<TeamItemDto>> QueryAsync(TeamCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<TeamItemDto>> QueryAsync(TeamCriteria criteria, int skip, int count, CancellationToken cancellationToken = default);
 
 	Task<int> CountAsync(TeamCriteria criteria, CancellationToken cancellationToken = default);
 

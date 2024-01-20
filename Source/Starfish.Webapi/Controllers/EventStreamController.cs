@@ -31,15 +31,15 @@ public class EventStreamController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[Route("/es")]
-	public async Task HandleAsync()
+	public async Task HandleAsync(string team, string app, string secret, string env)
 	{
-		var appId = await AuthAsync();
-		var environment = HttpContext.Request.Headers[Constants.RequestHeaders.Env];
+		var appId = await AuthAsync(team, app, secret);
+		//var environment = HttpContext.Request.Headers[Constants.RequestHeaders.Env];
 		Response.Headers.Append(HeaderNames.ContentType, "text/event-stream");
 		Response.Headers.Append(HeaderNames.Connection, "close");
 		try
 		{
-			var connection = _container.GetOrAdd(appId, environment, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(appId, env, HttpContext.Connection.Id);
 
 			while (await connection.Channel.Reader.WaitToReadAsync(HttpContext.RequestAborted))
 			{
@@ -65,14 +65,14 @@ public class EventStreamController : ControllerBase
 		finally
 		{
 			Response.Body.Close();
-			_container.Remove(appId, environment, HttpContext.Connection.Id);
+			_container.Remove(appId, env, HttpContext.Connection.Id);
 		}
 	}
 
-	private Task<long> AuthAsync()
+	private Task<long> AuthAsync(string team, string app, string secret)
 	{
-		var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
-		var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
+		// var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
+		// var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
 		var service = HttpContext.RequestServices.GetRequiredService<IAppsApplicationService>();
 		return service.AuthorizeAsync(app, secret, HttpContext.RequestAborted);

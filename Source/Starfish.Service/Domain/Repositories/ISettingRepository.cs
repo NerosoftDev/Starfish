@@ -16,7 +16,7 @@ public interface ISettingRepository : IBaseRepository<DataContext, Setting, long
 
 	Task<Setting> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default);
 	
-	Task<List<SettingItem>> GetItemListAsync(long id, string environment, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<SettingItem>> GetItemListAsync(long id, string environment, int skip, int count, CancellationToken cancellationToken = default);
 
 	Task<int> GetItemCountAsync(long id, string environment, CancellationToken cancellationToken = default);
 }

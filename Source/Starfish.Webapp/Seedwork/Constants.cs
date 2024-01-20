@@ -10,7 +10,8 @@ internal class Constants
 
 	public static class Query
 	{
-		public const int DefaultSize = 20;
+		public const int Skip = 0;
+		public const int Count = 20;
 	}
 	
 	public static class Setting

@@ -99,7 +99,7 @@
 
     private GridItemsProvider<SettingItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
 
     private int Total { get; set; }
 
@@ -123,7 +123,7 @@
             List<SettingItemDto> items = null;
             var tasks = new List<Task>
             {
-                SettingApi.GetItemListAsync(Id, Environment, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                SettingApi.GetItemListAsync(Id, Environment, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                           .ContinueWith(task =>
                           {
                               task.WaitAndUnwrapException(request.CancellationToken);

@@ -13,11 +13,11 @@ public interface ISettingApplicationService : IApplicationService
 	/// </summary>
 	/// <param name="appId"></param>
 	/// <param name="environment"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
+	/// <param name="skip"></param>
+	/// <param name="count"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<SettingItemDto>> GetItemListAsync(long appId, string environment, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<SettingItemDto>> GetItemListAsync(long appId, string environment, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置项数量

@@ -51,7 +51,7 @@
 
     private GridItemsProvider<TeamItemDto> _provider;
 
-    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.DefaultSize };
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
 
     private TeamCriteria Criteria { get; } = new();
 
@@ -68,7 +68,7 @@
             List<TeamItemDto> items = null;
             var tasks = new List<Task>
             {
-                Api.QueryAsync(Criteria, request.StartIndex + 1, Pagination.ItemsPerPage, request.CancellationToken)
+                Api.QueryAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                    .ContinueWith(task =>
                    {
                        task.WaitAndUnwrapException(request.CancellationToken);

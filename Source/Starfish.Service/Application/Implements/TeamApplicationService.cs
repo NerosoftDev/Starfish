@@ -6,10 +6,10 @@ namespace Nerosoft.Starfish.Application;
 
 public class TeamApplicationService : BaseApplicationService, ITeamApplicationService
 {
-	public Task<List<TeamItemDto>> QueryAsync(TeamCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
+	public Task<List<TeamItemDto>> QueryAsync(TeamCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var userCase = LazyServiceProvider.GetService<ITeamQueryUseCase>();
-		var input = new TeamQueryInput(criteria, page, size);
+		var input = new TeamQueryInput(criteria, skip, count);
 		return userCase.ExecuteAsync(input, cancellationToken)
 		               .ContinueWith(task => task.Result.Result, cancellationToken);
 	}

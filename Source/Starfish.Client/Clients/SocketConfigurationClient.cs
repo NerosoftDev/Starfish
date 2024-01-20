@@ -7,20 +7,20 @@ internal class SocketConfigurationClient : IConfigurationClient
 	private readonly ClientWebSocket _client = new();
 	private readonly Uri _uri;
 
-	public SocketConfigurationClient(Uri host,string team,  string app, string secret, string env)
+	public SocketConfigurationClient(Uri host, string team, string app, string secret, string env)
 	{
-		_uri = new Uri($"{host.AbsoluteUri}ws");
-		_client.Options.SetRequestHeader(Constants.RequestHeaders.Team, team);
-		_client.Options.SetRequestHeader(Constants.RequestHeaders.App, app);
-		_client.Options.SetRequestHeader(Constants.RequestHeaders.Secret, secret);
-		_client.Options.SetRequestHeader(Constants.RequestHeaders.Env, env);
+		_uri = new Uri($"{host.AbsoluteUri}ws?team={team}&app={app}&secret={secret}&env={env}");
+		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Team, team);
+		// _client.Options.SetRequestHeader(Constants.RequestHeaders.App, app);
+		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Secret, secret);
+		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Env, env);
 	}
 
 	public async Task GetConfigurationAsync(Action<byte[], int> dataAction, CancellationToken cancellationToken = default)
 	{
 		var attempts = 0;
 
-	RUN:
+		RUN:
 		try
 		{
 			attempts++;

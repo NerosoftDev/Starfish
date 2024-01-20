@@ -11,10 +11,10 @@ namespace Nerosoft.Starfish.Application;
 public class AppsApplicationService : BaseApplicationService, IAppsApplicationService
 {
 	/// <inheritdoc />
-	public Task<List<AppInfoItemDto>> SearchAsync(AppInfoCriteria criteria, int page, int size, CancellationToken cancellationToken = default)
+	public Task<List<AppInfoItemDto>> QueryAsync(AppInfoCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
-		var input = new AppInfoSearchInput(criteria, page, size);
-		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoSearchUseCase>();
+		var input = new AppInfoQueryInput(criteria, skip, count);
+		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoQueryUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}

@@ -12,11 +12,11 @@ public interface ILogsApplicationService : IApplicationService
 	/// 搜索日志
 	/// </summary>
 	/// <param name="criteria"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
+	/// <param name="skip"></param>
+	/// <param name="count"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<OperateLogDto>> QueryAsync(OperateLogCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<OperateLogDto>> QueryAsync(OperateLogCriteria criteria, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询日志数量

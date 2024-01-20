@@ -28,11 +28,4 @@ public interface IDictionaryApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<List<DictionaryItemDto>> GetDatabaseTypeItemsAsync(CancellationToken cancellationToken = default);
-
-	/// <summary>
-	/// 获取可用的配置节点类型列表
-	/// </summary>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task<List<DictionaryItemDto>> GetSettingItemTypeItemsAsync(CancellationToken cancellationToken = default);
 }

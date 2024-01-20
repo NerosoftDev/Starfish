@@ -131,6 +131,40 @@ public sealed class LoggingEventSubscriber
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
+	[Subscribe]
+	public Task HandleAsync(AppInfoSecretChangedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		var aggregate = @event.GetAggregate<AppInfo>();
+		var command = new OperateLogCreateCommand
+		{
+			Module = "apps",
+			Type = "secret",
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_RESET_SECRET, aggregate.Code, aggregate.Name),
+			OperateTime = DateTime.Now,
+			RequestTraceId = context.RequestTraceId,
+			UserName = context.User?.Identity?.Name
+		};
+
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
+	}
+
+	[Subscribe]
+	public Task HandleAsync(AppInfoUpdatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		var aggregate = @event.GetAggregate<AppInfo>();
+		var command = new OperateLogCreateCommand
+		{
+			Module = "apps",
+			Type = "update",
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_UPDATE, aggregate.Code, aggregate.Name),
+			OperateTime = DateTime.Now,
+			RequestTraceId = context.RequestTraceId,
+			UserName = context.User?.Identity?.Name
+		};
+
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
+	}
+
 	/// <summary>
 	/// 处理配置节点创建事件
 	/// </summary>
@@ -196,4 +230,6 @@ public sealed class LoggingEventSubscriber
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
+
+	
 }

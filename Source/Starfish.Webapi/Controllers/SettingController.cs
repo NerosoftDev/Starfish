@@ -30,13 +30,13 @@ public class SettingController : ControllerBase
 	/// </summary>
 	/// <param name="id">应用Id</param>
 	/// <param name="environment">应用环境</param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
+	/// <param name="skip"></param>
+	/// <param name="count"></param>
 	/// <param name="format"></param>
 	/// <returns></returns>
 	[HttpGet("item")]
 	[Produces(typeof(List<SettingItemDto>))]
-	public async Task<IActionResult> GetItemListAsync(long id, string environment, int page = 1, int size = 20, [FromHeader(Name = "x-format")] string format = null)
+	public async Task<IActionResult> GetItemListAsync(long id, string environment, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
 	{
 		switch (format)
 		{
@@ -47,7 +47,7 @@ public class SettingController : ControllerBase
 				var json = await _service.GetItemsInTextAsync(id, environment, "json", HttpContext.RequestAborted);
 				return Ok(json);
 			default:
-				var result = await _service.GetItemListAsync(id, environment, page, size, HttpContext.RequestAborted);
+				var result = await _service.GetItemListAsync(id, environment, skip, count, HttpContext.RequestAborted);
 				return Ok(result);
 		}
 	}

@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Webapp.Rest;
 internal interface ITeamApi
 {
 	[Get("/api/team")]
-	Task<IApiResponse<List<TeamItemDto>>> QueryAsync([Query] TeamCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<TeamItemDto>>> QueryAsync([Query] TeamCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
 
 	[Get("/api/team/count")]
 	Task<IApiResponse<int>> CountAsync([Query] TeamCriteria criteria, CancellationToken cancellationToken = default);

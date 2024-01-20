@@ -28,14 +28,14 @@ public class UserController : ControllerBase
 	/// 查询用户列表
 	/// </summary>
 	/// <param name="criteria"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
+	/// <param name="skip"></param>
+	/// <param name="count"></param>
 	/// <returns></returns>
 	[HttpGet]
 	[Produces(typeof(List<UserItemDto>))]
-	public async Task<IActionResult> QueryAsync([FromQuery] UserCriteria criteria, int page = 1, int size = 10)
+	public async Task<IActionResult> QueryAsync([FromQuery] UserCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count)
 	{
-		var result = await _service.SearchAsync(criteria, page, size, HttpContext.RequestAborted);
+		var result = await _service.QueryAsync(criteria, skip, count, HttpContext.RequestAborted);
 		return Ok(result);
 	}
 

@@ -252,6 +252,33 @@
   <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
     <value>用户名登录</value>
   </data>
+  <data name="IDS_LOGS_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>日志详情</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>日志内容</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_ERROR" xml:space="preserve">
+    <value>错误信息</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_MODULE" xml:space="preserve">
+    <value>模块</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_OPERATE_TIME" xml:space="preserve">
+    <value>操作时间</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID" xml:space="preserve">
+    <value>请求识别Id</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_TYPE" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="IDS_LOGS_DETAIL_LABEL_USER_NAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL" xml:space="preserve">
+    <value>查看详情</value>
+  </data>
   <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
     <value>日志内容</value>
   </data>
@@ -455,32 +482,5 @@
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用户名</value>
-  </data>
-  <data name="IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL" xml:space="preserve">
-    <value>查看详情</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>日志详情</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>日志内容</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_ERROR" xml:space="preserve">
-    <value>错误信息</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_MODULE" xml:space="preserve">
-    <value>模块</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_OPERATE_TIME" xml:space="preserve">
-    <value>操作时间</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_TYPE" xml:space="preserve">
-    <value>类型</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_USER_NAME" xml:space="preserve">
-    <value>用户名</value>
-  </data>
-  <data name="IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID" xml:space="preserve">
-    <value>请求识别Id</value>
   </data>
 </root>

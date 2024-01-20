@@ -28,14 +28,14 @@ public class TeamController : ControllerBase
 	/// 搜索团队
 	/// </summary>
 	/// <param name="criteria"></param>
-	/// <param name="page"></param>
-	/// <param name="size"></param>
+	/// <param name="skip"></param>
+	/// <param name="count"></param>
 	/// <returns></returns>
 	[HttpGet]
 	[Produces(typeof(List<TeamItemDto>))]
-	public async Task<IActionResult> QueryAsync([FromQuery] TeamCriteria criteria, int page = 1, int size = 10)
+	public async Task<IActionResult> QueryAsync([FromQuery] TeamCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count)
 	{
-		var result = await _service.QueryAsync(criteria, page, size, HttpContext.RequestAborted);
+		var result = await _service.QueryAsync(criteria, skip, count, HttpContext.RequestAborted);
 		return Ok(result);
 	}
 
@@ -52,11 +52,11 @@ public class TeamController : ControllerBase
 		return Ok(result);
 	}
 
-    /// <summary>
-    /// 获取团队详情
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+	/// <summary>
+	/// 获取团队详情
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
 	[HttpGet("{id:int}")]
 	[Produces(typeof(TeamDetailDto))]
 	public async Task<IActionResult> GetAsync(int id)
@@ -64,7 +64,7 @@ public class TeamController : ControllerBase
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
 	}
-	
+
 	/// <summary>
 	/// 创建团队
 	/// </summary>

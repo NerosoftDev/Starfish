@@ -29,11 +29,11 @@ public interface IUserApplicationService : IApplicationService
 	/// 查询符合条件的用户列表
 	/// </summary>
 	/// <param name="criteria"></param>
-	/// <param name="size"></param>
+	/// <param name="count"></param>
 	/// <param name="cancellationToken"></param>
-	/// <param name="page"></param>
+	/// <param name="skip"></param>
 	/// <returns></returns>
-	Task<List<UserItemDto>> SearchAsync(UserCriteria criteria, int page, int size, CancellationToken cancellationToken = default);
+	Task<List<UserItemDto>> QueryAsync(UserCriteria criteria, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询符合条件的用户数量
