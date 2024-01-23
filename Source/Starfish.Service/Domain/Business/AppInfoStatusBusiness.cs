@@ -40,7 +40,7 @@ public class AppInfoStatusBusiness : CommandObject<AppInfoStatusBusiness>, IDoma
 				break;
 			case AppStatus.None:
 			default:
-				throw new InvalidAppInfoStatusException(Resources.IDS_ERROR_APPINFO_STATUS_INVALID);
+				throw new ArgumentOutOfRangeException(Resources.IDS_ERROR_APPINFO_STATUS_INVALID);
 		}
 
 		await AppInfoRepository.UpdateAsync(aggregate, true, cancellationToken);

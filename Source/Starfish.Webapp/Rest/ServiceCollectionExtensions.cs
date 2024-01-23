@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Options;
 using Polly;
@@ -77,11 +78,13 @@ internal static class ServiceCollectionExtensions
 		return RestService.For<TService>(client, _refitSettings);
 	}
 
+	[SuppressMessage("ReSharper", "UnusedMember.Local")]
 	private static IAsyncPolicy<HttpResponseMessage> GetTimeoutPolicy()
 	{
 		return Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(15));
 	}
 
+	[SuppressMessage("ReSharper", "UnusedMember.Local")]
 	private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 	{
 		return HttpPolicyExtensions.HandleTransientHttpError()

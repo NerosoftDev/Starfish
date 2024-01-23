@@ -193,13 +193,13 @@
     <value>修改时间</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
-    <value>开发</value>
+    <value>开发环境</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PET" xml:space="preserve">
-    <value>性能评估</value>
+    <value>性能评估测试</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PRD" xml:space="preserve">
-    <value>生产</value>
+    <value>生产环境</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIM" xml:space="preserve">
     <value>模拟测试</value>
@@ -268,7 +268,7 @@
     <value>操作时间</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID" xml:space="preserve">
-    <value>请求识别Id</value>
+    <value>请求识别码</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_TYPE" xml:space="preserve">
     <value>类型</value>
@@ -289,7 +289,7 @@
     <value>操作时间</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
-    <value>请求跟踪Id</value>
+    <value>请求识别码</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
     <value>类型</value>
@@ -373,7 +373,7 @@
     <value>发布</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
-    <value>更新内容</value>
+    <value>发布内容</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
     <value>版本号</value>
@@ -391,7 +391,7 @@
     <value>数据库</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
-    <value>Redis Key名称</value>
+    <value>Redis键名称</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
     <value>同步到Redis</value>
@@ -409,7 +409,7 @@
     <value>确定要移除团队成员吗？</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>移除成员</value>
+    <value>移除团队成员</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
     <value>团队别名</value>
@@ -421,13 +421,13 @@
     <value>团队名称</value>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>新增团队</value>
+    <value>新建团队</value>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_EDIT" xml:space="preserve">
     <value>编辑团队</value>
   </data>
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>新增团队</value>
+    <value>新建团队</value>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
     <value>别名</value>
@@ -445,10 +445,10 @@
     <value>负责人</value>
   </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
-    <value>新增用户</value>
+    <value>新建用户</value>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_ADD" xml:space="preserve">
-    <value>新增用户</value>
+    <value>新建用户</value>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
     <value>编辑用户</value>

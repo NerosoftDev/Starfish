@@ -88,6 +88,17 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
 		var appInfo = await AppInfoRepository.GetAsync(AppId, cancellationToken);
+
+		if (appInfo == null)
+		{
+			throw new AppInfoNotFoundException(AppId);
+		}
+
+		if (appInfo.Status != AppStatus.Enabled)
+		{
+			throw new AppInfoNotEnabledException(AppId);
+		}
+
 		var aggregate = Setting.Create(AppId, Environment, Items);
 		await SettingRepository.InsertAsync(aggregate, true, cancellationToken);
 		Id = aggregate.Id;
