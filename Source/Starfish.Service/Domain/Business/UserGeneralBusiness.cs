@@ -22,7 +22,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 	private User Aggregate { get; set; }
 
-	public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(p => p.Id);
+	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
 	public static readonly PropertyInfo<string> UserNameProperty = RegisterProperty<string>(p => p.UserName);
 	public static readonly PropertyInfo<string> PasswordProperty = RegisterProperty<string>(p => p.Password);
 	public static readonly PropertyInfo<string> NickNameProperty = RegisterProperty<string>(p => p.NickName);
@@ -30,7 +30,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(p => p.Phone);
 	public static readonly PropertyInfo<List<string>> RolesProperty = RegisterProperty<List<string>>(p => p.Roles);
 
-	public int Id
+	public long Id
 	{
 		get => GetProperty(IdProperty);
 		private set => LoadProperty(IdProperty, value);
@@ -87,7 +87,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var user = await Repository.GetAsync(id, query => query.AsTracking().Include(nameof(User.Roles)), cancellationToken);
 
