@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 团队聚合根对象
 /// </summary>
-public sealed class Team : Aggregate<int>,
+public sealed class Team : Aggregate<long>,
                            IAuditing
 {
 	public string Alias { get; set; }
@@ -15,7 +15,7 @@ public sealed class Team : Aggregate<int>,
 
 	public string Description { get; set; }
 
-	public int OwnerId { get; set; }
+	public long OwnerId { get; set; }
 
 	public int MemberCount { get; set; }
 
@@ -29,7 +29,7 @@ public sealed class Team : Aggregate<int>,
 
 	public HashSet<TeamMember> Members { get; set; }
 
-	internal static Team Create(string name, string description, int ownerId)
+	internal static Team Create(string name, string description, long ownerId)
 	{
 		var team = new Team
 		{
@@ -72,7 +72,7 @@ public sealed class Team : Aggregate<int>,
 		Description = description;
 	}
 
-	internal void AddMember(int userId)
+	internal void AddMember(long userId)
 	{
 		Members ??= [];
 
@@ -86,7 +86,7 @@ public sealed class Team : Aggregate<int>,
 		MemberCount++;
 	}
 
-	internal void RemoveMember(int userId)
+	internal void RemoveMember(long userId)
 	{
 		if (Members == null || Members.All(t => t.UserId != userId))
 		{
