@@ -88,13 +88,13 @@
         await Task.CompletedTask;
     }
 
-    private async Task OnDetailClicked(int id)
+    private async Task OnDetailClicked(long id)
     {
         Navigation.NavigateTo($"/user/{id}");
         await Task.CompletedTask;
     }
 
-    private async Task OnEditClicked(int id)
+    private async Task OnEditClicked(long id)
     {
         var title = id == 0 ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
         var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
@@ -110,7 +110,7 @@
         await Pagination.SetCurrentPageIndexAsync(0);
     }
 
-    private async Task OnResetPasswordClicked(int id)
+    private async Task OnResetPasswordClicked(long id)
     {
         await DialogService.ShowDialogAsync<ResetPassword>(id, new DialogParameters { Modal = true });
     }

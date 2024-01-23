@@ -8,7 +8,7 @@ public interface ITeamMemberQueryUseCase : IUseCase<TeamMemberQueryInput, TeamMe
 
 public record TeamMemberQueryOutput(List<TeamMemberDto> Result) : IUseCaseOutput;
 
-public record TeamMemberQueryInput(int Id) : IUseCaseInput;
+public record TeamMemberQueryInput(long Id) : IUseCaseInput;
 
 public class TeamMemberQueryUseCase : ITeamMemberQueryUseCase
 {

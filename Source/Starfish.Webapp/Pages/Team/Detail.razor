@@ -1,4 +1,4 @@
-﻿@page "/team/{id:int}"
+﻿@page "/team/{id:long}"
 
 @inject ITeamApi TeamApi
 @inject IAppsApi AppsApi
@@ -20,7 +20,7 @@
             <FluentLabel>Updated at: @Data.UpdateTime.Date</FluentLabel>
             <FluentDivider Style="width: 100%;"/>
             <FluentLabel>@Data.Description</FluentLabel>
-            @if (Data.OwnerId != Identity?.GetUserIdOfInt32())
+            @if (Data.OwnerId != Identity?.GetUserIdOfInt64())
             {
                 <FluentDivider Style="width: 100%;" />
                 <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
@@ -37,7 +37,7 @@
                     <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                         @foreach (var member in Members)
                         {
-                            @if (Data.OwnerId != Identity?.GetUserIdOfInt32())
+                            @if (Data.OwnerId != Identity?.GetUserIdOfInt64())
                             {
                                 <FluentPersona Name="@member.NickName"
                                                ImageSize="50px"
@@ -66,7 +66,7 @@
 @code {
 
     [Parameter]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationState { get; set; }
@@ -134,7 +134,7 @@
         try
         {
             var criteria = new AppInfoCriteria { TeamId = Id };
-            return AppsApi.QueryAsync(criteria, 1, 100)
+            return AppsApi.QueryAsync(criteria, 0, 100)
                           .ContinueWith(task =>
                           {
                               task.WaitAndUnwrapException();
@@ -148,7 +148,7 @@
         }
     }
 
-    private async Task OnRemoveMemberClicked(int userId)
+    private async Task OnRemoveMemberClicked(long userId)
     {
         var confirmation = await DialogService.ShowConfirmationAsync(Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE);
         var result = await confirmation.Result;

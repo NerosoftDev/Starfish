@@ -57,9 +57,9 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id:int}")]
+	[HttpGet("{id:long}")]
 	[Produces(typeof(UserDetailDto))]
-	public async Task<IActionResult> GetAsync(int id)
+	public async Task<IActionResult> GetAsync(long id)
 	{
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
@@ -84,8 +84,8 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id:int}")]
-	public async Task<IActionResult> UpdateAsync(int id, [FromBody] UserUpdateDto data)
+	[HttpPut("{id:long}")]
+	public async Task<IActionResult> UpdateAsync(long id, [FromBody] UserUpdateDto data)
 	{
 		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -96,8 +96,8 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpDelete("{id:int}")]
-	public async Task<IActionResult> DeleteAsync(int id)
+	[HttpDelete("{id:long}")]
+	public async Task<IActionResult> DeleteAsync(long id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -109,8 +109,8 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="roles"></param>
 	/// <returns></returns>
-	[HttpPut("{id:int}/role")]
-	public async Task<IActionResult> SetRoleAsync(int id, [FromBody] List<string> roles)
+	[HttpPut("{id:long}/role")]
+	public async Task<IActionResult> SetRoleAsync(long id, [FromBody] List<string> roles)
 	{
 		await _service.SetRolesAsync(id, roles, HttpContext.RequestAborted);
 		return Ok();
@@ -122,9 +122,9 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id:int}/password")]
+	[HttpPut("{id:long}/password")]
 	[Authorize(Roles = "SA")]
-	public async Task<IActionResult> ResetPasswordAsync(int id, [FromBody] ResetPasswordRequestDto data)
+	public async Task<IActionResult> ResetPasswordAsync(long id, [FromBody] ResetPasswordRequestDto data)
 	{
 		await _service.ResetPasswordAsync(id, data.Password, HttpContext.RequestAborted);
 		return Ok();

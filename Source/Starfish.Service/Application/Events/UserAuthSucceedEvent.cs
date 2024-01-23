@@ -20,7 +20,7 @@ public class UserAuthSucceedEvent : ApplicationEvent
 	/// <param name="authType"></param>
 	/// <param name="data"></param>
 	/// <param name="userId"></param>
-	public UserAuthSucceedEvent(string authType, Dictionary<string, string> data, int userId)
+	public UserAuthSucceedEvent(string authType, Dictionary<string, string> data, long userId)
 	{
 		AuthType = authType;
 		Data = data;
@@ -40,7 +40,7 @@ public class UserAuthSucceedEvent : ApplicationEvent
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public int UserId { get; set; }
+	public long UserId { get; set; }
 
 	/// <summary>
 	/// 用户名

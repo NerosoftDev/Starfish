@@ -16,18 +16,14 @@ public class AppInfoCommandHandler : CommandHandlerBase,
                                      IHandler<ChangeAppStatusCommand>,
                                      IHandler<AppInfoSetSecretCommand>
 {
-	private readonly IAppInfoRepository _repository;
-
 	/// <summary>
 	/// 构造函数
 	/// </summary>
 	/// <param name="unitOfWork"></param>
 	/// <param name="factory"></param>
-	/// <param name="repository"></param>
-	public AppInfoCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory, IAppInfoRepository repository)
+	public AppInfoCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
 	{
-		_repository = repository;
 	}
 
 	/// <inheritdoc />

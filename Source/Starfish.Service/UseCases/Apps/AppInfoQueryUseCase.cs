@@ -72,7 +72,7 @@ public class AppInfoQueryUseCase : IAppInfoQueryUseCase
 		{
 			if (!_identity.IsInRole("SA"))
 			{
-				var userId = _identity.GetUserIdOfInt32();
+				var userId = _identity.GetUserIdOfInt64();
 				var teamQuery = _repository.Context.Set<TeamMember>();
 				query = from app in query
 				        join member in teamQuery on app.TeamId equals member.TeamId

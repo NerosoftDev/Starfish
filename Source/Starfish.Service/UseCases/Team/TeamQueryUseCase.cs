@@ -1,5 +1,4 @@
 ﻿using System.Security.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
@@ -58,7 +57,7 @@ public class TeamQueryUseCase : ITeamQueryUseCase
 		{
 			if (!_identity.IsInRole("SA"))
 			{
-				var userId = _identity.GetUserIdOfInt32();
+				var userId = _identity.GetUserIdOfInt64();
 				
 				var memberQuery = _repository.Context.Set<TeamMember>();
 				query = from team in query

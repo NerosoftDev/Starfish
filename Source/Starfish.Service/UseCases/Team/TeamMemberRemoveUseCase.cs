@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface ITeamMemberRemoveUseCase : INonOutputUseCase<TeamMemberRemoveInput>;
 
-public record TeamMemberRemoveInput(int Id, List<int> UserIds) : IUseCaseInput;
+public record TeamMemberRemoveInput(long Id, List<long> UserIds) : IUseCaseInput;
 
 public class TeamMemberRemoveUseCase : ITeamMemberRemoveUseCase
 {
