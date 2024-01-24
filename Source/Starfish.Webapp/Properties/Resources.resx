@@ -336,6 +336,12 @@
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>User name</value>
   </data>
+  <data name="IDS_SETTING_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
+    <value>Are you sure delete this setting?</value>
+  </data>
+  <data name="IDS_SETTING_DELETE_CONFIRM_TITLE" xml:space="preserve">
+    <value>Delete setting</value>
+  </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>Create from Json</value>
   </data>

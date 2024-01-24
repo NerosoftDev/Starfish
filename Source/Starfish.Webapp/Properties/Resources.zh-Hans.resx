@@ -336,6 +336,12 @@
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>用户名</value>
   </data>
+  <data name="IDS_SETTING_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
+    <value>确定要删除配置吗？</value>
+  </data>
+  <data name="IDS_SETTING_DELETE_CONFIRM_TITLE" xml:space="preserve">
+    <value>删除配置</value>
+  </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>从Json创建</value>
   </data>
