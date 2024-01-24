@@ -159,6 +159,9 @@
   <data name="IDS_ERROR_APPINFO_CODE_UNAVAILABLE" xml:space="preserve">
     <value>应用唯一编码不可用。</value>
   </data>
+  <data name="IDS_ERROR_APPINFO_NOT_ENABLED" xml:space="preserve">
+      <value>应用没有启用，[Id]:{0}。</value>
+  </data>
   <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
     <value>应用不存在，[Id]:{0}。</value>
   </data>

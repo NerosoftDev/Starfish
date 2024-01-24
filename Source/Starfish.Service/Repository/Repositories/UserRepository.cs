@@ -8,7 +8,7 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 用户仓储
 /// </summary>
-public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUserRepository
+public sealed class UserRepository : BaseRepository<DataContext, User, long>, IUserRepository
 {
 	/// <summary>
 	/// 初始化<see cref="UserRepository"/>.
@@ -34,7 +34,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 	}
 
 	/// <inheritdoc />
-	public Task<bool> CheckEmailExistsAsync(string email, int ignoreId, CancellationToken cancellationToken = default)
+	public Task<bool> CheckEmailExistsAsync(string email, long ignoreId, CancellationToken cancellationToken = default)
 	{
 		ISpecification<User>[] specifications =
 		[
@@ -45,7 +45,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, int>, IUs
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
-	public Task<bool> CheckPhoneExistsAsync(string phone, int ignoreId, CancellationToken cancellationToken = default)
+	public Task<bool> CheckPhoneExistsAsync(string phone, long ignoreId, CancellationToken cancellationToken = default)
 	{
 		ISpecification<User>[] specifications =
 		[

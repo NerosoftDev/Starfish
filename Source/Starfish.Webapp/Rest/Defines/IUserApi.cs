@@ -12,19 +12,19 @@ internal interface IUserApi
 	Task<IApiResponse<int>> CountAsync([Query] UserCriteria criteria, CancellationToken cancellationToken = default);
 
 	[Get("/api/user/{id}")]
-	Task<IApiResponse<UserDetailDto>> GetAsync(int id, CancellationToken cancellationToken = default);
+	Task<IApiResponse<UserDetailDto>> GetAsync(long id, CancellationToken cancellationToken = default);
 
 	[Post("/api/user")]
 	Task<IApiResponse> CreateAsync([Body] UserCreateDto data, CancellationToken cancellationToken = default);
 
 	[Put("/api/user/{id}")]
-	Task<IApiResponse> UpdateAsync(int id, [Body] UserUpdateDto data, CancellationToken cancellationToken = default);
+	Task<IApiResponse> UpdateAsync(long id, [Body] UserUpdateDto data, CancellationToken cancellationToken = default);
 
 	[Delete("/api/user/{id}")]
-	Task<IApiResponse> DeleteAsync(int id, CancellationToken cancellationToken = default);
+	Task<IApiResponse> DeleteAsync(long id, CancellationToken cancellationToken = default);
 
 	[Put("/api/user/{id}/password")]
-	Task<IApiResponse> ResetPassword(int id, [Body] ResetPasswordRequestDto data, CancellationToken cancellationToken = default);
+	Task<IApiResponse> ResetPassword(long id, [Body] ResetPasswordRequestDto data, CancellationToken cancellationToken = default);
 
 	[Put("/api/user/password")]
 	Task<IApiResponse> ChangePassword([Body] ChangePasswordRequestDto data, CancellationToken cancellationToken = default);

@@ -1,96 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
+		Microsoft ResX Schema
 
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,384 +89,384 @@
     <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
-    <value>2.0</value>
+    <value>1.3</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
-    <value>Code</value>
+    <value>應用代碼</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>應用描述</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>應用名稱</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
-    <value>Secret</value>
+    <value>訪問密鑰</value>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
-    <value>Select a team</value>
+    <value>選擇所屬團隊</value>
   </data>
   <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>Add app</value>
+    <value>新增應用</value>
   </data>
   <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>Edit app</value>
+    <value>編輯應用</value>
   </data>
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>Add app</value>
+    <value>新增</value>
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
-    <value>Code</value>
+    <value>代碼</value>
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>姓名</value>
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
-    <value>Status</value>
+    <value>狀態</value>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>Are you sure to remove this app '{0}'?</value>
+    <value>確定要刪除此應用“{0}”嗎？</value>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>Remove App</value>
+    <value>刪除應用</value>
   </data>
   <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
-    <value>The system will encrypt the secret and can not be decrypted. You should keep the secret yourself. If you forget the origin secret, please reset it.</value>
+    <value>存取密鑰將被加密儲存且無法解密，請自行保管。 如果忘記密鑰，請重新設定。</value>
   </data>
   <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
-    <value>Reset secret</value>
+    <value>重置密鑰</value>
   </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
-    <value>Detail</value>
+    <value>應用詳情</value>
   </data>
   <data name="IDS_BREADCRUMB_SETTING" xml:space="preserve">
-    <value>Setting</value>
+    <value>應用配置</value>
   </data>
   <data name="IDS_BREADCRUMB_TEAM_DETAIL" xml:space="preserve">
-    <value>Detail</value>
+    <value>團隊詳情</value>
   </data>
   <data name="IDS_BREADCRUMB_USER_DETAIL" xml:space="preserve">
-    <value>Detail</value>
+    <value>用戶詳情</value>
   </data>
   <data name="IDS_COMMON_CANCEL" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="IDS_COMMON_CLOSE" xml:space="preserve">
-    <value>Close</value>
+    <value>關閉</value>
   </data>
   <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
-    <value>Actions</value>
+    <value>操作</value>
   </data>
   <data name="IDS_COMMON_COLUMN_CREATE_TIME" xml:space="preserve">
-    <value>Created</value>
+    <value>創建時間</value>
   </data>
   <data name="IDS_COMMON_COLUMN_ID" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="IDS_COMMON_COLUMN_UPDATE_TIME" xml:space="preserve">
-    <value>Updated</value>
+    <value>修改時間</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
-    <value>Development</value>
+    <value>開發環境</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PET" xml:space="preserve">
-    <value>Performance Evaluation Testing</value>
+    <value>性能評估測試</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PRD" xml:space="preserve">
-    <value>Production</value>
+    <value>生產環境</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIM" xml:space="preserve">
-    <value>Simulation Testing</value>
+    <value>模擬測試</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIT" xml:space="preserve">
-    <value>System Integration Testing</value>
+    <value>系統整合測試</value>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_UAT" xml:space="preserve">
-    <value>User Acceptance Testing</value>
+    <value>用戶驗收測試</value>
   </data>
   <data name="IDS_COMMON_LOGOUT" xml:space="preserve">
-    <value>Logout</value>
+    <value>登出</value>
   </data>
   <data name="IDS_COMMON_NO" xml:space="preserve">
-    <value>No</value>
+    <value>否</value>
   </data>
   <data name="IDS_COMMON_OPERATIONS" xml:space="preserve">
-    <value>Operations</value>
+    <value>操作</value>
   </data>
   <data name="IDS_COMMON_PLACEHOLDER_KEYWORD" xml:space="preserve">
-    <value>Keyword to search</value>
+    <value>輸入關鍵字搜尋</value>
   </data>
   <data name="IDS_COMMON_SAVE" xml:space="preserve">
-    <value>Save</value>
+    <value>保存</value>
   </data>
   <data name="IDS_COMMON_SEARCH" xml:space="preserve">
-    <value>Search</value>
+    <value>搜尋</value>
   </data>
   <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
-    <value>Submit</value>
+    <value>提交</value>
   </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
-    <value>Login</value>
+    <value>登入</value>
   </data>
   <data name="IDS_LOGIN_PAGE_TITLE" xml:space="preserve">
-    <value>Login</value>
+    <value>登入</value>
   </data>
   <data name="IDS_LOGIN_PLACEHOLDER_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>請輸入密碼</value>
   </data>
   <data name="IDS_LOGIN_PLACEHOLDER_USERNAME" xml:space="preserve">
-    <value>User name</value>
+    <value>請輸入用戶名</value>
   </data>
   <data name="IDS_LOGIN_TAB_PINCODE" xml:space="preserve">
-    <value>One time password</value>
+    <value>驗證碼登錄</value>
   </data>
   <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
-    <value>User name &amp; password</value>
+    <value>用戶名登錄</value>
   </data>
   <data name="IDS_LOGS_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>Log detail</value>
+    <value>日誌詳情</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>日誌內容</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_ERROR" xml:space="preserve">
-    <value>Error message</value>
+    <value>錯誤訊息</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_MODULE" xml:space="preserve">
-    <value>Module</value>
+    <value>模塊</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_OPERATE_TIME" xml:space="preserve">
-    <value>Operate time</value>
+    <value>操作時間</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID" xml:space="preserve">
-    <value>Request Id</value>
+    <value>請求識別碼</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_TYPE" xml:space="preserve">
-    <value>Type</value>
+    <value>類型</value>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用戶名</value>
   </data>
   <data name="IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL" xml:space="preserve">
-    <value>Check detail</value>
+    <value>查看詳情</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>日誌內容</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_ERROR" xml:space="preserve">
-    <value>Error message</value>
+    <value>錯誤訊息</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_OPERATE_TIME" xml:space="preserve">
-    <value>Operate time</value>
+    <value>操作時間</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
-    <value>Trace Id</value>
+    <value>請求識別碼</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
-    <value>Type</value>
+    <value>類型</value>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用戶名</value>
   </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
-    <value>Apps</value>
+    <value>應用</value>
   </data>
   <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
-    <value>Home</value>
+    <value>首頁</value>
   </data>
   <data name="IDS_MENU_TEXT_LOGS" xml:space="preserve">
-    <value>Logs</value>
+    <value>日志</value>
   </data>
   <data name="IDS_MENU_TEXT_TEAM" xml:space="preserve">
-    <value>Team</value>
+    <value>團隊</value>
   </data>
   <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
-    <value>User</value>
+    <value>用戶</value>
   </data>
   <data name="IDS_PAGINATOR_TOTAL_FORMAT" xml:space="preserve">
-    <value>Total &lt;strong&gt;{0}&lt;/strong&gt; rows</value>
+    <value>共 &lt;strong&gt;{0}&lt;/strong&gt; 條</value>
   </data>
   <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
-    <value>Register</value>
+    <value>注冊</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_CONFIRM" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>確認密碼</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_EMAIL" xml:space="preserve">
-    <value>Email</value>
+    <value>電子郵件</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_NICK_NAME" xml:space="preserve">
-    <value>Name to display</value>
+    <value>顯示的名稱</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>密碼</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_PHONE" xml:space="preserve">
-    <value>Phone number</value>
+    <value>手機號碼</value>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用戶名</value>
   </data>
   <data name="IDS_SETTING_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
-    <value>Are you sure delete this setting?</value>
+    <value>確定要刪除配置嗎？</value>
   </data>
   <data name="IDS_SETTING_DELETE_CONFIRM_TITLE" xml:space="preserve">
-    <value>Delete setting</value>
+    <value>刪除配置</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
-    <value>Create from Json</value>
+    <value>從Json創建</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
-    <value>Create from Text</value>
+    <value>從文本創建</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
-    <value>Edit as Json</value>
+    <value>編輯Json</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
-    <value>Edit as Text</value>
+    <value>編輯文字</value>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
-    <value>Edit value</value>
+    <value>編輯配置</value>
   </data>
   <data name="IDS_SETTING_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
-    <value>Environment</value>
+    <value>應用環境</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_DELETE" xml:space="preserve">
-    <value>Delete</value>
+    <value>刪除</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
-    <value>Edit as Json</value>
+    <value>編輯Json</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
-    <value>Edit as Text</value>
+    <value>編輯文本</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_PUBLISH" xml:space="preserve">
-    <value>Publish</value>
+    <value>發布配置</value>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
-    <value>Sync to Redis</value>
+    <value>同步到Redis</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
-    <value>Publish</value>
+    <value>發布</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
-    <value>Comment</value>
+    <value>發布內容</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
-    <value>Version number</value>
+    <value>版本號</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_TITLE" xml:space="preserve">
-    <value>Publish setting</value>
+    <value>發佈配置</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
-    <value>Start</value>
+    <value>開始同步</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
-    <value>Connection string</value>
+    <value>連接字串</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
-    <value>Database</value>
+    <value>數據庫</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
-    <value>Key name</value>
+    <value>Redis鍵名稱</value>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
-    <value>Sync to Redis</value>
+    <value>同步到Redis</value>
   </data>
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
-    <value>Add member</value>
+    <value>添加成員</value>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
-    <value>Add member</value>
+    <value>添加成員</value>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
-    <value>Edit</value>
+    <value>編輯</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>Are you sure to remove this member?</value>
+    <value>確定要移除團隊成員嗎？</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>Remove member</value>
+    <value>移除團隊成員</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
-    <value>Alias</value>
+    <value>團隊別名</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>團隊介紹</value>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>團隊名稱</value>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>Add team</value>
+    <value>新建團隊</value>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>Edit team</value>
+    <value>編輯團隊</value>
   </data>
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>Add new team</value>
+    <value>新建團隊</value>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
-    <value>Alias</value>
+    <value>別名</value>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
+    <value>描述</value>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_MEMBERS" xml:space="preserve">
-    <value>Members</value>
+    <value>成員數</value>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>名稱</value>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_OWNER" xml:space="preserve">
-    <value>Owner</value>
+    <value>負責人</value>
   </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
-    <value>Add user</value>
+    <value>新建用戶</value>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_ADD" xml:space="preserve">
-    <value>Add user</value>
+    <value>新建用戶</value>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
-    <value>Edit user</value>
+    <value>編輯用戶</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
-    <value>Email</value>
+    <value>電子郵件</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
-    <value>Nick name</value>
+    <value>昵稱</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_PHONE" xml:space="preserve">
-    <value>Phone number</value>
+    <value>手機號碼</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_ROLES" xml:space="preserve">
-    <value>Roles</value>
+    <value>角色</value>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_USER_NAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用戶名</value>
   </data>
   <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>確認密碼</value>
   </data>
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
-    <value>Email</value>
+    <value>電子郵件</value>
   </data>
   <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
-    <value>Nick name</value>
+    <value>昵稱</value>
   </data>
   <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
-    <value>Password</value>
+    <value>密碼</value>
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
-    <value>User name</value>
+    <value>用戶名</value>
   </data>
 </root>

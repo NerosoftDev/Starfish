@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Nerosoft.Euonia.Application;
+﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Starfish.Common;
 using Nerosoft.Starfish.Transit;
 using Nerosoft.Starfish.UseCases;
@@ -85,9 +84,11 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
-	public Task<string> GetItemsInTextAsync(long appId, string environment, string type, CancellationToken cancellationToken = default)
+	/// <inheritdoc />
+	public Task<string> GetItemsInTextAsync(long appId, string environment, string format, CancellationToken cancellationToken = default)
 	{
-		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>().GetNamedService<IConfigurationParser>(type.ToLower(CultureInfo.CurrentCulture));
+		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>()
+		                                .GetKeyedService<IConfigurationParser>(format.Normalize(TextCaseType.Lower));
 		return GetItemListAsync(appId, environment, 0, int.MaxValue, cancellationToken)
 			.ContinueWith(task =>
 			{

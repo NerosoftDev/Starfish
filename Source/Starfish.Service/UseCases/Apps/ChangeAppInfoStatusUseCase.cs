@@ -24,11 +24,6 @@ public record ChangeAppInfoStatusInput(long Id, AppStatus Status) : IUseCaseInpu
 /// </summary>
 public class ChangeAppInfoStatusUseCase : IChangeAppInfoStatusUseCase
 {
-	/// <summary>
-	/// 允许访问的角色
-	/// </summary>
-	private readonly string[] _roles = ["SA", "RW"];
-
 	private readonly IBus _bus;
 	private readonly UserPrincipal _user;
 
@@ -43,11 +38,6 @@ public class ChangeAppInfoStatusUseCase : IChangeAppInfoStatusUseCase
 		if (!_user.IsAuthenticated)
 		{
 			throw new AuthenticationException();
-		}
-
-		if (!_user.IsInRoles(_roles))
-		{
-			throw new UnauthorizedAccessException();
 		}
 
 		var command = new ChangeAppStatusCommand(input.Id, input.Status);

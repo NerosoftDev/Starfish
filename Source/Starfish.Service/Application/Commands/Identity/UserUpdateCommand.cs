@@ -6,9 +6,9 @@ namespace Nerosoft.Starfish.Application;
 /// <summary>
 /// 用户更新命令
 /// </summary>
-public sealed class UserUpdateCommand : Command<int, UserUpdateDto>
+public sealed class UserUpdateCommand : Command<long, UserUpdateDto>
 {
-	public UserUpdateCommand(int userId, UserUpdateDto data)
+	public UserUpdateCommand(long userId, UserUpdateDto data)
 		: base(userId, data)
 	{
 	}

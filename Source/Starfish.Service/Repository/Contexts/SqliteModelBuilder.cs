@@ -22,6 +22,10 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.HasIndex(t => t.UserName)
 			      .IsUnique();
 
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+
 			entity.HasMany(t => t.Roles)
 			      .WithOne(t => t.User)
 			      .HasForeignKey(t => t.UserId);
@@ -36,6 +40,10 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.HasIndex([nameof(UserRole.UserId), nameof(UserRole.Name)], "IDX_USER_ROLE_UNIQUE")
 			      .IsUnique();
 
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+
 			entity.HasOne(t => t.User)
 			      .WithMany(t => t.Roles)
 			      .HasForeignKey(t => t.UserId);
@@ -44,10 +52,22 @@ public class SqliteModelBuilder : IModelBuilder
 		modelBuilder.Entity<Token>(entity =>
 		{
 			entity.ToTable("token");
+
+			entity.HasKey(t => t.Id);
+
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 		modelBuilder.Entity<OperateLog>(entity =>
 		{
 			entity.ToTable("operate_log");
+
+			entity.HasKey(t => t.Id);
+
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 		modelBuilder.Entity<AppInfo>(entity =>
 		{
@@ -150,6 +170,10 @@ public class SqliteModelBuilder : IModelBuilder
 			entity.HasIndex(t => t.Name);
 			entity.HasIndex(t => t.OwnerId);
 
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+
 			entity.HasMany(t => t.Members)
 			      .WithOne(t => t.Team)
 			      .HasForeignKey(t => t.TeamId);
@@ -162,6 +186,10 @@ public class SqliteModelBuilder : IModelBuilder
 
 			entity.HasIndex([nameof(TeamMember.TeamId), nameof(TeamMember.UserId)], "IDX_TEAM_MEMBER_UNIQUE")
 			      .IsUnique();
+
+			entity.Property(t => t.Id)
+				  .IsRequired()
+				  .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Team)
 			      .WithMany(t => t.Members)

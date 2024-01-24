@@ -11,6 +11,11 @@ public class AppInfoDetailDto
 	public long Id { get; set; }
 
 	/// <summary>
+	/// 团队Id
+	/// </summary>
+	public long TeamId { get; set; }
+
+	/// <summary>
 	/// 名称
 	/// </summary>
 	public string Name { get; set; }

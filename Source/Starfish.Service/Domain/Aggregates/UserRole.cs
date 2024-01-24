@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 用户角色
 /// </summary>
-public class UserRole : Entity<int>
+public class UserRole : Entity<long>
 {
 	private UserRole()
 	{
@@ -20,7 +20,7 @@ public class UserRole : Entity<int>
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public int UserId { get; set; }
+	public long UserId { get; set; }
 
 	/// <summary>
 	/// 角色名称

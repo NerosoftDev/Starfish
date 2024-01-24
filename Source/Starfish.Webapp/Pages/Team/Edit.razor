@@ -1,4 +1,4 @@
-﻿@implements IDialogContentComponent<int>
+﻿@implements IDialogContentComponent<long>
 
 @inject ITeamApi Api
 @inject IToastService ToastService
@@ -35,7 +35,7 @@
 @code {
 
     [Parameter]
-    public int Content { get; set; }
+    public long Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
@@ -103,7 +103,7 @@
         await Dialog.CancelAsync();
     }
 
-    private async Task LoadAsync(int id)
+    private async Task LoadAsync(long id)
     {
         if (id <= 0)
         {

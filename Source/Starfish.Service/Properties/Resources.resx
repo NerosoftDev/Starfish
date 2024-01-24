@@ -159,6 +159,9 @@
   <data name="IDS_ERROR_APPINFO_CODE_UNAVAILABLE" xml:space="preserve">
     <value>App unique code is not available.</value>
   </data>
+  <data name="IDS_ERROR_APPINFO_NOT_ENABLED" xml:space="preserve">
+      <value>App not enabled, [Id]:{0}.</value>
+  </data>
   <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
     <value>App not exists, [Id]:{0}.</value>
   </data>

@@ -31,7 +31,7 @@ public class IdentityCommonComponent
 	/// <para>Item3-颁发时间</para>
 	/// <para>Item4-过期时间</para>
 	/// </returns>
-	public Tuple<string, string, DateTime, DateTime> GenerateAccessToken(int userId, string userName, IEnumerable<string> roles = null)
+	public Tuple<string, string, DateTime, DateTime> GenerateAccessToken(long userId, string userName, IEnumerable<string> roles = null)
 	{
 		var issueTime = DateTime.UtcNow;
 		var expiresAt = issueTime.AddDays(1);

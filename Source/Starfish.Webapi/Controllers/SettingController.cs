@@ -40,10 +40,10 @@ public class SettingController : ControllerBase
 	{
 		switch (format)
 		{
-			case "text/plain":
+			case Constants.Setting.FormatText:
 				var text = await _service.GetItemsInTextAsync(id, environment, "text", HttpContext.RequestAborted);
 				return Ok(text);
-			case "text/json":
+			case Constants.Setting.FormatJson:
 				var json = await _service.GetItemsInTextAsync(id, environment, "json", HttpContext.RequestAborted);
 				return Ok(json);
 			default:

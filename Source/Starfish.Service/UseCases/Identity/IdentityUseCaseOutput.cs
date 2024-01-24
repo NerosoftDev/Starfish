@@ -30,5 +30,5 @@ public abstract class IdentityUseCaseOutput : IUseCaseOutput
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public int UserId { get; set; }
+	public long UserId { get; set; }
 }

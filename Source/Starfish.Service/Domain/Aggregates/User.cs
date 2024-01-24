@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 用户聚合根
 /// </summary>
-public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITombstone
+public sealed class User : Aggregate<long>, IHasCreateTime, IHasUpdateTime, ITombstone
 {
 	/// <summary>
 	/// 初始化<see cref="User"/>实例
@@ -17,7 +17,7 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	private User()
 	{
 	}
-
+	
 	/// <summary>
 	/// 初始化用户聚合根
 	/// </summary>
@@ -77,6 +77,11 @@ public sealed class User : Aggregate<int>, IHasCreateTime, IHasUpdateTime, ITomb
 	/// </summary>
 	/// <remarks>预留账号不允许删除、设置角色等</remarks>
 	public bool Reserved { get; set; }
+
+	/// <summary>
+	/// 来源
+	/// </summary>
+	public int Source { get; set; }
 
 	/// <summary>
 	/// 创建时间

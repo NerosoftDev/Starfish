@@ -25,7 +25,7 @@ public class AppInfoStatusBusiness : CommandObject<AppInfoStatusBusiness>, IDoma
 		}
 
 		var team = await TeamRepository.GetAsync(aggregate.TeamId, false, cancellationToken);
-		if (team.OwnerId != Identity.GetUserIdOfInt32())
+		if (team.OwnerId != Identity.GetUserIdOfInt64())
 		{
 			throw new UnauthorizedAccessException(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
 		}
@@ -40,7 +40,7 @@ public class AppInfoStatusBusiness : CommandObject<AppInfoStatusBusiness>, IDoma
 				break;
 			case AppStatus.None:
 			default:
-				throw new InvalidAppInfoStatusException(Resources.IDS_ERROR_APPINFO_STATUS_INVALID);
+				throw new ArgumentOutOfRangeException(Resources.IDS_ERROR_APPINFO_STATUS_INVALID);
 		}
 
 		await AppInfoRepository.UpdateAsync(aggregate, true, cancellationToken);

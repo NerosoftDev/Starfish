@@ -1,6 +1,4 @@
-﻿using Nerosoft.Euonia.Domain;
-
-namespace Nerosoft.Starfish.Application;
+﻿namespace Nerosoft.Starfish.Application;
 
 /// <summary>
 /// 删除配置节点命令

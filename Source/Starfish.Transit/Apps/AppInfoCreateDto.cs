@@ -8,7 +8,7 @@ public class AppInfoCreateDto
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public int TeamId { get; set; }
+	public long TeamId { get; set; }
 
 	/// <summary>
 	/// 应用名称

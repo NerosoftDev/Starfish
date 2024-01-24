@@ -98,5 +98,13 @@ public interface ISettingApplicationService : IApplicationService
 	/// <returns></returns>
 	Task<string> GetSettingRawAsync(long appId, string environment, CancellationToken cancellationToken = default);
 
-	Task<string> GetItemsInTextAsync(long appId, string environment, string type, CancellationToken cancellationToken = default);
+	/// <summary>
+	/// 获取指定格式的配置
+	/// </summary>
+	/// <param name="appId"></param>
+	/// <param name="environment"></param>
+	/// <param name="format"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<string> GetItemsInTextAsync(long appId, string environment, string format, CancellationToken cancellationToken = default);
 }

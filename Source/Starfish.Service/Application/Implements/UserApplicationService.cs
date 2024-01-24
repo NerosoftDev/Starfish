@@ -10,7 +10,7 @@ namespace Nerosoft.Starfish.Application;
 public class UserApplicationService : BaseApplicationService, IUserApplicationService
 {
 	/// <inheritdoc />
-	public Task<int> CreateAsync(UserCreateDto data, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(UserCreateDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserCreateUseCase>();
 		var input = new UserCreateInput(data);
@@ -19,7 +19,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(int id, UserUpdateDto data, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(long id, UserUpdateDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserUpdateUseCase>();
 		var input = new UserUpdateInput(id, data);
@@ -43,7 +43,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task<UserDetailDto> GetAsync(int id, CancellationToken cancellationToken = default)
+	public Task<UserDetailDto> GetAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserDetailUseCase>();
 		var input = new UserDetailInput(id);
@@ -52,7 +52,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+	public Task DeleteAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserDeleteUseCase>();
 		var input = new UserDeleteInput(id);
@@ -60,7 +60,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task SetRolesAsync(int id, List<string> roles, CancellationToken cancellationToken = default)
+	public Task SetRolesAsync(long id, List<string> roles, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserSetRoleUseCase>();
 		var input = new UserSetRoleInput(id, roles);
@@ -74,7 +74,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task ResetPasswordAsync(int id, string password, CancellationToken cancellationToken = default)
+	public Task ResetPasswordAsync(long id, string password, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IResetPasswordUseCase>();
 		var input = new ResetPasswordInput(id, password);

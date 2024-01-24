@@ -1,6 +1,4 @@
-﻿using Nerosoft.Euonia.Domain;
-
-namespace Nerosoft.Starfish.Application;
+﻿namespace Nerosoft.Starfish.Application;
 
 /// <summary>
 /// 配置节点发布命令

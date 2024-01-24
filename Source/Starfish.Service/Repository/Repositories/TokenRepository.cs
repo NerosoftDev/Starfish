@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 令牌仓储
 /// </summary>
-public class TokenRepository : BaseRepository<DataContext, Token, int>, ITokenRepository
+public class TokenRepository : BaseRepository<DataContext, Token, long>, ITokenRepository
 {
 	/// <summary>
 	/// 初始化<see cref="TokenRepository"/>

@@ -5,21 +5,21 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 团队成员实体
 /// </summary>
-public sealed class TeamMember : Entity<int>, IHasCreateTime
+public sealed class TeamMember : Entity<long>, IHasCreateTime
 {
 	private TeamMember()
 	{
 	}
 
-	private TeamMember(int userId)
+	private TeamMember(long userId)
 		: this()
 	{
 		UserId = userId;
 	}
 
-	public int UserId { get; set; }
+	public long UserId { get; set; }
 
-	public int TeamId { get; set; }
+	public long TeamId { get; set; }
 
 	public DateTime CreateTime { get; set; }
 
@@ -27,7 +27,7 @@ public sealed class TeamMember : Entity<int>, IHasCreateTime
 
 	public Team Team { get; set; }
 
-	internal static TeamMember Create(int userId)
+	internal static TeamMember Create(long userId)
 	{
 		return new TeamMember(userId);
 	}

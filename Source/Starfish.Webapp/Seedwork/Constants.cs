@@ -13,10 +13,15 @@ internal class Constants
 		public const int Skip = 0;
 		public const int Count = 20;
 	}
-	
+
 	public static class Setting
 	{
-		public const string FormatJson = "text/json";
-		public const string FormatText = "text/plain";
+		public const string FormatJson = "plain/json";
+		public const string FormatText = "plain/text";
+	}
+
+	public static class Message
+	{
+		public const string ExceptionThrown = "exception_thrown";
 	}
 }

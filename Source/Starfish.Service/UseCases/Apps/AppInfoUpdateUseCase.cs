@@ -24,11 +24,6 @@ public record AppInfoUpdateInput(long Id, AppInfoUpdateDto Model) : IUseCaseInpu
 /// </summary>
 public class AppInfoUpdateUseCase : IAppInfoUpdateUseCase
 {
-	/// <summary>
-	/// 允许访问的角色
-	/// </summary>
-	private readonly string[] _roles = { "SA", "RW" };
-
 	private readonly IBus _bus;
 	private readonly UserPrincipal _user;
 
@@ -44,7 +39,7 @@ public class AppInfoUpdateUseCase : IAppInfoUpdateUseCase
 		{
 			throw new AuthenticationException();
 		}
-		
+
 		var command = new AppInfoUpdateCommand(input.Id, input.Model);
 		return _bus.SendAsync(command, cancellationToken);
 	}

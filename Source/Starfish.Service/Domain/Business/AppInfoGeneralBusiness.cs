@@ -18,7 +18,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	internal AppInfo Aggregate { get; private set; }
 
 	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
-	public static readonly PropertyInfo<int> TeamIdProperty = RegisterProperty<int>(p => p.TeamId);
+	public static readonly PropertyInfo<long> TeamIdProperty = RegisterProperty<long>(p => p.TeamId);
 	public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(p => p.Name);
 	public static readonly PropertyInfo<string> CodeProperty = RegisterProperty<string>(p => p.Code);
 	public static readonly PropertyInfo<string> SecretProperty = RegisterProperty<string>(p => p.Secret);
@@ -30,7 +30,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 		set => LoadProperty(IdProperty, value);
 	}
 
-	public int TeamId
+	public long TeamId
 	{
 		get => GetProperty(TeamIdProperty);
 		set => SetProperty(TeamIdProperty, value);
@@ -73,7 +73,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(int id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await AppInfoRepository.GetAsync(id, true, [], cancellationToken);
 
@@ -148,7 +148,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 			}
 
 			var team = await target.TeamRepository.GetAsync(target.TeamId, false, cancellationToken);
-			if (team.OwnerId != target.Identity.GetUserIdOfInt32())
+			if (team.OwnerId != target.Identity.GetUserIdOfInt64())
 			{
 				context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
 			}

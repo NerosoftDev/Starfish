@@ -45,18 +45,8 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 
 		context.Services.AddSingleton<ConnectionContainer>();
 
-		context.Services.AddSingleton<JsonConfigurationParser>();
-		context.Services.AddSingleton<TextConfigurationParser>();
-
-		context.Services.AddNamedService<IConfigurationParser>((name, provider) =>
-		{
-			return name switch
-			{
-				"json" => provider.GetService<JsonConfigurationParser>(),
-				"text" => provider.GetService<TextConfigurationParser>(),
-				_ => throw new NotSupportedException()
-			};
-		});
+		context.Services.AddKeyedSingleton<IConfigurationParser, JsonConfigurationParser>("json");
+		context.Services.AddKeyedSingleton<IConfigurationParser, TextConfigurationParser>("text");
 
 		ConfigureCachingServices(context.Services);
 

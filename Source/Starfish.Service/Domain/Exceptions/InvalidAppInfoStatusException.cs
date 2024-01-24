@@ -5,10 +5,11 @@
 /// </summary>
 public class InvalidAppInfoStatusException : BadRequestException
 {
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="message"></param>
+	public InvalidAppInfoStatusException()
+		: base(Resources.IDS_ERROR_APPINFO_STATUS_INVALID)
+	{
+	}
+
 	public InvalidAppInfoStatusException(string message)
 		: base(message)
 	{
