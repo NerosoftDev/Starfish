@@ -14,11 +14,11 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 > 💚 Completed/已完成 ⌛ In progress/进行中 🕝 Planned/计划中
 
 - [ ] ⌛ Support multiple data sources/支持多种数据源
-    - [ ] ⌛ MySQL
+    - [x] 💚 MySQL
     - [ ] ⌛ SqlServer
     - [ ] ⌛ PostgreSQL
     - [ ] 🕝 MongoDB
-    - [ ] ⌛ Sqlite
+    - [x] 💚 Sqlite
 - [ ] ⌛ Support multiple platforms/支持多种平台
     - [x] 💚 Web API/Web Application/gRPC Service in .NET6/7/8
     - [x] 💚 .NET MAUI
@@ -36,7 +36,7 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 - [ ] ⌛ Support multiple languages admin panel/支持多语言管理面板
     - [x] 💚 en/英语
     - [x] 💚 zh-Hans/简体中文
-    - [ ] 🕝 zh-Hant/繁体中文
+    - [ ] ⌛ zh-Hant/繁体中文
     
 ## 💰 Donate/捐助 
 <img alt="" title="donate" width="512" src="https://qiniu-cdn.zhaorong.pro/images/donate.png" /> 
@@ -72,10 +72,6 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE)
 
 ```
 Starfish
-├──Sample
-├    ├──Starfish.Sample.Blazor
-├    ├──Starfish.Sample.MauiApp
-├    ├──Starfish.Sample.Webapi
 ├──Source
 ├    ├──Starfish.Client
 ├    ├──Starfish.Common
