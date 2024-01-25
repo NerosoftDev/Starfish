@@ -228,6 +228,41 @@ See the Swagger UI at [http://localhost:5229/swagger](http://localhost:5229/swag
 
 # Roadmap/路线图 ⚡
 
+## v1.0
+
+ - Basic configuration management/基础配置管理
+ - Web API
+ - Basic admin panel/基础管理面板
+ - Configuration client/配置客户端
+ - WebSockets protocol support of Client. / 客户端支持WebSockets协议。
+
+## v1.1
+    
+ - gRPC protocol support of Client. / 客户端支持gRPC协议。
+ - Rollback to history version. / 回滚到历史版本。
+ - Role-based access control. / 基于角色的访问控制。
+
+## v1.2
+
+ - Docker support. / 支持Docker部署。
+ - MongoDB support. / 支持MongoDB。
+ - User registration. / 用户注册。
+
+## v1.3
+
+ - Multiple node deployment. / 支持多节点部署。
+ - Common configuration. / 公共配置。
+
+## v2.0
+
+ - Service discovery. / 服务发现。
+
+## v3.0
+
+ - Service insights. / 服务监控。
+ - Service tracing. / 服务追踪。
+ - Log management. / 日志管理。
+
 
 # Contributing/贡献 ⚡
 
