@@ -1,4 +1,5 @@
-﻿using Nerosoft.Starfish.Webapp.Rest;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Nerosoft.Starfish.Webapp.Rest;
 using Refit;
 
 namespace Nerosoft.Starfish.Webapp;
@@ -30,5 +31,10 @@ internal static class ExceptionExtensions
 			ApiException ex => ex.GetDetail()?.Message ?? ex.Message,
 			_ => exception.Message
 		};
+	}
+
+	public static void Send(this Exception exception, string token = Constants.Message.ExceptionThrown)
+	{
+		WeakReferenceMessenger.Default.Send(exception, token);
 	}
 }

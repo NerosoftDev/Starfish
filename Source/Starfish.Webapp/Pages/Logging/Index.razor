@@ -55,23 +55,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-    }
-
-    private async Task OnSearchClicked()
-    {
         _provider = async request =>
         {
             List<OperateLogDto> items = null;
             var tasks = new List<Task>
-            {
+                {
                 LogsApi.QueryAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                        .ContinueWith(task =>
                        {
                            task.WaitAndUnwrapException(request.CancellationToken);
                            items = task.Result.EnsureSuccess();
                        }, request.CancellationToken)
-            };
+                };
 
             if (request.StartIndex == 0)
             {
@@ -85,7 +80,7 @@
                 );
             }
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).Guard();
             await Pagination.SetTotalItemCountAsync(Total);
             return GridItemsProviderResult.From(items, Total);
         };
@@ -93,8 +88,13 @@
         await Task.CompletedTask;
     }
 
-    private async Task OnGotoDetailClicked(OperateLogDto dto)
+    private Task OnSearchClicked()
     {
-        await DialogService.ShowDialogAsync<Detail>(dto, new DialogParameters { Title = Resources.IDS_LOGS_DETAIL_DIALOG_TITLE, Modal = true });
+        return Pagination.SetCurrentPageIndexAsync(0);
+    }
+
+    private Task OnGotoDetailClicked(OperateLogDto dto)
+    {
+        return DialogService.ShowDialogAsync<Detail>(dto, new DialogParameters { Title = Resources.IDS_LOGS_DETAIL_DIALOG_TITLE });
     }
 }

@@ -109,8 +109,7 @@
         }
         catch (Exception exception)
         {
-            var message = exception.GetPromptMessage();
-            ToastService.ShowError(message);
+            exception.Send();
         }
         finally
         {
@@ -131,7 +130,7 @@
                              task.WaitAndUnwrapException();
                              var value = Cryptography.Base64.Decrypt(task.Result.EnsureSuccess());
                              _editor.SetValue(value);
-                         });
+                         })
+                         .Guard();
     }
-
 }

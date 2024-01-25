@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>App detail</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_TEAM" xml:space="preserve">
+    <value>Team</value>
+  </data>
   <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
     <value>Code</value>
   </data>
@@ -149,6 +167,9 @@
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_TEAM" xml:space="preserve">
+    <value>Team</value>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>Are you sure to remove this app '{0}'?</value>
@@ -374,6 +395,36 @@
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
     <value>Sync to Redis</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_COLUMN_KEY" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_COLUMN_VALUE" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_APP_CODE" xml:space="preserve">
+    <value>App code: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_APP_NAME" xml:space="preserve">
+    <value>App name: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_APP_STATUS" xml:space="preserve">
+    <value>App Status: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_SETTING_PUBLISH_TIME" xml:space="preserve">
+    <value>Publish: {0:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_SETTING_UPDATE_TIME" xml:space="preserve">
+    <value>Updated: {0:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_SETTING_VERSION" xml:space="preserve">
+    <value>Version: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_TITLE_APP_INFO" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_TITLE_SETTING_INFO" xml:space="preserve">
+    <value>Setting information</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
     <value>Publish</value>

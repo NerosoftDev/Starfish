@@ -1,4 +1,5 @@
 ﻿using System.Security.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
@@ -65,25 +66,55 @@ public class AppInfoQueryUseCase : IAppInfoQueryUseCase
 		}
 
 		var predicate = input.Criteria.GetSpecification().Satisfy();
-		return _repository.FindAsync(predicate, Permission, input.Skip, input.Count, cancellationToken)
-		                  .ContinueWith(task => new AppInfoQueryOutput(task.Result.ProjectedAsCollection<AppInfoItemDto>()), cancellationToken);
 
-		IQueryable<AppInfo> Permission(IQueryable<AppInfo> query)
+		var context = _repository.Context;
+
+		var query = from app in context.Set<AppInfo>().Where(predicate)
+		            join team in context.Set<Team>() on app.TeamId equals team.Id
+		            select new AppInfoItemModel
+		            {
+			            Id = app.Id,
+			            TeamId = app.TeamId,
+			            TeamName = team.Name,
+			            Name = app.Name,
+			            Code = app.Code,
+			            Status = app.Status,
+			            CreateTime = app.CreateTime,
+			            UpdateTime = app.UpdateTime
+		            };
+
+		if (!_identity.IsInRole("SA"))
 		{
-			if (!_identity.IsInRole("SA"))
-			{
-				var userId = _identity.GetUserIdOfInt64();
-				var teamQuery = _repository.Context.Set<TeamMember>();
-				query = from app in query
-				        join member in teamQuery on app.TeamId equals member.TeamId
-				        where member.UserId == userId
-				        select app;
-			}
-
-			{
-			}
-
-			return query.OrderByDescending(t => t.Id);
+			var userId = _identity.GetUserIdOfInt64();
+			var teamQuery = _repository.Context.Set<TeamMember>();
+			query = from app in query
+			        join member in teamQuery on app.TeamId equals member.TeamId
+			        where member.UserId == userId
+			        select app;
 		}
+
+		{
+		}
+		
+		return query.OrderByDescending(t => t.Id)
+		            .ToListAsync(cancellationToken)
+		            .ContinueWith(task =>
+		            {
+			            task.WaitAndUnwrapException(cancellationToken);
+			            var result = task.Result.ProjectedAsCollection<AppInfoItemDto>();
+			            return new AppInfoQueryOutput(result);
+		            }, cancellationToken);
 	}
+}
+
+internal class AppInfoItemModel
+{
+	public long Id { get; set; }
+	public long TeamId { get; set; }
+	public string TeamName { get; set; }
+	public string Name { get; set; }
+	public string Code { get; set; }
+	public AppStatus Status { get; set; }
+	public DateTime CreateTime { get; set; }
+	public DateTime UpdateTime { get; set; }
 }

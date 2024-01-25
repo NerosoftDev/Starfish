@@ -1,17 +1,86 @@
-﻿@page "/apps/{id:long}"
+﻿@implements IDialogContentComponent<long>
 
-<FluentBreadcrumb Style="margin-bottom: 16px;">
-    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="@($"/apps/{Id}")">@(Resources.IDS_BREADCRUMB_APPS_DETAIL)</FluentBreadcrumbItem>
-</FluentBreadcrumb>
+@inject IAppsApi AppsApi
+
+<FluentDialogHeader ShowDismiss="true">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.Apps())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    @if (Loading)
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentProgressRing Size="Size.Size48" />
+        </FluentStack>
+    }
+    else
+    {
+        <FluentStack Orientation="Orientation.Vertical">
+
+            <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_NAME)"
+                             Value="@Data.Name" ReadOnly="true" />
+
+            <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_CODE)"
+                             Value="@Data.Code" ReadOnly="true" />
+
+            <FluentSwitch Value="@(Data.Status == "Enabled")"
+                          Label="@(Resources.IDS_APPS_DETAIL_LABEL_STATUS)" ReadOnly="true" />
+
+            <FluentTextArea Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_DESCRIPTION)"
+                            Value="@Data.Description" ReadOnly="true" />
+        </FluentStack>
+    }
+
+</FluentDialogBody>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">@(Resources.IDS_COMMON_CLOSE)</FluentButton>
+</FluentDialogFooter>
 
 @code {
     [Parameter]
-    public long Id { get; set; }
+    public long Content { get; set; }
 
     [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationState { get; set; }
+    public FluentDialog Dialog { get; set; } = default!;
 
-    private UserPrincipal User { get; set; }
+    private bool Loading { get; set; }
+
+    private AppInfoDetailDto Data { get; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Loading = true;
+
+            await AppsApi.GetAsync(Content).ContinueWith(task =>
+            {
+                task.WaitAndUnwrapException();
+                var result = task.Result.EnsureSuccess();
+                Data.Name = result.Name;
+                Data.Code = result.Code;
+                Data.Description = result.Description;
+                Data.Status = result.Status;
+            });
+        }
+        catch (Exception exception)
+        {
+            exception.Send();
+        }
+        finally
+        {
+            Loading = false;
+        }
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
 }

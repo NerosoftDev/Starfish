@@ -2,7 +2,6 @@
 
 @inject IAppsApi AppsApi
 @inject ITeamApi TeamApi
-@inject IToastService ToastService
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
@@ -30,11 +29,12 @@
         <FluentTextField Style="width: 100%" Required="true"
                          Label="@(Resources.IDS_APPS_EDIT_LABEL_NAME)"
                          @bind-Value="Name"/>
+
+        <FluentTextField Style="width: 100%" Required="true"
+                         Label="@(Resources.IDS_APPS_EDIT_LABEL_CODE)"
+                         @bind-Value="Code"/>
         @if (Content == 0)
         {
-            <FluentTextField Style="width: 100%" Required="true"
-                             Label="@(Resources.IDS_APPS_EDIT_LABEL_CODE)"
-                             @bind-Value="Code"/>
             <FluentTextField Style="width: 100%" Required="true"
                              Label="@(Resources.IDS_APPS_EDIT_LABEL_SECRET)"
                              @bind-Value="Secret"/>
@@ -93,12 +93,8 @@
 
         var tasks = new List<Task>
         {
-            LoadDetailAsync(Content)
+            Content == 0 ? LoadTeamsAsync() : LoadDetailAsync(Content)
         };
-        if (Content == 0)
-        {
-            tasks.Add(LoadTeamsAsync());
-        }
 
         await Task.WhenAll(tasks);
     }
@@ -114,6 +110,7 @@
                 var request = new AppInfoUpdateDto()
                 {
                     Name = Name,
+                    Code = Code,
                     Description = Description
                 };
                 await AppsApi.UpdateAsync(Content, request)
@@ -145,8 +142,7 @@
         }
         catch (Exception exception)
         {
-            var message = exception.GetPromptMessage();
-            ToastService.ShowError(message);
+            exception.Send();
         }
         finally
         {
@@ -177,7 +173,8 @@
                          {
                              TeamId = result[0].Id.ToString();
                          }
-                     });
+                     })
+                     .Guard();
     }
 
     private async Task LoadDetailAsync(long id)
@@ -201,6 +198,10 @@
                          Code = result.Code;
                          Name = result.Name;
                          Description = result.Description;
+                     })
+                     .Guard(async _ =>
+                     {
+                         await Dialog.CancelAsync();
                      });
     }
 

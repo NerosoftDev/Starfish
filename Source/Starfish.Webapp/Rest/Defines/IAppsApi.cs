@@ -25,4 +25,7 @@ internal interface IAppsApi
 	
 	[Delete("/api/apps/{id}")]
 	Task<IApiResponse> DeleteAsync(long id, CancellationToken cancellationToken = default);
+
+	[Put("/api/apps/{id}/{status}")]
+	Task<IApiResponse> ChangeStatusAsync(long id, string status, CancellationToken cancellationToken = default);
 }

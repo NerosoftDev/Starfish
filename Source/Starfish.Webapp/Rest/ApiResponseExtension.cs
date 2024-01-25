@@ -36,4 +36,35 @@ internal static class ApiResponseExtension
 
 		return response;
 	}
+
+	public static Task EnsureSuccess(this Task<IApiResponse> task, CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(task, nameof(task));
+		return task.ContinueWith(t =>
+		{
+			t.WaitAndUnwrapException(cancellationToken);
+			t.Result.EnsureSuccess();
+		}, cancellationToken);
+	}
+
+	public static Task<TResult> EnsureSuccess<TResult>(this Task<IApiResponse<TResult>> task, CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(task, nameof(task));
+		return task.ContinueWith(t =>
+		{
+			t.WaitAndUnwrapException(cancellationToken);
+			return t.Result.EnsureSuccess();
+		}, cancellationToken);
+	}
+
+	public static Task EnsureSuccess<TResult>(this Task<IApiResponse<TResult>> task, Action<TResult> next, CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(task, nameof(task));
+		return task.ContinueWith(t =>
+		{
+			t.WaitAndUnwrapException(cancellationToken);
+			var result = t.Result.EnsureSuccess();
+			next?.Invoke(result);
+		}, cancellationToken);
+	}
 }

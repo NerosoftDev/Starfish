@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Nerosoft.Starfish.Domain;
 using Nerosoft.Starfish.Transit;
+using Nerosoft.Starfish.UseCases;
 
 namespace Nerosoft.Starfish.Application;
 
@@ -14,6 +15,8 @@ internal class AppsMappingProfile : Profile
 	/// </summary>
 	public AppsMappingProfile()
 	{
+		CreateMap<AppInfoItemModel, AppInfoItemDto>()
+			.ForMember(dest => dest.StatusDescription, opt => opt.MapFrom(src => src.Status.GetDescription(Resources.ResourceManager, Resources.Culture)));
 		CreateMap<AppInfo, AppInfoItemDto>()
 			.ForMember(dest => dest.StatusDescription, opt => opt.MapFrom(src => src.Status.GetDescription(Resources.ResourceManager, Resources.Culture)));
 		CreateMap<AppInfo, AppInfoDetailDto>()

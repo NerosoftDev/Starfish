@@ -37,6 +37,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
+	/// <inheritdoc />
 	public Task<long> CreateAsync(long appId, string environment, string format, SettingEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingCreateUseCase>();
@@ -45,6 +46,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		              .ContinueWith(t => t.Result, cancellationToken);
 	}
 
+	/// <inheritdoc />
 	public async Task UpdateAsync(long appId, string environment, string format, SettingEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingUpdateUseCase>();
@@ -60,6 +62,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
+	/// <inheritdoc />
 	public Task UpdateAsync(long appId, string environment, string key, string value, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<ISettingValueUpdateUseCase>();

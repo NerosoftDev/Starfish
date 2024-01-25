@@ -3,7 +3,6 @@
 @inject ITeamApi TeamApi
 @inject IAppsApi AppsApi
 @inject IDialogService DialogService
-@inject IToastService ToastService
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
     <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
@@ -22,7 +21,7 @@
             <FluentLabel>@Data.Description</FluentLabel>
             @if (Data.OwnerId != Identity?.GetUserIdOfInt64())
             {
-                <FluentDivider Style="width: 100%;" />
+                <FluentDivider Style="width: 100%;"/>
                 <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
                 <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                     <FluentButton OnClick="@OnEditClicked">@(Resources.IDS_TEAM_DETAIL_BUTTON_EDIT)</FluentButton>
@@ -167,15 +166,14 @@
             }
             catch (Exception exception)
             {
-                var message = exception.GetPromptMessage();
-                ToastService.ShowError(message);
+                exception.Send();
             }
-    }
+        }
     }
 
     private async Task OnAppendMemberClicked()
     {
-        var reference = await DialogService.ShowDialogAsync<AppendMember>(Id, new DialogParameters { Title = Resources.IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE, Modal = true });
+        var reference = await DialogService.ShowDialogAsync<AppendMember>(Id, new DialogParameters { Title = Resources.IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
         var result = await reference.Result;
         if (!result.Cancelled)
         {
@@ -186,6 +184,7 @@
 
     private async Task OnEditClicked()
     {
-        await DialogService.ShowDialogAsync<Edit>(Id, new DialogParameters { Title = Resources.IDS_TEAM_EDIT_TITLE_EDIT, Modal = true });
+        await DialogService.ShowDialogAsync<Edit>(Id, new DialogParameters { Title = Resources.IDS_TEAM_EDIT_TITLE_EDIT, PreventDismissOnOverlayClick = true });
     }
+
 }
