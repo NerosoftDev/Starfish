@@ -39,8 +39,8 @@
                 </TemplateColumn>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_CODE)"
                                 Property="@(c => c.Code)" />
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_CREATE_TIME)"
-                                Property="@(c => c.CreateTime)" Format="yyyy-MM-dd HH:mm:ss" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_TEAM)"
+                                Property="@(c => c.TeamName)" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_UPDATE_TIME)"
                                 Property="@(c => c.UpdateTime)" Format="yyyy-MM-dd HH:mm:ss" />
                 <TemplateColumn Title="@(Resources.IDS_APPS_INDEX_COLUMN_STATUS)" Align="@Align.Start">
@@ -154,7 +154,6 @@
     {
         try
         {
-            throw new UnauthorizedAccessException("測試");
             await Api.ChangeStatusAsync(context.Id, status ? "enable" : "disable").EnsureSuccess();
             context.Status = status ? "Enabled" : "Disabled";
         }

@@ -22,15 +22,17 @@
     {
         <FluentStack Orientation="Orientation.Vertical">
 
+            <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_NAME)"
+                             Value="@Data.Name" ReadOnly="true" />
 
-            <FluentTextField Style="width: 100%" Required="true" Label="@(Resources.IDS_APPS_EDIT_LABEL_NAME)"
-                Value="@Data.Name" />
+            <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_CODE)"
+                             Value="@Data.Code" ReadOnly="true" />
 
-            <FluentTextField Style="width: 100%" Required="true" Label="@(Resources.IDS_APPS_EDIT_LABEL_CODE)"
-                Value="@Data.Code" />
+            <FluentSwitch Value="@(Data.Status == "Enabled")"
+                          Label="@(Resources.IDS_APPS_DETAIL_LABEL_STATUS)" ReadOnly="true" />
 
-            <FluentTextArea Style="width: 100%" Label="@(Resources.IDS_APPS_EDIT_LABEL_DESCRIPTION)"
-                Value="@Data.Description" />
+            <FluentTextArea Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_DESCRIPTION)"
+                            Value="@Data.Description" ReadOnly="true" />
         </FluentStack>
     }
 
@@ -64,9 +66,10 @@
                 Data.Name = result.Name;
                 Data.Code = result.Code;
                 Data.Description = result.Description;
+                Data.Status = result.Status;
             });
         }
-        catch(Exception exception)
+        catch (Exception exception)
         {
             exception.Send();
         }

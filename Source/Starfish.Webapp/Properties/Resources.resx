@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,504 +117,427 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>App detail</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="IDS_APPS_DETAIL_LABEL_TEAM" xml:space="preserve">
+    <value>Team</value>
+  </data>
   <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
     <value>Code</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
     <value>Description</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
     <value>Name</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
     <value>Secret</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
     <value>Select a team</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
     <value>Add app</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
     <value>Edit app</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add app</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
     <value>Code</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
     <value>Name</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
     <value>Status</value>
-    <comment/>
+  </data>
+  <data name="IDS_APPS_INDEX_COLUMN_TEAM" xml:space="preserve">
+    <value>Team</value>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>Are you sure to remove this app '{0}'?</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
     <value>Remove App</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
     <value>The system will encrypt the secret and can not be decrypted. You should keep the secret yourself. If you forget the origin secret, please reset it.</value>
-    <comment/>
   </data>
   <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
     <value>Reset secret</value>
-    <comment/>
   </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
     <value>Detail</value>
-    <comment/>
   </data>
   <data name="IDS_BREADCRUMB_SETTING" xml:space="preserve">
     <value>Setting</value>
-    <comment/>
   </data>
   <data name="IDS_BREADCRUMB_TEAM_DETAIL" xml:space="preserve">
     <value>Detail</value>
-    <comment/>
   </data>
   <data name="IDS_BREADCRUMB_USER_DETAIL" xml:space="preserve">
     <value>Detail</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_CANCEL" xml:space="preserve">
     <value>Cancel</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_CLOSE" xml:space="preserve">
     <value>Close</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_COLUMN_ACTIONS" xml:space="preserve">
     <value>Actions</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_COLUMN_CREATE_TIME" xml:space="preserve">
     <value>Created</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_COLUMN_ID" xml:space="preserve">
     <value>Id</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_COLUMN_UPDATE_TIME" xml:space="preserve">
     <value>Updated</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_DEV" xml:space="preserve">
     <value>Development</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PET" xml:space="preserve">
     <value>Performance Evaluation Testing</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_PRD" xml:space="preserve">
     <value>Production</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIM" xml:space="preserve">
     <value>Simulation Testing</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_SIT" xml:space="preserve">
     <value>System Integration Testing</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_ENVIRONMENT_UAT" xml:space="preserve">
     <value>User Acceptance Testing</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_LOGOUT" xml:space="preserve">
     <value>Logout</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_NO" xml:space="preserve">
     <value>No</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_OPERATIONS" xml:space="preserve">
     <value>Operations</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_PLACEHOLDER_KEYWORD" xml:space="preserve">
     <value>Keyword to search</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_SAVE" xml:space="preserve">
     <value>Save</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_SEARCH" xml:space="preserve">
     <value>Search</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
     <value>Submit</value>
-    <comment/>
   </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
     <value>Yes</value>
-    <comment/>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>Login</value>
-    <comment/>
   </data>
   <data name="IDS_LOGIN_PAGE_TITLE" xml:space="preserve">
     <value>Login</value>
-    <comment/>
   </data>
   <data name="IDS_LOGIN_PLACEHOLDER_PASSWORD" xml:space="preserve">
     <value>Password</value>
-    <comment/>
   </data>
   <data name="IDS_LOGIN_PLACEHOLDER_USERNAME" xml:space="preserve">
     <value>User name</value>
-    <comment/>
   </data>
   <data name="IDS_LOGIN_TAB_PINCODE" xml:space="preserve">
     <value>One time password</value>
-    <comment/>
   </data>
   <data name="IDS_LOGIN_TAB_USERNAME" xml:space="preserve">
     <value>User name &amp; password</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_DIALOG_TITLE" xml:space="preserve">
     <value>Log detail</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
     <value>Description</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_ERROR" xml:space="preserve">
     <value>Error message</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_MODULE" xml:space="preserve">
     <value>Module</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_OPERATE_TIME" xml:space="preserve">
     <value>Operate time</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_REQUEST_TRACE_ID" xml:space="preserve">
     <value>Request Id</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_TYPE" xml:space="preserve">
     <value>Type</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_DETAIL_LABEL_USER_NAME" xml:space="preserve">
     <value>User name</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL" xml:space="preserve">
     <value>Check detail</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
     <value>Description</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_ERROR" xml:space="preserve">
     <value>Error message</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_OPERATE_TIME" xml:space="preserve">
     <value>Operate time</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_REQUEST_TRACE_ID" xml:space="preserve">
     <value>Trace Id</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_TYPE" xml:space="preserve">
     <value>Type</value>
-    <comment/>
   </data>
   <data name="IDS_LOGS_INDEX_COLUMN_USER_NAME" xml:space="preserve">
     <value>User name</value>
-    <comment/>
   </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
     <value>Apps</value>
-    <comment/>
   </data>
   <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
     <value>Home</value>
-    <comment/>
   </data>
   <data name="IDS_MENU_TEXT_LOGS" xml:space="preserve">
     <value>Logs</value>
-    <comment/>
   </data>
   <data name="IDS_MENU_TEXT_TEAM" xml:space="preserve">
     <value>Team</value>
-    <comment/>
   </data>
   <data name="IDS_MENU_TEXT_USER" xml:space="preserve">
     <value>User</value>
-    <comment/>
   </data>
   <data name="IDS_PAGINATOR_TOTAL_FORMAT" xml:space="preserve">
     <value>Total &lt;strong&gt;{0}&lt;/strong&gt; rows</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PAGE_TITLE" xml:space="preserve">
     <value>Register</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_CONFIRM" xml:space="preserve">
     <value>Confirm password</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_EMAIL" xml:space="preserve">
     <value>Email</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_NICK_NAME" xml:space="preserve">
     <value>Name to display</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_PASSWORD" xml:space="preserve">
     <value>Password</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_PHONE" xml:space="preserve">
     <value>Phone number</value>
-    <comment/>
   </data>
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>User name</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
     <value>Are you sure delete this setting?</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_DELETE_CONFIRM_TITLE" xml:space="preserve">
     <value>Delete setting</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>Create from Json</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
     <value>Create from Text</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
     <value>Edit as Json</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
     <value>Edit as Text</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
     <value>Edit value</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
     <value>Environment</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_DELETE" xml:space="preserve">
     <value>Delete</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
     <value>Edit as Json</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
     <value>Edit as Text</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_PUBLISH" xml:space="preserve">
     <value>Publish</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
     <value>Sync to Redis</value>
-    <comment/>
+  </data>
+  <data name="IDS_SETTING_INDEX_COLUMN_KEY" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_COLUMN_VALUE" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_APP_CODE" xml:space="preserve">
+    <value>App code: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_APP_NAME" xml:space="preserve">
+    <value>App name: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_APP_STATUS" xml:space="preserve">
+    <value>App Status: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_SETTING_PUBLISH_TIME" xml:space="preserve">
+    <value>Publish: {0:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_SETTING_UPDATE_TIME" xml:space="preserve">
+    <value>Updated: {0:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_LABEL_SETTING_VERSION" xml:space="preserve">
+    <value>Version: {0}</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_TITLE_APP_INFO" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="IDS_SETTING_INDEX_PANEL_TITLE_SETTING_INFO" xml:space="preserve">
+    <value>Setting information</value>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
     <value>Publish</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
     <value>Comment</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
     <value>Version number</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_PUBLISH_DIALOG_TITLE" xml:space="preserve">
     <value>Publish setting</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
     <value>Start</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
     <value>Connection string</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
     <value>Database</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
     <value>Key name</value>
-    <comment/>
   </data>
   <data name="IDS_SETTING_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
     <value>Sync to Redis</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
     <value>Add member</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
     <value>Add member</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
     <value>Edit</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>Are you sure to remove this member?</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
     <value>Remove member</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_ALIAS" xml:space="preserve">
     <value>Alias</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
     <value>Description</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_EDIT_LABEL_NAME" xml:space="preserve">
     <value>Name</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_ADD" xml:space="preserve">
     <value>Add team</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_EDIT_TITLE_EDIT" xml:space="preserve">
     <value>Edit team</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_INDEX_BUTTON_ADD" xml:space="preserve">
     <value>Add new team</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_ALIAS" xml:space="preserve">
     <value>Alias</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_DESCRIPTION" xml:space="preserve">
     <value>Description</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_MEMBERS" xml:space="preserve">
     <value>Members</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_NAME" xml:space="preserve">
     <value>Name</value>
-    <comment/>
   </data>
   <data name="IDS_TEAM_INDEX_COLUMN_OWNER" xml:space="preserve">
     <value>Owner</value>
-    <comment/>
   </data>
   <data name="IDS_USER_BUTTON_TEXT_ADD" xml:space="preserve">
     <value>Add user</value>
-    <comment/>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_ADD" xml:space="preserve">
     <value>Add user</value>
-    <comment/>
   </data>
   <data name="IDS_USER_DIALOG_TITLE_EDIT" xml:space="preserve">
     <value>Edit user</value>
-    <comment/>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
     <value>Email</value>
-    <comment/>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
     <value>Nick name</value>
-    <comment/>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_PHONE" xml:space="preserve">
     <value>Phone number</value>
-    <comment/>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_ROLES" xml:space="preserve">
     <value>Roles</value>
-    <comment/>
   </data>
   <data name="IDS_USER_INDEX_COLUMN_USER_NAME" xml:space="preserve">
     <value>User name</value>
-    <comment/>
   </data>
   <data name="IDS_USER_LABEL_CONFIRM_PASSWORD" xml:space="preserve">
     <value>Confirm password</value>
-    <comment/>
   </data>
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
     <value>Email</value>
-    <comment/>
   </data>
   <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
     <value>Nick name</value>
-    <comment/>
   </data>
   <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
     <value>Password</value>
-    <comment/>
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>User name</value>
-    <comment/>
-  </data>
-  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>App detail</value>
-    <comment/>
   </data>
 </root>

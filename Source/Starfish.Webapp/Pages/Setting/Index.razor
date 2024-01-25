@@ -33,9 +33,9 @@
                 </FluentGridItem>
                 <FluentGridItem lg="12" sm="12" md="12">
                     <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="SettingItemDto">
-                        <PropertyColumn Class="data-grid-column" Title="Key" Property="@(c => c.Key)"/>
-                        <PropertyColumn Class="data-grid-column" Title="Value" Property="@(c => c.Value)"/>
-                        <TemplateColumn Title="Actions" Align="@Align.End">
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_SETTING_INDEX_COLUMN_KEY)" Property="@(c => c.Key)"/>
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_SETTING_INDEX_COLUMN_VALUE)" Property="@(c => c.Value)"/>
+                        <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
                             <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditValueClicked(context.Key, context.Value))"/>
                         </TemplateColumn>
                     </FluentDataGrid>
@@ -49,22 +49,22 @@
     <FluentGridItem lg="3" sm="12" md="4">
         <div style="top: 0; position: sticky;">
             <FluentAccordion>
-                <FluentAccordionItem Class="aside-right" Heading="App information" Expanded="true">
+                <FluentAccordionItem Class="aside-right" Heading="@(Resources.IDS_SETTING_INDEX_PANEL_TITLE_APP_INFO)" Expanded="true">
                     <FluentStack Orientation="Orientation.Vertical">
-                        <FluentLabel>App name: @AppDetail?.Name</FluentLabel>
-                        <FluentLabel>App code: @AppDetail?.Code</FluentLabel>
-                        <FluentLabel>App name: @AppDetail?.StatusDescription</FluentLabel>
+                        <FluentLabel>@string.Format(Resources.IDS_SETTING_INDEX_PANEL_LABEL_APP_NAME, AppDetail?.Name)</FluentLabel>
+                        <FluentLabel>@string.Format(Resources.IDS_SETTING_INDEX_PANEL_LABEL_APP_CODE, AppDetail?.Code)</FluentLabel>
+                        <FluentLabel>@string.Format(Resources.IDS_SETTING_INDEX_PANEL_LABEL_APP_STATUS, AppDetail?.StatusDescription)</FluentLabel>
                         <FluentDivider Style="width: 100%;"/>
                         <FluentLabel>@AppDetail?.Description</FluentLabel>
                     </FluentStack>
                 </FluentAccordionItem>
                 @if (SettingDetail != null)
                 {
-                    <FluentAccordionItem Class="aside-right" Heading="Setting information" Expanded="true">
+                    <FluentAccordionItem Class="aside-right" Heading="@(Resources.IDS_SETTING_INDEX_PANEL_TITLE_SETTING_INFO)" Expanded="true">
                         <FluentStack Orientation="Orientation.Vertical">
-                            <FluentLabel>Version: @(SettingDetail?.Version ?? "--")</FluentLabel>
-                            <FluentLabel>Publish: @(SettingDetail?.PublishTime)</FluentLabel>
-                            <FluentLabel>Last update: @(SettingDetail?.UpdateTime)</FluentLabel>
+                            <FluentLabel>@string.Format(Resources.IDS_SETTING_INDEX_PANEL_LABEL_SETTING_VERSION, SettingDetail?.Version ?? "--")</FluentLabel>
+                            <FluentLabel>@string.Format(Resources.IDS_SETTING_INDEX_PANEL_LABEL_SETTING_PUBLISH_TIME, SettingDetail?.PublishTime)</FluentLabel>
+                            <FluentLabel>@string.Format(Resources.IDS_SETTING_INDEX_PANEL_LABEL_SETTING_UPDATE_TIME, SettingDetail?.UpdateTime)</FluentLabel>
                         </FluentStack>
                     </FluentAccordionItem>
                 }
