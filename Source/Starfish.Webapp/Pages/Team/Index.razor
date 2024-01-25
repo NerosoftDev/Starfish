@@ -103,7 +103,7 @@
     private async Task OnEditClicked(long id)
     {
         var title = id == 0 ? Resources.IDS_TEAM_EDIT_TITLE_ADD : Resources.IDS_TEAM_EDIT_TITLE_EDIT;
-        await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
     }
 
     private async Task OnSearchClicked()

@@ -2,6 +2,20 @@
 
 internal class Constants
 {
+	public static bool IsDebug
+	{
+		get
+		{
+#if DEBUG
+			return true;
+#else
+			return false;
+#endif
+		}
+	}
+
+
+
 	public static class LocalStorage
 	{
 		public const string AccessToken = "session_access_token";

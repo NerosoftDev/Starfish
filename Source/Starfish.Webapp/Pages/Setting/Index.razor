@@ -143,7 +143,7 @@
                 );
             }
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).Guard();
             await Pagination.SetTotalItemCountAsync(Total);
             return GridItemsProviderResult.From(items, Total);
         };
@@ -157,7 +157,7 @@
             Pagination.SetCurrentPageIndexAsync(0),
             LoadSettingDetailAsync()
         };
-        await Task.WhenAll(tasks);
+        await Task.WhenAll(tasks).Guard();
     }
 
     private Task LoadSettingDetailAsync(CancellationToken cancellationToken = default)
@@ -167,7 +167,8 @@
                          {
                              task.WaitAndUnwrapException(cancellationToken);
                              SettingDetail = task.Result.EnsureSuccess();
-                         }, cancellationToken);
+                         }, cancellationToken)
+                         .Guard();
     }
 
     private Task LoadAppDetailAsync()
@@ -177,7 +178,8 @@
                       {
                           task.WaitAndUnwrapException();
                           AppDetail = task.Result.EnsureSuccess();
-                      });
+                      })
+                      .Guard();
     }
 
     private async Task OnEditJsonClicked()
@@ -192,7 +194,7 @@
         };
         var title = SettingDetail == null ? Resources.IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_JSON : Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_JSON;
 
-        var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)" });
+        var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)", PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
@@ -213,7 +215,7 @@
 
         var title = SettingDetail == null ? Resources.IDS_SETTING_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT : Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_AS_TEXT;
 
-        var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)" });
+        var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)", PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
@@ -232,7 +234,7 @@
             }
         };
 
-        var dialog = await DialogService.ShowDialogAsync<EditValue>(args, new DialogParameters { Title = Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE });
+        var dialog = await DialogService.ShowDialogAsync<EditValue>(args, new DialogParameters { Title = Resources.IDS_SETTING_EDIT_DIALOG_TITLE_EDIT_VALUE, PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
@@ -243,7 +245,7 @@
     private async Task OnPublishClicked()
     {
         var args = new EditDialogArgs(Id, Environment);
-        var dialog = await DialogService.ShowDialogAsync<Publish>(args, new DialogParameters { Title = Resources.IDS_SETTING_PUBLISH_DIALOG_TITLE });
+        var dialog = await DialogService.ShowDialogAsync<Publish>(args, new DialogParameters { Title = Resources.IDS_SETTING_PUBLISH_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
@@ -254,11 +256,31 @@
     private async Task OnSyncRedisClicked()
     {
         var args = new EditDialogArgs(Id, Environment);
-        var dialog = await DialogService.ShowDialogAsync<SyncRedis>(args, new DialogParameters { Title = Resources.IDS_SETTING_SYNC_REDIS_DIALOG_TITLE });
+        await DialogService.ShowDialogAsync<SyncRedis>(args, new DialogParameters { Title = Resources.IDS_SETTING_SYNC_REDIS_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
     }
 
     private async Task OnDeleteClicked()
     {
+        var confirmation = await DialogService.ShowConfirmationAsync(Resources.IDS_SETTING_DELETE_CONFIRM_MESSAGE, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_SETTING_DELETE_CONFIRM_TITLE);
+        var result = await confirmation.Result;
+        if (!result.Cancelled)
+        {
+            try
+            {
+                await SettingApi.DeleteAsync(Id, Environment)
+                                .ContinueWith(task =>
+                                {
+                                    task.WaitAndUnwrapException();
+                                    task.Result.EnsureSuccess();
+                                });
+                await Pagination.SetCurrentPageIndexAsync(0);
+                StateHasChanged();
+            }
+            catch (Exception exception)
+            {
+                exception.Send();
+            }
+        }
     }
 
 }

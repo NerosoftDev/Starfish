@@ -80,7 +80,7 @@
                 );
             }
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).Guard();
             await Pagination.SetTotalItemCountAsync(Total);
             return GridItemsProviderResult.From(items, Total);
         };
@@ -97,7 +97,7 @@
     private async Task OnEditClicked(long id)
     {
         var title = id == 0 ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
-        var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, Modal = true });
+        var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
@@ -112,7 +112,7 @@
 
     private async Task OnResetPasswordClicked(long id)
     {
-        await DialogService.ShowDialogAsync<ResetPassword>(id, new DialogParameters { Modal = true });
+        await DialogService.ShowDialogAsync<ResetPassword>(id, new DialogParameters { PreventDismissOnOverlayClick = true });
     }
 
 }

@@ -2,7 +2,6 @@
 
 @inject ITeamApi TeamApi
 @inject IUserApi UserApi
-@inject IToastService ToastService
 
 <FluentAutocomplete TOption="UserItemDto"
                     AutoComplete="off"
@@ -62,8 +61,7 @@
         }
         catch (Exception exception)
         {
-            var message = exception.GetPromptMessage();
-            ToastService.ShowError(message);
+            exception.Send();
         }
         finally
         {

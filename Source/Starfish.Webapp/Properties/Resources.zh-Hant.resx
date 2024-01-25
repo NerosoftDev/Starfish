@@ -469,4 +469,7 @@
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用戶名</value>
   </data>
+  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
+      <value>應用詳情</value>
+  </data>
 </root>
