@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Business;
+﻿using System.Threading;
+using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
@@ -62,7 +63,6 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 
 	protected override void AddRules()
 	{
-		Rules.AddRule(new TeamOwnerCheckRule());
 		Rules.AddRule(new CodeDuplicateCheckRule());
 	}
 
@@ -92,6 +92,8 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	[FactoryInsert]
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
+		await CheckPermissionAsync(TeamId, cancellationToken);
+
 		Aggregate = AppInfo.Create(TeamId, Name, Code);
 		Aggregate.SetSecret(Secret);
 		if (!string.IsNullOrWhiteSpace(Description))
@@ -106,6 +108,8 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	[FactoryUpdate]
 	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
+		await CheckPermissionAsync(Aggregate.TeamId, cancellationToken);
+
 		if (!HasChangedProperties)
 		{
 			return;
@@ -130,28 +134,19 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	}
 
 	[FactoryDelete]
-	protected override Task DeleteAsync(CancellationToken cancellationToken = default)
+	protected override async Task DeleteAsync(CancellationToken cancellationToken = default)
 	{
+		await CheckPermissionAsync(Aggregate.TeamId, cancellationToken);
 		Aggregate.RaiseEvent(new AppInfoDeletedEvent());
-		return AppInfoRepository.DeleteAsync(Aggregate, true, cancellationToken);
+		await AppInfoRepository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
-	private class TeamOwnerCheckRule : RuleBase
+	private async Task CheckPermissionAsync(long teamId, CancellationToken cancellationToken = default)
 	{
-		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
+		var team = await TeamRepository.GetAsync(teamId, false, cancellationToken);
+		if (team.OwnerId != Identity.GetUserIdOfInt64())
 		{
-			var target = (AppInfoGeneralBusiness)context.Target;
-
-			if (!target.ChangedProperties.Contains(TeamIdProperty))
-			{
-				return;
-			}
-
-			var team = await target.TeamRepository.GetAsync(target.TeamId, false, cancellationToken);
-			if (team.OwnerId != target.Identity.GetUserIdOfInt64())
-			{
-				context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
-			}
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE);
 		}
 	}
 

@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Domain;
 public class AppInfoSecretBusiness : CommandObject<AppInfoSecretBusiness>, IDomainService
 {
 	[Inject]
-	public IAppInfoRepository AppInfoRepository { get; set; }
+	public IAppInfoRepository AppsRepository { get; set; }
 
 	[Inject]
 	public ITeamRepository TeamRepository { get; set; }
@@ -18,7 +18,7 @@ public class AppInfoSecretBusiness : CommandObject<AppInfoSecretBusiness>, IDoma
 	[FactoryExecute]
 	protected async Task ExecuteAsync(long id, string secret, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await AppInfoRepository.GetAsync(id, true, cancellationToken);
+		var aggregate = await AppsRepository.GetAsync(id, true, cancellationToken);
 		if (aggregate == null)
 		{
 			throw new AppInfoNotFoundException(id);
@@ -27,11 +27,11 @@ public class AppInfoSecretBusiness : CommandObject<AppInfoSecretBusiness>, IDoma
 		var team = await TeamRepository.GetAsync(aggregate.TeamId, false, cancellationToken);
 		if (team.OwnerId != Identity.GetUserIdOfInt64())
 		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE);
 		}
 
 		aggregate.SetSecret(secret);
 
-		await AppInfoRepository.UpdateAsync(aggregate, true, cancellationToken);
+		await AppsRepository.UpdateAsync(aggregate, true, cancellationToken);
 	}
 }
