@@ -7,7 +7,7 @@
                     AutoComplete="off"
                     Label="Select a user"
                     Width="100%"
-                    Placeholder="Select countries"
+                    Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)"
                     OnOptionsSearch="@OnSearchAsync"
                     OptionText="@(item => item.NickName)"
                     @bind-SelectedOptions="@_selectedItems"/>
@@ -34,12 +34,7 @@
     private async Task OnSearchAsync(OptionsSearchEventArgs<UserItemDto> e)
     {
         Criteria.Keyword = e.Text;
-        e.Items = await UserApi.SearchAsync(Criteria)
-                               .ContinueWith(task =>
-                               {
-                                   task.WaitAndUnwrapException();
-                                   return task.Result.EnsureSuccess();
-                               });
+        e.Items = await UserApi.SearchAsync(Criteria).EnsureSuccess();
     }
 
     private async Task SaveAsync()
@@ -50,12 +45,7 @@
 
             var userIds = _selectedItems.Select(t => t.Id).ToList();
 
-            await TeamApi.AppendMemberAsync(Content, userIds)
-                         .ContinueWith(task =>
-                         {
-                             task.WaitAndUnwrapException();
-                             task.Result.EnsureSuccess();
-                         });
+            await TeamApi.AppendMemberAsync(Content, userIds).EnsureSuccess();
 
             await Dialog.CloseAsync(Content);
         }

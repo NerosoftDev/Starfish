@@ -456,11 +456,50 @@
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
     <value>Add member</value>
   </data>
+  <data name="IDS_TEAM_DETAIL_APPS" xml:space="preserve">
+    <value>Apps</value>
+  </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
     <value>Add member</value>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_CODE" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_EMAIL" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_NICK_NAME" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_PHONE" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_ROLES" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_USER_NAME" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_LABEL_ALIAS" xml:space="preserve">
+    <value>Alias: {0}</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_LABEL_CREATE_TIME" xml:space="preserve">
+    <value>Created at: {0:yyyy-MM-dd}</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_LABEL_UPDATE_TIME" xml:space="preserve">
+    <value>Updated at: {0:yyyy-MM-dd}</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_MEMBERS" xml:space="preserve">
+    <value>Members</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>Are you sure to remove this member?</value>

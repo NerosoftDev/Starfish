@@ -13,15 +13,15 @@
 <FluentCard>
     <FluentStack Orientation="Orientation.Horizontal" Width="100%">
         <FluentStack Orientation="Orientation.Vertical" Width="360px">
-            <FluentPersona Name="@Data.Name" Initials="N" ImageSize="50px"/>
-            <FluentLabel>Alias: @Data.Alias</FluentLabel>
-            <FluentLabel>Created at: @Data.CreateTime.Date</FluentLabel>
-            <FluentLabel>Updated at: @Data.UpdateTime.Date</FluentLabel>
-            <FluentDivider Style="width: 100%;"/>
+            <FluentPersona Name="@Data.Name" Initials="S" ImageSize="50px" />
+            <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_ALIAS, Data.Alias)</FluentLabel>
+            <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_CREATE_TIME, Data.CreateTime)</FluentLabel>
+            <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_UPDATE_TIME, Data.UpdateTime)</FluentLabel>
+            <FluentDivider Style="width: 100%;" />
             <FluentLabel>@Data.Description</FluentLabel>
             @if (Data.OwnerId != Identity?.GetUserIdOfInt64())
             {
-                <FluentDivider Style="width: 100%;"/>
+                <FluentDivider Style="width: 100%;" />
                 <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
                 <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
                     <FluentButton OnClick="@OnEditClicked">@(Resources.IDS_TEAM_DETAIL_BUTTON_EDIT)</FluentButton>
@@ -32,29 +32,23 @@
         <FluentDivider Orientation="Orientation.Vertical" Style="height: 100%"></FluentDivider>
         <div style="width:100%">
             <FluentTabs Width="100%" Size="TabSize.Large">
-                <FluentTab Label="Member">
-                    <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
-                        @foreach (var member in Members)
-                        {
-                            @if (Data.OwnerId != Identity?.GetUserIdOfInt64())
-                            {
-                                <FluentPersona Name="@member.NickName"
-                                               ImageSize="50px"
-                                               OnDismissClick="@(() => OnRemoveMemberClicked(member.UserId))"/>
-                            }
-                            else
-                            {
-                                <FluentPersona Name="@member.NickName" ImageSize="50px"/>
-                            }
-                        }
-                    </FluentStack>
+                <FluentTab Label="@(Resources.IDS_TEAM_DETAIL_MEMBERS)">
+                    <FluentDataGrid Items="@QueryableMembers" Style="width: 100%">
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_USER_NAME)" Property="@(c => c.UserName)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_NICK_NAME)" Property="@(c => c.NickName)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_EMAIL)" Property="@(c => c.Email)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_PHONE)" Property="@(c => c.Phone)" />
+                        <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.DismissCircle())" Disabled="@(Identity.GetUserIdOfInt64() == Data.OwnerId)" OnClick="@(() => OnRemoveMemberClicked(context.UserId))" />
+                        </TemplateColumn>
+                    </FluentDataGrid>
                 </FluentTab>
-                <FluentTab Label="Apps">
+                <FluentTab Label="@(Resources.IDS_TEAM_DETAIL_APPS)">
                     <FluentDataGrid Items="@QueryableApps" Style="width: 100%">
-                        <PropertyColumn Title="Id" Property="@(c => c.Id)"/>
-                        <PropertyColumn Title="Name" Property="@(c => c.Name)"/>
-                        <PropertyColumn Title="Code" Property="@(c => c.Code)"/>
-                        <PropertyColumn Title="Status" Property="@(c => c.StatusDescription)"/>
+                        <PropertyColumn Class="data-grid-column" Title="Id" Property="@(c => c.Id)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_NAME)" Property="@(c => c.Name)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_CODE)" Property="@(c => c.Code)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_STATUS)" Property="@(c => c.StatusDescription)" />
                     </FluentDataGrid>
                 </FluentTab>
             </FluentTabs>
@@ -79,6 +73,8 @@
     private ObservableRangeCollection<AppInfoItemDto> Apps { get; } = [];
 
     private IQueryable<AppInfoItemDto> QueryableApps => Apps.AsQueryable();
+
+    private IQueryable<TeamMemberDto> QueryableMembers => Members.AsQueryable();
 
     protected override async Task OnInitializedAsync()
     {

@@ -456,11 +456,50 @@
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
     <value>添加成员</value>
   </data>
+  <data name="IDS_TEAM_DETAIL_APPS" xml:space="preserve">
+    <value>应用</value>
+  </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_ADD_MEMBER" xml:space="preserve">
     <value>添加成员</value>
   </data>
   <data name="IDS_TEAM_DETAIL_BUTTON_EDIT" xml:space="preserve">
     <value>编辑</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_CODE" xml:space="preserve">
+    <value>代码</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_STATUS" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_EMAIL" xml:space="preserve">
+    <value>邮箱</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_NICK_NAME" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_PHONE" xml:space="preserve">
+    <value>手机号码</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_ROLES" xml:space="preserve">
+    <value>角色</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_USER_NAME" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_LABEL_ALIAS" xml:space="preserve">
+    <value>别名：{0}</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_LABEL_CREATE_TIME" xml:space="preserve">
+    <value>创建：{0:yyyy-MM-dd}</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_LABEL_UPDATE_TIME" xml:space="preserve">
+    <value>修改：{0:yyyy-MM-dd}</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_MEMBERS" xml:space="preserve">
+    <value>团队成员</value>
   </data>
   <data name="IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
     <value>确定要移除团队成员吗？</value>
