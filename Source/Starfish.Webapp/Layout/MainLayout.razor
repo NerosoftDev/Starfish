@@ -7,22 +7,22 @@
 @inject NavigationManager Navigation
 @inject IToastService ToastService
 
-<FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office" />
+<FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office"/>
 <FluentLayout>
     <FluentHeader>
         Starfish
-        <FluentSpacer />
-        <div style="display: flex; gap: 10px;">
-            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Alert())" />
+        <FluentSpacer/>
+        @* <div style="display: flex; gap: 10px;">
+            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Alert())"/>
 
-            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Settings())" />
+            <FluentIcon Color="Color.Lightweight" Value="@(new Icons.Filled.Size20.Settings())"/>
 
             <FluentPersona Name="@(Identity?.Username ?? "starfish")" Id="persona"
                            ImageSize="36px"
                            Image="https://s.gravatar.com/avatar/38a519cc759f85fc814868d0656c0c18?s=480"
                            Status="PresenceStatus.Available"
-                           StatusSize="PresenceBadgeSize.Small" />
-        </div>
+                           StatusSize="PresenceBadgeSize.Small"/>
+        </div> *@
     </FluentHeader>
 
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
@@ -49,11 +49,11 @@
                     <ErrorContent Context="ex">
                         @if (ex is AuthenticationException)
                         {
-                            <Redirect Uri="/login" />
+                            <Redirect Uri="/login"/>
                         }
                         else if (ex is HttpRequestException e && e.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                         {
-                            <Redirect Uri="/login" />
+                            <Redirect Uri="/login"/>
                         }
                         else
                         {
@@ -81,8 +81,8 @@
         </div>
     </FluentFooter>
 
-    <FluentToastProvider MaxToastCount="10" />
-    <FluentDialogProvider />
+    <FluentToastProvider MaxToastCount="10"/>
+    <FluentDialogProvider/>
 </FluentLayout>
 
 @code {
@@ -100,7 +100,7 @@
 
         Authentication.AuthenticationStateChanged += OnAuthenticationStateChanged;
 
-        if (!WeakReferenceMessenger.Default.IsRegistered<MainLayout>(this))
+        if (!WeakReferenceMessenger.Default.IsRegistered<Exception, string>(this, Constants.Message.ExceptionThrown))
         {
             WeakReferenceMessenger.Default.Register<Exception, string>(this, Constants.Message.ExceptionThrown, OnExceptionThrown);
         }
@@ -111,7 +111,7 @@
         switch (exception)
         {
             case UnauthorizedAccessException:
-            case HttpRequestException e when e.StatusCode == System.Net.HttpStatusCode.Unauthorized:
+            case HttpRequestException { StatusCode: System.Net.HttpStatusCode.Unauthorized }:
                 var returnUrl = Navigation.Uri;
                 Navigation.NavigateTo($"/login?returnUrl={returnUrl}");
                 break;
@@ -141,6 +141,7 @@
     {
         Authentication.AuthenticationStateChanged -= OnAuthenticationStateChanged;
         AuthenticationState?.Dispose();
+        WeakReferenceMessenger.Default.UnregisterAll(this);
     }
 
 }

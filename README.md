@@ -252,6 +252,7 @@ See the Swagger UI at [http://localhost:5229/swagger](http://localhost:5229/swag
 
  - Multiple node deployment. / 支持多节点部署。
  - Common configuration. / 公共配置。
+ - Customized environments. / 自定义环境。
 
 ## v2.0
 
