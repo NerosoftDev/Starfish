@@ -19,10 +19,10 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
     - [ ] ⌛ PostgreSQL
     - [ ] 🕝 MongoDB
     - [x] 💚 Sqlite
-- [ ] ⌛ Support multiple platforms/支持多种平台
+- [x] 💚 Support multiple platforms/支持多种平台
     - [x] 💚 Web API/Web Application/gRPC Service in .NET6/7/8
     - [x] 💚 .NET MAUI
-    - [ ] ⌛ WPF application
+    - [x] 💚 WPF application
 - [ ] 🕝 Support multiple node deployment/支持多节点部署
 - [x] 💚 Support multiple environments/支持多环境
 - [ ] ⌛ Deploy with docker/支持Docker部署
@@ -33,10 +33,10 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
     - [x] 💚 WebSocket
 - [ ] 🕝 Rollback to history version/回滚到历史版本
 - [ ] 🕝 Role-based access control/基于角色的访问控制
-- [ ] ⌛ Support multiple languages admin panel/支持多语言管理面板
+- [x] 💚 Support multiple languages admin panel/支持多语言管理面板
     - [x] 💚 en/英语
     - [x] 💚 zh-Hans/简体中文
-    - [ ] ⌛ zh-Hant/繁体中文
+    - [x] 💚 zh-Hant/繁体中文
     
 ## 💰 Donate/捐助 
 <img alt="" title="donate" width="512" src="https://qiniu-cdn.zhaorong.pro/images/donate.png" /> 

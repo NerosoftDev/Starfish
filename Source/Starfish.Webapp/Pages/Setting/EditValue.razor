@@ -1,7 +1,6 @@
 ﻿@implements IDialogContentComponent<EditDialogArgs>
 
 @inject ISettingApi SettingApi
-@inject IToastService ToastService
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
@@ -55,11 +54,7 @@
         {
             Loading = true;
             await SettingApi.UpdateItemValueAsync(Content.AppId, Content.Environment, Key, Request)
-                            .ContinueWith(task =>
-                            {
-                                task.WaitAndUnwrapException();
-                                task.Result.EnsureSuccess();
-                            });
+                            .EnsureSuccess();
             await Dialog.CloseAsync(Content);
         }
         catch (Exception exception)

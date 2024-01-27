@@ -57,11 +57,7 @@
             Loading = true;
 
             var raw = await SettingApi.GetArchivedAsync(Content.AppId, Content.Environment)
-                                      .ContinueWith(task =>
-                                      {
-                                          task.WaitAndUnwrapException();
-                                          return task.Result.EnsureSuccess();
-                                      });
+                                      .EnsureSuccess();
 
             var buffer = Convert.FromBase64String(raw);
             var items = Decompress(buffer, buffer.Length);

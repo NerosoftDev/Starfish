@@ -59,10 +59,8 @@
         {
             Loading = true;
 
-            await AppsApi.GetAsync(Content).ContinueWith(task =>
+            await AppsApi.GetAsync(Content).EnsureSuccess(result =>
             {
-                task.WaitAndUnwrapException();
-                var result = task.Result.EnsureSuccess();
                 Data.Name = result.Name;
                 Data.Code = result.Code;
                 Data.Description = result.Description;

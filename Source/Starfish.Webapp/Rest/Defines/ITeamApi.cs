@@ -21,7 +21,7 @@ internal interface ITeamApi
 	Task<IApiResponse> UpdateAsync(long id, [Body] TeamEditDto data, CancellationToken cancellationToken = default);
 
 	[Get("/api/team/{id}/member")]
-	Task<ApiResponse<List<TeamMemberDto>>> GetMembersAsync(long id, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<TeamMemberDto>>> GetMembersAsync(long id, CancellationToken cancellationToken = default);
 
 	[Post("/api/team/{id}/member")]
 	Task<IApiResponse> AppendMemberAsync(long id, [Body] List<long> userIds, CancellationToken cancellationToken = default);

@@ -61,22 +61,14 @@
             var tasks = new List<Task>
             {
                 Api.SearchAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
-                   .ContinueWith(task =>
-                   {
-                       task.WaitAndUnwrapException(request.CancellationToken);
-                       items = task.Result.EnsureSuccess();
-                   }, request.CancellationToken)
+                   .EnsureSuccess(result => items = result, request.CancellationToken)
             };
 
             if (request.StartIndex == 0)
             {
                 tasks.Add(
                     Api.CountAsync(Criteria, request.CancellationToken)
-                       .ContinueWith(task =>
-                       {
-                           task.WaitAndUnwrapException(request.CancellationToken);
-                           Total = task.Result.EnsureSuccess();
-                       }, request.CancellationToken)
+                       .EnsureSuccess(result => Total = result, request.CancellationToken)
                 );
             }
 
