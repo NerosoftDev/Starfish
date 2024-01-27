@@ -117,11 +117,7 @@
             UserName = UserName,
             Password = Password
         };
-        return await Api.GrantTokenAsync(dto, cancellationToken).ContinueWith(task =>
-        {
-            task.WaitAndUnwrapException(cancellationToken);
-            return task.Result.EnsureSuccess();
-        }, cancellationToken);
+        return await Api.GrantTokenAsync(dto, cancellationToken).EnsureSuccess(cancellationToken);
     }
 
     private async Task OnRegisterClicked()

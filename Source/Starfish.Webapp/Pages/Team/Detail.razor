@@ -101,27 +101,22 @@
     private Task LoadDetailAsync()
     {
         return TeamApi.GetAsync(Id)
-                      .ContinueWith(task =>
+                      .EnsureSuccess(result =>
                       {
-                          var data = task.Result.EnsureSuccess();
-                          Data.Name = data.Name;
-                          Data.Alias = data.Alias;
-                          Data.Description = data.Description;
-                          Data.CreateTime = data.CreateTime;
-                          Data.UpdateTime = data.UpdateTime;
-                          Data.CreatedBy = data.CreatedBy;
-                          Data.UpdatedBy = data.UpdatedBy;
+                          Data.Name = result.Name;
+                          Data.Alias = result.Alias;
+                          Data.Description = result.Description;
+                          Data.CreateTime = result.CreateTime;
+                          Data.UpdateTime = result.UpdateTime;
+                          Data.CreatedBy = result.CreatedBy;
+                          Data.UpdatedBy = result.UpdatedBy;
                       });
     }
 
     private Task LoadMembersAsync()
     {
         return TeamApi.GetMembersAsync(Id)
-                      .ContinueWith(task =>
-                      {
-                          var data = task.Result.EnsureSuccess();
-                          Members.ReplaceRange(data);
-                      });
+                      .EnsureSuccess(result => Members.ReplaceRange(result));
     }
 
     private Task LoadAppsAsync()
@@ -130,12 +125,7 @@
         {
             var criteria = new AppInfoCriteria { TeamId = Id };
             return AppsApi.QueryAsync(criteria, 0, 100)
-                          .ContinueWith(task =>
-                          {
-                              task.WaitAndUnwrapException();
-                              var data = task.Result.EnsureSuccess();
-                              Apps.ReplaceRange(data);
-                          });
+                          .EnsureSuccess(result => Apps.ReplaceRange(result));
         }
         catch
         {
@@ -152,11 +142,7 @@
             try
             {
                 await TeamApi.RemoveMemberAsync(Id, [userId])
-                             .ContinueWith(task =>
-                             {
-                                 task.WaitAndUnwrapException();
-                                 task.Result.EnsureSuccess();
-                             });
+                             .EnsureSuccess();
                 await LoadMembersAsync();
                 StateHasChanged();
             }
@@ -182,5 +168,4 @@
     {
         await DialogService.ShowDialogAsync<Edit>(Id, new DialogParameters { Title = Resources.IDS_TEAM_EDIT_TITLE_EDIT, PreventDismissOnOverlayClick = true });
     }
-
 }

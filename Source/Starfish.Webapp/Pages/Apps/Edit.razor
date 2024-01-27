@@ -114,11 +114,7 @@
                     Description = Description
                 };
                 await AppsApi.UpdateAsync(Content, request)
-                             .ContinueWith(task =>
-                             {
-                                 task.WaitAndUnwrapException();
-                                 task.Result.EnsureSuccess();
-                             });
+                             .EnsureSuccess();
             }
             else
             {
@@ -131,11 +127,7 @@
                     Description = Description
                 };
                 await AppsApi.CreateAsync(request)
-                             .ContinueWith(task =>
-                             {
-                                 task.WaitAndUnwrapException();
-                                 task.Result.EnsureSuccess();
-                             });
+                             .EnsureSuccess();
             }
 
             await Dialog.CloseAsync(Content);
@@ -158,10 +150,8 @@
     private async Task LoadTeamsAsync()
     {
         await TeamApi.QueryAsync(new TeamCriteria(), 1, 100)
-                     .ContinueWith(task =>
+                     .EnsureSuccess(result =>
                      {
-                         task.WaitAndUnwrapException();
-                         var result = task.Result.EnsureSuccess();
                          if (result == null)
                          {
                              return;
@@ -185,10 +175,8 @@
         }
 
         await AppsApi.GetAsync(id)
-                     .ContinueWith(task =>
+                     .EnsureSuccess(result =>
                      {
-                         task.WaitAndUnwrapException();
-                         var result = task.Result.EnsureSuccess();
                          if (result == null)
                          {
                              return;

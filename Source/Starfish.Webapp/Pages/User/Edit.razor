@@ -1,7 +1,6 @@
 ﻿@implements IDialogContentComponent<long>
 
 @inject IUserApi Api
-@inject IToastService ToastService
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
@@ -85,11 +84,7 @@
                     };
 
                 await Api.UpdateAsync(Content, request)
-                         .ContinueWith(task =>
-                         {
-                             task.WaitAndUnwrapException();
-                             task.Result.EnsureSuccess();
-                         });
+                         .EnsureSuccess();
             }
             else
             {
@@ -107,18 +102,13 @@
                     };
 
                 await Api.CreateAsync(request)
-                         .ContinueWith(task =>
-                         {
-                             task.WaitAndUnwrapException();
-                             task.Result.EnsureSuccess();
-                         });
+                         .EnsureSuccess();
             }
             await Dialog.CloseAsync(Content);
         }
         catch (Exception exception)
         {
-            var message = exception.GetPromptMessage();
-            ToastService.ShowError(message);
+            exception.Send();
         }
         finally
         {
@@ -139,10 +129,8 @@
         }
 
         await Api.GetAsync(id)
-                  .ContinueWith(task =>
+                  .EnsureSuccess(result =>
                   {
-                      task.WaitAndUnwrapException();
-                      var result = task.Result.EnsureSuccess();
                       if (result == null)
                       {
                           return;

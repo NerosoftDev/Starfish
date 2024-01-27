@@ -90,18 +90,8 @@
             };
             var task = Mode switch
             {
-                "create" => SettingApi.CreateAsync(Content.AppId, Content.Environment, Format, request)
-                                      .ContinueWith(task =>
-                                      {
-                                          task.WaitAndUnwrapException();
-                                          task.Result.EnsureSuccess();
-                                      }),
-                "update" => SettingApi.UpdateAsync(Content.AppId, Content.Environment, Format, request)
-                                      .ContinueWith(task =>
-                                      {
-                                          task.WaitAndUnwrapException();
-                                          task.Result.EnsureSuccess();
-                                      }),
+                "create" => SettingApi.CreateAsync(Content.AppId, Content.Environment, Format, request).EnsureSuccess(),
+                "update" => SettingApi.UpdateAsync(Content.AppId, Content.Environment, Format, request).EnsureSuccess(),
                 _ => Task.CompletedTask
             };
             await task;
@@ -125,10 +115,9 @@
     private Task LoadValueAsync()
     {
         return SettingApi.GetItemsAsync(Content.AppId, Content.Environment, Format)
-                         .ContinueWith(task =>
+                         .EnsureSuccess(result=>
                          {
-                             task.WaitAndUnwrapException();
-                             var value = Cryptography.Base64.Decrypt(task.Result.EnsureSuccess());
+                             var value = Cryptography.Base64.Decrypt(result);
                              _editor.SetValue(value);
                          })
                          .Guard();

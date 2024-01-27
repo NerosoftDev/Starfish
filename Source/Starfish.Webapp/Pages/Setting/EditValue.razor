@@ -55,11 +55,7 @@
         {
             Loading = true;
             await SettingApi.UpdateItemValueAsync(Content.AppId, Content.Environment, Key, Request)
-                            .ContinueWith(task =>
-                            {
-                                task.WaitAndUnwrapException();
-                                task.Result.EnsureSuccess();
-                            });
+                            .EnsureSuccess();
             await Dialog.CloseAsync(Content);
         }
         catch (Exception exception)

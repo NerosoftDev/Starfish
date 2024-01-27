@@ -48,11 +48,7 @@
             Loading = true;
 
             await SettingApi.PublishAsync(Content.AppId, Content.Environment, Request)
-                            .ContinueWith(task =>
-                            {
-                                task.WaitAndUnwrapException();
-                                task.Result.EnsureSuccess();
-                            });
+                            .EnsureSuccess();
 
             await Dialog.CloseAsync(Content);
         }
