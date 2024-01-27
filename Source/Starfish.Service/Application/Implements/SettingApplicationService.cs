@@ -82,7 +82,7 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 	public Task<string> GetSettingRawAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetSettingRawUseCase>();
-		var input = new GetSettingRawUseCaseInput(appId, environment);
+		var input = new GetSettingRawInput(appId, environment);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
@@ -100,5 +100,12 @@ public class SettingApplicationService : BaseApplicationService, ISettingApplica
 				var text = parser.InvertParse(items);
 				return Cryptography.Base64.Encrypt(text);
 			}, cancellationToken);
+	}
+
+	public Task PushRedisAsync(long appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default)
+	{ 
+		var useCase = LazyServiceProvider.GetRequiredService<IPushRedisUseCase>();
+		var input = new PushRedisInput(appId, environment, data);
+		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 }

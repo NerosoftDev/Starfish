@@ -35,4 +35,7 @@ internal interface ISettingApi
 
 	[Get("/api/apps/{id}/setting/{environment}/archive")]
 	Task<IApiResponse<string>> GetArchivedAsync(long id, string environment, CancellationToken cancellationToken = default);
+
+	[Post("/api/apps/{id}/setting/{environment}/redis")]
+	Task<IApiResponse> PushRedisAsync(long id, string environment, [Body] PushRedisRequestDto data);
 }

@@ -107,4 +107,6 @@ public interface ISettingApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<string> GetItemsInTextAsync(long appId, string environment, string format, CancellationToken cancellationToken = default);
+
+	Task PushRedisAsync(long appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default);
 }

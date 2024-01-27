@@ -1,6 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
+using Nerosoft.Starfish.Common;
 
 namespace Nerosoft.Starfish.Client;
 
@@ -66,7 +67,7 @@ internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposabl
 		{
 			await client.GetConfigurationAsync((data, length) =>
 			{
-				var json = Decompress(data, length);
+				var json = GzipHelper.Decompress(data, length);
 				File.WriteAllText(_cacheFile, json, Encoding.UTF8);
 				if (_waitHandle.IsSet)
 				{
@@ -83,31 +84,6 @@ internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposabl
 		{
 			ConnectionLost?.Invoke(this, EventArgs.Empty);
 		}
-	}
-
-	private static string Decompress(byte[] data, int count)
-	{
-		var stream = new MemoryStream(data, 0, count);
-		var zip = new GZipStream(stream, CompressionMode.Decompress, true);
-		var destStream = new MemoryStream();
-		var buffer = new byte[0x1000];
-		while (true)
-		{
-			var reader = zip.Read(buffer, 0, buffer.Length);
-			if (reader <= 0)
-			{
-				break;
-			}
-
-			destStream.Write(buffer, 0, reader);
-		}
-
-		zip.Close();
-		stream.Close();
-		destStream.Position = 0;
-		buffer = destStream.ToArray();
-		destStream.Close();
-		return Encoding.UTF8.GetString(buffer);
 	}
 
 	public void Dispose()

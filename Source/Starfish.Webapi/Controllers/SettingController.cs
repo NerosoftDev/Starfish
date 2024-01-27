@@ -181,4 +181,18 @@ public class SettingController : ControllerBase
 		var result = await _service.GetSettingRawAsync(id, environment, HttpContext.RequestAborted);
 		return Ok(result);
 	}
+
+	/// <summary>
+	/// 推送到Redis
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="environment"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPost("redis")]
+	public async Task<IActionResult> PushRedisAsync(long id, string environment, [FromBody] PushRedisRequestDto data)
+	{
+		await _service.PushRedisAsync(id, environment, data, HttpContext.RequestAborted);
+		return Ok();
+	}
 }
