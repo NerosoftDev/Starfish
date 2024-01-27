@@ -6,6 +6,7 @@
 @inject AuthenticationStateProvider Authentication
 @inject NavigationManager Navigation
 @inject IToastService ToastService
+@inject ExceptionRecipient Recipient
 
 <FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Office"/>
 <FluentLayout>
@@ -100,26 +101,7 @@
 
         Authentication.AuthenticationStateChanged += OnAuthenticationStateChanged;
 
-        if (!WeakReferenceMessenger.Default.IsRegistered<Exception, string>(this, Constants.Message.ExceptionThrown))
-        {
-            WeakReferenceMessenger.Default.Register<Exception, string>(this, Constants.Message.ExceptionThrown, OnExceptionThrown);
-        }
-    }
-
-    private void OnExceptionThrown(object recipient, Exception exception)
-    {
-        switch (exception)
-        {
-            case UnauthorizedAccessException:
-            case HttpRequestException { StatusCode: System.Net.HttpStatusCode.Unauthorized }:
-                var returnUrl = Navigation.Uri;
-                Navigation.NavigateTo($"/login?returnUrl={returnUrl}");
-                break;
-            default:
-                var message = exception.GetPromptMessage();
-                ToastService.ShowError(message);
-                break;
-        }
+        Recipient.Subscribe(OnExceptionReceived);
     }
 
     private async void OnAuthenticationStateChanged(Task<AuthenticationState> task)
@@ -144,4 +126,19 @@
         WeakReferenceMessenger.Default.UnregisterAll(this);
     }
 
+    private void OnExceptionReceived(Exception exception)
+    {
+        switch (exception)
+        {
+            case UnauthorizedAccessException:
+            case HttpRequestException { StatusCode: System.Net.HttpStatusCode.Unauthorized }:
+                var returnUrl = Navigation.Uri;
+                Navigation.NavigateTo($"/login?returnUrl={returnUrl}");
+                break;
+            default:
+                var message = exception.GetPromptMessage();
+                ToastService.ShowError(message);
+                break;
+        }
+    }
 }

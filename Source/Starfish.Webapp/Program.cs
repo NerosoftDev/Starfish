@@ -41,6 +41,8 @@ public class Program
 				   options.Timeout = TimeSpan.FromMilliseconds(timeout);
 			   });
 
+		builder.Services.AddSingleton<ExceptionRecipient>();
+
 		var host = builder.Build();
 		Singleton<HostAccessor>.Get(() => new HostAccessor
 		{
