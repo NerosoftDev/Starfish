@@ -166,8 +166,4 @@ public class Setting : Aggregate<long>, IAuditing
 		Version = version;
 		PublishTime = DateTime.Now;
 	}
-
-	internal void Archive(string @operator)
-	{
-	}
 }

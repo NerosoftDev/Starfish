@@ -15,4 +15,6 @@ public interface IAppInfoRepository : IBaseRepository<DataContext, AppInfo, long
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task<AppInfo> GetByCodeAsync(string code, CancellationToken cancellationToken = default);
+
+	Task<int> CheckPermissionAsync(long appId, long userId, CancellationToken cancellationToken = default);
 }
