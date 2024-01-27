@@ -1,15 +1,13 @@
 ﻿using Nerosoft.Euonia.Application;
-using Nerosoft.Euonia.Linq;
 using Nerosoft.Starfish.Domain;
-using Nerosoft.Starfish.Repository;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IGetSettingRawUseCase : IUseCase<GetSettingRawUseCaseInput, GetSettingRawUseCaseOutput>;
+public interface IGetSettingRawUseCase : IUseCase<GetSettingRawInput, GetSettingRawUseCaseOutput>;
 
 public record GetSettingRawUseCaseOutput(string Result) : IUseCaseOutput;
 
-public record GetSettingRawUseCaseInput(long AppId, string Environment) : IUseCaseInput;
+public record GetSettingRawInput(long AppId, string Environment) : IUseCaseInput;
 
 public class GetSettingRawUseCase : IGetSettingRawUseCase
 {
@@ -20,17 +18,9 @@ public class GetSettingRawUseCase : IGetSettingRawUseCase
 		_repository = repository;
 	}
 
-	public Task<GetSettingRawUseCaseOutput> ExecuteAsync(GetSettingRawUseCaseInput input, CancellationToken cancellationToken = default)
+	public Task<GetSettingRawUseCaseOutput> ExecuteAsync(GetSettingRawInput input, CancellationToken cancellationToken = default)
 	{
-		ISpecification<SettingArchive>[] specifications = 
-		{
-			SettingArchiveSpecification.AppIdEquals(input.AppId),
-			SettingArchiveSpecification.EnvironmentEquals(input.Environment)
-		};
-
-		var predicate = new CompositeSpecification<SettingArchive>(PredicateOperator.AndAlso, specifications).Satisfy();
-
-		return _repository.GetAsync(predicate, cancellationToken)
+		return _repository.GetAsync(input.AppId, input.Environment, cancellationToken)
 						   .ContinueWith(t => new GetSettingRawUseCaseOutput(t.Result.Data), cancellationToken);
 	}
 }

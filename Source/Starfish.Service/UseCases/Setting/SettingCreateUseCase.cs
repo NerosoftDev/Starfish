@@ -26,14 +26,14 @@ public class SettingCreateUseCase : ISettingCreateUseCase
 		var format = input.Format?.Normalize(TextCaseType.Lower).Trim(TextTrimType.All);
 		var parserName = format switch
 		{
-			"text/plain" => "text",
-			"text/json" => "json",
+			"plain/text" => "text",
+			"plain/json" => "json",
 			"" => throw new ArgumentNullException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED),
 			null => throw new ArgumentNullException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED),
 			_ => throw new InvalidOperationException(Resources.IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED)
 		};
 
-		var parser = _provider.GetNamedService<IConfigurationParser>(parserName);
+		var parser = _provider.GetKeyedService<IConfigurationParser>(parserName);
 		var data = Cryptography.Base64.Decrypt(input.Data.Data);
 		var command = new SettingCreateCommand(input.AppId, input.Environment)
 		{

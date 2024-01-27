@@ -28,7 +28,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="README.md" Pack="True" PackagePath=""  />
+        <None Include="README.md" Pack="True" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Starfish.Common\Starfish.Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>

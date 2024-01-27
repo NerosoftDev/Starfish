@@ -1,6 +1,6 @@
-﻿using System.IO.Compression;
-using Nerosoft.Euonia.Business;
+﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
+using Nerosoft.Starfish.Common;
 using Newtonsoft.Json;
 
 namespace Nerosoft.Starfish.Domain;
@@ -30,7 +30,7 @@ public class SettingArchiveBusiness : CommandObject<SettingArchiveBusiness>, IDo
 
 		archive ??= SettingArchive.Create(appId, environment);
 
-		archive.Update(Compress(json), userName);
+		archive.Update(GzipHelper.CompressToBase64(json), userName);
 
 		if (archive.Id > 0)
 		{
@@ -40,21 +40,5 @@ public class SettingArchiveBusiness : CommandObject<SettingArchiveBusiness>, IDo
 		{
 			await ArchiveRepository.InsertAsync(archive, true, cancellationToken);
 		}
-	}
-
-	private static string Compress(string source)
-	{
-		var data = Encoding.UTF8.GetBytes(source);
-
-		var stream = new MemoryStream();
-		var zip = new GZipStream(stream, CompressionMode.Compress, true);
-		zip.Write(data, 0, data.Length);
-		zip.Close();
-		var buffer = new byte[stream.Length];
-		stream.Position = 0;
-		_ = stream.Read(buffer, 0, buffer.Length);
-		stream.Close();
-
-		return Convert.ToBase64String(buffer);
 	}
 }

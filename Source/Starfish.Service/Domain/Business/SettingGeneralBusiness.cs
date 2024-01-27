@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Business;
+﻿using Google.Protobuf.WellKnownTypes;
+using Nerosoft.Euonia.Business;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -87,6 +88,19 @@ internal class SettingGeneralBusiness : EditableObjectBase<SettingGeneralBusines
 	[FactoryInsert]
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
+		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.GetUserIdOfInt64(), cancellationToken);
+
+		switch (permission)
+		{
+			case 0:
+				throw new UnauthorizedAccessException();
+			case 1:
+			case 2:
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+
 		var appInfo = await AppInfoRepository.GetAsync(AppId, cancellationToken);
 
 		if (appInfo == null)

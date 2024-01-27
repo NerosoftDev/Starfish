@@ -1,4 +1,5 @@
 ﻿using Nerosoft.Euonia.Business;
+using Nerosoft.Euonia.Claims;
 using Nerosoft.Euonia.Domain;
 
 // ReSharper disable UnusedMember.Global
@@ -10,17 +11,33 @@ namespace Nerosoft.Starfish.Domain;
 /// </summary>
 public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDomainService
 {
-	private readonly ISettingRepository _repository;
+	[Inject]
+	public IAppInfoRepository AppInfoRepository { get; set; }
 
-	public SettingPublishBusiness(ISettingRepository repository)
-	{
-		_repository = repository;
-	}
+	[Inject]
+	public ISettingRepository SettingRepository { get; set; }
+
+	[Inject]
+	public UserPrincipal Identity { get; set; }
 
 	[FactoryExecute]
 	protected async Task ExecuteAsync(long appId, string environment, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await _repository.GetAsync(appId, environment, true, [], cancellationToken);
+		var permission = await AppInfoRepository.CheckPermissionAsync(appId, Identity.GetUserIdOfInt64(), cancellationToken);
+
+		switch(permission)
+		{
+			case 0:
+				throw new UnauthorizedAccessException();
+			case 1:
+				break;
+			case 2:
+				throw new UnauthorizedAccessException();
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+
+		var aggregate = await SettingRepository.GetAsync(appId, environment, true, [], cancellationToken);
 
 		if (aggregate == null)
 		{
@@ -34,6 +51,6 @@ public class SettingPublishBusiness : CommandObject<SettingPublishBusiness>, IDo
 
 		aggregate.SetStatus(SettingStatus.Published);
 
-		await _repository.UpdateAsync(aggregate, true, cancellationToken);
+		await SettingRepository.UpdateAsync(aggregate, true, cancellationToken);
 	}
 }
