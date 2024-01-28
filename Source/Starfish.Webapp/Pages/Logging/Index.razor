@@ -26,8 +26,7 @@
                             ItemSize="46"
                             GenerateHeader="GenerateHeaderOption.Sticky"
                             TGridItem="OperateLogDto"
-                            GridTemplateColumns="0.2fr 1fr 0.8fr 0.2fr 0.4fr 0.2fr">
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_TYPE)" Property="@(c => c.Type)" />
+                            GridTemplateColumns="1fr 0.8fr 0.2fr 0.4fr 0.2fr">
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_DESCRIPTION)" Property="@(c => c.Description)" Tooltip="true" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_ERROR)" Property="@(c => c.Error)" Tooltip="true" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_USER_NAME)" Property="@(c => c.UserName)" />

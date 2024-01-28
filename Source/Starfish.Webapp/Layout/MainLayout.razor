@@ -78,7 +78,7 @@
             <span>Nerosoft © @(DateTime.Today.Year). All rights reserved.</span>
         </div>
         <div class="link2">
-            <a href="javascript:void(0);" @onclick="@OnLogoutClicked">@(Resources.IDS_COMMON_LOGOUT)</a>
+            <span>@(Identity?.Username)</span>&emsp;<a href="javascript:void(0);" @onclick="@OnLogoutClicked">@(Resources.IDS_COMMON_LOGOUT)</a>
         </div>
     </FluentFooter>
 

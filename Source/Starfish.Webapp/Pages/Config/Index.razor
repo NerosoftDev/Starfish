@@ -32,7 +32,10 @@
                     </div>
                 </FluentGridItem>
                 <FluentGridItem lg="12" sm="12" md="12">
-                    <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="ConfigurationItemDto">
+                    <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46"
+                                    GenerateHeader="GenerateHeaderOption.Sticky"
+                                    TGridItem="ConfigurationItemDto"
+                                    GridTemplateColumns="1fr 1fr 0.2fr">
                         <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_CONFIG_INDEX_COLUMN_KEY)" Property="@(c => c.Key)"/>
                         <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_CONFIG_INDEX_COLUMN_VALUE)" Property="@(c => c.Value)"/>
                         <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
@@ -124,14 +127,14 @@
             var tasks = new List<Task>
             {
                 ConfigurationApi.GetItemListAsync(Id, Environment, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
-                          .EnsureSuccess(result => items = result, request.CancellationToken)
+                                .EnsureSuccess(result => items = result, request.CancellationToken)
             };
 
             if (request.StartIndex == 0)
             {
                 tasks.Add(
                     ConfigurationApi.GetItemCountAsync(Id, Environment, request.CancellationToken)
-                              .EnsureSuccess(result => Total = result, request.CancellationToken)
+                                    .EnsureSuccess(result => Total = result, request.CancellationToken)
                 );
             }
 
@@ -155,8 +158,8 @@
     private Task LoadConfigurationDetailAsync(CancellationToken cancellationToken = default)
     {
         return ConfigurationApi.GetAsync(Id, Environment, cancellationToken)
-                         .EnsureSuccess(result => ConfigurationDetail = result, cancellationToken)
-                         .Guard();
+                               .EnsureSuccess(result => ConfigurationDetail = result, cancellationToken)
+                               .Guard();
     }
 
     private Task LoadAppDetailAsync()
@@ -252,7 +255,7 @@
             try
             {
                 await ConfigurationApi.DeleteAsync(Id, Environment)
-                                .EnsureSuccess();
+                                      .EnsureSuccess();
                 await Pagination.SetCurrentPageIndexAsync(0);
                 StateHasChanged();
             }
