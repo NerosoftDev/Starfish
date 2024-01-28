@@ -16,7 +16,7 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 - [ ] ⌛ Support multiple data sources/支持多种数据源
     - [x] 💚 MySQL
     - [ ] ⌛ SqlServer
-    - [ ] ⌛ PostgreSQL
+    - [x] 💚 PostgreSQL
     - [ ] 🕝 MongoDB
     - [x] 💚 Sqlite
 - [x] 💚 Support multiple platforms/支持多种平台
