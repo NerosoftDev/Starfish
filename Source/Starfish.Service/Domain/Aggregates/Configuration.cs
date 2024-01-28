@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 设置聚合根
 /// </summary>
-public class Configuration : Aggregate<long>, IAuditing
+public sealed class Configuration : Aggregate<long>, IAuditing
 {
 	private Configuration()
 	{

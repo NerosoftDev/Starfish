@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Nerosoft.Euonia.Business;
+﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
