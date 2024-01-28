@@ -66,6 +66,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Using Include="Nerosoft.Starfish.Common" />
         <Using Include="$(RootNamespace).Properties" />
     </ItemGroup>
 </Project>

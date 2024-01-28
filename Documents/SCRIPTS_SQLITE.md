@@ -62,10 +62,10 @@ ON "operate_log" (
 );
 ```
 
-# setting
+# configuration
 
 ```sqlite
-CREATE TABLE "setting" (
+CREATE TABLE "configuration" (
   "Id" integer NOT NULL,
   "AppId" integer NOT NULL,
   "Environment" text NOT NULL,
@@ -79,25 +79,25 @@ CREATE TABLE "setting" (
   PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDX_SETTING_APP_ID"
-ON "setting" (
+CREATE INDEX "IDX_CONFIG_APP_ID"
+ON "configuration" (
   "AppId" ASC
 );
-CREATE INDEX "IDX_SETTING_STATUS"
-ON "setting" (
+CREATE INDEX "IDX_CONFIG_STATUS"
+ON "configuration" (
   "Status" ASC
 );
-CREATE UNIQUE INDEX "IDX_SETTING_UNIQUE"
-ON "setting" (
+CREATE UNIQUE INDEX "IDX_CONFIG_UNIQUE"
+ON "configuration" (
   "AppId" ASC,
   "Environment" ASC
 );
 ```
 
-# setting_archive
+# configuration_archive
 
 ```sqlite
-CREATE TABLE "setting_archive" (
+CREATE TABLE "configuration_archive" (
   "Id" integer NOT NULL,
   "AppId" integer NOT NULL,
   "Environment" text NOT NULL,
@@ -107,19 +107,19 @@ CREATE TABLE "setting_archive" (
   PRIMARY KEY ("Id")
 );
 
-CREATE UNIQUE INDEX "IDX_SETTING_ARCHIVE_UNIQUE"
-ON "setting_archive" (
+CREATE UNIQUE INDEX "IDX_CONFIG_ARCHIVE_UNIQUE"
+ON "configuration_archive" (
   "AppId" ASC,
   "Environment" ASC
 );
 ```
 
-# setting_item
+# configuration_item
 
 ```sqlite
-CREATE TABLE "setting_item" (
+CREATE TABLE "configuration_item" (
   "Id" integer NOT NULL,
-  "SettingId" integer NOT NULL,
+  "ConfigurationId" integer NOT NULL,
   "Key" text NOT NULL,
   "Value" text,
   "UpdateTime" text NOT NULL,
@@ -127,23 +127,23 @@ CREATE TABLE "setting_item" (
   PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDX_SETTING_ITEM_FK"
-ON "setting_item" (
-  "SettingId" ASC
+CREATE INDEX "IDX_CONFIG_ITEM_FK"
+ON "configuration_item" (
+  "ConfigurationId" ASC
 );
-CREATE UNIQUE INDEX "IDX_SETTING_ITEM_UNIQUE"
-ON "setting_item" (
-  "SettingId" ASC,
+CREATE UNIQUE INDEX "IDX_CONFIG_ITEM_UNIQUE"
+ON "configuration_item" (
+  "ConfigurationId" ASC,
   "Key" ASC
 );
 ```
 
-# setting_revision
+# configuration_revision
 
 ```sqlite
-CREATE TABLE "setting_revision" (
+CREATE TABLE "configuration_revision" (
   "Id" integer NOT NULL,
-  "SettingId" integer NOT NULL,
+  "ConfigurationId" integer NOT NULL,
   "Data" text,
   "Comment" text,
   "Version" text NOT NULL,
@@ -152,9 +152,9 @@ CREATE TABLE "setting_revision" (
   PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDS_SETTING_REVISION_FK"
-ON "setting_revision" (
-  "SettingId" ASC
+CREATE INDEX "IDS_CONFIG_REVISION_FK"
+ON "configuration_revision" (
+  "ConfigurationId" ASC
 );
 ```
 

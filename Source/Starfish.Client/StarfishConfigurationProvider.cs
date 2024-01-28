@@ -1,5 +1,4 @@
-﻿using System.IO.Compression;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Nerosoft.Starfish.Common;
 

@@ -82,10 +82,10 @@ ON [operate_log] (
 GO
 ```
 
-# setting
+# configuration
 
 ```sql
-CREATE TABLE [setting] (
+CREATE TABLE [configuration] (
   [Id] bigint  NOT NULL,
   [AppId] bigint  NOT NULL,
   [Environment] varchar(50) NOT NULL,
@@ -100,33 +100,33 @@ CREATE TABLE [setting] (
 )
 GO
 
-ALTER TABLE [setting] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [configuration] SET (LOCK_ESCALATION = TABLE)
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_SETTING_UNIQUE]
-ON [setting] (
+CREATE UNIQUE NONCLUSTERED INDEX [IDX_CONFIG_UNIQUE]
+ON [configuration] (
   [AppId] ASC,
   [Environment] ASC
 )
 GO
 
-CREATE NONCLUSTERED INDEX [IDX_SETTING_APP_ID]
-ON [setting] (
+CREATE NONCLUSTERED INDEX [IDX_CONFIG_APP_ID]
+ON [configuration] (
   [AppId] ASC
 )
 GO
 
-CREATE NONCLUSTERED INDEX [IDX_SETTING_STATUS]
-ON [setting] (
+CREATE NONCLUSTERED INDEX [IDX_CONFIG_STATUS]
+ON [configuration] (
   [Status] ASC
 )
 GO
 ```
 
-# setting_archive
+# configuration_archive
 
 ```sql
-CREATE TABLE [setting_archive] (
+CREATE TABLE [configuration_archive] (
   [Id] bigint  NOT NULL,
   [AppId] bigint  NOT NULL,
   [Environment] varchar(50) NOT NULL,
@@ -137,23 +137,23 @@ CREATE TABLE [setting_archive] (
 )
 GO
 
-ALTER TABLE [setting_archive] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [configuration_archive] SET (LOCK_ESCALATION = TABLE)
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_SETTING_ARCHIVE_UNIQUE]
-ON [setting_archive] (
+CREATE UNIQUE NONCLUSTERED INDEX [IDX_CONFIG_ARCHIVE_UNIQUE]
+ON [configuration_archive] (
   [AppId] ASC,
   [Environment] ASC
 )
 GO
 ```
 
-# setting_item
+# configuration_item
 
 ```sql
-CREATE TABLE [setting_item] (
+CREATE TABLE [configuration_item] (
   [Id] bigint  NOT NULL,
-  [SettingId] bigint  NOT NULL,
+  [ConfigurationId] bigint  NOT NULL,
   [Key] varchar(255) NOT NULL,
   [Value] text NULL,
   [UpdateTime] datetime DEFAULT getdate() NOT NULL,
@@ -162,29 +162,29 @@ CREATE TABLE [setting_item] (
 )
 GO
 
-ALTER TABLE [setting_item] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [configuration_item] SET (LOCK_ESCALATION = TABLE)
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_SETTING_ITEM_UNIQUE]
-ON [setting_item] (
-  [SettingId] ASC,
+CREATE UNIQUE NONCLUSTERED INDEX [IDX_CONFIG_ITEM_UNIQUE]
+ON [configuration_item] (
+  [ConfigurationId] ASC,
   [Key] ASC
 )
 GO
 
-CREATE NONCLUSTERED INDEX [IDX_SETTING_ITEM_FK]
-ON [setting_item] (
-  [SettingId] ASC
+CREATE NONCLUSTERED INDEX [IDX_CONFIG_ITEM_FK]
+ON [configuration_item] (
+  [ConfigurationId] ASC
 )
 GO
 ```
 
-# setting_revision
+# configuration_revision
 
 ```sql
-CREATE TABLE [setting_revision] (
+CREATE TABLE [configuration_revision] (
   [Id] bigint  NOT NULL,
-  [SettingId] bigint  NOT NULL,
+  [ConfigurationId] bigint  NOT NULL,
   [Data] text NULL,
   [Comment] varchar(1000) COLLATE SQL_Latin1_General_CP1_CI_AS DEFAULT NULL NULL,
   [Version] varchar(25) NOT NULL,
@@ -194,12 +194,12 @@ CREATE TABLE [setting_revision] (
 )
 GO
 
-ALTER TABLE [setting_revision] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [configuration_revision] SET (LOCK_ESCALATION = TABLE)
 GO
 
-CREATE NONCLUSTERED INDEX [IDS_SETTING_REVISION_FK]
-ON [setting_revision] (
-  [SettingId] ASC
+CREATE NONCLUSTERED INDEX [IDS_CONFIG_REVISION_FK]
+ON [configuration_revision] (
+  [ConfigurationId] ASC
 )
 GO
 ```

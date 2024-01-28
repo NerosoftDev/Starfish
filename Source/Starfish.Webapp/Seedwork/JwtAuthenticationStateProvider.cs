@@ -24,11 +24,11 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 		switch (message.Type)
 		{
 			case "logout":
-				await _storageService.RemoveItemsAsync([Constants.LocalStorage.AccessToken, Constants.LocalStorage.RefreshToken]);
+				await _storageService.RemoveItemsAsync([InternalConstants.LocalStorage.AccessToken, InternalConstants.LocalStorage.RefreshToken]);
 				break;
 			case "login":
-				await _storageService.SetItemAsStringAsync(Constants.LocalStorage.AccessToken, message.AccessToken);
-				await _storageService.SetItemAsStringAsync(Constants.LocalStorage.RefreshToken, message.RefreshToken);
+				await _storageService.SetItemAsStringAsync(InternalConstants.LocalStorage.AccessToken, message.AccessToken);
+				await _storageService.SetItemAsStringAsync(InternalConstants.LocalStorage.RefreshToken, message.RefreshToken);
 				break;
 		}
 
@@ -39,7 +39,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 	{
 		ClaimsIdentity identity;
 
-		var token = await _storageService.GetItemAsStringAsync(Constants.LocalStorage.AccessToken);
+		var token = await _storageService.GetItemAsStringAsync(InternalConstants.LocalStorage.AccessToken);
 		var jwt = TokenHelper.Resolve(token);
 		if (jwt != null && jwt.ValidTo > DateTime.UtcNow)
 		{

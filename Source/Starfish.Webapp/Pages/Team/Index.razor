@@ -22,17 +22,21 @@
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="TeamItemDto">
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)" Property="@(c => c.Id)"/>
+            <FluentDataGrid ItemsProvider="_provider" 
+                            Pagination="Pagination" 
+                            ItemSize="46" 
+                            GenerateHeader="GenerateHeaderOption.Sticky" 
+                            TGridItem="TeamItemDto"
+                            GridTemplateColumns="0.5fr 0.5fr 1fr 0.5fr 0.2fr 0.2fr">
                 <TemplateColumn Title="@(Resources.IDS_TEAM_INDEX_COLUMN_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => HandleDetailClicked(context.Id))">@(context.Name)</FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_ALIAS)" Property="@(c => c.Alias)" />
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_DESCRIPTION)" Property="@(c => c.Description)" />
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_OWNER)" Property="@(c => c.OwnerId)" />
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_MEMBERS)" Property="@(c => c.MemberCount)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_ALIAS)" Property="@(c => c.Alias)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_DESCRIPTION)" Property="@(c => c.Description)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_OWNER)" Property="@(c => c.OwnerId)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_INDEX_COLUMN_MEMBERS)" Property="@(c => c.MemberCount)"/>
                 <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" Disabled="@(User?.GetUserIdOfInt64() != context.OwnerId)" OnClick="@(() => OnEditClicked(context.Id))" />
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" Disabled="@(User?.GetUserIdOfInt64() != context.OwnerId)" OnClick="@(() => OnEditClicked(context.Id))"/>
                 </TemplateColumn>
             </FluentDataGrid>
         </FluentGridItem>

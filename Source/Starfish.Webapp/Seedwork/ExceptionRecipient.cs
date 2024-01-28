@@ -6,8 +6,8 @@ internal sealed class ExceptionRecipient : IDisposable
 {
 	public ExceptionRecipient()
 	{
-		WeakReferenceMessenger.Default.Unregister<Exception, string>(this, Constants.Message.ExceptionThrown);
-		WeakReferenceMessenger.Default.Register<Exception, string>(this, Constants.Message.ExceptionThrown, OnExceptionThrown);
+		WeakReferenceMessenger.Default.Unregister<Exception, string>(this, InternalConstants.Message.ExceptionThrown);
+		WeakReferenceMessenger.Default.Register<Exception, string>(this, InternalConstants.Message.ExceptionThrown, OnExceptionThrown);
 	}
 
 	private Action<Exception> Handle { get; set; }
@@ -15,7 +15,7 @@ internal sealed class ExceptionRecipient : IDisposable
 	public void Dispose()
 	{
 		Handle = null;
-		WeakReferenceMessenger.Default.Unregister<Exception, string>(this, Constants.Message.ExceptionThrown);
+		WeakReferenceMessenger.Default.Unregister<Exception, string>(this, InternalConstants.Message.ExceptionThrown);
 	}
 
 	public void Subscribe(Action<Exception> handle)

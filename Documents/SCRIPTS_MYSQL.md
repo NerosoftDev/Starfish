@@ -38,10 +38,10 @@ CREATE TABLE `operate_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
 
-# setting
+# configuration
 
 ```sql
-CREATE TABLE `setting`  (
+CREATE TABLE `configuration`  (
   `Id` bigint NOT NULL,
   `AppId` bigint NOT NULL,
   `Environment` varchar(50) NOT NULL,
@@ -53,16 +53,16 @@ CREATE TABLE `setting`  (
   `CreatedBy` varchar(64) NOT NULL,
   `UpdatedBy` varchar(64) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
-  UNIQUE INDEX `IDX_SETTING_UNIQUE`(`AppId` ASC, `Environment` ASC) USING BTREE,
-  INDEX `IDX_SETTING_APP_ID`(`AppId` ASC) USING BTREE,
-  INDEX `IDX_SETTING_STATUS`(`Status` ASC) USING BTREE
+  UNIQUE INDEX `IDX_CONFIG_UNIQUE`(`AppId` ASC, `Environment` ASC) USING BTREE,
+  INDEX `IDX_CONFIG_APP_ID`(`AppId` ASC) USING BTREE,
+  INDEX `IDX_CONFIG_STATUS`(`Status` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
 
-# setting_archive
+# configuration_archive
 
 ```sql
-CREATE TABLE `setting_archive`  (
+CREATE TABLE `configuration_archive`  (
   `Id` bigint NOT NULL,
   `AppId` bigint NOT NULL,
   `Environment` varchar(50) NOT NULL,
@@ -70,39 +70,39 @@ CREATE TABLE `setting_archive`  (
   `Operator` varchar(64) NOT NULL,
   `ArchiveTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`) USING BTREE,
-  INDEX `IDX_SETTING_ARCHIVE_UNIQUE`(`AppId` ASC, `Environment` ASC) USING BTREE
+  INDEX `IDX_CONFIG_ARCHIVE_UNIQUE`(`AppId` ASC, `Environment` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
 
-# setting_item
+# configuration_item
 
 ```sql
-CREATE TABLE `setting_item`  (
+CREATE TABLE `configuration_item`  (
   `Id` bigint NOT NULL,
-  `SettingId` bigint NOT NULL,
+  `ConfigurationId` bigint NOT NULL,
   `Key` varchar(255) NOT NULL,
   `Value` text NULL,
   `UpdateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `UpdatedBy` varchar(64) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
-  UNIQUE INDEX `IDX_SETTING_ITEM_UNIQUE`(`SettingId` ASC, `Key` ASC) USING BTREE,
-  INDEX `IDX_SETTING_ITEM_FK`(`SettingId` ASC) USING BTREE
+  UNIQUE INDEX `IDX_CONFIG_ITEM_UNIQUE`(`ConfigurationId` ASC, `Key` ASC) USING BTREE,
+  INDEX `IDX_CONFIG_ITEM_FK`(`ConfigurationId` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
 
-# setting_revision
+# configuration_revision
 
 ```sql
-CREATE TABLE `setting_revision`  (
+CREATE TABLE `configuration_revision`  (
   `Id` bigint NOT NULL,
-  `SettingId` bigint NOT NULL,
+  `ConfigurationId` bigint NOT NULL,
   `Data` text NULL,
   `Comment` varchar(1000) NULL DEFAULT NULL,
   `Version` varchar(25) NOT NULL,
   `Operator` varchar(64) NOT NULL,
   `CreateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`) USING BTREE,
-  INDEX `IDS_SETTING_REVISION_FK`(`SettingId` ASC) USING BTREE
+  INDEX `IDS_CONFIG_REVISION_FK`(`ConfigurationId` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
 

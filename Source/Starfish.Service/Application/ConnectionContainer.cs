@@ -11,9 +11,9 @@ public class ConnectionContainer
 
 	private static readonly ConcurrentDictionary<string, ConnectionInfo> _connections = new(StringComparer.OrdinalIgnoreCase);
 
-	private readonly ISettingApplicationService _service;
+	private readonly IConfigurationApplicationService _service;
 
-	public ConnectionContainer(ISettingApplicationService service)
+	public ConnectionContainer(IConfigurationApplicationService service)
 	{
 		_service = service;
 
@@ -22,7 +22,7 @@ public class ConnectionContainer
 
 	private async void OnClientConnected(object sender, ClientConnectedEventArgs e)
 	{
-		var raw = await _service.GetSettingRawAsync(e.AppId, e.Environment);
+		var raw = await _service.GetArchiveAsync(e.AppId, e.Environment);
 		var key = $"{e.AppId}-{e.Environment}";
 		if (_connections.TryGetValue(key, out var connection))
 		{
@@ -61,9 +61,9 @@ public class ConnectionContainer
 	}
 
 	[Subscribe]
-	public async Task HandleAsync(SettingArchiveUpdatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public async Task HandleAsync(ConfigurationArchiveUpdatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<SettingArchive>();
+		var aggregate = @event.GetAggregate<ConfigurationArchive>();
 		var key = $"{aggregate.AppId}-{aggregate.Environment}";
 		if (_connections.TryGetValue(key, out var connection))
 		{

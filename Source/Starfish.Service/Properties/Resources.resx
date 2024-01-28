@@ -144,13 +144,13 @@
   <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
     <value>Enabled</value>
   </data>
-  <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
+  <data name="IDS_ENUM_CONFIG_STATUS_DISABLED" xml:space="preserve">
     <value>Disabled</value>
   </data>
-  <data name="IDS_ENUM_SETTING_STATUS_PENDING" xml:space="preserve">
+  <data name="IDS_ENUM_CONFIG_STATUS_PENDING" xml:space="preserve">
     <value>Pending</value>
   </data>
-  <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
+  <data name="IDS_ENUM_CONFIG_STATUS_PUBLISHED" xml:space="preserve">
     <value>Published</value>
   </data>
   <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
@@ -192,31 +192,31 @@
   <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
     <value>Refresh_token is required.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
     <value>Data format '{0}' is not supported.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_DATA_FORMAT_REQUIRED" xml:space="preserve">
     <value>Data format required.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
-    <value>Setting was disabled, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_ERROR_CONFIG_DISABLED" xml:space="preserve">
+    <value>Configuration was disabled, [App]:{0}, [Env]:{1}.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
-    <value>Setting was duplicated, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_ERROR_CONFIG_DUPLICATE" xml:space="preserve">
+    <value>Configuration was duplicated, [App]:{0}, [Env]:{1}.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_KEY_EXISTS" xml:space="preserve">
-    <value>Setting key '{0}' exists.</value>
+  <data name="IDS_ERROR_CONFIG_KEY_EXISTS" xml:space="preserve">
+    <value>Configuration key '{0}' exists.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_KEY_NOT_EXISTS" xml:space="preserve">
-    <value>Setting key '{0}' not exists.</value>
+  <data name="IDS_ERROR_CONFIG_KEY_NOT_EXISTS" xml:space="preserve">
+    <value>Configuration key '{0}' not exists.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
-    <value>Setting not exists, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
+    <value>Configuration not exists, [App]:{0}, [Env]:{1}.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_NO_PENDING_ITEM" xml:space="preserve">
     <value>No pending item to publish.</value>
   </data>
-  <data name="IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>Version number '{0}' already exists.</value>
   </data>
   <data name="IDS_ERROR_TEAM_NOT_EXISTS" xml:space="preserve">
@@ -294,16 +294,16 @@
   <data name="IDS_MESSAGE_LOGS_AUTH_SUCCEED" xml:space="preserve">
     <value>User authenticate successfully.</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_CREATE" xml:space="preserve">
-    <value>Create setting, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_CREATE" xml:space="preserve">
+    <value>Create configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_DELETE" xml:space="preserve">
-    <value>Delete setting, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_DELETE" xml:space="preserve">
+    <value>Delete configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_PUBLISH" xml:space="preserve">
-    <value>Publish setting, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_PUBLISH" xml:space="preserve">
+    <value>Publish configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_UPDATE" xml:space="preserve">
-    <value>Update setting, [App]:{0}, [Env]:{1}.</value>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
+    <value>Update configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
 </root>
