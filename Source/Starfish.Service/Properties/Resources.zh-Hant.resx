@@ -124,13 +124,13 @@
   <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
     <value>啟用</value>
   </data>
-  <data name="IDS_ENUM_SETTING_STATUS_DISABLED" xml:space="preserve">
+  <data name="IDS_ENUM_CONFIG_STATUS_DISABLED" xml:space="preserve">
     <value>停用</value>
   </data>
-  <data name="IDS_ENUM_SETTING_STATUS_PENDING" xml:space="preserve">
+  <data name="IDS_ENUM_CONFIG_STATUS_PENDING" xml:space="preserve">
     <value>待發表</value>
   </data>
-  <data name="IDS_ENUM_SETTING_STATUS_PUBLISHED" xml:space="preserve">
+  <data name="IDS_ENUM_CONFIG_STATUS_PUBLISHED" xml:space="preserve">
     <value>已發表</value>
   </data>
   <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
@@ -172,31 +172,31 @@
   <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
     <value>刷新令牌不能為空。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
     <value>不支援資料格式“{0}”。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DATA_FORMAT_REQUIRED" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_DATA_FORMAT_REQUIRED" xml:space="preserve">
     <value>資料格式不能為空。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DISABLED" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_DISABLED" xml:space="preserve">
     <value>設置已停用，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_DUPLICATE" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_DUPLICATE" xml:space="preserve">
     <value>設置重複，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_KEY_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_KEY_EXISTS" xml:space="preserve">
     <value>設置項目“{0}”已經存在。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_KEY_NOT_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_KEY_NOT_EXISTS" xml:space="preserve">
     <value>設置項目“{0}”不存在。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NOT_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
     <value>設定不存在，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_NO_PENDING_ITEM" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_NO_PENDING_ITEM" xml:space="preserve">
     <value>沒有待發布的設定。</value>
   </data>
-  <data name="IDS_ERROR_SETTING_VERSION_NUMBER_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>版本號碼“{0}”已存在。</value>
   </data>
   <data name="IDS_ERROR_TEAM_NOT_EXISTS" xml:space="preserve">
@@ -274,16 +274,16 @@
   <data name="IDS_MESSAGE_LOGS_AUTH_SUCCEED" xml:space="preserve">
     <value>用戶身份驗證成功。</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_CREATE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_CONFIG_CREATE" xml:space="preserve">
     <value>建立設置，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_DELETE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_CONFIG_DELETE" xml:space="preserve">
     <value>刪除設置，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_PUBLISH" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_CONFIG_PUBLISH" xml:space="preserve">
     <value>發佈設置，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_SETTING_UPDATE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
     <value>更新設置，[應用程式]：{0}，[環境]：{1}。</value>
   </data>
 </root>

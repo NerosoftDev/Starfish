@@ -91,9 +91,9 @@ public static class CriteriaExtensions
 	/// </summary>
 	/// <param name="criteria"></param>
 	/// <returns></returns>
-	public static Specification<Setting> GetSpecification(this SettingCriteria criteria)
+	public static Specification<Configuration> GetSpecification(this ConfigurationCriteria criteria)
 	{
-		Specification<Setting> specification = new TrueSpecification<Setting>();
+		Specification<Configuration> specification = new TrueSpecification<Configuration>();
 		if (criteria == null)
 		{
 			return specification;
@@ -101,7 +101,7 @@ public static class CriteriaExtensions
 		
 		if (!string.IsNullOrWhiteSpace(criteria.Environment))
 		{
-			specification &= SettingSpecification.EnvironmentEquals(criteria.Environment);
+			specification &= ConfigurationSpecification.EnvironmentEquals(criteria.Environment);
 		}
 
 		return specification;

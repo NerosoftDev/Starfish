@@ -33,7 +33,7 @@
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)"
                                 Property="@(c => c.Id)" />
                 <TemplateColumn Title="@(Resources.IDS_APPS_INDEX_COLUMN_NAME)" Align="@Align.Start">
-                    <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnGotoSettingClicked(context.Id))">
+                    <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnGotoConfigurationClicked(context.Id))">
                         @(context.Name)
                     </FluentButton>
                 </TemplateColumn>
@@ -110,9 +110,9 @@
         return DialogService.ShowDialogAsync<Detail>(id, new DialogParameters { Title = Resources.IDS_APPS_DETAIL_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
     }
 
-    private async Task OnGotoSettingClicked(long id)
+    private async Task OnGotoConfigurationClicked(long id)
     {
-        Navigation.NavigateTo($"/apps/{id}/settings");
+        Navigation.NavigateTo($"/apps/{id}/configs");
         await Task.CompletedTask;
     }
 

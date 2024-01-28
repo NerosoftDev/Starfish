@@ -40,7 +40,7 @@ internal static class ServiceCollectionExtensions
 		        .AddTransient(provider => provider.GetRestService<IUserApi>(HTTP_CLIENT_NAME))
 		        .AddTransient(provider => provider.GetRestService<ITeamApi>(HTTP_CLIENT_NAME))
 		        .AddTransient(provider => provider.GetRestService<IAppsApi>(HTTP_CLIENT_NAME))
-		        .AddTransient(provider => provider.GetRestService<ISettingApi>(HTTP_CLIENT_NAME));
+		        .AddTransient(provider => provider.GetRestService<IConfigurationApi>(HTTP_CLIENT_NAME));
 
 		services.AddHttpClient(HTTP_CLIENT_NAME, (provider, client) =>
 		        {

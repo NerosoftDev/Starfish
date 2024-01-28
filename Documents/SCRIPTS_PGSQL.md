@@ -59,10 +59,10 @@ CREATE INDEX "IDX_OPERATE_LOG_USER_NAME" ON "public"."operate_log" USING btree (
 ALTER TABLE "public"."operate_log" ADD CONSTRAINT "operate_log_pkey" PRIMARY KEY ("Id");
 ```
 
-# setting
+# configuration
 
 ```sql
-CREATE TABLE "public"."setting" (
+CREATE TABLE "public"."configuration" (
   "Id" int8 NOT NULL,
   "AppId" int8 NOT NULL,
   "Environment" varchar(25) COLLATE "pg_catalog"."default" NOT NULL,
@@ -76,24 +76,24 @@ CREATE TABLE "public"."setting" (
 )
 ;
 
-CREATE INDEX "IDX_SETTING_APP_ID" ON "public"."setting" USING btree (
+CREATE INDEX "IDX_CONFIG_APP_ID" ON "public"."configuration" USING btree (
   "AppId" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-CREATE INDEX "IDX_SETTING_STATUS" ON "public"."setting" USING btree (
+CREATE INDEX "IDX_CONFIG_STATUS" ON "public"."configuration" USING btree (
   "Status" "pg_catalog"."int4_ops" ASC NULLS LAST
 );
-CREATE UNIQUE INDEX "IDX_SETTING_UNIQUE" ON "public"."setting" USING btree (
+CREATE UNIQUE INDEX "IDX_CONFIG_UNIQUE" ON "public"."configuration" USING btree (
   "AppId" "pg_catalog"."int8_ops" ASC NULLS LAST,
   "Environment" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
-ALTER TABLE "public"."setting" ADD CONSTRAINT "setting_pkey" PRIMARY KEY ("Id");
+ALTER TABLE "public"."configuration" ADD CONSTRAINT "configuration_pkey" PRIMARY KEY ("Id");
 ```
 
-# setting_archive
+# configuration_archive
 
 ```sql
-CREATE TABLE "public"."setting_archive" (
+CREATE TABLE "public"."configuration_archive" (
   "Id" int8 NOT NULL,
   "AppId" int8 NOT NULL,
   "Environment" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
@@ -103,20 +103,20 @@ CREATE TABLE "public"."setting_archive" (
 )
 ;
 
-CREATE UNIQUE INDEX "IDX_SETTING_ARCHIVE_UNIQUE" ON "public"."setting_archive" USING btree (
+CREATE UNIQUE INDEX "IDX_CONFIG_ARCHIVE_UNIQUE" ON "public"."configuration_archive" USING btree (
   "AppId" "pg_catalog"."int8_ops" ASC NULLS LAST,
   "Environment" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
-ALTER TABLE "public"."setting_archive" ADD CONSTRAINT "setting_archive_pkey" PRIMARY KEY ("Id");
+ALTER TABLE "public"."configuration_archive" ADD CONSTRAINT "configuration_archive_pkey" PRIMARY KEY ("Id");
 ```
 
-# setting_item
+# configuration_item
 
 ```sql
-CREATE TABLE "public"."setting_item" (
+CREATE TABLE "public"."configuration_item" (
   "Id" int8 NOT NULL,
-  "SettingId" int8 NOT NULL,
+  "ConfigurationId" int8 NOT NULL,
   "Key" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "Value" text COLLATE "pg_catalog"."default",
   "UpdatedTime" timestamp(6) NOT NULL,
@@ -124,23 +124,23 @@ CREATE TABLE "public"."setting_item" (
 )
 ;
 
-CREATE INDEX "IDX_SETTING_ITEM_FK" ON "public"."setting_item" USING btree (
-  "SettingId" "pg_catalog"."int8_ops" ASC NULLS LAST
+CREATE INDEX "IDX_CONFIG_ITEM_FK" ON "public"."configuration_item" USING btree (
+  "ConfigurationId" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-CREATE UNIQUE INDEX "IDX_SETTING_ITEM_UNIQUE" ON "public"."setting_item" USING btree (
-  "SettingId" "pg_catalog"."int8_ops" ASC NULLS LAST,
+CREATE UNIQUE INDEX "IDX_CONFIG_ITEM_UNIQUE" ON "public"."configuration_item" USING btree (
+  "ConfigurationId" "pg_catalog"."int8_ops" ASC NULLS LAST,
   "Key" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
-ALTER TABLE "public"."setting_item" ADD CONSTRAINT "setting_item_pkey" PRIMARY KEY ("Id");
+ALTER TABLE "public"."configuration_item" ADD CONSTRAINT "configuration_item_pkey" PRIMARY KEY ("Id");
 ```
 
-# setting_revision
+# configuration_revision
 
 ```sql
-CREATE TABLE "public"."setting_revision" (
+CREATE TABLE "public"."configuration_revision" (
   "Id" int8 NOT NULL,
-  "SettingId" int8 NOT NULL,
+  "ConfigurationId" int8 NOT NULL,
   "Data" text COLLATE "pg_catalog"."default",
   "Comment" varchar(1000) COLLATE "pg_catalog"."default",
   "Version" varchar(25) COLLATE "pg_catalog"."default" NOT NULL,
@@ -149,11 +149,11 @@ CREATE TABLE "public"."setting_revision" (
 )
 ;
 
-CREATE INDEX "IDS_SETTING_REVISION_FK" ON "public"."setting_revision" USING btree (
-  "SettingId" "pg_catalog"."int8_ops" ASC NULLS LAST
+CREATE INDEX "IDS_CONFIG_REVISION_FK" ON "public"."configuration_revision" USING btree (
+  "ConfigurationId" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
 
-ALTER TABLE "public"."setting_revision" ADD CONSTRAINT "setting_revision_pkey" PRIMARY KEY ("Id");
+ALTER TABLE "public"."configuration_revision" ADD CONSTRAINT "configuration_revision_pkey" PRIMARY KEY ("Id");
 ```
 
 # team

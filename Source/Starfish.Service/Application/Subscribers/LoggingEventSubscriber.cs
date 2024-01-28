@@ -173,9 +173,9 @@ public sealed class LoggingEventSubscriber
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(SettingCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_SETTING_CREATE, @event.Setting.AppId, @event.Setting.Environment);
+		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_CREATE, @event.Configuration.AppId, @event.Configuration.Environment);
 
 		var command = new OperateLogCreateCommand
 		{
@@ -197,10 +197,10 @@ public sealed class LoggingEventSubscriber
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(SettingDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<Setting>();
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_SETTING_DELETE, aggregate.AppId, aggregate.Environment);
+		var aggregate = @event.GetAggregate<Configuration>();
+		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DELETE, aggregate.AppId, aggregate.Environment);
 
 		var command = new OperateLogCreateCommand
 		{
@@ -215,9 +215,9 @@ public sealed class LoggingEventSubscriber
 	}
 
 	[Subscribe]
-	public Task HandleAsync(SettingPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_SETTING_PUBLISH, @event.AppId, @event.Environment);
+		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_PUBLISH, @event.AppId, @event.Environment);
 
 		var command = new OperateLogCreateCommand
 		{
