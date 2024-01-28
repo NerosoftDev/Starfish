@@ -1,6 +1,5 @@
 ﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
-using Nerosoft.Starfish.Common;
 using Newtonsoft.Json;
 
 namespace Nerosoft.Starfish.Domain;

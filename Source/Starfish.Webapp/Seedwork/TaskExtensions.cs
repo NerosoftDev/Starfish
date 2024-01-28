@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Nerosoft.Starfish.Webapp.Rest;
-using Refit;
 
 namespace Nerosoft.Starfish.Webapp;
 
@@ -14,7 +12,7 @@ internal static class TaskExtensions
 		}
 		catch (Exception exception)
 		{
-			WeakReferenceMessenger.Default.Send(exception, Constants.Message.ExceptionThrown);
+			WeakReferenceMessenger.Default.Send(exception, InternalConstants.Message.ExceptionThrown);
 			if (handler != null)
 			{
 				await handler(exception);
@@ -34,7 +32,7 @@ internal static class TaskExtensions
 		}
 		catch (Exception exception)
 		{
-			WeakReferenceMessenger.Default.Send(exception, Constants.Message.ExceptionThrown);
+			WeakReferenceMessenger.Default.Send(exception, InternalConstants.Message.ExceptionThrown);
 			if (handler != null)
 			{
 				await handler(exception);

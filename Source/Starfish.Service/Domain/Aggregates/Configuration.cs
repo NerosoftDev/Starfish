@@ -73,17 +73,17 @@ public class Configuration : Aggregate<long>, IAuditing
 
 	internal static Configuration Create(long appId, string environment, IDictionary<string, string> items)
 	{
-		var setting = new Configuration
+		var configuration = new Configuration
 		{
 			AppId = appId,
 			Environment = environment,
 			Status = ConfigurationStatus.Pending
 		};
 
-		setting.AddOrUpdateItem(items);
+		configuration.AddOrUpdateItem(items);
 
-		setting.RaiseEvent(new ConfigurationCreatedEvent(setting));
-		return setting;
+		configuration.RaiseEvent(new ConfigurationCreatedEvent(configuration));
+		return configuration;
 	}
 
 	internal void AddOrUpdateItem(IDictionary<string, string> items)

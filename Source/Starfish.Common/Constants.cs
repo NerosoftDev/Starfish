@@ -1,7 +1,19 @@
-﻿namespace Nerosoft.Starfish.Webapi;
+﻿namespace Nerosoft.Starfish.Common;
 
 internal class Constants
 {
+	public static bool IsDebug
+	{
+		get
+		{
+#if DEBUG
+			return true;
+#else
+			return false;
+#endif
+		}
+	}
+	
 	public static class RequestHeaders
 	{
 		public const string Team = "starfish-team";

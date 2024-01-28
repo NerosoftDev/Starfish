@@ -179,7 +179,7 @@ public sealed class LoggingEventSubscriber
 
 		var command = new OperateLogCreateCommand
 		{
-			Module = "setting",
+			Module = "config",
 			Type = "create",
 			Description = description,
 			OperateTime = DateTime.Now,
@@ -204,7 +204,7 @@ public sealed class LoggingEventSubscriber
 
 		var command = new OperateLogCreateCommand
 		{
-			Module = "setting",
+			Module = "config",
 			Type = "delete",
 			Description = description,
 			OperateTime = DateTime.Now,
@@ -221,7 +221,7 @@ public sealed class LoggingEventSubscriber
 
 		var command = new OperateLogCreateCommand
 		{
-			Module = "setting",
+			Module = "config",
 			Type = "publish",
 			Description = description,
 			OperateTime = DateTime.Now,

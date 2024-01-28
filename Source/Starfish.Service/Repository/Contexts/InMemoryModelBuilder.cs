@@ -82,7 +82,7 @@ public class InMemoryModelBuilder : IModelBuilder
 
 		modelBuilder.Entity<Configuration>(entity =>
 		{
-			entity.ToTable("setting");
+			entity.ToTable("configuration");
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.AppId);
 			entity.HasIndex(t => t.Environment);
@@ -112,7 +112,7 @@ public class InMemoryModelBuilder : IModelBuilder
 
 		modelBuilder.Entity<ConfigurationItem>(entity =>
 		{
-			entity.ToTable("setting_item");
+			entity.ToTable("configuration_item");
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.ConfigurationId);
 
@@ -133,7 +133,7 @@ public class InMemoryModelBuilder : IModelBuilder
 
 		modelBuilder.Entity<ConfigurationRevision>(entity =>
 		{
-			entity.ToTable("setting_revision");
+			entity.ToTable("configuration_revision");
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.ConfigurationId);
 
@@ -149,7 +149,7 @@ public class InMemoryModelBuilder : IModelBuilder
 
 		modelBuilder.Entity<ConfigurationArchive>(entity =>
 		{
-			entity.ToTable("setting_archive");
+			entity.ToTable("configuration_archive");
 			entity.HasKey(t => t.Id);
 			entity.HasIndex(t => t.AppId)
 				  .HasDatabaseName("IDX_CONFIG_ARCHIVE_APP_ID");

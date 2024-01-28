@@ -33,7 +33,7 @@ internal static class ExceptionExtensions
 		};
 	}
 
-	public static void Send(this Exception exception, string token = Constants.Message.ExceptionThrown)
+	public static void Send(this Exception exception, string token = InternalConstants.Message.ExceptionThrown)
 	{
 		WeakReferenceMessenger.Default.Send(exception, token);
 	}

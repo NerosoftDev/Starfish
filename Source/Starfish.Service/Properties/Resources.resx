@@ -199,19 +199,19 @@
     <value>Data format required.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_DISABLED" xml:space="preserve">
-    <value>Setting was disabled, [App]:{0}, [Env]:{1}.</value>
+    <value>Configuration was disabled, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_DUPLICATE" xml:space="preserve">
-    <value>Setting was duplicated, [App]:{0}, [Env]:{1}.</value>
+    <value>Configuration was duplicated, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_KEY_EXISTS" xml:space="preserve">
-    <value>Setting key '{0}' exists.</value>
+    <value>Configuration key '{0}' exists.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_KEY_NOT_EXISTS" xml:space="preserve">
-    <value>Setting key '{0}' not exists.</value>
+    <value>Configuration key '{0}' not exists.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
-    <value>Setting not exists, [App]:{0}, [Env]:{1}.</value>
+    <value>Configuration not exists, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_NO_PENDING_ITEM" xml:space="preserve">
     <value>No pending item to publish.</value>
@@ -295,15 +295,15 @@
     <value>User authenticate successfully.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_CREATE" xml:space="preserve">
-    <value>Create setting, [App]:{0}, [Env]:{1}.</value>
+    <value>Create configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_DELETE" xml:space="preserve">
-    <value>Delete setting, [App]:{0}, [Env]:{1}.</value>
+    <value>Delete configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_PUBLISH" xml:space="preserve">
-    <value>Publish setting, [App]:{0}, [Env]:{1}.</value>
+    <value>Publish configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
-    <value>Update setting, [App]:{0}, [Env]:{1}.</value>
+    <value>Update configuration, [App]:{0}, [Env]:{1}.</value>
   </data>
 </root>

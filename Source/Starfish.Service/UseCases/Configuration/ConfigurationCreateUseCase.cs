@@ -1,7 +1,6 @@
 ﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Starfish.Application;
-using Nerosoft.Starfish.Common;
 using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
@@ -26,8 +25,8 @@ public class ConfigurationCreateUseCase : IConfigurationCreateUseCase
 		var format = input.Format?.Normalize(TextCaseType.Lower).Trim(TextTrimType.All);
 		var parserName = format switch
 		{
-			"plain/text" => "text",
-			"plain/json" => "json",
+			Constants.Configuration.FormatText => "text",
+			Constants.Configuration.FormatJson => "json",
 			"" => throw new ArgumentNullException(Resources.IDS_ERROR_CONFIG_DATA_FORMAT_REQUIRED),
 			null => throw new ArgumentNullException(Resources.IDS_ERROR_CONFIG_DATA_FORMAT_REQUIRED),
 			_ => throw new InvalidOperationException(Resources.IDS_ERROR_CONFIG_DATA_FORMAT_NOT_SUPPORTED)

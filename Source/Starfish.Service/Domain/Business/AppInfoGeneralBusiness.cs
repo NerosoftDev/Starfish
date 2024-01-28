@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Nerosoft.Euonia.Business;
+﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;

@@ -9,7 +9,7 @@ internal static class SwaggerExtensions
 {
 	private static readonly Dictionary<string, string> _apiGroups = new()
 	{
-		["setting"] = "setting",
+		["configuration"] = "configuration",
 		["identity"] = "identity",
 		["system"] = "system"
 	};
