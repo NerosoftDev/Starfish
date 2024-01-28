@@ -16,7 +16,7 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
 - [ ] ⌛ Support multiple data sources/支持多种数据源
     - [x] 💚 MySQL
     - [ ] ⌛ SqlServer
-    - [ ] ⌛ PostgreSQL
+    - [x] 💚 PostgreSQL
     - [ ] 🕝 MongoDB
     - [x] 💚 Sqlite
 - [x] 💚 Support multiple platforms/支持多种平台
@@ -31,6 +31,7 @@ Starfish是一个轻量但功能强大的分布式 .NET 应用程序配置中心
     - [x] 💚 HTTP
     - [ ] 🕝 gRPC
     - [x] 💚 WebSocket
+- [x] 💚 Sync configuration to Redis server. / 同步配置到Redis服务器。
 - [ ] 🕝 Rollback to history version/回滚到历史版本
 - [ ] 🕝 Role-based access control/基于角色的访问控制
 - [x] 💚 Support multiple languages admin panel/支持多语言管理面板
@@ -74,6 +75,7 @@ This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE)
 Starfish
 ├──Source
 ├    ├──Starfish.Client
+├    ├──~~Starfish.Agent~~
 ├    ├──Starfish.Common
 ├    ├──Starfish.Service
 ├    ├──Starfish.Transit

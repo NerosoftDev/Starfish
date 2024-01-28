@@ -2,25 +2,34 @@
 
 ```sqlite
 CREATE TABLE "app_info" (
-    "Id" integer NOT NULL,
-    "TeamId" integer NOT NULL,
-    "Name" text(50) NOT NULL,
-    "Code" text(50) NOT NULL,
-    "Secret" text(50) NOT NULL,
-    "Description" text(1000),
-    "Status" integer NOT NULL DEFAULT 1,
-    "CreateTime" text(20) NOT NULL,
-    "UpdateTime" text(20) NOT NULL,
-    PRIMARY KEY ("Id")
+  "Id" integer NOT NULL,
+  "TeamId" integer NOT NULL,
+  "Name" text(50) NOT NULL,
+  "Code" text(50) NOT NULL,
+  "Secret" text(50) NOT NULL,
+  "Description" text(500),
+  "Status" integer NOT NULL DEFAULT 1,
+  "CreateTime" text NOT NULL,
+  "UpdateTime" text NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
 CREATE INDEX "IDX_APP_INFO_CODE"
 ON "app_info" (
-    "Code" ASC
+  "Code" ASC
 );
 CREATE INDEX "IDX_APP_INFO_STATUS"
 ON "app_info" (
-    "Status" ASC
+  "Status" ASC
+);
+CREATE INDEX "IDX_APP_INFO_TEAM_ID"
+ON "app_info" (
+  "TeamId" ASC
+);
+CREATE UNIQUE INDEX "IDX_APP_INFO_UNIQUE"
+ON "app_info" (
+  "TeamId" ASC,
+  "Code" ASC
 );
 ```
 
@@ -28,29 +37,28 @@ ON "app_info" (
 
 ```sqlite
 CREATE TABLE "operate_log" (
-  "Id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "Module" text(20) NOT NULL,
-  "Type" text(20) NOT NULL,
-  "Description" text(2000),
-  "UserName" text(200),
-  "OperateTime" text(20) NOT NULL,
-  "Error" text(2000),
-  "RequestTraceId" text(40) NOT NULL
+  "Id" integer NOT NULL,
+  "Module" text NOT NULL,
+  "Type" text NOT NULL,
+  "Description" text,
+  "UserName" text,
+  "OperateTime" text NOT NULL,
+  "Error" text,
+  "RequestTraceId" text NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
 CREATE INDEX "IDX_OPERATE_LOG_MODULE"
 ON "operate_log" (
-    "Module"
+  "Module" ASC
 );
-
 CREATE INDEX "IDX_OPERATE_LOG_TYPE"
 ON "operate_log" (
-    "Type"
+  "Type" ASC
 );
-
 CREATE INDEX "IDX_OPERATE_LOG_USER_NAME"
 ON "operate_log" (
-    "UserName"
+  "UserName" ASC
 );
 ```
 
@@ -58,31 +66,31 @@ ON "operate_log" (
 
 ```sqlite
 CREATE TABLE "setting" (
-    "Id" integer NOT NULL,
-    "AppId" integer NOT NULL,
-    "Environment" text(20) NOT NULL,
-    "Status" integer NOT NULL DEFAULT 1,
-    "Version" text(20),
-    "PublishTime" text(20),
-    "CreateTime" text(20) NOT NULL,
-    "UpdateTime" text(20) NOT NULL,
-    "CreatedBy" text(200) NOT NULL,
-    "UpdatedBy" text(200) NOT NULL,
-    PRIMARY KEY ("Id")
+  "Id" integer NOT NULL,
+  "AppId" integer NOT NULL,
+  "Environment" text NOT NULL,
+  "Status" integer NOT NULL DEFAULT 1,
+  "Version" text,
+  "PublishTime" text,
+  "CreateTime" text NOT NULL,
+  "UpdateTime" text NOT NULL,
+  "CreatedBy" text NOT NULL,
+  "UpdatedBy" text NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
 CREATE INDEX "IDX_SETTING_APP_ID"
 ON "setting" (
-    "AppId" ASC
+  "AppId" ASC
 );
-CREATE INDEX "IDX_SETTING_ENV"
+CREATE INDEX "IDX_SETTING_STATUS"
 ON "setting" (
-    "Environment" ASC
+  "Status" ASC
 );
 CREATE UNIQUE INDEX "IDX_SETTING_UNIQUE"
 ON "setting" (
-    "AppId" ASC,
-    "Environment" ASC
+  "AppId" ASC,
+  "Environment" ASC
 );
 ```
 
@@ -90,23 +98,19 @@ ON "setting" (
 
 ```sqlite
 CREATE TABLE "setting_archive" (
-    "Id" integer NOT NULL,
-    "AppId" integer NOT NULL,
-    "Environment" text NOT NULL,
-    "Data" text,
-    "Operator" text NOT NULL,
-    "ArchiveTime" text NOT NULL,
-    PRIMARY KEY ("Id")
+  "Id" integer NOT NULL,
+  "AppId" integer NOT NULL,
+  "Environment" text NOT NULL,
+  "Data" text,
+  "Operator" text NOT NULL,
+  "ArchiveTime" text NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDX_SETTING_ARCHIVE_APP_ID"
-ON "setting_archive" (
-    "AppId" ASC
-);
 CREATE UNIQUE INDEX "IDX_SETTING_ARCHIVE_UNIQUE"
 ON "setting_archive" (
-    "AppId" ASC,
-    "Environment" ASC
+  "AppId" ASC,
+  "Environment" ASC
 );
 ```
 
@@ -114,17 +118,23 @@ ON "setting_archive" (
 
 ```sqlite
 CREATE TABLE "setting_item" (
-    "Id" integer NOT NULL,
-    "SettingId" integer NOT NULL,
-    "Key" text NOT NULL,
-    "Value" text,
-    PRIMARY KEY ("Id")
+  "Id" integer NOT NULL,
+  "SettingId" integer NOT NULL,
+  "Key" text NOT NULL,
+  "Value" text,
+  "UpdateTime" text NOT NULL,
+  "UpdatedBy" text(64) NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
+CREATE INDEX "IDX_SETTING_ITEM_FK"
+ON "setting_item" (
+  "SettingId" ASC
+);
 CREATE UNIQUE INDEX "IDX_SETTING_ITEM_UNIQUE"
 ON "setting_item" (
-    "SettingId" ASC,
-    "Key" ASC
+  "SettingId" ASC,
+  "Key" ASC
 );
 ```
 
@@ -142,7 +152,7 @@ CREATE TABLE "setting_revision" (
   PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDS_SETTING_REVISION_SETTING_ID"
+CREATE INDEX "IDS_SETTING_REVISION_FK"
 ON "setting_revision" (
   "SettingId" ASC
 );
@@ -152,27 +162,29 @@ ON "setting_revision" (
 
 ```sqlite
 CREATE TABLE "team" (
-  "Id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "Alias" text(50),
-  "Name" text(50) NOT NULL,
-  "Description" text(1000),
+  "Id" integer NOT NULL,
+  "Alias" text,
+  "Name" text NOT NULL,
+  "Description" text,
   "OwnerId" integer NOT NULL,
   "MemberCount" integer NOT NULL DEFAULT 0,
-  "CreateTime" text(20) NOT NULL,
-  "UpdateTime" text(20) NOT NULL,
-  "CreatedBy" text(200) NOT NULL,
-  "UpdatedBy" text(200) NOT NULL
+  "CreateTime" text NOT NULL,
+  "UpdateTime" text NOT NULL,
+  "CreatedBy" text NOT NULL,
+  "UpdatedBy" text NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
-INSERT INTO "sqlite_sequence" (name, seq) VALUES ('team', '1000001');
-
-CREATE INDEX "IDX_TEAM_ALIAS" ON "team" (
+CREATE UNIQUE INDEX "IDX_TEAM_ALIAS"
+ON "team" (
   "Alias" ASC
 );
-CREATE INDEX "IDX_TEAM_NAME" ON "team" (
+CREATE INDEX "IDX_TEAM_NAME"
+ON "team" (
   "Name" ASC
 );
-CREATE INDEX "IDX_TEAM_OWNER" ON "team" (
+CREATE INDEX "IDX_TEAM_OWNER"
+ON "team" (
   "OwnerId" ASC
 );
 ```
@@ -181,15 +193,15 @@ CREATE INDEX "IDX_TEAM_OWNER" ON "team" (
 
 ```sqlite
 CREATE TABLE "team_member" (
-  "Id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "Id" integer NOT NULL,
   "TeamId" integer NOT NULL,
   "UserId" integer NOT NULL,
-  "CreateTime" text NOT NULL
+  "CreateTime" text NOT NULL,
+  PRIMARY KEY ("Id")
 );
 
-INSERT INTO "sqlite_sequence" (name, seq) VALUES ('team_member', '1000001');
-
-CREATE UNIQUE INDEX "IDX_TEAM_MEMBER_UNIQUE" ON "team_member" (
+CREATE UNIQUE INDEX "IDX_TEAM_MEMBER_UNIQUE"
+ON "team_member" (
   "TeamId" ASC,
   "UserId" ASC
 );
@@ -207,44 +219,50 @@ CREATE TABLE "token" (
   "Expires" text,
   PRIMARY KEY ("Id")
 );
+
+CREATE INDEX "IDX_TOKEN_EXPIRES"
+ON "token" (
+  "Expires" ASC
+);
+CREATE UNIQUE INDEX "IDX_TOKEN_KEY"
+ON "token" (
+  "Key" ASC
+);
 ```
 
 # user
 
 ```sqlite
 CREATE TABLE "user" (
-    "Id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "UserName" text(200) NOT NULL,
-    "PasswordHash" text(512) NOT NULL,
-    "PasswordSalt" text(32) NOT NULL,
-    "NickName" text(100),
-    "Email" text(256),
-    "Phone" text,
-    "AccessFailedCount" integer NOT NULL DEFAULT 0,
-    "LockoutEnd" text,
-    "Reserved" integer NOT NULL DEFAULT 0,
-    "Source" integer NOT NULL,
-    "CreateTime" text(20) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "UpdateTime" text(20) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "IsDeleted" integer NOT NULL DEFAULT 0,
-    "DeleteTime" text(20)
+  "Id" integer NOT NULL,
+  "UserName" text(64) NOT NULL,
+  "PasswordHash" text(512) NOT NULL,
+  "PasswordSalt" text(32) NOT NULL,
+  "NickName" text(100),
+  "Email" text(256),
+  "Phone" text(25),
+  "AccessFailedCount" integer NOT NULL DEFAULT 0,
+  "LockoutEnd" text,
+  "Reserved" integer NOT NULL DEFAULT 0,
+  "Source" integer NOT NULL,
+  "CreateTime" text NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "UpdateTime" text NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "IsDeleted" integer NOT NULL DEFAULT 0,
+  "DeleteTime" text,
+  PRIMARY KEY ("Id")
 );
-
-INSERT INTO "sqlite_sequence" (name, seq) VALUES ('user', '1000001');
 
 CREATE UNIQUE INDEX "IDX_USER_EMAIL"
 ON "user" (
-    "Email" ASC
+  "Email" ASC
 );
-
 CREATE UNIQUE INDEX "IDX_USER_PHONE"
 ON "user" (
-    "Phone"
+  "Phone" ASC
 );
-
 CREATE UNIQUE INDEX "IDX_USER_USERNAME"
 ON "user" (
-    "UserName" ASC
+  "UserName" ASC
 );
 ```
 
@@ -252,16 +270,15 @@ ON "user" (
 
 ```sqlite
 CREATE TABLE "user_role" (
-    "Id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "UserId" integer NOT NULL,
-    "Name" text(20) NOT NULL
+  "Id" integer NOT NULL,
+  "UserId" integer NOT NULL,
+  "Name" text(20) NOT NULL,
+  PRIMARY KEY ("Id")
 );
-
-INSERT INTO "sqlite_sequence" (name, seq) VALUES ('user_role', '1000001');
 
 CREATE UNIQUE INDEX "IDX_USER_ROLE_UNIQUE"
 ON "user_role" (
-    "UserId" ASC,
-    "Name" ASC
+  "UserId" ASC,
+  "Name" ASC
 );
 ```
