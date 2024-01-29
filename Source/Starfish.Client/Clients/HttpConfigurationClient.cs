@@ -3,16 +3,14 @@
 internal class HttpConfigurationClient : IConfigurationClient
 {
 	private readonly HttpClient _httpClient = new();
-
-	private readonly string _team;
+	
 	private readonly string _app;
 	private readonly string _secret;
 	private readonly string _env;
 
-	public HttpConfigurationClient(Uri host, string team, string app, string secret, string env)
+	public HttpConfigurationClient(Uri host, string app, string secret, string env)
 	{
 		_httpClient.BaseAddress = host;
-		_team = team;
 		_app = app;
 		_secret = secret;
 		_env = env;
@@ -30,7 +28,7 @@ internal class HttpConfigurationClient : IConfigurationClient
 		try
 		{
 			attempts++;
-			using var request = new HttpRequestMessage(HttpMethod.Get, $"es?team={_team}&app={_app}&secret={_secret}&env={_env}");
+			using var request = new HttpRequestMessage(HttpMethod.Get, $"es?app={_app}&secret={_secret}&env={_env}");
 
 			var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 

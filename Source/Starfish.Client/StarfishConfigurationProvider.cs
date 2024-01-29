@@ -58,8 +58,8 @@ internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposabl
 		var uri = new Uri(args.Host);
 		IConfigurationClient client = uri.Scheme switch
 		{
-			"http" or "https" => new HttpConfigurationClient(uri, _options.Team, _options.App, _options.Secret, _options.Env),
-			"ws" or "wss" => new SocketConfigurationClient(uri, _options.Team, _options.App, _options.Secret, _options.Env),
+			"http" or "https" => new HttpConfigurationClient(uri,  _options.App, _options.Secret, _options.Env),
+			"ws" or "wss" => new SocketConfigurationClient(uri,  _options.App, _options.Secret, _options.Env),
 			_ => throw new NotSupportedException(string.Format(Resources.IDS_ERROR_SCHEMA_NOT_SUPPORTED, uri.Scheme)),
 		};
 		try

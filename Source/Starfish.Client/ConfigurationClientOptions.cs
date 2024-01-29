@@ -8,11 +8,6 @@ namespace Nerosoft.Starfish.Client;
 public class ConfigurationClientOptions
 {
 	/// <summary>
-	/// 团队别名
-	/// </summary>
-	public string Team { get; set; }
-
-	/// <summary>
 	/// 应用Id
 	/// </summary>
 	public string App { get; set; }
@@ -88,7 +83,6 @@ public class ConfigurationClientOptions
 		var options = new ConfigurationClientOptions
 		{
 			Host = host,
-			Team = section[nameof(Team)] ?? string.Empty,
 			App = app,
 			Env = section[nameof(Env)] ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
 			Secret = section[nameof(Secret)],
