@@ -8,7 +8,7 @@ public class UserDetailDto
 	/// <summary>
 	/// Id
 	/// </summary>
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// 用户名

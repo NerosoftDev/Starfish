@@ -23,7 +23,7 @@ public static class AppInfoSpecification
 	/// </summary>
 	/// <param name="teamId"></param>
 	/// <returns></returns>
-	public static Specification<AppInfo> TeamIdEquals(long teamId)
+	public static Specification<AppInfo> TeamIdEquals(string teamId)
 	{
 		return new DirectSpecification<AppInfo>(t => t.TeamId == teamId);
 	}

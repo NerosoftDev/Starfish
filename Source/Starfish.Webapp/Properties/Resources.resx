@@ -468,6 +468,9 @@
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_CODE" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_ID" xml:space="preserve">
+    <value>App Id</value>
+  </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_NAME" xml:space="preserve">
     <value>Name</value>
   </data>

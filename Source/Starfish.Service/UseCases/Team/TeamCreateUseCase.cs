@@ -9,7 +9,7 @@ public interface ITeamCreateUseCase : IUseCase<TeamCreateInput, TeamCreateOutput
 
 public record TeamCreateInput(TeamEditDto Data) : IUseCaseInput;
 
-public record TeamCreateOutput(long Result) : IUseCaseOutput;
+public record TeamCreateOutput(string Result) : IUseCaseOutput;
 
 public class TeamCreateUseCase : ITeamCreateUseCase
 {
@@ -23,7 +23,7 @@ public class TeamCreateUseCase : ITeamCreateUseCase
 	public Task<TeamCreateOutput> ExecuteAsync(TeamCreateInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new TeamCreateCommand(input.Data);
-		return _bus.SendAsync<TeamCreateCommand, long>(command, cancellationToken)
+		return _bus.SendAsync<TeamCreateCommand, string>(command, cancellationToken)
 		           .ContinueWith(task =>
 		           {
 			           task.WaitAndUnwrapException(cancellationToken);

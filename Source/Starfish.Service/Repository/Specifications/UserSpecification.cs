@@ -13,7 +13,7 @@ public static class UserSpecification
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<User> IdEquals(long id)
+	public static Specification<User> IdEquals(string id)
 	{
 		return new DirectSpecification<User>(t => t.Id == id);
 	}
@@ -23,7 +23,7 @@ public static class UserSpecification
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<User> IdNotEquals(long id)
+	public static Specification<User> IdNotEquals(string id)
 	{
 		return new DirectSpecification<User>(t => t.Id != id);
 	}

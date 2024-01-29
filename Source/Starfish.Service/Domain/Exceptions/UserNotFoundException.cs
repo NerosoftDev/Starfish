@@ -9,7 +9,7 @@ public class UserNotFoundException : NotFoundException
 	/// 初始化<see cref="UserNotFoundException"/>实例。
 	/// </summary>
 	/// <param name="id"></param>
-	public UserNotFoundException(long id)
+	public UserNotFoundException(string id)
 		: base(string.Format(Resources.IDS_ERROR_USER_NOT_EXISTS, id))
 	{
 	}

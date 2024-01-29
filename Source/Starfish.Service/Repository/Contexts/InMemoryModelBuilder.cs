@@ -164,8 +164,7 @@ public class InMemoryModelBuilder : IModelBuilder
 		{
 			entity.ToTable("team");
 			entity.HasKey(t => t.Id);
-
-			entity.HasIndex(t => t.Alias).HasDatabaseName("IDX_TEAM_ALIAS").IsUnique();
+			
 			entity.HasIndex(t => t.Name).HasDatabaseName("IDX_TEAM_NAME");
 			entity.HasIndex(t => t.OwnerId).HasDatabaseName("IDX_TEAM_OWNER");
 

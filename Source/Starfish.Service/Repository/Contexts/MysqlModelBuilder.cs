@@ -20,7 +20,7 @@ internal class MysqlModelBuilder : IModelBuilder
 
 			entity.Property(t => t.Id)
 				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+				  .HasValueGenerator<UuidValueGenerator>();
 
 			entity.HasMany(t => t.Roles)
 				  .WithOne(t => t.User)
@@ -160,14 +160,13 @@ internal class MysqlModelBuilder : IModelBuilder
 		{
 			entity.ToTable("team");
 			entity.HasKey(t => t.Id);
-
-			entity.HasIndex(t => t.Alias).IsUnique();
+			
 			entity.HasIndex(t => t.Name);
 			entity.HasIndex(t => t.OwnerId);
 
 			entity.Property(t => t.Id)
 				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+				  .HasValueGenerator<UuidValueGenerator>();
 
 			entity.HasMany(t => t.Members)
 				  .WithOne(t => t.Team)

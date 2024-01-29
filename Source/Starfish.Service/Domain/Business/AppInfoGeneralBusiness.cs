@@ -17,7 +17,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	internal AppInfo Aggregate { get; private set; }
 
 	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
-	public static readonly PropertyInfo<long> TeamIdProperty = RegisterProperty<long>(p => p.TeamId);
+	public static readonly PropertyInfo<string> TeamIdProperty = RegisterProperty<string>(p => p.TeamId);
 	public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(p => p.Name);
 	public static readonly PropertyInfo<string> SecretProperty = RegisterProperty<string>(p => p.Secret);
 	public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(p => p.Description);
@@ -28,7 +28,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 		set => LoadProperty(IdProperty, value);
 	}
 
-	public long TeamId
+	public string TeamId
 	{
 		get => GetProperty(TeamIdProperty);
 		set => SetProperty(TeamIdProperty, value);
@@ -121,10 +121,10 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 		await AppInfoRepository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
-	private async Task CheckPermissionAsync(long teamId, CancellationToken cancellationToken = default)
+	private async Task CheckPermissionAsync(string teamId, CancellationToken cancellationToken = default)
 	{
 		var team = await TeamRepository.GetAsync(teamId, false, cancellationToken);
-		if (team.OwnerId != Identity.GetUserIdOfInt64())
+		if (team.OwnerId != Identity.UserId)
 		{
 			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}

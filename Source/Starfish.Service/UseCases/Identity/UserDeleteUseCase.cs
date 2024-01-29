@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IUserDeleteUseCase : INonOutputUseCase<UserDeleteInput>;
 
-public record UserDeleteInput(long Id) : IUseCaseInput;
+public record UserDeleteInput(string Id) : IUseCaseInput;
 
 public class UserDeleteUseCase : IUserDeleteUseCase
 {

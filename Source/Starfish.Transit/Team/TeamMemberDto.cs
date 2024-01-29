@@ -8,7 +8,7 @@ public class TeamMemberDto
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public long UserId { get; set; }
+	public string UserId { get; set; }
 
 	/// <summary>
 	/// 用户名

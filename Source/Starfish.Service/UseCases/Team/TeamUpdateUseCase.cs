@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface ITeamUpdateUseCase : INonOutputUseCase<TeamUpdateInput>;
 
-public record TeamUpdateInput(long Id, TeamEditDto Data) : IUseCaseInput;
+public record TeamUpdateInput(string Id, TeamEditDto Data) : IUseCaseInput;
 
 public class TeamUpdateUseCase : ITeamUpdateUseCase
 {

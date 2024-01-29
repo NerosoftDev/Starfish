@@ -6,11 +6,6 @@
 public class AppInfoUpdateDto
 {
 	/// <summary>
-	/// 应用唯一编码
-	/// </summary>
-	public string Code { get; set; }
-	
-	/// <summary>
 	/// 应用名称
 	/// </summary>
 	public string Name { get; set; }

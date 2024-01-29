@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IUserSetRoleUseCase : INonOutputUseCase<UserSetRoleInput>;
 
-public record UserSetRoleInput(long Id, List<string> Roles) : IUseCaseInput;
+public record UserSetRoleInput(string Id, List<string> Roles) : IUseCaseInput;
 
 public class UserSetRoleUseCase : IUserSetRoleUseCase
 {

@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 用户聚合根
 /// </summary>
-public sealed class User : Aggregate<long>, IHasCreateTime, IHasUpdateTime, ITombstone
+public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, ITombstone
 {
 	/// <summary>
 	/// 初始化<see cref="User"/>实例

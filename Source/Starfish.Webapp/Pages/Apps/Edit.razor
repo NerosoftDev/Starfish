@@ -20,7 +20,7 @@
                           Required="true"
                           TOption="TeamItemDto"
                           Label="@(Resources.IDS_APPS_EDIT_LABEL_SELECT_TEAM)"
-                          Items="@Tesms"
+                          Items="@Teams"
                           OptionValue="@(p => p.Id.ToString())"
                           OptionText="@(p => p.Name)"
                           @bind-Value="@TeamId"/>
@@ -29,10 +29,7 @@
         <FluentTextField Style="width: 100%" Required="true"
                          Label="@(Resources.IDS_APPS_EDIT_LABEL_NAME)"
                          @bind-Value="Name"/>
-
-        <FluentTextField Style="width: 100%" Required="true"
-                         Label="@(Resources.IDS_APPS_EDIT_LABEL_CODE)"
-                         @bind-Value="Code"/>
+        
         @if (string.IsNullOrEmpty(Content))
         {
             <FluentTextField Style="width: 100%" Required="true"
@@ -60,7 +57,7 @@
 
     private bool Loading { get; set; }
 
-    private List<TeamItemDto> Tesms { get; } = new();
+    private List<TeamItemDto> Teams { get; } = [];
 
     /// <summary>
     /// 团队Id
@@ -71,12 +68,7 @@
     /// 应用名称
     /// </summary>
     private string Name { get; set; } = default!;
-
-    /// <summary>
-    /// 应用代码
-    /// </summary>
-    private string Code { get; set; } = default!;
-
+    
     /// <summary>
     /// 密钥
     /// </summary>
@@ -110,7 +102,6 @@
                 var request = new AppInfoUpdateDto()
                 {
                     Name = Name,
-                    Code = Code,
                     Description = Description
                 };
                 await AppsApi.UpdateAsync(Content, request)
@@ -120,9 +111,8 @@
             {
                 var request = new AppInfoCreateDto()
                 {
-                    TeamId = int.Parse(TeamId),
+                    TeamId = TeamId,
                     Name = Name,
-                    Code = Code,
                     Secret = Secret,
                     Description = Description
                 };
@@ -157,8 +147,8 @@
                              return;
                          }
 
-                         Tesms.Clear();
-                         Tesms.AddRange(result);
+                         Teams.Clear();
+                         Teams.AddRange(result);
                          if (result.Count > 0)
                          {
                              TeamId = result[0].Id.ToString();

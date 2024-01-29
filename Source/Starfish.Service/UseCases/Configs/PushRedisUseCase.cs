@@ -26,7 +26,7 @@ internal sealed class PushRedisUseCase : IPushRedisUseCase
 
 	public async Task ExecuteAsync(PushRedisInput input, CancellationToken cancellationToken = default)
 	{
-		var permission = await _appInfoRepository.CheckPermissionAsync(input.AppId, _identity.GetUserIdOfInt64(), cancellationToken);
+		var permission = await _appInfoRepository.CheckPermissionAsync(input.AppId, _identity.UserId, cancellationToken);
 
 		if (!permission.IsIn(1, 2))
 		{

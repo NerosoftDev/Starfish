@@ -19,7 +19,7 @@ public sealed class AppInfo : Aggregate<string>,
 	{
 	}
 
-	private AppInfo(long teamId)
+	private AppInfo(string teamId)
 		: this()
 	{
 		TeamId = teamId;
@@ -28,7 +28,7 @@ public sealed class AppInfo : Aggregate<string>,
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public long TeamId { get; set; }
+	public string TeamId { get; set; }
 
 	/// <summary>
 	/// 名称
@@ -67,7 +67,7 @@ public sealed class AppInfo : Aggregate<string>,
 	/// <param name="name"></param>
 	/// 
 	/// <returns></returns>
-	internal static AppInfo Create(long teamId, string name)
+	internal static AppInfo Create(string teamId, string name)
 	{
 		var entity = new AppInfo(teamId);
 		entity.SetName(name);

@@ -6,12 +6,6 @@
 public class TeamEditDto
 {
 	/// <summary>
-	/// 别名
-	/// </summary>
-	/// <remarks>全局唯一</remarks>
-	public string Alias { get; set; }
-
-	/// <summary>
 	/// 团队名称
 	/// </summary>
 	public string Name { get; set; }

@@ -8,5 +8,5 @@ namespace Nerosoft.Starfish.Domain;
 /// </summary>
 public interface IAppInfoRepository : IBaseRepository<DataContext, AppInfo, string>
 {
-	Task<int> CheckPermissionAsync(string appId, long userId, CancellationToken cancellationToken = default);
+	Task<int> CheckPermissionAsync(string appId, string userId, CancellationToken cancellationToken = default);
 }

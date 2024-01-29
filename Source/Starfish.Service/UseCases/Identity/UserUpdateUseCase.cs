@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IUserUpdateUseCase : INonOutputUseCase<UserUpdateInput>;
 
-public record UserUpdateInput(long Id, UserUpdateDto Data) : IUseCaseInput;
+public record UserUpdateInput(string Id, UserUpdateDto Data) : IUseCaseInput;
 
 public class UserUpdateUseCase : IUserUpdateUseCase
 {

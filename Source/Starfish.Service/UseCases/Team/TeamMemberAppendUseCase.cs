@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface ITeamMemberAppendUseCase : INonOutputUseCase<TeamMemberAppendInput>;
 
-public record TeamMemberAppendInput(long Id, List<long> UserIds) : IUseCaseInput;
+public record TeamMemberAppendInput(string Id, List<string> UserIds) : IUseCaseInput;
 
 public class TeamMemberAppendUseCase : ITeamMemberAppendUseCase
 {

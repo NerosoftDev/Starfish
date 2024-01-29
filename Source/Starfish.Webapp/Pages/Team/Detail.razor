@@ -1,4 +1,4 @@
-﻿@page "/team/{id:long}"
+﻿@page "/team/{id}"
 
 @inject ITeamApi TeamApi
 @inject IAppsApi AppsApi
@@ -14,12 +14,12 @@
     <FluentStack Orientation="Orientation.Horizontal" Width="100%">
         <FluentStack Orientation="Orientation.Vertical" Width="360px">
             <FluentPersona Name="@Data.Name" Initials="S" ImageSize="50px" />
-            <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_ALIAS, Data.Alias)</FluentLabel>
+            <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_ALIAS, Data.Id)</FluentLabel>
             <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_CREATE_TIME, Data.CreateTime)</FluentLabel>
             <FluentLabel>@string.Format(Resources.IDS_TEAM_DETAIL_LABEL_UPDATE_TIME, Data.UpdateTime)</FluentLabel>
             <FluentDivider Style="width: 100%;" />
             <FluentLabel>@Data.Description</FluentLabel>
-            @if (Data.OwnerId != Identity?.GetUserIdOfInt64())
+            @if (Data.OwnerId != Identity?.UserId)
             {
                 <FluentDivider Style="width: 100%;" />
                 <FluentLabel>@(Resources.IDS_COMMON_OPERATIONS)</FluentLabel>
@@ -39,15 +39,14 @@
                         <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_EMAIL)" Property="@(c => c.Email)" />
                         <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_PHONE)" Property="@(c => c.Phone)" />
                         <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
-                            <FluentButton IconEnd="@(new Icons.Regular.Size16.DismissCircle())" Disabled="@(Identity.GetUserIdOfInt64() == Data.OwnerId)" OnClick="@(() => OnRemoveMemberClicked(context.UserId))" />
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.DismissCircle())" Disabled="@(Identity.UserId == Data.OwnerId)" OnClick="@(() => OnRemoveMemberClicked(context.UserId))" />
                         </TemplateColumn>
                     </FluentDataGrid>
                 </FluentTab>
                 <FluentTab Label="@(Resources.IDS_TEAM_DETAIL_APPS)">
                     <FluentDataGrid Items="@QueryableApps" Style="width: 100%">
-                        <PropertyColumn Class="data-grid-column" Title="Id" Property="@(c => c.Id)" />
+                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_ID)" Property="@(c => c.Id)" />
                         <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_NAME)" Property="@(c => c.Name)" />
-                        <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_CODE)" Property="@(c => c.Code)" />
                         <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_APP_STATUS)" Property="@(c => c.StatusDescription)" />
                     </FluentDataGrid>
                 </FluentTab>
@@ -59,7 +58,7 @@
 @code {
 
     [Parameter]
-    public long Id { get; set; }
+    public string Id { get; set; }
 
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationState { get; set; }
@@ -104,7 +103,6 @@
                       .EnsureSuccess(result =>
                       {
                           Data.Name = result.Name;
-                          Data.Alias = result.Alias;
                           Data.Description = result.Description;
                           Data.CreateTime = result.CreateTime;
                           Data.UpdateTime = result.UpdateTime;
@@ -133,7 +131,7 @@
         }
     }
 
-    private async Task OnRemoveMemberClicked(long userId)
+    private async Task OnRemoveMemberClicked(string userId)
     {
         var confirmation = await DialogService.ShowConfirmationAsync(Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE);
         var result = await confirmation.Result;

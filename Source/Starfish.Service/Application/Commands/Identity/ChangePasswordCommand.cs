@@ -11,7 +11,7 @@ public class ChangePasswordCommand : Command
 	{
 	}
 
-	public ChangePasswordCommand(long userId, string password)
+	public ChangePasswordCommand(string userId, string password)
 		: this()
 	{
 		UserId = userId;
@@ -21,7 +21,7 @@ public class ChangePasswordCommand : Command
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public long UserId { get; set; }
+	public string UserId { get; set; }
 
 	/// <summary>
 	/// 新密码

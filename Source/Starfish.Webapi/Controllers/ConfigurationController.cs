@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// <summary>
 /// 应用配置管理接口
 /// </summary>
-[Route("api/apps/{id:long}/[controller]/{environment}")]
+[Route("api/apps/{id}/[controller]/{environment}")]
 [ApiController, ApiExplorerSettings(GroupName = "configuration")]
 [Authorize]
 public class ConfigurationController : ControllerBase

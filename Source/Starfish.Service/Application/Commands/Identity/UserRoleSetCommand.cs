@@ -2,9 +2,9 @@
 
 namespace Nerosoft.Starfish.Application;
 
-public class UserRoleSetCommand : Command<long, List<string>>
+public class UserRoleSetCommand : Command<string, List<string>>
 {
-	public UserRoleSetCommand(long id, List<string> roles)
+	public UserRoleSetCommand(string id, List<string> roles)
 		: base(id, roles)
 	{
 	}

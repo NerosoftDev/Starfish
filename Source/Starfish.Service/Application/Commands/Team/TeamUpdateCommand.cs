@@ -5,13 +5,13 @@ namespace Nerosoft.Starfish.Application;
 
 public class TeamUpdateCommand : Command
 {
-	public TeamUpdateCommand(long id, TeamEditDto data)
+	public TeamUpdateCommand(string id, TeamEditDto data)
 	{
 		Id = id;
 		Data = data;
 	}
 
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	public TeamEditDto Data { get; set; }
 }

@@ -21,7 +21,6 @@ public class TeamCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			var business = await Factory.CreateAsync<TeamGeneralBusiness>(cancellationToken);
-			business.Alias = message.Data.Alias;
 			business.Name = message.Data.Name;
 			business.Description = message.Data.Description;
 			business.MarkAsInsert();
@@ -35,7 +34,6 @@ public class TeamCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			var business = await Factory.FetchAsync<TeamGeneralBusiness>(message.Id, cancellationToken);
-			business.Alias = message.Data.Alias;
 			business.Name = message.Data.Name;
 			business.Description = message.Data.Description;
 			business.MarkAsUpdate();

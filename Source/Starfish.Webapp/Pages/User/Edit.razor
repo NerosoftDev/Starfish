@@ -1,10 +1,10 @@
-﻿@implements IDialogContentComponent<long>
+﻿@implements IDialogContentComponent<string>
 
 @inject IUserApi Api
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
-        <FluentIcon Value="@(new Icons.Regular.Size24.People())" />
+        <FluentIcon Value="@(new Icons.Regular.Size24.People())"/>
         <FluentLabel Typo="Typography.PaneHeader">
             @Dialog.Instance.Parameters.Title
         </FluentLabel>
@@ -16,25 +16,25 @@
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_USERNAME)"
                          @bind-Value="UserName"
-                         ReadOnly="@(Content > 0)" />
-        @if (Content == 0)
+                         ReadOnly="@(!string.IsNullOrEmpty(Content))"/>
+        @if (string.IsNullOrEmpty(Content))
         {
             <FluentTextField Style="width: 100%"
                              Label="@(Resources.IDS_USER_LABEL_PASSWORD)"
                              @bind-Value="Password"
-                             TextFieldType="TextFieldType.Password" />
+                             TextFieldType="TextFieldType.Password"/>
             <FluentTextField Style="width: 100%"
                              Label="@(Resources.IDS_USER_LABEL_CONFIRM_PASSWORD)"
                              @bind-Value="Confirm"
-                             TextFieldType="TextFieldType.Password" />
+                             TextFieldType="TextFieldType.Password"/>
         }
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_NICKNAME)"
-                         @bind-Value="NickName" />
+                         @bind-Value="NickName"/>
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_EMAIL)"
                          @bind-Value="Email"
-                         TextFieldType="TextFieldType.Email" />
+                         TextFieldType="TextFieldType.Email"/>
     </FluentStack>
 </FluentDialogBody>
 
@@ -46,7 +46,7 @@
 @code {
 
     [Parameter]
-    public long Content { get; set; }
+    public string Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
@@ -74,14 +74,13 @@
         try
         {
             Loading = true;
-            if (Content > 0)
+            if (!string.IsNullOrEmpty(Content))
             {
-
                 var request = new UserUpdateDto
-                    {
-                        NickName = NickName,
-                        Email = Email
-                    };
+                {
+                    NickName = NickName,
+                    Email = Email
+                };
 
                 await Api.UpdateAsync(Content, request)
                          .EnsureSuccess();
@@ -94,16 +93,17 @@
                 }
 
                 var request = new UserCreateDto
-                    {
-                        UserName = UserName,
-                        Password = Password,
-                        NickName = NickName,
-                        Email = Email
-                    };
+                {
+                    UserName = UserName,
+                    Password = Password,
+                    NickName = NickName,
+                    Email = Email
+                };
 
                 await Api.CreateAsync(request)
                          .EnsureSuccess();
             }
+
             await Dialog.CloseAsync(Content);
         }
         catch (Exception exception)
@@ -121,26 +121,26 @@
         await Dialog.CancelAsync();
     }
 
-    private async Task LoadAsync(long id)
+    private async Task LoadAsync(string id)
     {
-        if (id <= 0)
+        if (string.IsNullOrEmpty(id))
         {
             return;
         }
 
         await Api.GetAsync(id)
-                  .EnsureSuccess(result =>
-                  {
-                      if (result == null)
-                      {
-                          return;
-                      }
+                 .EnsureSuccess(result =>
+                 {
+                     if (result == null)
+                     {
+                         return;
+                     }
 
-                      Content = result.Id;
-                      UserName = result.UserName;
-                      NickName = result.NickName;
-                      Email = result.Email;
-                  });
+                     Content = result.Id;
+                     UserName = result.UserName;
+                     NickName = result.NickName;
+                     Email = result.Email;
+                 });
     }
 
 }

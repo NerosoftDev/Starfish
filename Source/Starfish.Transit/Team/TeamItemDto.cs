@@ -8,12 +8,7 @@ public class TeamItemDto
 	/// <summary>
 	/// Id
 	/// </summary>
-	public long Id { get; set; }
-
-	/// <summary>
-	/// 别名
-	/// </summary>
-	public string Alias { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// 名称
@@ -28,7 +23,7 @@ public class TeamItemDto
 	/// <summary>
 	/// 团队所有者Id
 	/// </summary>
-	public long OwnerId { get; set; }
+	public string OwnerId { get; set; }
 
 	/// <summary>
 	/// 成员数量

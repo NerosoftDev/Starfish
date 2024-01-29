@@ -57,7 +57,7 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id:long}")]
+	[HttpGet("{id}")]
 	[Produces<AppInfoDetailDto>]
 	public async Task<IActionResult> GetAsync(string id)
 	{
@@ -85,7 +85,7 @@ public class AppsController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}")]
+	[HttpPut("{id}")]
 	public async Task<IActionResult> UpdateAsync(string id, [FromBody] AppInfoUpdateDto model)
 	{
 		await _service.UpdateAsync(id, model, HttpContext.RequestAborted);
@@ -97,7 +97,7 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/enable")]
+	[HttpPut("{id}/enable")]
 	public async Task<IActionResult> EnableAsync(string id)
 	{
 		await _service.EnableAsync(id, HttpContext.RequestAborted);
@@ -109,7 +109,7 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/disable")]
+	[HttpPut("{id}/disable")]
 	public async Task<IActionResult> DisableAsync(string id)
 	{
 		await _service.DisableAsync(id, HttpContext.RequestAborted);
@@ -121,7 +121,7 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpDelete("{id:long}")]
+	[HttpDelete("{id}")]
 	public async Task<IActionResult> DeleteAsync(string id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
@@ -134,7 +134,7 @@ public class AppsController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/secret")]
+	[HttpPut("{id}/secret")]
 	public async Task<IActionResult> SetSecretAsync(string id, [FromBody] AppInfoSetSecretDto model)
 	{
 		await _service.SetSecretAsync(id, model.Secret, HttpContext.RequestAborted);

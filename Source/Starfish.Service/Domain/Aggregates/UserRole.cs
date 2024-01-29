@@ -20,7 +20,7 @@ public class UserRole : Entity<long>
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public long UserId { get; set; }
+	public string UserId { get; set; }
 
 	/// <summary>
 	/// 角色名称

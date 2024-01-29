@@ -10,7 +10,7 @@ public interface IUserDetailUseCase : IUseCase<UserDetailInput, UserDetailOutput
 
 public record UserDetailOutput(UserDetailDto Result) : IUseCaseOutput;
 
-public record UserDetailInput(long Id) : IUseCaseInput;
+public record UserDetailInput(string Id) : IUseCaseInput;
 
 public class UserDetailUseCase : IUserDetailUseCase
 {

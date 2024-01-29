@@ -84,11 +84,10 @@ public class AppInfoQueryUseCase : IAppInfoQueryUseCase
 
 		if (!_identity.IsInRole("SA"))
 		{
-			var userId = _identity.GetUserIdOfInt64();
 			var teamQuery = _repository.Context.Set<TeamMember>();
 			query = from app in query
 			        join member in teamQuery on app.TeamId equals member.TeamId
-			        where member.UserId == userId
+			        where member.UserId == _identity.UserId
 			        select app;
 		}
 
@@ -109,7 +108,7 @@ public class AppInfoQueryUseCase : IAppInfoQueryUseCase
 internal class AppInfoItemModel
 {
 	public string Id { get; set; }
-	public long TeamId { get; set; }
+	public string TeamId { get; set; }
 	public string TeamName { get; set; }
 	public string Name { get; set; }
 	public AppStatus Status { get; set; }

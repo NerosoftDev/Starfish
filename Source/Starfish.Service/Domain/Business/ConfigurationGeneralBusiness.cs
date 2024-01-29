@@ -87,7 +87,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryInsert]
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.GetUserIdOfInt64(), cancellationToken);
+		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{
@@ -120,7 +120,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryUpdate]
 	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.GetUserIdOfInt64(), cancellationToken);
+		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{
@@ -153,7 +153,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryDelete]
 	protected override async Task DeleteAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.GetUserIdOfInt64(), cancellationToken);
+		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{

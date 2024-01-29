@@ -14,7 +14,7 @@ public class AppInfoItemDto
 	/// <summary>
 	/// 所属团队Id
 	/// </summary>
-	public long TeamId { get; set; }
+	public string TeamId { get; set; }
 
 	/// <summary>
 	/// 所属团队名称
@@ -25,11 +25,6 @@ public class AppInfoItemDto
 	/// 名称
 	/// </summary>
 	public string Name { get; set; }
-
-	/// <summary>
-	/// 唯一编码
-	/// </summary>
-	public string Code { get; set; }
 
 	/// <summary>
 	/// 状态

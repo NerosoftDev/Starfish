@@ -73,7 +73,7 @@ public static class CriteriaExtensions
 			}
 		}
 
-		if (criteria.TeamId > 0)
+		if (!string.IsNullOrEmpty(criteria.TeamId))
 		{
 			specification &= AppInfoSpecification.TeamIdEquals(criteria.TeamId);
 		}

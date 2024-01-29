@@ -19,7 +19,7 @@ public class AppInfoRepository : BaseRepository<DataContext, AppInfo, string>, I
 	{
 	}
 
-	public async Task<int> CheckPermissionAsync(string appId, long userId, CancellationToken cancellationToken = default)
+	public async Task<int> CheckPermissionAsync(string appId, string userId, CancellationToken cancellationToken = default)
 	{
 		var query = from app in Context.Set<AppInfo>()
 					join team in Context.Set<Team>() on app.TeamId equals team.Id

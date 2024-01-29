@@ -32,13 +32,13 @@
                             GenerateHeader="GenerateHeaderOption.Sticky"
                             TGridItem="AppInfoItemDto"
                             GridTemplateColumns="0.5fr 0.5fr 0.5fr 0.4fr 0.2fr 0.5fr">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)"
+                                Property="@(c => c.Id)" />
                 <TemplateColumn Title="@(Resources.IDS_APPS_INDEX_COLUMN_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnGotoConfigurationClicked(context.Id))">
                         @(context.Name)
                     </FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_CODE)"
-                                Property="@(c => c.Code)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_TEAM)"
                                 Property="@(c => c.TeamName)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_UPDATE_TIME)"

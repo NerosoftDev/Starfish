@@ -12,23 +12,23 @@ internal interface ITeamApi
 	Task<IApiResponse<int>> CountAsync([Query] TeamCriteria criteria, CancellationToken cancellationToken = default);
 
 	[Get("/api/team/{id}")]
-	Task<IApiResponse<TeamDetailDto>> GetAsync(long id, CancellationToken cancellationToken = default);
+	Task<IApiResponse<TeamDetailDto>> GetAsync(string id, CancellationToken cancellationToken = default);
 
 	[Post("/api/team")]
 	Task<IApiResponse> CreateAsync([Body] TeamEditDto data, CancellationToken cancellationToken = default);
 
 	[Put("/api/team/{id}")]
-	Task<IApiResponse> UpdateAsync(long id, [Body] TeamEditDto data, CancellationToken cancellationToken = default);
+	Task<IApiResponse> UpdateAsync(string id, [Body] TeamEditDto data, CancellationToken cancellationToken = default);
 
 	[Get("/api/team/{id}/member")]
-	Task<IApiResponse<List<TeamMemberDto>>> GetMembersAsync(long id, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<TeamMemberDto>>> GetMembersAsync(string id, CancellationToken cancellationToken = default);
 
 	[Post("/api/team/{id}/member")]
-	Task<IApiResponse> AppendMemberAsync(long id, [Body] List<long> userIds, CancellationToken cancellationToken = default);
+	Task<IApiResponse> AppendMemberAsync(string id, [Body] List<string> userIds, CancellationToken cancellationToken = default);
 
 	[Delete("/api/team/{id}/member")]
-	Task<IApiResponse> RemoveMemberAsync(long id, [Body] List<long> userIds, CancellationToken cancellationToken = default);
+	Task<IApiResponse> RemoveMemberAsync(string id, [Body] List<string> userIds, CancellationToken cancellationToken = default);
 
 	[Delete("/api/team/{id}/quit")]
-	Task<IApiResponse> QuitAsync(long id, CancellationToken cancellationToken = default);
+	Task<IApiResponse> QuitAsync(string id, CancellationToken cancellationToken = default);
 }

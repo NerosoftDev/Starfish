@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IUserCreateUseCase : IUseCase<UserCreateInput, UserCreateOutput>;
 
-public record UserCreateOutput(long Result) : IUseCaseOutput;
+public record UserCreateOutput(string Result) : IUseCaseOutput;
 
 public record UserCreateInput(UserCreateDto Data) : IUseCaseInput;
 
@@ -23,7 +23,7 @@ public class UserCreateUseCase : IUserCreateUseCase
 	public Task<UserCreateOutput> ExecuteAsync(UserCreateInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new UserCreateCommand(input.Data);
-		return _bus.SendAsync<UserCreateCommand, long>(command, cancellationToken)
+		return _bus.SendAsync<UserCreateCommand, string>(command, cancellationToken)
 		           .ContinueWith(task => new UserCreateOutput(task.Result), cancellationToken);
 	}
 }
