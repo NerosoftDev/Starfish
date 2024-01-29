@@ -22,7 +22,7 @@ public record GetConfigurationDetailOutput(ConfigurationDetailDto Result) : IUse
 /// 获取配置节点详情用例输入
 /// </summary>
 /// <param name="AppId"></param>
-public record GetConfigurationDetailInput(long AppId, string Environment) : IUseCaseInput;
+public record GetConfigurationDetailInput(string AppId, string Environment) : IUseCaseInput;
 
 /// <summary>
 /// 获取配置节点详情用例

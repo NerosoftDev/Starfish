@@ -73,7 +73,6 @@ public class InMemoryModelBuilder : IModelBuilder
 		{
 			entity.ToTable("app_info");
 			entity.HasKey(t => t.Id);
-			entity.HasIndex(t => t.Code);
 
 			entity.Property(t => t.Id)
 				  .IsRequired()

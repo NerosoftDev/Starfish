@@ -4,7 +4,7 @@ namespace Nerosoft.Starfish.Application;
 
 public abstract class ConfigurationAbstractCommand : Command
 {
-	protected ConfigurationAbstractCommand(long appId, string environment)
+	protected ConfigurationAbstractCommand(string appId, string environment)
 	{
 		AppId = appId;
 		Environment = environment;
@@ -13,7 +13,7 @@ public abstract class ConfigurationAbstractCommand : Command
 	/// <summary>
 	/// 应用Id
 	/// </summary>
-	public long AppId { get; set; }
+	public string AppId { get; set; }
 
 	/// <summary>
 	/// 应用环境

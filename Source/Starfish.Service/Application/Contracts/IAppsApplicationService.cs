@@ -32,16 +32,16 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<AppInfoDetailDto> GetAsync(long id, CancellationToken cancellationToken = default);
+	Task<AppInfoDetailDto> GetAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 应用授权
 	/// </summary>
-	/// <param name="code"></param>
+	/// <param name="id"></param>
 	/// <param name="secret"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default);
+	Task<bool> AuthorizeAsync(string id, string secret, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 创建应用
@@ -49,7 +49,7 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> CreateAsync(AppInfoCreateDto data, CancellationToken cancellationToken = default);
+	Task<string> CreateAsync(AppInfoCreateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新应用
@@ -58,7 +58,7 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long id, AppInfoUpdateDto data, CancellationToken cancellationToken = default);
+	Task UpdateAsync(string id, AppInfoUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除应用
@@ -66,7 +66,7 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task DeleteAsync(long id, CancellationToken cancellationToken = default);
+	Task DeleteAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 启用应用
@@ -74,7 +74,7 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task EnableAsync(long id, CancellationToken cancellationToken = default);
+	Task EnableAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 禁用应用
@@ -82,7 +82,7 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task DisableAsync(long id, CancellationToken cancellationToken = default);
+	Task DisableAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 设置应用密钥
@@ -91,5 +91,5 @@ public interface IAppsApplicationService : IApplicationService
 	/// <param name="secret"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task SetSecretAsync(long id, string secret, CancellationToken cancellationToken = default);
+	Task SetSecretAsync(string id, string secret, CancellationToken cancellationToken = default);
 }

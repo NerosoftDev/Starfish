@@ -13,13 +13,13 @@ public class ChangeAppStatusCommand : Command
 	/// </summary>
 	/// <param name="id"></param>
 	/// <param name="status"></param>
-	public ChangeAppStatusCommand(long id, AppStatus status)
+	public ChangeAppStatusCommand(string id, AppStatus status)
 	{
 		Id = id;
 		Status = status;
 	}
 
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	public AppStatus Status { get; set; }
 }

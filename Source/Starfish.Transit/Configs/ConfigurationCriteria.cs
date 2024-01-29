@@ -13,7 +13,7 @@ public class ConfigurationCriteria
 	/// <summary>
 	/// App唯一编码
 	/// </summary>
-	public string AppCode { get; set; }
+	public string AppName { get; set; }
 
 	/// <summary>
 	/// 应用环境

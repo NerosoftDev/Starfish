@@ -13,7 +13,7 @@ public static class AppInfoSpecification
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<AppInfo> IdEquals(long id)
+	public static Specification<AppInfo> IdEquals(string id)
 	{
 		return new DirectSpecification<AppInfo>(t => t.Id == id);
 	}
@@ -51,28 +51,6 @@ public static class AppInfoSpecification
 	}
 
 	/// <summary>
-	/// 唯一编码等于
-	/// </summary>
-	/// <param name="code"></param>
-	/// <returns></returns>
-	public static Specification<AppInfo> CodeEquals(string code)
-	{
-		code = code.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<AppInfo>(t => t.Code == code);
-	}
-
-	/// <summary>
-	/// 应用唯一编码包含
-	/// </summary>
-	/// <param name="code"></param>
-	/// <returns></returns>
-	public static Specification<AppInfo> CodeContains(string code)
-	{
-		code = code.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<AppInfo>(t => t.Code.Contains(code));
-	}
-
-	/// <summary>
 	/// 应用描述包含
 	/// </summary>
 	/// <param name="description"></param>
@@ -101,9 +79,8 @@ public static class AppInfoSpecification
 	public static Specification<AppInfo> Matches(string keyword)
 	{
 		var nameSpecification = NameContains(keyword);
-		var codeSpecification = CodeContains(keyword);
 		var descSpecification = DescriptionContains(keyword);
 
-		return nameSpecification | codeSpecification | descSpecification;
+		return nameSpecification | descSpecification;
 	}
 }

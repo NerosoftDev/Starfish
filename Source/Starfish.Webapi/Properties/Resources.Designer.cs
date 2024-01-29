@@ -59,5 +59,14 @@ namespace Nerosoft.Starfish.Webapi.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Authorize failed. 的本地化字符串。
+        /// </summary>
+        internal static string IDS_ERROR_AUTHORIZE_FAILED {
+            get {
+                return ResourceManager.GetString("IDS_ERROR_AUTHORIZE_FAILED", resourceCulture);
+            }
+        }
     }
 }

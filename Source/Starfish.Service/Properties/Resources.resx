@@ -160,7 +160,7 @@
     <value>App unique code is not available.</value>
   </data>
   <data name="IDS_ERROR_APPINFO_NOT_ENABLED" xml:space="preserve">
-      <value>App not enabled, [Id]:{0}.</value>
+    <value>App not enabled, [Id]:{0}.</value>
   </data>
   <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
     <value>App not exists, [Id]:{0}.</value>
@@ -305,5 +305,11 @@
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
     <value>Update configuration, [App]:{0}, [Env]:{1}.</value>
+  </data>
+  <data name="IDS_ERROR_COMMON_AUTHORIZE_FAILED" xml:space="preserve">
+    <value>Authorize failed.</value>
+  </data>
+  <data name="IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS" xml:space="preserve">
+    <value>You are not authorized to operate.</value>
   </data>
 </root>

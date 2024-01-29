@@ -12,11 +12,11 @@ public interface IConfigurationRepository : IBaseRepository<DataContext, Configu
 	/// <param name="environment"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<bool> ExistsAsync(long appId, string environment, CancellationToken cancellationToken = default);
+	Task<bool> ExistsAsync(string appId, string environment, CancellationToken cancellationToken = default);
 
-	Task<Configuration> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default);
+	Task<Configuration> GetAsync(string appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default);
 	
-	Task<List<ConfigurationItem>> GetItemListAsync(long id, string environment, int skip, int count, CancellationToken cancellationToken = default);
+	Task<List<ConfigurationItem>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default);
 
-	Task<int> GetItemCountAsync(long id, string environment, CancellationToken cancellationToken = default);
+	Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default);
 }

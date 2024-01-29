@@ -13,7 +13,7 @@ public class ConfigurationArchive : Aggregate<long>
 	/// <summary>
 	/// 应用Id
 	/// </summary>
-	public long AppId { get; set; }
+	public string AppId { get; set; }
 
 	/// <summary>
 	/// 应用环境
@@ -35,7 +35,7 @@ public class ConfigurationArchive : Aggregate<long>
 	/// </summary>
 	public DateTime ArchiveTime { get; set; }
 
-	internal static ConfigurationArchive Create(long appId, string environment)
+	internal static ConfigurationArchive Create(string appId, string environment)
 	{
 		var entity = new ConfigurationArchive()
 		{

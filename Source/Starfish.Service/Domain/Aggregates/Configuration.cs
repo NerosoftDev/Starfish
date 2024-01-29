@@ -20,7 +20,7 @@ public sealed class Configuration : Aggregate<long>, IAuditing
 	/// <summary>
 	/// 应用Id
 	/// </summary>
-	public long AppId { get; set; }
+	public string AppId { get; set; }
 
 	/// <summary>
 	/// 应用环境
@@ -71,7 +71,7 @@ public sealed class Configuration : Aggregate<long>, IAuditing
 	/// </summary>
 	public AppInfo App { get; set; }
 
-	internal static Configuration Create(long appId, string environment, IDictionary<string, string> items)
+	internal static Configuration Create(string appId, string environment, IDictionary<string, string> items)
 	{
 		var configuration = new Configuration
 		{

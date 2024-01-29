@@ -13,7 +13,7 @@ public class ConfigurationRevisionBusiness : CommandObject<ConfigurationRevision
 	}
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long appId, string environment, ConfigurationRevisionArgument argument, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string appId, string environment, ConfigurationRevisionArgument argument, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await _repository.GetAsync(appId, environment, true, [nameof(Configuration.Items), nameof(Configuration.Revisions)], cancellationToken);
 

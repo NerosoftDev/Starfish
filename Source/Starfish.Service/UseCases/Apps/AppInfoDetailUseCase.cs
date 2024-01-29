@@ -22,7 +22,7 @@ public record AppInfoDetailOutput(AppInfoDetailDto Result) : IUseCaseOutput;
 /// 应用详情查询用例输入
 /// </summary>
 /// <param name="Id"></param>
-public record AppInfoDetailInput(long Id) : IUseCaseInput;
+public record AppInfoDetailInput(string Id) : IUseCaseInput;
 
 /// <summary>
 /// 应用详情查询用例

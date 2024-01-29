@@ -16,7 +16,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	internal Configuration Aggregate { get; private set; }
 
 	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
-	public static readonly PropertyInfo<long> AppIdProperty = RegisterProperty<long>(p => p.AppId);
+	public static readonly PropertyInfo<string> AppIdProperty = RegisterProperty<string>(p => p.AppId);
 	public static readonly PropertyInfo<string> EnvironmentProperty = RegisterProperty<string>(p => p.Environment);
 	public static readonly PropertyInfo<IDictionary<string, string>> ItemsProperty = RegisterProperty<IDictionary<string, string>>(p => p.Items);
 	public static readonly PropertyInfo<string> KeyProperty = RegisterProperty<string>(p => p.Key);
@@ -28,7 +28,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 		set => LoadProperty(IdProperty, value);
 	}
 
-	public long AppId
+	public string AppId
 	{
 		get => GetProperty(AppIdProperty);
 		set => SetProperty(AppIdProperty, value);
@@ -70,7 +70,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await ConfigurationRepository.GetAsync(appId, environment, true, [nameof(Configuration.Items)], cancellationToken);
 

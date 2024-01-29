@@ -5,7 +5,7 @@
 /// </summary>
 public class ConfigurationPublishCommand : ConfigurationAbstractCommand
 {
-	public ConfigurationPublishCommand(long appId, string environment)
+	public ConfigurationPublishCommand(string appId, string environment)
 		: base(appId, environment)
 	{
 	}

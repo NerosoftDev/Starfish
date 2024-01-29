@@ -17,7 +17,7 @@ public interface IChangeAppInfoStatusUseCase : INonOutputUseCase<ChangeAppInfoSt
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Status"></param>
-public record ChangeAppInfoStatusInput(long Id, AppStatus Status) : IUseCaseInput;
+public record ChangeAppInfoStatusInput(string Id, AppStatus Status) : IUseCaseInput;
 
 /// <summary>
 /// 变更应用信息状态用例

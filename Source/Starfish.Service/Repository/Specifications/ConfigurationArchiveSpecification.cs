@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Repository;
 
 public static class ConfigurationArchiveSpecification
 {
-	public static Specification<ConfigurationArchive> AppIdEquals(long appId)
+	public static Specification<ConfigurationArchive> AppIdEquals(string appId)
 	{
 		return new DirectSpecification<ConfigurationArchive>(x => x.AppId == appId);
 	}

@@ -1,4 +1,5 @@
 ﻿using System.Net.WebSockets;
+using System.Security.Authentication;
 using System.Threading.Channels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,21 +30,26 @@ public class WebSocketController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[Route("/ws")]
-	public async Task HandleAsync(string team, string app, string secret, string env)
+	public async Task HandleAsync(string app, string secret, string env)
 	{
 		if (HttpContext.WebSockets.IsWebSocketRequest)
 		{
-			var appId = await AuthAsync(team, app, secret);
+			var auth = await AuthAsync(app, secret);
+
+			if (!auth)
+			{
+				throw new AuthenticationException(Resources.IDS_ERROR_AUTHORIZE_FAILED);
+			}
 
 			using var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 
-			var connection = _container.GetOrAdd(appId, env, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(app, env, HttpContext.Connection.Id);
 
 			await Task.WhenAny(MonitorChannelAsync(connection.Channel, socket), MonitorClientAsync(socket));
 
 			await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
 
-			_container.Remove(appId, env, HttpContext.Connection.Id);
+			_container.Remove(app, env, HttpContext.Connection.Id);
 		}
 		else
 		{
@@ -91,7 +97,7 @@ public class WebSocketController : ControllerBase
 		}
 	}
 
-	private Task<long> AuthAsync(string team, string app, string secret)
+	private Task<bool> AuthAsync(string app, string secret)
 	{
 		// var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
 		// var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];

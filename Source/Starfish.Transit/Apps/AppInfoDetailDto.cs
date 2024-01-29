@@ -8,7 +8,7 @@ public class AppInfoDetailDto
 	/// <summary>
 	/// Id
 	/// </summary>
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// 团队Id
@@ -19,11 +19,6 @@ public class AppInfoDetailDto
 	/// 名称
 	/// </summary>
 	public string Name { get; set; }
-
-	/// <summary>
-	/// 唯一编码
-	/// </summary>
-	public string Code { get; set; }
 
 	/// <summary>
 	/// 描述

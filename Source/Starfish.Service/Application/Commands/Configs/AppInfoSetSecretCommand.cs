@@ -7,13 +7,13 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class AppInfoSetSecretCommand : Command
 {
-	public AppInfoSetSecretCommand(long id, string secret)
+	public AppInfoSetSecretCommand(string id, string secret)
 	{
 		Id = id;
 		Secret = secret;
 	}
 
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	public string Secret { get; set; }
 }

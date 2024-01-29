@@ -9,7 +9,7 @@ public class AppInfoItemDto
 	/// <summary>
 	/// Id
 	/// </summary>
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// 所属团队Id

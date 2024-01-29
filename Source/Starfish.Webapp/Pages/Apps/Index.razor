@@ -22,7 +22,7 @@
                 </FluentButton>
                 <FluentSpacer/>
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent"
-                              OnClick="@(() => OnEditButtonClicked(0))">
+                              OnClick="@(() => OnEditButtonClicked(string.Empty))">
                     @(Resources.IDS_APPS_INDEX_BUTTON_ADD)
                 </FluentButton>
             </div>
@@ -105,20 +105,20 @@
         };
     }
 
-    private Task OnDetailButtonClicked(long id)
+    private Task OnDetailButtonClicked(string id)
     {
         return DialogService.ShowDialogAsync<Detail>(id, new DialogParameters { Title = Resources.IDS_APPS_DETAIL_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
     }
 
-    private async Task OnGotoConfigurationClicked(long id)
+    private async Task OnGotoConfigurationClicked(string id)
     {
         Navigation.NavigateTo($"/apps/{id}/configs");
         await Task.CompletedTask;
     }
 
-    private async Task OnEditButtonClicked(long id)
+    private async Task OnEditButtonClicked(string id)
     {
-        var title = id == 0 ? Resources.IDS_APPS_EDIT_TITLE_ADD : Resources.IDS_APPS_EDIT_TITLE_EDIT;
+        var title = string.IsNullOrEmpty(id) ? Resources.IDS_APPS_EDIT_TITLE_ADD : Resources.IDS_APPS_EDIT_TITLE_EDIT;
         var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (result.Cancelled)
@@ -127,7 +127,7 @@
         }
     }
 
-    private async Task OnDeleteButtonClicked(long id, string name)
+    private async Task OnDeleteButtonClicked(string id, string name)
     {
         var confirmationMessage = string.Format(Resources.IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE, name);
         var confirmation = await DialogService.ShowConfirmationAsync(confirmationMessage, primaryText: Resources.IDS_COMMON_YES,
@@ -140,7 +140,7 @@
         }
     }
 
-    private async Task OnResetSecretClicked(long id)
+    private async Task OnResetSecretClicked(string id)
     {
         await DialogService.ShowDialogAsync<ResetSecret>(id, new DialogParameters { PreventDismissOnOverlayClick = true });
     }

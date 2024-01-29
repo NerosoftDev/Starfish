@@ -7,7 +7,7 @@ public interface IGetConfigurationRawUseCase : IUseCase<GetConfigurationRawInput
 
 public record GetConfigurationRawUseCaseOutput(string Result) : IUseCaseOutput;
 
-public record GetConfigurationRawInput(long AppId, string Environment) : IUseCaseInput;
+public record GetConfigurationRawInput(string AppId, string Environment) : IUseCaseInput;
 
 public class GetConfigurationRawUseCase : IGetConfigurationRawUseCase
 {

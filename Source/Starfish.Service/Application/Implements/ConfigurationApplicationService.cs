@@ -10,7 +10,7 @@ namespace Nerosoft.Starfish.Application;
 public class ConfigurationApplicationService : BaseApplicationService, IConfigurationApplicationService
 {
 	/// <inheritdoc />
-	public Task<List<ConfigurationItemDto>> GetItemListAsync(long appId, string environment, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItemDto>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemListUseCase>();
 		var input = new GetConfigurationItemListInput(appId, environment, skip, count);
@@ -19,7 +19,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<int> GetItemCountAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemCountUseCase>();
 		var input = new GetConfigurationItemCountInput(appId, environment);
@@ -28,7 +28,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<ConfigurationDetailDto> GetDetailAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task<ConfigurationDetailDto> GetDetailAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationDetailUseCase>();
 		var input = new GetConfigurationDetailInput(appId, environment);
@@ -37,7 +37,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<long> CreateAsync(long appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationCreateUseCase>();
 		var input = new ConfigurationCreateInput(appId, environment, format, data);
@@ -46,7 +46,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public async Task UpdateAsync(long appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default)
+	public async Task UpdateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationUpdateUseCase>();
 		var input = new ConfigurationUpdateInput(appId, environment, format, data);
@@ -54,7 +54,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task DeleteAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task DeleteAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationDeleteUseCase>();
 		var input = new ConfigurationDeleteInput(appId, environment);
@@ -62,7 +62,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(long appId, string environment, string key, string value, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(string appId, string environment, string key, string value, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationValueUpdateUseCase>();
 		var input = new ConfigurationValueUpdateInput(appId, environment, key, value);
@@ -70,7 +70,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task PublishAsync(long appId, string environment, ConfigurationPublishDto data, CancellationToken cancellationToken = default)
+	public Task PublishAsync(string appId, string environment, ConfigurationPublishDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationPublishUseCase>();
 		var input = new ConfigurationPublishInput(appId, environment, data);
@@ -78,7 +78,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<string> GetArchiveAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task<string> GetArchiveAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationRawUseCase>();
 		var input = new GetConfigurationRawInput(appId, environment);
@@ -87,7 +87,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<string> GetItemsInTextAsync(long appId, string environment, string format, CancellationToken cancellationToken = default)
+	public Task<string> GetItemsInTextAsync(string appId, string environment, string format, CancellationToken cancellationToken = default)
 	{
 		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>()
 		                                .GetKeyedService<IConfigurationParser>(format.Normalize(TextCaseType.Lower));
@@ -101,7 +101,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 			}, cancellationToken);
 	}
 
-	public Task PushRedisAsync(long appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default)
+	public Task PushRedisAsync(string appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default)
 	{ 
 		var useCase = LazyServiceProvider.GetRequiredService<IPushRedisUseCase>();
 		var input = new PushRedisInput(appId, environment, data);

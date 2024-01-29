@@ -2,7 +2,7 @@
 
 public class ConfigurationUpdateCommand : ConfigurationAbstractCommand
 {
-	public ConfigurationUpdateCommand(long appId, string environment)
+	public ConfigurationUpdateCommand(string appId, string environment)
 		: base(appId, environment)
 	{
 		AppId = appId;

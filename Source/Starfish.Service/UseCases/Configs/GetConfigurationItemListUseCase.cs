@@ -24,7 +24,7 @@ public record GetConfigurationItemListOutput(List<ConfigurationItemDto> Result) 
 /// <param name="Environment"></param>
 /// <param name="Skip"></param>
 /// <param name="Count"></param>
-public record GetConfigurationItemListInput(long Id, string Environment, int Skip, int Count) : IUseCaseInput;
+public record GetConfigurationItemListInput(string Id, string Environment, int Skip, int Count) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例

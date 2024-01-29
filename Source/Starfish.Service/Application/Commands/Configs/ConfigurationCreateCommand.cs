@@ -2,7 +2,7 @@
 
 public class ConfigurationCreateCommand : ConfigurationAbstractCommand
 {
-	public ConfigurationCreateCommand(long appId, string environment)
+	public ConfigurationCreateCommand(string appId, string environment)
 		: base(appId, environment)
 	{
 	}

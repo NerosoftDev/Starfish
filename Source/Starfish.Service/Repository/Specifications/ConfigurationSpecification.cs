@@ -10,7 +10,7 @@ public static class ConfigurationSpecification
 		return new DirectSpecification<Configuration>(x => x.Id == id);
 	}
 
-	public static Specification<Configuration> AppIdEquals(long appId)
+	public static Specification<Configuration> AppIdEquals(string appId)
 	{
 		return new DirectSpecification<Configuration>(x => x.AppId == appId);
 	}
@@ -25,7 +25,7 @@ public static class ConfigurationSpecification
 		return new DirectSpecification<Configuration>(x => x.Status == status);
 	}
 
-	public static Specification<ConfigurationItem> ConfigurationAppIdEquals(long appId)
+	public static Specification<ConfigurationItem> ConfigurationAppIdEquals(string appId)
 	{
 		return new DirectSpecification<ConfigurationItem>(x => x.Configuration.AppId == appId);
 	}

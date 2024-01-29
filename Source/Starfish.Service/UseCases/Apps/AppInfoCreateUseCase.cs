@@ -14,7 +14,7 @@ public interface IAppInfoCreateUseCase : IUseCase<AppInfoCreateInput, AppInfoCre
 /// 创建应用信息用例输出
 /// </summary>
 /// <param name="Id"></param>
-public record AppInfoCreateOutput(long Id) : IUseCaseOutput;
+public record AppInfoCreateOutput(string Id) : IUseCaseOutput;
 
 /// <summary>
 /// 创建应用信息用例输入
@@ -42,7 +42,7 @@ public class AppInfoCreateUseCase : IAppInfoCreateUseCase
 	public Task<AppInfoCreateOutput> ExecuteAsync(AppInfoCreateInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new AppInfoCreateCommand(input.Data);
-		return _bus.SendAsync<AppInfoCreateCommand, long>(command, cancellationToken)
+		return _bus.SendAsync<AppInfoCreateCommand, string>(command, cancellationToken)
 		           .ContinueWith(task =>
 		           {
 			           task.WaitAndUnwrapException(cancellationToken);

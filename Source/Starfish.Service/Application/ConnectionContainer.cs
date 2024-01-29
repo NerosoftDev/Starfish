@@ -30,7 +30,7 @@ public class ConnectionContainer
 		}
 	}
 
-	public ConnectionInfo GetOrAdd(long appId, string environment, string connectionId)
+	public ConnectionInfo GetOrAdd(string appId, string environment, string connectionId)
 	{
 		var key = $"{appId}-{environment}";
 
@@ -44,7 +44,7 @@ public class ConnectionContainer
 		return connection;
 	}
 
-	public void Remove(long appId, string environment, string connectionId)
+	public void Remove(string appId, string environment, string connectionId)
 	{
 		var key = $"{appId}-{environment}";
 
@@ -73,7 +73,7 @@ public class ConnectionContainer
 
 	public class ClientConnectedEventArgs : EventArgs
 	{
-		public long AppId { get; set; }
+		public string AppId { get; set; }
 
 		public string Environment { get; set; }
 

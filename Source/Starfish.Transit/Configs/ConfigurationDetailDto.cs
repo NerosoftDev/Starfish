@@ -13,12 +13,7 @@ public class ConfigurationDetailDto
 	/// <summary>
 	/// 应用Id
 	/// </summary>
-	public long AppId { get; set; }
-
-	/// <summary>
-	/// 应用唯一编码
-	/// </summary>
-	public string AppCode { get; set; }
+	public string AppId { get; set; }
 
 	/// <summary>
 	/// 应用名称

@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IPushRedisUseCase : INonOutputUseCase<PushRedisInput>;
 
-internal record PushRedisInput(long AppId, string Environment, PushRedisRequestDto Data) : IUseCaseInput;
+internal record PushRedisInput(string AppId, string Environment, PushRedisRequestDto Data) : IUseCaseInput;
 
 internal sealed class PushRedisUseCase : IPushRedisUseCase
 {

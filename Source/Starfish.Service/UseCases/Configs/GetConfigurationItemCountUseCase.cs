@@ -17,9 +17,9 @@ public record GetConfigurationItemCountOutput(int Result) : IUseCaseOutput;
 /// <summary>
 /// 获取符合条件的配置数量用例输入
 /// </summary>
-/// <param name="Id"></param>
+/// <param name="AppId"></param>
 /// <param name="Environment"></param>
-public record GetConfigurationItemCountInput(long Id, string Environment) : IUseCaseInput;
+public record GetConfigurationItemCountInput(string AppId, string Environment) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置数量用例
@@ -40,7 +40,7 @@ public class GetConfigurationItemCountUseCase : IGetConfigurationItemCountUseCas
 	/// <inheritdoc />
 	public Task<GetConfigurationItemCountOutput> ExecuteAsync(GetConfigurationItemCountInput input, CancellationToken cancellationToken = default)
 	{
-		return _repository.GetItemCountAsync(input.Id, input.Environment, cancellationToken)
+		return _repository.GetItemCountAsync(input.AppId, input.Environment, cancellationToken)
 		                  .ContinueWith(t => new GetConfigurationItemCountOutput(t.Result), cancellationToken);
 	}
 }

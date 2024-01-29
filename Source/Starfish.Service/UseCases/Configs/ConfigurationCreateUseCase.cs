@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IConfigurationCreateUseCase : IUseCase<ConfigurationCreateInput, long>;
 
-public record ConfigurationCreateInput(long AppId, string Environment, string Format, ConfigurationEditDto Data) : IUseCaseInput;
+public record ConfigurationCreateInput(string AppId, string Environment, string Format, ConfigurationEditDto Data) : IUseCaseInput;
 
 public class ConfigurationCreateUseCase : IConfigurationCreateUseCase
 {

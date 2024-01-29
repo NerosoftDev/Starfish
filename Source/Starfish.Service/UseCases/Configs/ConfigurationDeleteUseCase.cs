@@ -14,7 +14,7 @@ public interface IConfigurationDeleteUseCase : INonOutputUseCase<ConfigurationDe
 /// </summary>
 /// <param name="AppId"></param>
 /// <param name="Environment"></param>
-public record ConfigurationDeleteInput(long AppId, string Environment) : IUseCaseInput;
+public record ConfigurationDeleteInput(string AppId, string Environment) : IUseCaseInput;
 
 /// <summary>
 /// 删除配置节点用例

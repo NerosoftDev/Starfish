@@ -16,7 +16,7 @@ public class AppInfoSecretBusiness : CommandObject<AppInfoSecretBusiness>, IDoma
 	private UserPrincipal Identity { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long id, string secret, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string id, string secret, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await AppsRepository.GetAsync(id, true, cancellationToken);
 		if (aggregate == null)

@@ -9,7 +9,7 @@ public class AppInfoNotFoundException : NotFoundException
 	/// 构造函数
 	/// </summary>
 	/// <param name="id"></param>
-	public AppInfoNotFoundException(long id)
+	public AppInfoNotFoundException(string id)
 		: base(string.Format(Resources.IDS_ERROR_APPINFO_NOT_EXISTS, id))
 	{
 	}

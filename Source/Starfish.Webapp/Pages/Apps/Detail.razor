@@ -1,4 +1,4 @@
-﻿@implements IDialogContentComponent<long>
+﻿@implements IDialogContentComponent<string>
 
 @inject IAppsApi AppsApi
 
@@ -22,11 +22,11 @@
     {
         <FluentStack Orientation="Orientation.Vertical">
 
+            <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_CODE)"
+                             Value="@Data.Id" ReadOnly="true" />
+
             <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_NAME)"
                              Value="@Data.Name" ReadOnly="true" />
-
-            <FluentTextField Style="width: 100%" Label="@(Resources.IDS_APPS_DETAIL_LABEL_CODE)"
-                             Value="@Data.Code" ReadOnly="true" />
 
             <FluentSwitch Value="@(Data.Status == "Enabled")"
                           Label="@(Resources.IDS_APPS_DETAIL_LABEL_STATUS)" ReadOnly="true" />
@@ -44,7 +44,7 @@
 
 @code {
     [Parameter]
-    public long Content { get; set; }
+    public string Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
@@ -62,7 +62,6 @@
             await AppsApi.GetAsync(Content).EnsureSuccess(result =>
             {
                 Data.Name = result.Name;
-                Data.Code = result.Code;
                 Data.Description = result.Description;
                 Data.Status = result.Status;
             });

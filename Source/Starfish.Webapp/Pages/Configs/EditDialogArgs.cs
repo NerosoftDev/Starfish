@@ -1,14 +1,14 @@
-﻿namespace Nerosoft.Starfish.Webapp.Pages.Config;
+﻿namespace Nerosoft.Starfish.Webapp.Pages.Configs;
 
 public class EditDialogArgs
 {
-	public EditDialogArgs(long appId, string environment)
+	public EditDialogArgs(string appId, string environment)
 	{
 		AppId = appId;
 		Environment = environment;
 	}
 
-	public long AppId { get; set; }
+	public string AppId { get; set; }
 
 	public string Environment { get; set; }
 

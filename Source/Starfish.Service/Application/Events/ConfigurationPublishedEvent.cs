@@ -13,7 +13,7 @@ public class ConfigurationPublishedEvent : ApplicationEvent
 	{
 	}
 
-	public ConfigurationPublishedEvent(long appId, string environment)
+	public ConfigurationPublishedEvent(string appId, string environment)
 		: this()
 	{
 		AppId = appId;
@@ -23,7 +23,7 @@ public class ConfigurationPublishedEvent : ApplicationEvent
 	/// <summary>
 	/// 根节点Id
 	/// </summary>
-	public long AppId { get; set; }
+	public string AppId { get; set; }
 
 	/// <summary>
 	/// 应用环境

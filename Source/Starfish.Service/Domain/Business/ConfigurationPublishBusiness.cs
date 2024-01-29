@@ -21,7 +21,7 @@ public class ConfigurationPublishBusiness : CommandObject<ConfigurationPublishBu
 	public UserPrincipal Identity { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		var permission = await AppInfoRepository.CheckPermissionAsync(appId, Identity.GetUserIdOfInt64(), cancellationToken);
 

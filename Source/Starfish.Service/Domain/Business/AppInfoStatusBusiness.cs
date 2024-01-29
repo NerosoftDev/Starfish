@@ -16,7 +16,7 @@ public class AppInfoStatusBusiness : CommandObject<AppInfoStatusBusiness>, IDoma
 	private UserPrincipal Identity { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long id, AppStatus status, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string id, AppStatus status, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await AppInfoRepository.GetAsync(id, true, cancellationToken);
 		if (aggregate == null)
