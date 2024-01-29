@@ -45,6 +45,7 @@
         <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.3.1" />
         <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.3.1" />
         <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.3.1" />
+        <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
         <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
         <PackageVersion Include="Refit" Version="7.0.0" />
         <PackageVersion Include="Refit.HttpClientFactory" Version="7.0.0" />
@@ -71,7 +72,7 @@
         </PackageVersion>
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-        <PackageVersion Include="System.Text.Json" Version="8.0.0" />
+        <PackageVersion Include="System.Text.Json" Version="8.0.1" />
     </ItemGroup>
     <ItemGroup Condition=" $(TargetFrameworkVersion.Equals('v5.0')) ">
         <PackageVersion Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
