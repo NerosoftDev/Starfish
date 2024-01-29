@@ -165,6 +165,22 @@ public sealed class LoggingEventSubscriber
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
+	[Subscribe]
+	public Task HandleAsync(AppInfoDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		var aggregate = @event.GetAggregate<AppInfo>();
+		var command = new OperateLogCreateCommand
+		{
+			Module = "apps",
+			Type = "delete",
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_DELETE, aggregate.Id, aggregate.Name),
+			OperateTime = DateTime.Now,
+			RequestTraceId = context.RequestTraceId,
+			UserName = context.User?.Identity?.Name
+		};
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
+	}
+
 	/// <summary>
 	/// 处理配置节点创建事件
 	/// </summary>

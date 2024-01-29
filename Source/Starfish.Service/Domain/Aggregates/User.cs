@@ -146,7 +146,7 @@ public sealed class User : Aggregate<long>, IHasCreateTime, IHasUpdateTime, ITom
 
 		if (Reserved)
 		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER);
+			throw new NotSupportedException(Resources.IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER);
 		}
 
 		Roles ??= [];

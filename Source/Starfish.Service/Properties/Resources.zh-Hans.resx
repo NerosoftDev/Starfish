@@ -153,12 +153,6 @@
   <data name="IDS_ENUM_CONFIG_STATUS_PUBLISHED" xml:space="preserve">
     <value>已发布</value>
   </data>
-  <data name="IDS_ERROR_APPINFO_CODE_REQUIRED" xml:space="preserve">
-    <value>应用唯一编码不能为空。</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_CODE_UNAVAILABLE" xml:space="preserve">
-    <value>应用唯一编码不可用。</value>
-  </data>
   <data name="IDS_ERROR_APPINFO_NOT_ENABLED" xml:space="preserve">
       <value>应用没有启用，[Id]:{0}。</value>
   </data>
@@ -174,23 +168,11 @@
   <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
     <value>无效的应用状态。</value>
   </data>
-  <data name="IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0" xml:space="preserve">
-    <value>请求参数'count'必须大于0。</value>
+  <data name="IDS_ERROR_COMMON_AUTHORIZE_FAILED" xml:space="preserve">
+    <value>认证失败。</value>
   </data>
-  <data name="IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE" xml:space="preserve">
-    <value>请求参数'skip'不能是负数。</value>
-  </data>
-  <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
-    <value>密码不正确。</value>
-  </data>
-  <data name="IDS_ERROR_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
-    <value>刷新令牌已过期。</value>
-  </data>
-  <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
-    <value>刷新令牌无效。</value>
-  </data>
-  <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
-    <value>Token不能为空。</value>
+  <data name="IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS" xml:space="preserve">
+    <value>您无权进行此操作。</value>
   </data>
   <data name="IDS_ERROR_CONFIG_DATA_FORMAT_NOT_SUPPORTED" xml:space="preserve">
     <value>不支持的数据格式 '{0}'。</value>
@@ -219,14 +201,26 @@
   <data name="IDS_ERROR_CONFIG_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>版本号 '{0}' 已经存在。</value>
   </data>
+  <data name="IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0" xml:space="preserve">
+    <value>请求参数'count'必须大于0。</value>
+  </data>
+  <data name="IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE" xml:space="preserve">
+    <value>请求参数'skip'不能是负数。</value>
+  </data>
+  <data name="IDS_ERROR_PASSWORD_INCORRECT" xml:space="preserve">
+    <value>密码不正确。</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_EXPIRED" xml:space="preserve">
+    <value>刷新令牌已过期。</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_IS_INVALID" xml:space="preserve">
+    <value>刷新令牌无效。</value>
+  </data>
+  <data name="IDS_ERROR_REFRESH_TOKEN_REQUIRED" xml:space="preserve">
+    <value>Token不能为空。</value>
+  </data>
   <data name="IDS_ERROR_TEAM_NOT_EXISTS" xml:space="preserve">
     <value>团队不存在，[Id]:{0}。</value>
-  </data>
-  <data name="IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER" xml:space="preserve">
-    <value>仅允许团队负责人添加/移除团队成员。</value>
-  </data>
-  <data name="IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE" xml:space="preserve">
-    <value>仅允许团队负责人更新信息。</value>
   </data>
   <data name="IDS_ERROR_TEAM_OWNER_CANNOT_REMOVED" xml:space="preserve">
     <value>不能移除团队负责人。</value>

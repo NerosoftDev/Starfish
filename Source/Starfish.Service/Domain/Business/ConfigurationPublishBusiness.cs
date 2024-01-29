@@ -28,11 +28,11 @@ public class ConfigurationPublishBusiness : CommandObject<ConfigurationPublishBu
 		switch(permission)
 		{
 			case 0:
-				throw new UnauthorizedAccessException();
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			case 1:
 				break;
 			case 2:
-				throw new UnauthorizedAccessException();
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			default:
 				throw new ArgumentOutOfRangeException();
 		}

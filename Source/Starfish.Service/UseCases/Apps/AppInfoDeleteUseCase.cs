@@ -45,7 +45,7 @@ public class AppInfoDeleteUseCase : IAppInfoDeleteUseCase
 
 		if (!_user.IsInRoles(_roles))
 		{
-			throw new UnauthorizedAccessException();
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
 		var command = new AppInfoDeleteCommand(input.Id);

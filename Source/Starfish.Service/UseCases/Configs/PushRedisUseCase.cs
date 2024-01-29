@@ -30,7 +30,7 @@ internal sealed class PushRedisUseCase : IPushRedisUseCase
 
 		if (!permission.IsIn(1, 2))
 		{
-			throw new UnauthorizedAccessException();
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
 		var archive = await _configurationRepository.GetAsync(input.AppId, input.Environment, cancellationToken);

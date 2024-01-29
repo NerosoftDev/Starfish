@@ -27,7 +27,7 @@ public class AppInfoStatusBusiness : CommandObject<AppInfoStatusBusiness>, IDoma
 		var team = await TeamRepository.GetAsync(aggregate.TeamId, false, cancellationToken);
 		if (team.OwnerId != Identity.GetUserIdOfInt64())
 		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE);
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
 		switch (status)

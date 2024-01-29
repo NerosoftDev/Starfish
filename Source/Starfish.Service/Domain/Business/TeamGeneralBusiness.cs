@@ -117,7 +117,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 			{
 				if (target.Aggregate.OwnerId != target.Identity.GetUserIdOfInt64())
 				{
-					context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE);
+					context.AddErrorResult(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 				}
 			}
 

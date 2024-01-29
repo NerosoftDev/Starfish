@@ -76,7 +76,7 @@ public class InMemoryModelBuilder : IModelBuilder
 
 			entity.Property(t => t.Id)
 				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+				  .HasValueGenerator<UuidValueGenerator>();
 		});
 
 		modelBuilder.Entity<Configuration>(entity =>

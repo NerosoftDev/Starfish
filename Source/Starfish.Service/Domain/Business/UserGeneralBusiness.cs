@@ -168,7 +168,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	{
 		if (Aggregate.Reserved)
 		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER);
+			throw new NotSupportedException(Resources.IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER);
 		}
 
 		return _repository.DeleteAsync(Aggregate, true, cancellationToken);

@@ -92,7 +92,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 		switch (permission)
 		{
 			case 0:
-				throw new UnauthorizedAccessException();
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			case 1:
 			case 2:
 				break;
@@ -120,6 +120,19 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryUpdate]
 	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
+		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.GetUserIdOfInt64(), cancellationToken);
+
+		switch (permission)
+		{
+			case 0:
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
+			case 1:
+			case 2:
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+
 		if (!HasChangedProperties)
 		{
 			return;
@@ -138,10 +151,23 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	}
 
 	[FactoryDelete]
-	protected override Task DeleteAsync(CancellationToken cancellationToken = default)
+	protected override async Task DeleteAsync(CancellationToken cancellationToken = default)
 	{
+		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.GetUserIdOfInt64(), cancellationToken);
+
+		switch (permission)
+		{
+			case 0:
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
+			case 1:
+			case 2:
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+
 		Aggregate.RaiseEvent(new ConfigurationDeletedEvent());
-		return ConfigurationRepository.DeleteAsync(Aggregate, true, cancellationToken);
+		await ConfigurationRepository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
 	public class DuplicateCheckRule : RuleBase

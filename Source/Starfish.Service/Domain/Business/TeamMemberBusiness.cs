@@ -89,7 +89,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 
 			if (target.Aggregate.OwnerId != target.Identity.GetUserIdOfInt64())
 			{
-				context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
+				context.AddErrorResult(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			}
 
 			return Task.CompletedTask;

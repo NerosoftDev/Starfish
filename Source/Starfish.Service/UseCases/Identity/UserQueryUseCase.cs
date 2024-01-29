@@ -44,7 +44,7 @@ public class UserQueryUseCase : IUserQueryUseCase
 
 		if (!_identity.IsInRole("SA"))
 		{
-			throw new UnauthorizedAccessException();
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
 		var specification = input.Criteria.GetSpecification();
