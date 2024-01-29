@@ -32,7 +32,7 @@
                             GenerateHeader="GenerateHeaderOption.Sticky"
                             TGridItem="AppInfoItemDto"
                             GridTemplateColumns="0.5fr 0.5fr 0.5fr 0.4fr 0.2fr 0.5fr">
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_COMMON_COLUMN_ID)"
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_APPS_INDEX_COLUMN_ID)"
                                 Property="@(c => c.Id)" />
                 <TemplateColumn Title="@(Resources.IDS_APPS_INDEX_COLUMN_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnGotoConfigurationClicked(context.Id))">

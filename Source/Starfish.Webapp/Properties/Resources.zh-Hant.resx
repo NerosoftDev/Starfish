@@ -162,6 +162,9 @@
   <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
     <value>代碼</value>
   </data>
+  <data name="IDS_APPS_INDEX_COLUMN_ID" xml:space="preserve">
+    <value>應用Id</value>
+  </data>
   <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
     <value>姓名</value>
   </data>
@@ -467,6 +470,9 @@
   </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_CODE" xml:space="preserve">
     <value>代碼</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_ID" xml:space="preserve">
+    <value>應用Id</value>
   </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_NAME" xml:space="preserve">
     <value>名稱</value>
