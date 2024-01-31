@@ -52,7 +52,7 @@
         <PackageVersion Include="Refit.Newtonsoft.Json" Version="7.0.0" />
         <PackageVersion Include="StackExchange.Redis" Version="2.7.17" />
         <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-        <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.2.0" />
+        <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.3.0" />
     </ItemGroup>
     <ItemGroup>
         <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" />

@@ -2,8 +2,8 @@
 
 ```sqlite
 CREATE TABLE "app_info" (
-  "Id" integer NOT NULL,
-  "TeamId" integer NOT NULL,
+  "Id" text(32) NOT NULL,
+  "TeamId" text(32) NOT NULL,
   "Name" text(50) NOT NULL,
   "Code" text(50) NOT NULL,
   "Secret" text(50) NOT NULL,
@@ -14,10 +14,6 @@ CREATE TABLE "app_info" (
   PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDX_APP_INFO_CODE"
-ON "app_info" (
-  "Code" ASC
-);
 CREATE INDEX "IDX_APP_INFO_STATUS"
 ON "app_info" (
   "Status" ASC
@@ -25,11 +21,6 @@ ON "app_info" (
 CREATE INDEX "IDX_APP_INFO_TEAM_ID"
 ON "app_info" (
   "TeamId" ASC
-);
-CREATE UNIQUE INDEX "IDX_APP_INFO_UNIQUE"
-ON "app_info" (
-  "TeamId" ASC,
-  "Code" ASC
 );
 ```
 
@@ -67,7 +58,7 @@ ON "operate_log" (
 ```sqlite
 CREATE TABLE "configuration" (
   "Id" integer NOT NULL,
-  "AppId" integer NOT NULL,
+  "AppId" text(32) NOT NULL,
   "Environment" text NOT NULL,
   "Status" integer NOT NULL DEFAULT 1,
   "Version" text,
@@ -99,7 +90,7 @@ ON "configuration" (
 ```sqlite
 CREATE TABLE "configuration_archive" (
   "Id" integer NOT NULL,
-  "AppId" integer NOT NULL,
+  "AppId" text(32) NOT NULL,
   "Environment" text NOT NULL,
   "Data" text,
   "Operator" text NOT NULL,
@@ -162,11 +153,10 @@ ON "configuration_revision" (
 
 ```sqlite
 CREATE TABLE "team" (
-  "Id" integer NOT NULL,
-  "Alias" text,
+  "Id" text(32) NOT NULL,
   "Name" text NOT NULL,
   "Description" text,
-  "OwnerId" integer NOT NULL,
+  "OwnerId" text(32) NOT NULL,
   "MemberCount" integer NOT NULL DEFAULT 0,
   "CreateTime" text NOT NULL,
   "UpdateTime" text NOT NULL,
@@ -175,10 +165,6 @@ CREATE TABLE "team" (
   PRIMARY KEY ("Id")
 );
 
-CREATE UNIQUE INDEX "IDX_TEAM_ALIAS"
-ON "team" (
-  "Alias" ASC
-);
 CREATE INDEX "IDX_TEAM_NAME"
 ON "team" (
   "Name" ASC
@@ -194,8 +180,8 @@ ON "team" (
 ```sqlite
 CREATE TABLE "team_member" (
   "Id" integer NOT NULL,
-  "TeamId" integer NOT NULL,
-  "UserId" integer NOT NULL,
+  "TeamId" text(32) NOT NULL,
+  "UserId" text(32) NOT NULL,
   "CreateTime" text NOT NULL,
   PRIMARY KEY ("Id")
 );
@@ -234,7 +220,7 @@ ON "token" (
 
 ```sqlite
 CREATE TABLE "user" (
-  "Id" integer NOT NULL,
+  "Id" text(32) NOT NULL,
   "UserName" text(64) NOT NULL,
   "PasswordHash" text(512) NOT NULL,
   "PasswordSalt" text(32) NOT NULL,
@@ -271,7 +257,7 @@ ON "user" (
 ```sqlite
 CREATE TABLE "user_role" (
   "Id" integer NOT NULL,
-  "UserId" integer NOT NULL,
+  "UserId" text(32) NOT NULL,
   "Name" text(20) NOT NULL,
   PRIMARY KEY ("Id")
 );

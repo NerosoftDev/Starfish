@@ -2,10 +2,9 @@
 
 ```sql
 CREATE TABLE [appinfo] (
-  [Id] bigint  NOT NULL,
-  [TeamId] bigint  NOT NULL,
+  [Id] varchar(32)  NOT NULL,
+  [TeamId] varchar(32)  NOT NULL,
   [Name] varchar(100) NOT NULL,
-  [Code] varchar(100) NOT NULL,
   [Secret] varchar(255) NOT NULL,
   [Description] varchar(500) NULL,
   [Status] int  NOT NULL,
@@ -16,19 +15,6 @@ CREATE TABLE [appinfo] (
 GO
 
 ALTER TABLE [appinfo] SET (LOCK_ESCALATION = TABLE)
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_APP_INFO_UNIQUE]
-ON [appinfo] (
-  [TeamId] ASC,
-  [Code] ASC
-)
-GO
-
-CREATE NONCLUSTERED INDEX [IDX_APP_INFO_CODE]
-ON [appinfo] (
-  [Code] ASC
-)
 GO
 
 CREATE NONCLUSTERED INDEX [IDX_APP_INFO_STATUS]
@@ -87,7 +73,7 @@ GO
 ```sql
 CREATE TABLE [configuration] (
   [Id] bigint  NOT NULL,
-  [AppId] bigint  NOT NULL,
+  [AppId] varchar(32)  NOT NULL,
   [Environment] varchar(50) NOT NULL,
   [Status] int  NOT NULL,
   [Version] varchar(20) NULL,
@@ -128,7 +114,7 @@ GO
 ```sql
 CREATE TABLE [configuration_archive] (
   [Id] bigint  NOT NULL,
-  [AppId] bigint  NOT NULL,
+  [AppId] varchar(32)  NOT NULL,
   [Environment] varchar(50) NOT NULL,
   [Data] text NULL,
   [Operator] varchar(64) NOT NULL,
@@ -208,11 +194,10 @@ GO
 
 ```sql
 CREATE TABLE [team] (
-  [Id] bigint  NOT NULL,
-  [Alias] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS DEFAULT NULL NULL,
+  [Id] varchar(32)  NOT NULL,
   [Name] varchar(100) NOT NULL,
   [Description] varchar(500) COLLATE SQL_Latin1_General_CP1_CI_AS DEFAULT NULL NULL,
-  [OwnerId] bigint  NOT NULL,
+  [OwnerId] varchar(32)  NOT NULL,
   [MemberCount] int DEFAULT 0 NOT NULL,
   [CreateTime] datetime DEFAULT getdate() NOT NULL,
   [UpdateTime] datetime DEFAULT getdate() NOT NULL,
@@ -223,12 +208,6 @@ CREATE TABLE [team] (
 GO
 
 ALTER TABLE [team] SET (LOCK_ESCALATION = TABLE)
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_TEAM_ALIAS]
-ON [team] (
-  [Alias] ASC
-)
 GO
 
 CREATE NONCLUSTERED INDEX [IDX_TEAM_NAME]
@@ -249,8 +228,8 @@ GO
 ```sql
 CREATE TABLE [team_member] (
   [Id] bigint  NOT NULL,
-  [TeamId] bigint  NOT NULL,
-  [UserId] bigint  NOT NULL,
+  [TeamId] varchar(32)  NOT NULL,
+  [UserId] varchar(32)  NOT NULL,
   [CreateTime] datetime DEFAULT getdate() NOT NULL,
   PRIMARY KEY CLUSTERED ([Id])
 )
@@ -301,7 +280,7 @@ GO
 
 ```sql
 CREATE TABLE [user] (
-  [Id] bigint  NOT NULL,
+  [Id] varchar(32)  NOT NULL,
   [UserName] varchar(64) NOT NULL,
   [PasswordHash] varchar(512) NOT NULL,
   [PasswordSalt] varchar(32) NOT NULL,
@@ -347,7 +326,7 @@ GO
 ```sql
 CREATE TABLE [user_role] (
   [Id] bigint  NOT NULL,
-  [UserId] bigint  NOT NULL,
+  [UserId] varchar(32)  NOT NULL,
   [Name] varchar(100) NOT NULL,
   PRIMARY KEY CLUSTERED ([Id])
 )
