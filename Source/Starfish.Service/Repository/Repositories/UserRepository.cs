@@ -22,7 +22,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, string>, 
 	/// <inheritdoc />
 	public Task<User> FindByUserNameAsync(string userName, bool tracking, CancellationToken cancellationToken = default)
 	{
-		return GetAsync(t => t.UserName == userName, tracking, [nameof(User.Roles)], cancellationToken);
+		return GetAsync(t => t.UserName == userName, tracking, [], cancellationToken);
 	}
 
 	/// <inheritdoc />

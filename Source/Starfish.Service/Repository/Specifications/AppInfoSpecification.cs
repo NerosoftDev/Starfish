@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 应用信息查询规约
 /// </summary>
-public static class AppInfoSpecification
+internal static class AppInfoSpecification
 {
 	/// <summary>
 	/// Id等于

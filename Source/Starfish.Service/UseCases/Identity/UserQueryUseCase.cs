@@ -1,5 +1,4 @@
 ﻿using System.Security.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Claims;
 using Nerosoft.Starfish.Domain;
@@ -50,17 +49,12 @@ public class UserQueryUseCase : IUserQueryUseCase
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
 
-		return _repository.FindAsync(predicate, Collator, input.Skip, input.Count, cancellationToken)
+		return _repository.FindAsync(predicate, null, input.Skip, input.Count, cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);
 			                  var result = task.Result.ProjectedAsCollection<UserItemDto>();
 			                  return new UserSearchOutput(result);
 		                  }, cancellationToken);
-
-		static IQueryable<User> Collator(IQueryable<User> query)
-		{
-			return query.Include(nameof(User.Roles)).OrderByDescending(t => t.Id);
-		}
 	}
 }

@@ -31,11 +31,6 @@ public class UserDetailDto
 	public string NickName { get; set; }
 
 	/// <summary>
-	/// 用户角色
-	/// </summary>
-	public List<string> Roles { get; set; }
-
-	/// <summary>
 	/// 创建时间
 	/// </summary>
 	public DateTime CreateTime { get; set; }

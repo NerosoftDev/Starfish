@@ -3,7 +3,7 @@ using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.Repository;
 
-public static class ConfigurationSpecification
+internal static class ConfigurationSpecification
 {
 	public static Specification<Configuration> IdEquals(long id)
 	{

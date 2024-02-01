@@ -60,15 +60,6 @@ public interface IUserApplicationService : IApplicationService
 	Task DeleteAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	/// 设置用户角色
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="roles"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	Task SetRolesAsync(string id, List<string> roles, CancellationToken cancellationToken = default);
-
-	/// <summary>
 	/// 修改密码
 	/// </summary>
 	/// <param name="oldPassword"></param>

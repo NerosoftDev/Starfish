@@ -103,11 +103,6 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	public DateTime? DeleteTime { get; set; }
 
 	/// <summary>
-	/// 用户角色
-	/// </summary>
-	public HashSet<UserRole> Roles { get; set; }
-
-	/// <summary>
 	/// 新建用户
 	/// </summary>
 	/// <param name="userName"></param>
@@ -131,30 +126,6 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
 		PasswordHash = hash;
 		PasswordSalt = salt;
-	}
-
-	/// <summary>
-	/// 设置用户角色
-	/// </summary>
-	/// <param name="roles"></param>
-	internal void SetRoles(params string[] roles)
-	{
-		if (roles == null)
-		{
-			return;
-		}
-
-		if (Reserved)
-		{
-			throw new NotSupportedException(Resources.IDS_ERROR_USER_NOT_ALLOWED_CHANGE_ROLE_FOR_RESERVED_USER);
-		}
-
-		Roles ??= [];
-		Roles.RemoveWhere(t => roles.Contains(t.Name, StringComparison.OrdinalIgnoreCase));
-		foreach (var role in roles)
-		{
-			Roles.Add(UserRole.Create(role));
-		}
 	}
 
 	/// <summary>

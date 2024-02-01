@@ -14,21 +14,9 @@ internal class UserMappingProfile : Profile
 	/// </summary>
 	public UserMappingProfile()
 	{
-		CreateMap<User, UserItemDto>()
-			.ForMember(dest => dest.Roles, opt => opt.MapFrom(GetRoles));
-		CreateMap<User, UserDetailDto>()
-			.ForMember(dest => dest.Roles, opt => opt.MapFrom(GetRoles));
+		CreateMap<User, UserItemDto>();
+		CreateMap<User, UserDetailDto>();
 		CreateMap<UserCreateDto, UserCreateCommand>();
 		CreateMap<UserUpdateDto, UserUpdateCommand>();
-	}
-
-	private static List<string> GetRoles(User source, UserItemDto destination)
-	{
-		return source.Roles.Select(t => t.Name).ToList();
-	}
-
-	private static List<string> GetRoles(User source, UserDetailDto destination)
-	{
-		return source.Roles.Select(t => t.Name).ToList();
 	}
 }

@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置归档
 /// </summary>
-public class ConfigurationArchive : Aggregate<long>
+public sealed class ConfigurationArchive : Aggregate<long>
 {
 	private ConfigurationArchive()
 	{ }

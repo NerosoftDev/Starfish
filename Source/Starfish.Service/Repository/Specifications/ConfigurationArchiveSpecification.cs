@@ -3,7 +3,7 @@ using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.Repository;
 
-public static class ConfigurationArchiveSpecification
+internal static class ConfigurationArchiveSpecification
 {
 	public static Specification<ConfigurationArchive> AppIdEquals(string appId)
 	{

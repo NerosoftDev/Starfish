@@ -102,20 +102,7 @@ public class UserController : ControllerBase
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
 	}
-
-	/// <summary>
-	/// 设置用户角色
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="roles"></param>
-	/// <returns></returns>
-	[HttpPut("{id}/role")]
-	public async Task<IActionResult> SetRoleAsync(string id, [FromBody] List<string> roles)
-	{
-		await _service.SetRolesAsync(id, roles, HttpContext.RequestAborted);
-		return Ok();
-	}
-
+	
 	/// <summary>
 	/// 重置指定用户密码
 	/// </summary>
