@@ -8,5 +8,5 @@ public class Administrator : Aggregate<long>
 
 	public User User { get; set; }
 
-	public string Scopes { get; set; }
+	public string Roles { get; set; }
 }

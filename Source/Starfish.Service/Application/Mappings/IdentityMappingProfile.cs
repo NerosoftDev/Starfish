@@ -4,10 +4,21 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.Application;
 
-internal class TeamMappingProfile : Profile
+/// <summary>
+/// 用户映射配置
+/// </summary>
+internal class IdentityMappingProfile : Profile
 {
-	public TeamMappingProfile()
+	/// <summary>
+	/// 
+	/// </summary>
+	public IdentityMappingProfile()
 	{
+		CreateMap<User, UserItemDto>();
+		CreateMap<User, UserDetailDto>();
+		CreateMap<UserCreateDto, UserCreateCommand>();
+		CreateMap<UserUpdateDto, UserUpdateCommand>();
+
 		CreateMap<Team, TeamItemDto>();
 		CreateMap<Team, TeamDetailDto>();
 
@@ -16,5 +27,8 @@ internal class TeamMappingProfile : Profile
 			.ForMember(dest => dest.NickName, options => options.MapFrom(src => src.User.NickName))
 			.ForMember(dest => dest.Email, options => options.MapFrom(src => src.User.Email))
 			.ForMember(dest => dest.Phone, options => options.MapFrom(src => src.User.Phone));
+
+		CreateMap<Administrator, AdministratorItemDto>();
+		CreateMap<AdministratorAssignDto, AdministratorAssignCommand>();
 	}
 }

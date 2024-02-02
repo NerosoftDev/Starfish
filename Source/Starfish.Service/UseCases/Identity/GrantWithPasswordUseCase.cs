@@ -93,7 +93,7 @@ public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 			}
 
 			var administrator = await AdminRepository.GetByUserIdAsync(user.Id, cancellationToken);
-			var roles = administrator?.Scopes?.Split(",");
+			var roles = administrator?.Roles?.Split(",");
 
 			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
 			@events.Add(new UserAuthSucceedEvent

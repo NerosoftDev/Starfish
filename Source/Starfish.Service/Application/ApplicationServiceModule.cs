@@ -30,11 +30,10 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 	{
 		Configure<AutomapperOptions>(options =>
 		{
-			options.AddProfile<UserMappingProfile>();
+			options.AddProfile<IdentityMappingProfile>();
 			options.AddProfile<LogsMappingProfile>();
 			options.AddProfile<AppsMappingProfile>();
 			options.AddProfile<ConfigurationMappingProfile>();
-			options.AddProfile<TeamMappingProfile>();
 		});
 	}
 
