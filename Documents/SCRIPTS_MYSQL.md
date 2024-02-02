@@ -2,18 +2,15 @@
 
 ```sql
 CREATE TABLE `app_info`  (
-  `Id` bigint NOT NULL,
-  `TeamId` bigint NOT NULL,
+  `Id` varchar(32) NOT NULL,
+  `TeamId` varchar(32) NOT NULL,
   `Name` varchar(100) NOT NULL,
-  `Code` varchar(100) NOT NULL,
   `Secret` varchar(255) NOT NULL,
   `Description` varchar(500) NULL DEFAULT NULL,
   `Status` int NOT NULL,
   `CreateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UpdateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`) USING BTREE,
-  UNIQUE INDEX `IDX_APP_INFO_UNIQUE`(`TeamId` ASC, `Code` ASC) USING BTREE,
-  INDEX `IDX_APP_INFO_CODE`(`Code` ASC) USING BTREE,
   INDEX `IDX_APP_INFO_STATUS`(`Status` ASC) USING BTREE,
   INDEX `IDX_APP_INFO_TEAM_ID`(`TeamId` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
@@ -43,7 +40,7 @@ CREATE TABLE `operate_log`  (
 ```sql
 CREATE TABLE `configuration`  (
   `Id` bigint NOT NULL,
-  `AppId` bigint NOT NULL,
+  `AppId` varchar(32) NOT NULL,
   `Environment` varchar(50) NOT NULL,
   `Status` int NOT NULL,
   `Version` varchar(20) NULL DEFAULT NULL,
@@ -64,7 +61,7 @@ CREATE TABLE `configuration`  (
 ```sql
 CREATE TABLE `configuration_archive`  (
   `Id` bigint NOT NULL,
-  `AppId` bigint NOT NULL,
+  `AppId` varchar(32) NOT NULL,
   `Environment` varchar(50) NOT NULL,
   `Data` text NULL,
   `Operator` varchar(64) NOT NULL,
@@ -110,18 +107,16 @@ CREATE TABLE `configuration_revision`  (
 
 ```sql
 CREATE TABLE `team`  (
-  `Id` bigint NOT NULL,
-  `Alias` varchar(100) NULL DEFAULT NULL,
+  `Id` varchar(32) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Description` varchar(500) NULL DEFAULT NULL,
-  `OwnerId` bigint NOT NULL,
+  `OwnerId` varchar(32) NOT NULL,
   `MemberCount` int NOT NULL DEFAULT 0,
   `CreateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UpdateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `CreatedBy` varchar(64) NOT NULL,
   `UpdatedBy` varchar(64) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
-  UNIQUE INDEX `IDX_TEAM_ALIAS`(`Alias` ASC) USING BTREE,
   INDEX `IDX_TEAM_NAME`(`Name` ASC) USING BTREE,
   INDEX `IDX_TEAM_OWNER`(`OwnerId` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
@@ -132,8 +127,8 @@ CREATE TABLE `team`  (
 ```sql
 CREATE TABLE `team_member`  (
   `Id` bigint NOT NULL,
-  `TeamId` bigint NOT NULL,
-  `UserId` bigint NOT NULL,
+  `TeamId` varchar(32) NOT NULL,
+  `UserId` varchar(32) NOT NULL,
   `CreateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`) USING BTREE,
   UNIQUE INDEX `IDX_TEAM_MEMBER_UNIQUE`(`TeamId` ASC, `UserId` ASC) USING BTREE
@@ -160,7 +155,7 @@ CREATE TABLE `token`  (
 
 ```sql
 CREATE TABLE `user`  (
-  `Id` bigint NOT NULL,
+  `Id` varchar(32) NOT NULL,
   `UserName` varchar(64) NOT NULL,
   `PasswordHash` varchar(512) NOT NULL,
   `PasswordSalt` varchar(32) NOT NULL,
@@ -187,7 +182,7 @@ CREATE TABLE `user`  (
 ```sql
 CREATE TABLE `user_role`  (
   `Id` bigint NOT NULL,
-  `UserId` bigint NOT NULL,
+  `UserId` varchar(32) NOT NULL,
   `Name` varchar(100) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
   UNIQUE INDEX `IDX_USER_ROLE_UNIQUE`(`UserId` ASC, `Name` ASC) USING BTREE

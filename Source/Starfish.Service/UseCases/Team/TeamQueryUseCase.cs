@@ -57,12 +57,10 @@ public class TeamQueryUseCase : ITeamQueryUseCase
 		{
 			if (!_identity.IsInRole("SA"))
 			{
-				var userId = _identity.GetUserIdOfInt64();
-				
 				var memberQuery = _repository.Context.Set<TeamMember>();
 				query = from team in query
 				        join member in memberQuery on team.Id equals member.TeamId
-				        where member.UserId == userId
+				        where member.UserId == _identity.UserId
 				        select team;
 			}
 

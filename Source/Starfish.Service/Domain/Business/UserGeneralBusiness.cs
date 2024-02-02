@@ -22,15 +22,14 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 	private User Aggregate { get; set; }
 
-	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
+	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
 	public static readonly PropertyInfo<string> UserNameProperty = RegisterProperty<string>(p => p.UserName);
 	public static readonly PropertyInfo<string> PasswordProperty = RegisterProperty<string>(p => p.Password);
 	public static readonly PropertyInfo<string> NickNameProperty = RegisterProperty<string>(p => p.NickName);
 	public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(p => p.Email);
 	public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(p => p.Phone);
-	public static readonly PropertyInfo<List<string>> RolesProperty = RegisterProperty<List<string>>(p => p.Roles);
 
-	public long Id
+	public string Id
 	{
 		get => GetProperty(IdProperty);
 		private set => LoadProperty(IdProperty, value);
@@ -66,12 +65,6 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		set => SetProperty(PhoneProperty, value);
 	}
 
-	public List<string> Roles
-	{
-		get => GetProperty(RolesProperty);
-		set => SetProperty(RolesProperty, value);
-	}
-
 	protected override void AddRules()
 	{
 		Rules.AddRule(new DuplicateUserNameCheckRule());
@@ -87,9 +80,9 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
 	{
-		var user = await Repository.GetAsync(id, query => query.AsTracking().Include(nameof(User.Roles)), cancellationToken);
+		var user = await Repository.GetAsync(id, query => query.AsTracking(), cancellationToken);
 
 		Aggregate = user ?? throw new UserNotFoundException(id);
 
@@ -100,7 +93,6 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			NickName = user.NickName;
 			Email = user.Email;
 			Phone = user.Phone;
-			Roles = user.Roles.Select(t => t.Name).ToList();
 		}
 	}
 
@@ -119,17 +111,13 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		}
 
 		user.SetNickName(NickName ?? UserName);
-		if (Roles?.Count > 0)
-		{
-			user.SetRoles(Roles.ToArray());
-		}
 
 		return Repository.InsertAsync(user, true, cancellationToken)
-		                 .ContinueWith(task =>
-		                 {
-			                 task.WaitAndUnwrapException(cancellationToken);
-			                 Id = task.Result.Id;
-		                 }, cancellationToken);
+						 .ContinueWith(task =>
+						 {
+							 task.WaitAndUnwrapException(cancellationToken);
+							 Id = task.Result.Id;
+						 }, cancellationToken);
 	}
 
 	[FactoryUpdate]
@@ -150,11 +138,6 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			Aggregate.SetNickName(NickName);
 		}
 
-		if (ChangedProperties.Contains(RolesProperty))
-		{
-			Aggregate.SetRoles(Roles?.ToArray());
-		}
-
 		if (ChangedProperties.Contains(PasswordProperty))
 		{
 			Aggregate.ChangePassword(Password);
@@ -168,7 +151,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	{
 		if (Aggregate.Reserved)
 		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER);
+			throw new NotSupportedException(Resources.IDS_ERROR_USER_NOT_ALLOWED_TO_DELETE_RESERVED_USER);
 		}
 
 		return _repository.DeleteAsync(Aggregate, true, cancellationToken);

@@ -6,14 +6,14 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 用户查询规约
 /// </summary>
-public static class UserSpecification
+internal static class UserSpecification
 {
 	/// <summary>
 	/// Id等于
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<User> IdEquals(long id)
+	public static Specification<User> IdEquals(string id)
 	{
 		return new DirectSpecification<User>(t => t.Id == id);
 	}
@@ -23,7 +23,7 @@ public static class UserSpecification
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<User> IdNotEquals(long id)
+	public static Specification<User> IdNotEquals(string id)
 	{
 		return new DirectSpecification<User>(t => t.Id != id);
 	}
@@ -66,16 +66,6 @@ public static class UserSpecification
 	{
 		email = email.Normalize(TextCaseType.Lower);
 		return new DirectSpecification<User>(t => t.Email.Contains(email));
-	}
-
-	public static Specification<User> HasRole(string role)
-	{
-		return new DirectSpecification<User>(t => t.Roles.Any(r => r.Name == role));
-	}
-
-	public static Specification<User> InRoles(params string[] roles)
-	{
-		return new DirectSpecification<User>(t => t.Roles.Any(r => roles.Contains(r.Name)));
 	}
 
 	public static Specification<User> Matches(string keyword)

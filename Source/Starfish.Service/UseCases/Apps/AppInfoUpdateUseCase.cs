@@ -17,7 +17,7 @@ public interface IAppInfoUpdateUseCase : INonOutputUseCase<AppInfoUpdateInput>;
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Model"></param>
-public record AppInfoUpdateInput(long Id, AppInfoUpdateDto Model) : IUseCaseInput;
+public record AppInfoUpdateInput(string Id, AppInfoUpdateDto Model) : IUseCaseInput;
 
 /// <summary>
 /// 应用信息更新用例

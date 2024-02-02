@@ -8,7 +8,7 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 应用信息仓储
 /// </summary>
-public class AppInfoRepository : BaseRepository<DataContext, AppInfo, long>, IAppInfoRepository
+public class AppInfoRepository : BaseRepository<DataContext, AppInfo, string>, IAppInfoRepository
 {
 	/// <summary>
 	/// 构造函数
@@ -19,20 +19,7 @@ public class AppInfoRepository : BaseRepository<DataContext, AppInfo, long>, IAp
 	{
 	}
 
-	/// <inheritdoc />
-	public Task<AppInfo> GetByCodeAsync(string code, CancellationToken cancellationToken = default)
-	{
-		if (string.IsNullOrWhiteSpace(code))
-		{
-			throw new BadRequestException(Resources.IDS_ERROR_APPINFO_CODE_REQUIRED);
-		}
-
-		code = code.Normalize(TextCaseType.Lower);
-		var predicate = AppInfoSpecification.CodeEquals(code).Satisfy();
-		return GetAsync(predicate, null, cancellationToken);
-	}
-
-	public async Task<int> CheckPermissionAsync(long appId, long userId, CancellationToken cancellationToken = default)
+	public async Task<int> CheckPermissionAsync(string appId, string userId, CancellationToken cancellationToken = default)
 	{
 		var query = from app in Context.Set<AppInfo>()
 					join team in Context.Set<Team>() on app.TeamId equals team.Id

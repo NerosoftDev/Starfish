@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.Webapi.Controllers;
 /// <summary>
 /// 应用配置管理接口
 /// </summary>
-[Route("api/apps/{id:long}/[controller]/{environment}")]
+[Route("api/apps/{id}/[controller]/{environment}")]
 [ApiController, ApiExplorerSettings(GroupName = "configuration")]
 [Authorize]
 public class ConfigurationController : ControllerBase
@@ -36,7 +36,7 @@ public class ConfigurationController : ControllerBase
 	/// <returns></returns>
 	[HttpGet("item")]
 	[Produces(typeof(List<ConfigurationItemDto>))]
-	public async Task<IActionResult> GetItemListAsync(long id, string environment, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
+	public async Task<IActionResult> GetItemListAsync(string id, string environment, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
 	{
 		switch (format)
 		{
@@ -60,7 +60,7 @@ public class ConfigurationController : ControllerBase
 	/// <returns></returns>
 	[HttpGet("item/count")]
 	[Produces(typeof(int))]
-	public async Task<IActionResult> GetItemCountAsync(long id, string environment)
+	public async Task<IActionResult> GetItemCountAsync(string id, string environment)
 	{
 		var result = await _service.GetItemCountAsync(id, environment, HttpContext.RequestAborted);
 		return Ok(result);
@@ -74,7 +74,7 @@ public class ConfigurationController : ControllerBase
 	/// <returns></returns>
 	[HttpGet("item/json")]
 	[Produces(typeof(string))]
-	public async Task<IActionResult> GetJsonAsync(long id, string environment)
+	public async Task<IActionResult> GetJsonAsync(string id, string environment)
 	{
 		var json = await _service.GetItemsInTextAsync(id, environment, "json", HttpContext.RequestAborted);
 		return Ok(json);
@@ -88,7 +88,7 @@ public class ConfigurationController : ControllerBase
 	/// <returns></returns>
 	[HttpGet("detail")]
 	[Produces<ConfigurationDetailDto>]
-	public async Task<IActionResult> GetAsync(long id, string environment)
+	public async Task<IActionResult> GetAsync(string id, string environment)
 	{
 		var result = await _service.GetDetailAsync(id, environment, HttpContext.RequestAborted);
 		return Ok(result);
@@ -103,7 +103,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<IActionResult> CreateAsync(long id, string environment, [FromHeader(Name = "x-format")] string format, [FromBody] ConfigurationEditDto data)
+	public async Task<IActionResult> CreateAsync(string id, string environment, [FromHeader(Name = "x-format")] string format, [FromBody] ConfigurationEditDto data)
 	{
 		var result = await _service.CreateAsync(id, environment, format, data, HttpContext.RequestAborted);
 		Response.Headers.Append("Entry", $"{result}");
@@ -119,7 +119,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data">数据内容</param>
 	/// <returns></returns>
 	[HttpPut]
-	public async Task<IActionResult> UpdateAsync(long id, string environment, [FromHeader(Name = "x-format")] string format, [FromBody] ConfigurationEditDto data)
+	public async Task<IActionResult> UpdateAsync(string id, string environment, [FromHeader(Name = "x-format")] string format, [FromBody] ConfigurationEditDto data)
 	{
 		await _service.UpdateAsync(id, environment, format, data, HttpContext.RequestAborted);
 		return Ok();
@@ -132,7 +132,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="environment">应用环境</param>
 	/// <returns></returns>
 	[HttpDelete]
-	public async Task<IActionResult> DeleteAsync(long id, string environment)
+	public async Task<IActionResult> DeleteAsync(string id, string environment)
 	{
 		await _service.DeleteAsync(id, environment, HttpContext.RequestAborted);
 		return Ok();
@@ -147,7 +147,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{key}")]
-	public async Task<IActionResult> UpdateItemValueAsync(long id, string environment, string key, [FromBody] ConfigurationValueUpdateDto data)
+	public async Task<IActionResult> UpdateItemValueAsync(string id, string environment, string key, [FromBody] ConfigurationValueUpdateDto data)
 	{
 		key = HttpUtility.UrlDecode(key);
 		await _service.UpdateAsync(id, environment, key, data.Value, HttpContext.RequestAborted);
@@ -162,7 +162,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("publish")]
-	public async Task<IActionResult> PublishAsync(long id, string environment, [FromBody] ConfigurationPublishDto data)
+	public async Task<IActionResult> PublishAsync(string id, string environment, [FromBody] ConfigurationPublishDto data)
 	{
 		await _service.PublishAsync(id, environment, data, HttpContext.RequestAborted);
 		return Ok();
@@ -176,7 +176,7 @@ public class ConfigurationController : ControllerBase
 	/// <returns></returns>
 	[HttpGet("archive")]
 	[Produces<string>]
-	public async Task<IActionResult> GetArchivedAsync(long id, string environment)
+	public async Task<IActionResult> GetArchivedAsync(string id, string environment)
 	{
 		var result = await _service.GetArchiveAsync(id, environment, HttpContext.RequestAborted);
 		return Ok(result);
@@ -190,7 +190,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("redis")]
-	public async Task<IActionResult> PushRedisAsync(long id, string environment, [FromBody] PushRedisRequestDto data)
+	public async Task<IActionResult> PushRedisAsync(string id, string environment, [FromBody] PushRedisRequestDto data)
 	{
 		await _service.PushRedisAsync(id, environment, data, HttpContext.RequestAborted);
 		return Ok();

@@ -6,14 +6,14 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 应用信息查询规约
 /// </summary>
-public static class AppInfoSpecification
+internal static class AppInfoSpecification
 {
 	/// <summary>
 	/// Id等于
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<AppInfo> IdEquals(long id)
+	public static Specification<AppInfo> IdEquals(string id)
 	{
 		return new DirectSpecification<AppInfo>(t => t.Id == id);
 	}
@@ -23,7 +23,7 @@ public static class AppInfoSpecification
 	/// </summary>
 	/// <param name="teamId"></param>
 	/// <returns></returns>
-	public static Specification<AppInfo> TeamIdEquals(long teamId)
+	public static Specification<AppInfo> TeamIdEquals(string teamId)
 	{
 		return new DirectSpecification<AppInfo>(t => t.TeamId == teamId);
 	}
@@ -48,28 +48,6 @@ public static class AppInfoSpecification
 	{
 		name = name.Normalize(TextCaseType.Lower);
 		return new DirectSpecification<AppInfo>(t => t.Name.ToLower().Contains(name));
-	}
-
-	/// <summary>
-	/// 唯一编码等于
-	/// </summary>
-	/// <param name="code"></param>
-	/// <returns></returns>
-	public static Specification<AppInfo> CodeEquals(string code)
-	{
-		code = code.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<AppInfo>(t => t.Code == code);
-	}
-
-	/// <summary>
-	/// 应用唯一编码包含
-	/// </summary>
-	/// <param name="code"></param>
-	/// <returns></returns>
-	public static Specification<AppInfo> CodeContains(string code)
-	{
-		code = code.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<AppInfo>(t => t.Code.Contains(code));
 	}
 
 	/// <summary>
@@ -101,9 +79,8 @@ public static class AppInfoSpecification
 	public static Specification<AppInfo> Matches(string keyword)
 	{
 		var nameSpecification = NameContains(keyword);
-		var codeSpecification = CodeContains(keyword);
 		var descSpecification = DescriptionContains(keyword);
 
-		return nameSpecification | codeSpecification | descSpecification;
+		return nameSpecification | descSpecification;
 	}
 }

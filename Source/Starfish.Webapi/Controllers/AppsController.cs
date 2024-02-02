@@ -57,9 +57,9 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id:long}")]
+	[HttpGet("{id}")]
 	[Produces<AppInfoDetailDto>]
-	public async Task<IActionResult> GetAsync(long id)
+	public async Task<IActionResult> GetAsync(string id)
 	{
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
@@ -75,7 +75,7 @@ public class AppsController : ControllerBase
 	{
 		var result = await _service.CreateAsync(model, HttpContext.RequestAborted);
 		//HttpContext.Response.Headers.Add("Location", $"/api/apps/{result}");
-		HttpContext.Response.Headers.Append("Entry", $"{result}");
+		HttpContext.Response.Headers.Append("Entry", result);
 		return Ok(result);
 	}
 
@@ -85,8 +85,8 @@ public class AppsController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}")]
-	public async Task<IActionResult> UpdateAsync(long id, [FromBody] AppInfoUpdateDto model)
+	[HttpPut("{id}")]
+	public async Task<IActionResult> UpdateAsync(string id, [FromBody] AppInfoUpdateDto model)
 	{
 		await _service.UpdateAsync(id, model, HttpContext.RequestAborted);
 		return Ok();
@@ -97,8 +97,8 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/enable")]
-	public async Task<IActionResult> EnableAsync(long id)
+	[HttpPut("{id}/enable")]
+	public async Task<IActionResult> EnableAsync(string id)
 	{
 		await _service.EnableAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -109,8 +109,8 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/disable")]
-	public async Task<IActionResult> DisableAsync(long id)
+	[HttpPut("{id}/disable")]
+	public async Task<IActionResult> DisableAsync(string id)
 	{
 		await _service.DisableAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -121,8 +121,8 @@ public class AppsController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpDelete("{id:long}")]
-	public async Task<IActionResult> DeleteAsync(long id)
+	[HttpDelete("{id}")]
+	public async Task<IActionResult> DeleteAsync(string id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -134,8 +134,8 @@ public class AppsController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="model"></param>
 	/// <returns></returns>
-	[HttpPut("{id:long}/secret")]
-	public async Task<IActionResult> SetSecretAsync(long id, [FromBody] AppInfoSetSecretDto model)
+	[HttpPut("{id}/secret")]
+	public async Task<IActionResult> SetSecretAsync(string id, [FromBody] AppInfoSetSecretDto model)
 	{
 		await _service.SetSecretAsync(id, model.Secret, HttpContext.RequestAborted);
 		return Ok();

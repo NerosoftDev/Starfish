@@ -51,6 +51,9 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 	private IUserRepository UserRepository => _provider.GetService<IUserRepository>();
 	private ITokenRepository TokenRepository => _provider.GetService<ITokenRepository>();
 
+	private IAdministratorRepository _adminRespository;
+	private IAdministratorRepository AdminRepository => _adminRespository ??= _provider.GetService<IAdministratorRepository>();
+
 	private IdentityCommonComponent _component;
 	private IdentityCommonComponent Component => _component ??= _provider.GetService<IdentityCommonComponent>();
 
@@ -82,7 +85,7 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 				throw new BadRequestException(Resources.IDS_ERROR_REFRESH_TOKEN_EXPIRED);
 			}
 
-			var user = await UserRepository.GetAsync(int.Parse(token.Subject), query => query.AsNoTracking().Include(nameof(User.Roles)), cancellationToken);
+			var user = await UserRepository.GetAsync(token.Subject, query => query.AsNoTracking(), cancellationToken);
 
 			if (user == null)
 			{
@@ -94,9 +97,9 @@ public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 				throw new AuthenticationException(Resources.IDS_ERROR_USER_LOCKOUT);
 			}
 
-			var roles = user.Roles
-			                .Select(t => t.Name)
-			                .ToList();
+			var administrator = await AdminRepository.GetByUserIdAsync(user.Id, cancellationToken);
+			var roles = administrator?.Roles?.Split(",");
+
 			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{

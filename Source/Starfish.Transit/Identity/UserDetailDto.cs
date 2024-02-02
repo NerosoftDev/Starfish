@@ -8,7 +8,7 @@ public class UserDetailDto
 	/// <summary>
 	/// Id
 	/// </summary>
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// 用户名
@@ -29,11 +29,6 @@ public class UserDetailDto
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }
-
-	/// <summary>
-	/// 用户角色
-	/// </summary>
-	public List<string> Roles { get; set; }
 
 	/// <summary>
 	/// 创建时间

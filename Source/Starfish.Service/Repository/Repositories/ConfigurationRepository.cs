@@ -13,7 +13,7 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 	{
 	}
 
-	public Task<bool> ExistsAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task<bool> ExistsAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		ISpecification<Configuration>[] specifications =
 		[
@@ -25,7 +25,7 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
-	public Task<Configuration> GetAsync(long appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public Task<Configuration> GetAsync(string appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default)
 	{
 		ISpecification<Configuration>[] specifications =
 		[
@@ -38,11 +38,11 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		return GetAsync(predicate, tracking, properties, cancellationToken);
 	}
 
-	public Task<List<ConfigurationItem>> GetItemListAsync(long id, string environment, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItem>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		ISpecification<ConfigurationItem>[] specifications =
 		[
-			ConfigurationSpecification.ConfigurationAppIdEquals(id),
+			ConfigurationSpecification.ConfigurationAppIdEquals(appId),
 			ConfigurationSpecification.ConfigurationAppEnvironmentEquals(environment)
 		];
 
@@ -57,11 +57,11 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		            .ToListAsync(cancellationToken);
 	}
 
-	public Task<int> GetItemCountAsync(long id, string environment, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		ISpecification<ConfigurationItem>[] specifications =
 		[
-			ConfigurationSpecification.ConfigurationAppIdEquals(id),
+			ConfigurationSpecification.ConfigurationAppIdEquals(appId),
 			ConfigurationSpecification.ConfigurationAppEnvironmentEquals(environment)
 		];
 

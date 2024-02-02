@@ -29,7 +29,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task<AppInfoDetailDto> GetAsync(long id, CancellationToken cancellationToken = default)
+	public Task<AppInfoDetailDto> GetAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var input = new AppInfoDetailInput(id);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoDetailUseCase>();
@@ -38,16 +38,16 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task<long> AuthorizeAsync(string code, string secret, CancellationToken cancellationToken = default)
+	public Task<bool> AuthorizeAsync(string id, string secret, CancellationToken cancellationToken = default)
 	{
-		var input = new AppInfoAuthorizeInput(code, secret);
+		var input = new AppInfoAuthorizeInput(id, secret);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoAuthorizeUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<long> CreateAsync(AppInfoCreateDto data, CancellationToken cancellationToken = default)
+	public Task<string> CreateAsync(AppInfoCreateDto data, CancellationToken cancellationToken = default)
 	{
 		var input = new AppInfoCreateInput(data);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoCreateUseCase>();
@@ -56,7 +56,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(long id, AppInfoUpdateDto data, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(string id, AppInfoUpdateDto data, CancellationToken cancellationToken = default)
 	{
 		var input = new AppInfoUpdateInput(id, data);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoUpdateUseCase>();
@@ -64,7 +64,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task DeleteAsync(long id, CancellationToken cancellationToken = default)
+	public Task DeleteAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var input = new AppInfoDeleteInput(id);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoDeleteUseCase>();
@@ -72,7 +72,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task EnableAsync(long id, CancellationToken cancellationToken = default)
+	public Task EnableAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var input = new ChangeAppInfoStatusInput(id, AppStatus.Enabled);
 		var useCase = LazyServiceProvider.GetRequiredService<IChangeAppInfoStatusUseCase>();
@@ -80,7 +80,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task DisableAsync(long id, CancellationToken cancellationToken = default)
+	public Task DisableAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var input = new ChangeAppInfoStatusInput(id, AppStatus.Disabled);
 		var useCase = LazyServiceProvider.GetRequiredService<IChangeAppInfoStatusUseCase>();
@@ -88,7 +88,7 @@ public class AppsApplicationService : BaseApplicationService, IAppsApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task SetSecretAsync(long id, string secret, CancellationToken cancellationToken = default)
+	public Task SetSecretAsync(string id, string secret, CancellationToken cancellationToken = default)
 	{
 		var input = new AppInfoSetSecretInput(id, secret);
 		var useCase = LazyServiceProvider.GetRequiredService<IAppInfoSetSecretUseCase>();

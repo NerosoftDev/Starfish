@@ -11,15 +11,15 @@ public interface IAppInfoAuthorizeUseCase : IUseCase<AppInfoAuthorizeInput, AppI
 /// <summary>
 /// 应用信息认证输入
 /// </summary>
-/// <param name="Code"></param>
+/// <param name="Id"></param>
 /// <param name="Secret"></param>
-public record AppInfoAuthorizeInput(string Code, string Secret) : IUseCaseInput;
+public record AppInfoAuthorizeInput(string Id, string Secret) : IUseCaseInput;
 
 /// <summary>
 /// 应用信息认证输出
 /// </summary>
 /// <param name="Result"></param>
-public record AppInfoAuthorizeOutput(long Result) : IUseCaseOutput;
+public record AppInfoAuthorizeOutput(bool Result) : IUseCaseOutput;
 
 /// <summary>
 /// 应用信息认证用例
@@ -40,19 +40,16 @@ public class AppInfoAuthorizeUseCase : IAppInfoAuthorizeUseCase
 	/// <inheritdoc />
 	public async Task<AppInfoAuthorizeOutput> ExecuteAsync(AppInfoAuthorizeInput input, CancellationToken cancellationToken = default)
 	{
-		var appInfo = await _repository.GetByCodeAsync(input.Code, cancellationToken);
+		var appInfo = await _repository.GetAsync(input.Id, cancellationToken);
 		if (appInfo == null)
 		{
-			throw new AppInfoNotFoundException(0);
+			throw new AppInfoNotFoundException(input.Id);
 		}
 
 		var encryptedSecret = Cryptography.SHA.Encrypt(input.Secret);
 
-		if (!string.Equals(appInfo.Secret, encryptedSecret))
-		{
-			throw new UnauthorizedAccessException();
-		}
+		var result = string.Equals(appInfo.Secret, encryptedSecret);
 
-		return new AppInfoAuthorizeOutput(appInfo.Id);
+		return new AppInfoAuthorizeOutput(result);
 	}
 }

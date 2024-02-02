@@ -24,10 +24,8 @@ public class ConfigurationRevisionEventSubscriber : IHandler<ConfigurationPublis
 	/// <exception cref="NotImplementedException"></exception>
 	public Task HandleAsync(ConfigurationPublishedEvent message, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var command = new ConfigurationRevisionCreateCommand
+		var command = new ConfigurationRevisionCreateCommand(message.AppId, message.Environment)
 		{
-			AppId = message.AppId,
-			Environment = message.Environment,
 			Version = message.Version,
 			Comment = message.Comment
 		};

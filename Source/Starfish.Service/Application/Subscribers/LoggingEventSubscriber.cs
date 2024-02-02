@@ -74,7 +74,7 @@ public sealed class LoggingEventSubscriber
 		{
 			Module = "apps",
 			Type = "create",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_CREATE, aggregate.Code, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_CREATE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -98,7 +98,7 @@ public sealed class LoggingEventSubscriber
 		{
 			Module = "apps",
 			Type = "status",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_ENABLE, aggregate.Code, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_ENABLE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -122,7 +122,7 @@ public sealed class LoggingEventSubscriber
 		{
 			Module = "appinfo",
 			Type = "status",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_DISABLE, aggregate.Code, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_DISABLE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -139,7 +139,7 @@ public sealed class LoggingEventSubscriber
 		{
 			Module = "apps",
 			Type = "secret",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_RESET_SECRET, aggregate.Code, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_RESET_SECRET, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -156,12 +156,28 @@ public sealed class LoggingEventSubscriber
 		{
 			Module = "apps",
 			Type = "update",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_UPDATE, aggregate.Code, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_UPDATE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
 		};
 
+		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
+	}
+
+	[Subscribe]
+	public Task HandleAsync(AppInfoDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		var aggregate = @event.GetAggregate<AppInfo>();
+		var command = new OperateLogCreateCommand
+		{
+			Module = "apps",
+			Type = "delete",
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_DELETE, aggregate.Id, aggregate.Name),
+			OperateTime = DateTime.Now,
+			RequestTraceId = context.RequestTraceId,
+			UserName = context.User?.Identity?.Name
+		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 

@@ -1,6 +1,5 @@
 ﻿using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Service;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -17,20 +16,19 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 
 	internal AppInfo Aggregate { get; private set; }
 
-	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
-	public static readonly PropertyInfo<long> TeamIdProperty = RegisterProperty<long>(p => p.TeamId);
+	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
+	public static readonly PropertyInfo<string> TeamIdProperty = RegisterProperty<string>(p => p.TeamId);
 	public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(p => p.Name);
-	public static readonly PropertyInfo<string> CodeProperty = RegisterProperty<string>(p => p.Code);
 	public static readonly PropertyInfo<string> SecretProperty = RegisterProperty<string>(p => p.Secret);
 	public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(p => p.Description);
 
-	public long Id
+	public string Id
 	{
 		get => ReadProperty(IdProperty);
 		set => LoadProperty(IdProperty, value);
 	}
 
-	public long TeamId
+	public string TeamId
 	{
 		get => GetProperty(TeamIdProperty);
 		set => SetProperty(TeamIdProperty, value);
@@ -40,12 +38,6 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	{
 		get => GetProperty(NameProperty);
 		set => SetProperty(NameProperty, value);
-	}
-
-	public string Code
-	{
-		get => GetProperty(CodeProperty);
-		set => SetProperty(CodeProperty, value);
 	}
 
 	public string Secret
@@ -60,11 +52,6 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 		set => SetProperty(DescriptionProperty, value);
 	}
 
-	protected override void AddRules()
-	{
-		Rules.AddRule(new CodeDuplicateCheckRule());
-	}
-
 	[FactoryCreate]
 	protected override Task CreateAsync(CancellationToken cancellationToken = default)
 	{
@@ -72,7 +59,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await AppInfoRepository.GetAsync(id, true, [], cancellationToken);
 
@@ -83,7 +70,6 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 			Id = aggregate.Id;
 			TeamId = aggregate.TeamId;
 			Name = aggregate.Name;
-			Code = aggregate.Code;
 			Description = aggregate.Description;
 		}
 	}
@@ -93,7 +79,7 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 	{
 		await CheckPermissionAsync(TeamId, cancellationToken);
 
-		Aggregate = AppInfo.Create(TeamId, Name, Code);
+		Aggregate = AppInfo.Create(TeamId, Name);
 		Aggregate.SetSecret(Secret);
 		if (!string.IsNullOrWhiteSpace(Description))
 		{
@@ -119,11 +105,6 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 			Aggregate.SetName(Name);
 		}
 
-		if (ChangedProperties.Contains(CodeProperty))
-		{
-			Aggregate.SetCode(Code);
-		}
-
 		if (ChangedProperties.Contains(DescriptionProperty))
 		{
 			Aggregate.SetDescription(Description);
@@ -140,33 +121,12 @@ public class AppInfoGeneralBusiness : EditableObjectBase<AppInfoGeneralBusiness>
 		await AppInfoRepository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
-	private async Task CheckPermissionAsync(long teamId, CancellationToken cancellationToken = default)
+	private async Task CheckPermissionAsync(string teamId, CancellationToken cancellationToken = default)
 	{
 		var team = await TeamRepository.GetAsync(teamId, false, cancellationToken);
-		if (team.OwnerId != Identity.GetUserIdOfInt64())
+		if (team.OwnerId != Identity.UserId)
 		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_UPDATE);
-		}
-	}
-
-	private class CodeDuplicateCheckRule : RuleBase
-	{
-		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
-		{
-			var target = (AppInfoGeneralBusiness)context.Target;
-
-			if (!target.ChangedProperties.Contains(CodeProperty))
-			{
-				return;
-			}
-
-			var predicate = AppInfoSpecification.CodeEquals(target.Code).Satisfy();
-
-			var exists = await target.AppInfoRepository.AnyAsync(predicate, cancellationToken);
-			if (exists)
-			{
-				context.AddErrorResult(Resources.IDS_ERROR_APPINFO_CODE_UNAVAILABLE);
-			}
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 	}
 }

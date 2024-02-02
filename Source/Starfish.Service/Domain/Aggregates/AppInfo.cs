@@ -6,9 +6,9 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 应用信息
 /// </summary>
-public sealed class AppInfo : Aggregate<long>,
-                              IHasCreateTime,
-                              IHasUpdateTime
+public sealed class AppInfo : Aggregate<string>,
+							  IHasCreateTime,
+							  IHasUpdateTime
 {
 	private const string PATTERN_SECRET = @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$";
 
@@ -19,7 +19,7 @@ public sealed class AppInfo : Aggregate<long>,
 	{
 	}
 
-	private AppInfo(long teamId)
+	private AppInfo(string teamId)
 		: this()
 	{
 		TeamId = teamId;
@@ -28,17 +28,12 @@ public sealed class AppInfo : Aggregate<long>,
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public long TeamId { get; set; }
+	public string TeamId { get; set; }
 
 	/// <summary>
 	/// 名称
 	/// </summary>
 	public string Name { get; set; }
-
-	/// <summary>
-	/// 唯一编码
-	/// </summary>
-	public string Code { get; set; }
 
 	/// <summary>
 	/// 密钥
@@ -70,12 +65,11 @@ public sealed class AppInfo : Aggregate<long>,
 	/// </summary>
 	/// <param name="teamId"></param>
 	/// <param name="name"></param>
-	/// <param name="code"></param>
+	/// 
 	/// <returns></returns>
-	internal static AppInfo Create(long teamId, string name, string code)
+	internal static AppInfo Create(string teamId, string name)
 	{
 		var entity = new AppInfo(teamId);
-		entity.SetCode(code);
 		entity.SetName(name);
 		entity.RaiseEvent(new AppInfoCreatedEvent());
 		return entity;
@@ -89,16 +83,6 @@ public sealed class AppInfo : Aggregate<long>,
 	{
 		ArgumentNullException.ThrowIfNull(name);
 		Name = name;
-	}
-
-	/// <summary>
-	/// 设置唯一编码
-	/// </summary>
-	/// <param name="code"></param>
-	internal void SetCode(string code)
-	{
-		ArgumentNullException.ThrowIfNull(code);
-		Code = code.Normalize(TextCaseType.Lower);
 	}
 
 	/// <summary>
@@ -145,7 +129,7 @@ public sealed class AppInfo : Aggregate<long>,
 		}
 
 		Secret = Cryptography.SHA.Encrypt(secret);
-		if (Id > 0)
+		if (!string.IsNullOrEmpty(Id))
 		{
 			RaiseEvent(new AppInfoSecretChangedEvent());
 		}

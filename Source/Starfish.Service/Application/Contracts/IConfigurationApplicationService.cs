@@ -17,7 +17,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="count"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<ConfigurationItemDto>> GetItemListAsync(long appId, string environment, int skip, int count, CancellationToken cancellationToken = default);
+	Task<List<ConfigurationItemDto>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置项数量
@@ -26,7 +26,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="environment"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<int> GetItemCountAsync(long appId, string environment, CancellationToken cancellationToken = default);
+	Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置详情
@@ -35,7 +35,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="environment"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ConfigurationDetailDto> GetDetailAsync(long appId, string environment, CancellationToken cancellationToken = default);
+	Task<ConfigurationDetailDto> GetDetailAsync(string appId, string environment, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 新建配置
@@ -46,7 +46,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> CreateAsync(long appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default);
+	Task<long> CreateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新配置
@@ -57,7 +57,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default);
+	Task UpdateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除节点
@@ -66,7 +66,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="environment"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task DeleteAsync(long appId, string environment, CancellationToken cancellationToken = default);
+	Task DeleteAsync(string appId, string environment, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新配置项
@@ -77,7 +77,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="value"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(long appId, string environment, string key, string value, CancellationToken cancellationToken = default);
+	Task UpdateAsync(string appId, string environment, string key, string value, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 发布配置
@@ -87,7 +87,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task PublishAsync(long appId, string environment, ConfigurationPublishDto data, CancellationToken cancellationToken = default);
+	Task PublishAsync(string appId, string environment, ConfigurationPublishDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取已发布的配置
@@ -96,7 +96,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="environment">应用环境</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<string> GetArchiveAsync(long appId, string environment, CancellationToken cancellationToken = default);
+	Task<string> GetArchiveAsync(string appId, string environment, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取指定格式的配置
@@ -106,7 +106,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="format"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<string> GetItemsInTextAsync(long appId, string environment, string format, CancellationToken cancellationToken = default);
+	Task<string> GetItemsInTextAsync(string appId, string environment, string format, CancellationToken cancellationToken = default);
 
-	Task PushRedisAsync(long appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default);
+	Task PushRedisAsync(string appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default);
 }

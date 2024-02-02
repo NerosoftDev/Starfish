@@ -7,9 +7,9 @@ internal class SocketConfigurationClient : IConfigurationClient
 	private readonly ClientWebSocket _client = new();
 	private readonly Uri _uri;
 
-	public SocketConfigurationClient(Uri host, string team, string app, string secret, string env)
+	public SocketConfigurationClient(Uri host, string app, string secret, string env)
 	{
-		_uri = new Uri($"{host.AbsoluteUri}ws?team={team}&app={app}&secret={secret}&env={env}");
+		_uri = new Uri($"{host.AbsoluteUri}ws?app={app}&secret={secret}&env={env}");
 		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Team, team);
 		// _client.Options.SetRequestHeader(Constants.RequestHeaders.App, app);
 		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Secret, secret);

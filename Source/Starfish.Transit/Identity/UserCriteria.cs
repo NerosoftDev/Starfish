@@ -10,9 +10,4 @@ public class UserCriteria
 	/// </summary>
 	/// <remarks>模糊查询用户/邮箱</remarks>
 	public string Keyword { get; set; }
-
-	/// <summary>
-	/// 角色
-	/// </summary>
-	public string Role { get; set; }
 }

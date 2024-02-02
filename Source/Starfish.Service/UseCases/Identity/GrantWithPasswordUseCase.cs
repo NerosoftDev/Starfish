@@ -54,6 +54,9 @@ public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 	private IUserRepository _userRepository;
 	private IUserRepository UserRepository => _userRepository ??= _provider.GetService<IUserRepository>();
 
+	private IAdministratorRepository _adminRespository;
+	private IAdministratorRepository AdminRepository => _adminRespository ??= _provider.GetService<IAdministratorRepository>();
+
 	private IdentityCommonComponent _component;
 	private IdentityCommonComponent Component => _component ??= _provider.GetService<IdentityCommonComponent>();
 
@@ -89,7 +92,9 @@ public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 				throw new AuthenticationException(Resources.IDS_ERROR_USER_LOCKOUT);
 			}
 
-			var roles = user.Roles.Select(t => t.Name).ToList();
+			var administrator = await AdminRepository.GetByUserIdAsync(user.Id, cancellationToken);
+			var roles = administrator?.Roles?.Split(",");
+
 			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{

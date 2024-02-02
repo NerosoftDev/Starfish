@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 令牌
 /// </summary>
-public class Token : Entity<long>
+public sealed class Token : Entity<long>
 {
 	/// <summary>
 	/// 初始化<see cref="Token"/>实例。

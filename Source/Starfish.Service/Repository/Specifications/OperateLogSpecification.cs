@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 操作日志查询规约
 /// </summary>
-public class OperateLogSpecification
+internal class OperateLogSpecification
 {
 	/// <summary>
 	/// 用户名等于

@@ -32,7 +32,7 @@ public static class CriteriaExtensions
 		{
 			specification &= OperateLogSpecification.ModuleEquals(criteria.Module);
 		}
-		
+
 		if (!string.IsNullOrWhiteSpace(criteria.Type))
 		{
 			specification &= OperateLogSpecification.TypeEquals(criteria.Type);
@@ -73,7 +73,7 @@ public static class CriteriaExtensions
 			}
 		}
 
-		if (criteria.TeamId > 0)
+		if (!string.IsNullOrEmpty(criteria.TeamId))
 		{
 			specification &= AppInfoSpecification.TeamIdEquals(criteria.TeamId);
 		}
@@ -98,7 +98,7 @@ public static class CriteriaExtensions
 		{
 			return specification;
 		}
-		
+
 		if (!string.IsNullOrWhiteSpace(criteria.Environment))
 		{
 			specification &= ConfigurationSpecification.EnvironmentEquals(criteria.Environment);
@@ -118,11 +118,6 @@ public static class CriteriaExtensions
 		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
 		{
 			specification &= UserSpecification.UserNameContains(criteria.Keyword);
-		}
-
-		if (!string.IsNullOrWhiteSpace(criteria.Role))
-		{
-			specification &= UserSpecification.HasRole(criteria.Role);
 		}
 
 		return specification;

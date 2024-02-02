@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IResetPasswordUseCase : INonOutputUseCase<ResetPasswordInput>;
 
-public record ResetPasswordInput(long Id, string Password) : IUseCaseInput;
+public record ResetPasswordInput(string Id, string Password) : IUseCaseInput;
 
 public class ResetPasswordUseCase : IResetPasswordUseCase
 {

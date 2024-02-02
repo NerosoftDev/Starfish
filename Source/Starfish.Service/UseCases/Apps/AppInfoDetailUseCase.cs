@@ -22,7 +22,7 @@ public record AppInfoDetailOutput(AppInfoDetailDto Result) : IUseCaseOutput;
 /// 应用详情查询用例输入
 /// </summary>
 /// <param name="Id"></param>
-public record AppInfoDetailInput(long Id) : IUseCaseInput;
+public record AppInfoDetailInput(string Id) : IUseCaseInput;
 
 /// <summary>
 /// 应用详情查询用例
@@ -59,11 +59,10 @@ public class AppInfoDetailUseCase : IAppInfoDetailUseCase
 		{
 			if (!_user.IsInRole("SA"))
 			{
-				var userId = _user.GetUserIdOfInt64();
 				var teamQuery = _repository.Context.Set<TeamMember>();
 				query = from app in query
 				        join member in teamQuery on app.TeamId equals member.TeamId
-				        where member.UserId == userId
+				        where member.UserId == _user.UserId
 				        select app;
 			}
 

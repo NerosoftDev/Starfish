@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IAppInfoSetSecretUseCase : INonOutputUseCase<AppInfoSetSecretInput>;
 
-public record AppInfoSetSecretInput(long Id, string Secret) : IUseCaseInput;
+public record AppInfoSetSecretInput(string Id, string Secret) : IUseCaseInput;
 
 public class AppInfoSetSecretUseCase : IAppInfoSetSecretUseCase
 {

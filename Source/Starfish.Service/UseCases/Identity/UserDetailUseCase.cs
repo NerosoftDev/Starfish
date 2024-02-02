@@ -10,7 +10,7 @@ public interface IUserDetailUseCase : IUseCase<UserDetailInput, UserDetailOutput
 
 public record UserDetailOutput(UserDetailDto Result) : IUseCaseOutput;
 
-public record UserDetailInput(long Id) : IUseCaseInput;
+public record UserDetailInput(string Id) : IUseCaseInput;
 
 public class UserDetailUseCase : IUserDetailUseCase
 {
@@ -23,7 +23,7 @@ public class UserDetailUseCase : IUserDetailUseCase
 
 	public Task<UserDetailOutput> ExecuteAsync(UserDetailInput input, CancellationToken cancellationToken = default)
 	{
-		return _repository.GetAsync(input.Id, query => query.AsNoTracking().Include(nameof(User.Roles)), cancellationToken)
+		return _repository.GetAsync(input.Id, query => query.AsNoTracking(), cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

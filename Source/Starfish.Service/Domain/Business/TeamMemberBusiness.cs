@@ -16,9 +16,9 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 
 	private Team Aggregate { get; set; }
 
-	public static readonly PropertyInfo<long[]> UserIdsProperty = RegisterProperty<long[]>(p => p.UserIds);
+	public static readonly PropertyInfo<string[]> UserIdsProperty = RegisterProperty<string[]>(p => p.UserIds);
 
-	public long[] UserIds
+	public string[] UserIds
 	{
 		get => GetProperty(UserIdsProperty);
 		set => SetProperty(UserIdsProperty, value);
@@ -31,7 +31,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await TeamRepository.GetAsync(id, true, [nameof(Team.Members)], cancellationToken);
 
@@ -87,9 +87,9 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 		{
 			var target = (TeamMemberBusiness)context.Target;
 
-			if (target.Aggregate.OwnerId != target.Identity.GetUserIdOfInt64())
+			if (target.Aggregate.OwnerId != target.Identity.UserId)
 			{
-				context.AddErrorResult(Resources.IDS_ERROR_TEAM_ONLY_ALLOW_OWNER_CHANGE_MEMBER);
+				context.AddErrorResult(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			}
 
 			return Task.CompletedTask;

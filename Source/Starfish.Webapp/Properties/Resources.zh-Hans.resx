@@ -162,6 +162,9 @@
   <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
     <value>代码</value>
   </data>
+  <data name="IDS_APPS_INDEX_COLUMN_ID" xml:space="preserve">
+    <value>应用Id</value>
+  </data>
   <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
     <value>名称</value>
   </data>
@@ -254,6 +257,102 @@
   </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
     <value>是</value>
+  </data>
+  <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
+    <value>确定要删除配置吗？</value>
+  </data>
+  <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
+    <value>删除配置</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
+    <value>从Json创建</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
+    <value>从文本创建</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
+    <value>编辑Json</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
+    <value>编辑文本</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
+    <value>编辑配置</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
+    <value>应用环境</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
+    <value>编辑Json</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
+    <value>编辑文本</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_PUBLISH" xml:space="preserve">
+    <value>发布配置</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
+    <value>同步到Redis</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
+    <value>键</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_CODE" xml:space="preserve">
+    <value>代码：{0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_NAME" xml:space="preserve">
+    <value>名称：{0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_STATUS" xml:space="preserve">
+    <value>状态：{0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_PUBLISH_TIME" xml:space="preserve">
+    <value>发布：{0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_UPDATE_TIME" xml:space="preserve">
+    <value>修改：{0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_VERSION" xml:space="preserve">
+    <value>版本：{0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_APP_INFO" xml:space="preserve">
+    <value>应用信息</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_CONFIG_INFO" xml:space="preserve">
+    <value>配置信息</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
+    <value>发布</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
+    <value>发布内容</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>版本号</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
+    <value>发布配置</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
+    <value>开始同步</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
+    <value>连接字符串</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
+    <value>数据库</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
+    <value>Redis键名称</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
+    <value>同步到Redis</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>登录</value>
@@ -357,102 +456,6 @@
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>用户名</value>
   </data>
-  <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
-    <value>确定要删除配置吗？</value>
-  </data>
-  <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
-    <value>删除配置</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
-    <value>从Json创建</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
-    <value>从文本创建</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
-    <value>编辑Json</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
-    <value>编辑文本</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
-    <value>编辑配置</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
-    <value>应用环境</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
-    <value>删除</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
-    <value>编辑Json</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
-    <value>编辑文本</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_PUBLISH" xml:space="preserve">
-    <value>发布配置</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
-    <value>同步到Redis</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
-    <value>键</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
-    <value>值</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_CODE" xml:space="preserve">
-    <value>代码：{0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_NAME" xml:space="preserve">
-    <value>名称：{0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_STATUS" xml:space="preserve">
-    <value>状态：{0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_PUBLISH_TIME" xml:space="preserve">
-    <value>发布：{0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_UPDATE_TIME" xml:space="preserve">
-    <value>修改：{0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_VERSION" xml:space="preserve">
-    <value>版本：{0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_APP_INFO" xml:space="preserve">
-    <value>应用信息</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_CONFIG_INFO" xml:space="preserve">
-    <value>配置信息</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
-    <value>发布</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
-    <value>发布内容</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
-    <value>版本号</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
-    <value>发布配置</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
-    <value>开始同步</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
-    <value>连接字符串</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
-    <value>数据库</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
-    <value>Redis键名称</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
-    <value>同步到Redis</value>
-  </data>
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
     <value>添加成员</value>
   </data>
@@ -467,6 +470,9 @@
   </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_CODE" xml:space="preserve">
     <value>代码</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_ID" xml:space="preserve">
+    <value>应用Id</value>
   </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_NAME" xml:space="preserve">
     <value>名称</value>

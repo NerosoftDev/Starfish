@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置项
 /// </summary>
-public class ConfigurationItem : Entity<long>
+public sealed class ConfigurationItem : Entity<long>
 {
 	private ConfigurationItem()
 	{

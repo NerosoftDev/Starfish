@@ -162,6 +162,9 @@
   <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="IDS_APPS_INDEX_COLUMN_ID" xml:space="preserve">
+    <value>App Id</value>
+  </data>
   <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -254,6 +257,102 @@
   </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
+    <value>Are you sure delete this configuration?</value>
+  </data>
+  <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
+    <value>Delete configuration</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
+    <value>Create from Json</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
+    <value>Create from Text</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
+    <value>Edit as Json</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
+    <value>Edit as Text</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
+    <value>Edit value</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
+    <value>Environment</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
+    <value>Edit as Json</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
+    <value>Edit as Text</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_PUBLISH" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
+    <value>Sync to Redis</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_CODE" xml:space="preserve">
+    <value>App code: {0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_NAME" xml:space="preserve">
+    <value>App name: {0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_STATUS" xml:space="preserve">
+    <value>App Status: {0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_PUBLISH_TIME" xml:space="preserve">
+    <value>Publish: {0:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_UPDATE_TIME" xml:space="preserve">
+    <value>Updated: {0:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_VERSION" xml:space="preserve">
+    <value>Version: {0}</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_APP_INFO" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_CONFIG_INFO" xml:space="preserve">
+    <value>Configuration information</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>Version number</value>
+  </data>
+  <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
+    <value>Publish configuration</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
+    <value>Connection string</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
+    <value>Key name</value>
+  </data>
+  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
+    <value>Sync to Redis</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>Login</value>
@@ -357,102 +456,6 @@
   <data name="IDS_REGISTER_PLACEHOLDER_USER_NAME" xml:space="preserve">
     <value>User name</value>
   </data>
-  <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
-    <value>Are you sure delete this configuration?</value>
-  </data>
-  <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
-    <value>Delete configuration</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
-    <value>Create from Json</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
-    <value>Create from Text</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
-    <value>Edit as Json</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT" xml:space="preserve">
-    <value>Edit as Text</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_VALUE" xml:space="preserve">
-    <value>Edit value</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
-    <value>Environment</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_JSON" xml:space="preserve">
-    <value>Edit as Json</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_EDIT_TEXT" xml:space="preserve">
-    <value>Edit as Text</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_PUBLISH" xml:space="preserve">
-    <value>Publish</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_BUTTON_SYNC_REDIS" xml:space="preserve">
-    <value>Sync to Redis</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
-    <value>Key</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_CODE" xml:space="preserve">
-    <value>App code: {0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_NAME" xml:space="preserve">
-    <value>App name: {0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_APP_STATUS" xml:space="preserve">
-    <value>App Status: {0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_PUBLISH_TIME" xml:space="preserve">
-    <value>Publish: {0:yyyy-MM-dd HH:mm:ss}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_UPDATE_TIME" xml:space="preserve">
-    <value>Updated: {0:yyyy-MM-dd HH:mm:ss}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_VERSION" xml:space="preserve">
-    <value>Version: {0}</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_APP_INFO" xml:space="preserve">
-    <value>App information</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_PANEL_TITLE_CONFIG_INFO" xml:space="preserve">
-    <value>Configuration information</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_BUTTON_PUBLISH" xml:space="preserve">
-    <value>Publish</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_COMMENT" xml:space="preserve">
-    <value>Comment</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_LABEL_VERSION" xml:space="preserve">
-    <value>Version number</value>
-  </data>
-  <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
-    <value>Publish configuration</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_CONNECTION" xml:space="preserve">
-    <value>Connection string</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_DATABASE" xml:space="preserve">
-    <value>Database</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_LABEL_KEY" xml:space="preserve">
-    <value>Key name</value>
-  </data>
-  <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
-    <value>Sync to Redis</value>
-  </data>
   <data name="IDS_TEAM_APPEND_MEMBER_DIALOG_TITLE" xml:space="preserve">
     <value>Add member</value>
   </data>
@@ -467,6 +470,9 @@
   </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_CODE" xml:space="preserve">
     <value>Code</value>
+  </data>
+  <data name="IDS_TEAM_DETAIL_COLUMN_APP_ID" xml:space="preserve">
+    <value>App Id</value>
   </data>
   <data name="IDS_TEAM_DETAIL_COLUMN_APP_NAME" xml:space="preserve">
     <value>Name</value>

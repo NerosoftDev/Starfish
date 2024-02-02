@@ -35,7 +35,6 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 
 			business.TeamId = message.Item1.TeamId;
 			business.Name = message.Item1.Name;
-			business.Code = message.Item1.Code;
 			business.Description = message.Item1.Description;
 			business.Secret = message.Item1.Secret;
 
@@ -54,7 +53,6 @@ public class AppInfoCommandHandler : CommandHandlerBase,
 		{
 			var business = await Factory.FetchAsync<AppInfoGeneralBusiness>(message.Item1, cancellationToken);
 
-			business.Code = message.Item2.Code;
 			business.Name = message.Item2.Name;
 			business.Description = message.Item2.Description;
 

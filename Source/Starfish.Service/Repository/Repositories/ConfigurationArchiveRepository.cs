@@ -12,7 +12,7 @@ public class ConfigurationArchiveRepository : BaseRepository<DataContext, Config
 	{
 	}
 
-	public Task<ConfigurationArchive> GetAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	public Task<ConfigurationArchive> GetAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
 		ISpecification<ConfigurationArchive>[] specs =
 		[

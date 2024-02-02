@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 操作日志信息
 /// </summary>
-public class OperateLog : Aggregate<long>
+public sealed class OperateLog : Aggregate<long>
 {
 	private OperateLog()
 	{

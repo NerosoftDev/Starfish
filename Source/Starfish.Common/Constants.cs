@@ -33,4 +33,9 @@ internal class Constants
 		public const string FormatJson = "plain/json";
 		public const string FormatText = "plain/text";
 	}
+
+	public static class RegexPattern
+	{ 
+		public const string Secret = @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$";
+	}
 }

@@ -14,9 +14,4 @@ public class UserUpdateDto
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }
-
-	/// <summary>
-	/// 角色
-	/// </summary>
-	public List<string> Roles { get; set; }
 }

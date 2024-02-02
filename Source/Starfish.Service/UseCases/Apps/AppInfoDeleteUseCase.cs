@@ -15,7 +15,7 @@ public interface IAppInfoDeleteUseCase : INonOutputUseCase<AppInfoDeleteInput>;
 /// 应用信息删除输入
 /// </summary>
 /// <param name="Id"></param>
-public record AppInfoDeleteInput(long Id) : IUseCaseInput;
+public record AppInfoDeleteInput(string Id) : IUseCaseInput;
 
 /// <summary>
 /// 应用信息删除用例
@@ -45,7 +45,7 @@ public class AppInfoDeleteUseCase : IAppInfoDeleteUseCase
 
 		if (!_user.IsInRoles(_roles))
 		{
-			throw new UnauthorizedAccessException();
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
 		var command = new AppInfoDeleteCommand(input.Id);

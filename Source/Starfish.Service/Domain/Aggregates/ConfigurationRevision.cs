@@ -5,8 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置修订版本
 /// </summary>
-public class ConfigurationRevision : Entity<long>,
-                               IHasCreateTime
+public sealed class ConfigurationRevision : Entity<long>, IHasCreateTime
 {
 	private ConfigurationRevision()
 	{

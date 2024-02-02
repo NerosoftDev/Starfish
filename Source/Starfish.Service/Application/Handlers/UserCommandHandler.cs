@@ -13,8 +13,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
                                          IHandler<UserCreateCommand>,
                                          IHandler<UserUpdateCommand>,
                                          IHandler<ChangePasswordCommand>,
-                                         IHandler<UserDeleteCommand>,
-                                         IHandler<UserRoleSetCommand>
+                                         IHandler<UserDeleteCommand>
 {
 	/// <summary>
 	/// 初始化<see cref="UserCommandHandler"/>.
@@ -37,7 +36,6 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			business.NickName = message.Item1.NickName;
 			business.Email = message.Item1.Email;
 			business.Phone = message.Item1.Phone;
-			business.Roles = message.Item1.Roles;
 			business.MarkAsInsert();
 			await business.SaveAsync(false, cancellationToken);
 
@@ -54,7 +52,6 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 
 			business.Email = message.Item2.Email;
 			business.NickName = message.Item2.NickName;
-			business.Roles = message.Item2.Roles;
 			business.MarkAsUpdate();
 			await business.SaveAsync(true, cancellationToken);
 		});
@@ -80,21 +77,6 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 		{
 			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.Item1, cancellationToken);
 			business.MarkAsDelete();
-			await business.SaveAsync(true, cancellationToken);
-		});
-	}
-
-	/// <inheritdoc />
-	public Task HandleAsync(UserRoleSetCommand message, MessageContext context, CancellationToken cancellationToken = default)
-	{
-		return ExecuteAsync(async () =>
-		{
-			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.Item1, cancellationToken);
-
-			business.Roles = message.Item2;
-
-			business.MarkAsUpdate();
-
 			await business.SaveAsync(true, cancellationToken);
 		});
 	}

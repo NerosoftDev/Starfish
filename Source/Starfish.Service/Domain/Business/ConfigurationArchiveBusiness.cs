@@ -13,7 +13,7 @@ public class ConfigurationArchiveBusiness : CommandObject<ConfigurationArchiveBu
 	public IConfigurationArchiveRepository ArchiveRepository { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long appId, string environment, string userName, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string appId, string environment, string userName, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await ConfigurationRepository.GetAsync(appId, environment, false, [nameof(Configuration.Items)], cancellationToken);
 

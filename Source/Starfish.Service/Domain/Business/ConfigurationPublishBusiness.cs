@@ -21,18 +21,18 @@ public class ConfigurationPublishBusiness : CommandObject<ConfigurationPublishBu
 	public UserPrincipal Identity { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(long appId, string environment, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string appId, string environment, CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(appId, Identity.GetUserIdOfInt64(), cancellationToken);
+		var permission = await AppInfoRepository.CheckPermissionAsync(appId, Identity.UserId, cancellationToken);
 
 		switch(permission)
 		{
 			case 0:
-				throw new UnauthorizedAccessException();
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			case 1:
 				break;
 			case 2:
-				throw new UnauthorizedAccessException();
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			default:
 				throw new ArgumentOutOfRangeException();
 		}

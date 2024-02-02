@@ -18,12 +18,12 @@
                 <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
                 <FluentSpacer/>
-                <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(0))">@(Resources.IDS_USER_BUTTON_TEXT_ADD)</FluentButton>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(string.Empty))">@(Resources.IDS_USER_BUTTON_TEXT_ADD)</FluentButton>
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46" 
-                GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto"
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46"
+                            GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto"
                             GridTemplateColumns="0.5fr 0.5fr 1fr 1fr 0.2fr">
                 <TemplateColumn Title="@(Resources.IDS_USER_INDEX_COLUMN_USER_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnDetailClicked(context.Id))">@(context.UserName)</FluentButton>
@@ -80,16 +80,16 @@
         await Task.CompletedTask;
     }
 
-    private async Task OnDetailClicked(long id)
+    private async Task OnDetailClicked(string id)
     {
         //Navigation.NavigateTo($"/user/{id}");
         await Task.CompletedTask;
     }
 
-    private async Task OnEditClicked(long id)
+    private async Task OnEditClicked(string id)
     {
-        var title = id == 0 ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
-        var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
+        var title = string.IsNullOrEmpty(id) ? Resources.IDS_USER_DIALOG_TITLE_ADD : Resources.IDS_USER_DIALOG_TITLE_EDIT;
+        var dialog = await DialogService.ShowDialogAsync<Edit>(id ?? string.Empty, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
@@ -102,7 +102,7 @@
         await Pagination.SetCurrentPageIndexAsync(0);
     }
 
-    private async Task OnResetPasswordClicked(long id)
+    private async Task OnResetPasswordClicked(string id)
     {
         await DialogService.ShowDialogAsync<ResetPassword>(id, new DialogParameters { PreventDismissOnOverlayClick = true });
     }

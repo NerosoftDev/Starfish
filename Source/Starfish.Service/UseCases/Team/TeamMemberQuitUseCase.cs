@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface ITeamMemberQuitUseCase : INonOutputUseCase<TeamMemberQuitInput>;
 
-public record TeamMemberQuitInput(long TeamId, long UserId) : IUseCaseInput;
+public record TeamMemberQuitInput(string TeamId, string UserId) : IUseCaseInput;
 
 public class TeamMemberQuitUseCase : ITeamMemberQuitUseCase
 {
