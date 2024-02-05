@@ -15,5 +15,5 @@ public interface ITeamRepository : IBaseRepository<DataContext, Team, string>
 
 	Task<List<TeamMember>> GetMembersAsync(string id, CancellationToken cancellationToken = default);
 	
-	Task<int> CheckPermissionAsync(string id, string userId, CancellationToken cancellationToken = default);
+	Task<PermissionState> CheckPermissionAsync(string id, string userId, CancellationToken cancellationToken = default);
 }
