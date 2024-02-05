@@ -8,7 +8,7 @@ namespace Nerosoft.Starfish.Domain;
 internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGeneralBusiness>
 {
 	[Inject]
-	public IAppInfoRepository AppInfoRepository { get; set; }
+	public ITeamRepository TeamRepository { get; set; }
 
 	[Inject]
 	public IConfigurationRepository ConfigurationRepository { get; set; }
@@ -16,11 +16,10 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	internal Configuration Aggregate { get; private set; }
 
 	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
-	public static readonly PropertyInfo<string> AppIdProperty = RegisterProperty<string>(p => p.AppId);
-	public static readonly PropertyInfo<string> EnvironmentProperty = RegisterProperty<string>(p => p.Environment);
-	public static readonly PropertyInfo<IDictionary<string, string>> ItemsProperty = RegisterProperty<IDictionary<string, string>>(p => p.Items);
-	public static readonly PropertyInfo<string> KeyProperty = RegisterProperty<string>(p => p.Key);
-	public static readonly PropertyInfo<string> ValueProperty = RegisterProperty<string>(p => p.Value);
+	public static readonly PropertyInfo<string> TeamIdProperty = RegisterProperty<string>(p => p.TeamId);
+	public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(p => p.Name);
+	public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(p => p.Description);
+	public static readonly PropertyInfo<string> SecretProperty = RegisterProperty<string>(p => p.Secret);
 
 	public string Id
 	{
@@ -28,34 +27,28 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 		set => LoadProperty(IdProperty, value);
 	}
 
-	public string AppId
+	public string TeamId
 	{
-		get => GetProperty(AppIdProperty);
-		set => SetProperty(AppIdProperty, value);
+		get => GetProperty(TeamIdProperty);
+		set => SetProperty(TeamIdProperty, value);
 	}
 
-	public string Environment
+	public string Name
 	{
-		get => GetProperty(EnvironmentProperty);
-		set => SetProperty(EnvironmentProperty, value);
+		get => GetProperty(NameProperty);
+		set => SetProperty(NameProperty, value);
 	}
 
-	public IDictionary<string, string> Items
+	public string Description
 	{
-		get => GetProperty(ItemsProperty);
-		set => SetProperty(ItemsProperty, value);
+		get => GetProperty(DescriptionProperty);
+		set => SetProperty(DescriptionProperty, value);
 	}
 
-	public string Key
+	public string Secret
 	{
-		get => GetProperty(KeyProperty);
-		set => SetProperty(KeyProperty, value);
-	}
-
-	public string Value
-	{
-		get => GetProperty(ValueProperty);
-		set => SetProperty(ValueProperty, value);
+		get => GetProperty(SecretProperty);
+		set => SetProperty(SecretProperty, value);
 	}
 
 	protected override void AddRules()
@@ -70,49 +63,39 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await ConfigurationRepository.GetAsync(appId, environment, true, [nameof(Configuration.Items)], cancellationToken);
+		var aggregate = await ConfigurationRepository.GetAsync(id, true, [nameof(Configuration.Items)], cancellationToken);
 
-		Aggregate = aggregate ?? throw new ConfigurationNotFoundException(appId, environment);
+		Aggregate = aggregate ?? throw new ConfigurationNotFoundException(id);
 
 		using (BypassRuleChecks)
 		{
 			Id = aggregate.Id;
-			AppId = aggregate.TeamId;
-			Environment = aggregate.Name;
+			TeamId = aggregate.TeamId;
+			Name = aggregate.Name;
+			Description = aggregate.Description;
 		}
 	}
 
 	[FactoryInsert]
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(TeamId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{
-			case 0:
+			case PermissionState.None: // 无权限
 				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
-			case 1:
-			case 2:
+			case PermissionState.Edit:
 				break;
+			case PermissionState.Read:
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
 
-		var appInfo = await AppInfoRepository.GetAsync(AppId, cancellationToken);
-
-		if (appInfo == null)
-		{
-			throw new AppInfoNotFoundException(AppId);
-		}
-
-		if (appInfo.Status != AppStatus.Enabled)
-		{
-			throw new AppInfoNotEnabledException(AppId);
-		}
-
-		var aggregate = Configuration.Create(AppId, Environment, Items);
+		var aggregate = Configuration.Create(TeamId, Name);
 		await ConfigurationRepository.InsertAsync(aggregate, true, cancellationToken);
 		Id = aggregate.Id;
 	}
@@ -120,15 +103,16 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryUpdate]
 	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(Aggregate.TeamId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{
-			case 0:
-				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
-			case 1:
-			case 2:
+			case PermissionState.None: // 无权限
+				throw new ConfigurationNotFoundException(Id);
+			case PermissionState.Edit:
 				break;
+			case PermissionState.Read:
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
@@ -138,13 +122,19 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 			return;
 		}
 
-		if (ChangedProperties.Contains(ItemsProperty))
+		if (ChangedProperties.Contains(NameProperty))
 		{
-			Aggregate.UpdateItem(Items);
+			Aggregate.SetName(Name);
 		}
-		else if (ChangedProperties.Contains(KeyProperty) && ChangedProperties.Contains(ValueProperty))
+
+		if (ChangedProperties.Contains(SecretProperty))
 		{
-			Aggregate.UpdateItem(Key, Value);
+			Aggregate.SetSecret(Secret);
+		}
+
+		if (ChangedProperties.Contains(DescriptionProperty))
+		{
+			Aggregate.SetDescription(Description);
 		}
 
 		await ConfigurationRepository.UpdateAsync(Aggregate, true, cancellationToken);
@@ -153,15 +143,16 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryDelete]
 	protected override async Task DeleteAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await AppInfoRepository.CheckPermissionAsync(AppId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(Aggregate.TeamId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{
-			case 0:
-				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
-			case 1:
-			case 2:
+			case PermissionState.None: // 无权限
+				throw new ConfigurationNotFoundException(Id);
+			case PermissionState.Edit:
 				break;
+			case PermissionState.Read:
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
@@ -180,10 +171,10 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 				return;
 			}
 
-			var exists = await target.ConfigurationRepository.ExistsAsync(target.AppId, target.Environment, cancellationToken);
+			var exists = await target.ConfigurationRepository.ExistsAsync(target.TeamId, target.Name, cancellationToken);
 			if (exists)
 			{
-				context.AddErrorResult(string.Format(Resources.IDS_ERROR_CONFIG_DUPLICATE, target.AppId, target.Environment));
+				context.AddErrorResult(string.Format(Resources.IDS_ERROR_CONFIG_DUPLICATE, target.TeamId, target.Name));
 			}
 		}
 	}

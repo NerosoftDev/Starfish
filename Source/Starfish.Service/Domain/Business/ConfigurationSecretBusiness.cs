@@ -1,16 +1,10 @@
 ﻿using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Claims;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
 
-// ReSharper disable UnusedMember.Global
-
 namespace Nerosoft.Starfish.Domain;
 
-/// <summary>
-/// 应用配置发布领域服务
-/// </summary>
-public class ConfigurationPublishBusiness : CommandObjectBase<ConfigurationPublishBusiness>, IDomainService
+public class ConfigurationSecretBusiness : CommandObjectBase<ConfigurationSecretBusiness>, IDomainService
 {
 	[Inject]
 	public ITeamRepository TeamRepository { get; set; }
@@ -19,11 +13,9 @@ public class ConfigurationPublishBusiness : CommandObjectBase<ConfigurationPubli
 	public IConfigurationRepository ConfigurationRepository { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(string id, string version, string comment, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(string id, string secret, CancellationToken cancellationToken = default)
 	{
-		string[] includeProperties = [nameof(Configuration.Items), nameof(Configuration.Revisions), nameof(Configuration.Archive)];
-
-		var aggregate = await ConfigurationRepository.GetAsync(id, true, includeProperties, cancellationToken);
+		var aggregate = await ConfigurationRepository.GetAsync(id, true, cancellationToken);
 
 		if (aggregate == null)
 		{
@@ -44,7 +36,7 @@ public class ConfigurationPublishBusiness : CommandObjectBase<ConfigurationPubli
 				throw new ArgumentOutOfRangeException();
 		}
 
-		aggregate.Publish(version, comment, Identity.Username);
+		aggregate.SetSecret(secret);
 
 		await ConfigurationRepository.UpdateAsync(aggregate, true, cancellationToken);
 	}

@@ -106,12 +106,9 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 	/// </summary>
 	public ConfigurationArchive Archive { get; set; }
 
-	internal static Configuration Create(string teamId, string name, IDictionary<string, string> items)
+	internal static Configuration Create(string teamId, string name)
 	{
 		var configuration = new Configuration(teamId, name);
-
-		configuration.UpdateItem(items);
-
 		configuration.RaiseEvent(new ConfigurationCreatedEvent(configuration));
 		return configuration;
 	}
@@ -129,7 +126,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		RaiseEvent(new ConfigurationNameChangedEvent(Name, name));
 	}
 
-	internal void SetStatus(ConfigurationStatus status)
+	private void SetStatus(ConfigurationStatus status)
 	{
 		if (Status == status)
 		{
@@ -253,5 +250,30 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		{
 			throw new ConfigurationDisabledException(Id);
 		}
+	}
+
+	internal void Disable()
+	{
+		if (Status == ConfigurationStatus.Disabled)
+		{
+			return;
+		}
+
+		SetStatus(ConfigurationStatus.Disabled);
+	}
+
+	internal void Enable()
+	{
+		if (Status != ConfigurationStatus.Disabled)
+		{
+			return;
+		}
+
+		SetStatus(ConfigurationStatus.Pending);
+	}
+
+	internal void SetDescription(string description)
+	{
+		Description = description;
 	}
 }
