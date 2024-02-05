@@ -15,14 +15,14 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 
 	internal Configuration Aggregate { get; private set; }
 
-	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
+	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
 	public static readonly PropertyInfo<string> AppIdProperty = RegisterProperty<string>(p => p.AppId);
 	public static readonly PropertyInfo<string> EnvironmentProperty = RegisterProperty<string>(p => p.Environment);
 	public static readonly PropertyInfo<IDictionary<string, string>> ItemsProperty = RegisterProperty<IDictionary<string, string>>(p => p.Items);
 	public static readonly PropertyInfo<string> KeyProperty = RegisterProperty<string>(p => p.Key);
 	public static readonly PropertyInfo<string> ValueProperty = RegisterProperty<string>(p => p.Value);
 
-	public long Id
+	public string Id
 	{
 		get => ReadProperty(IdProperty);
 		set => LoadProperty(IdProperty, value);
@@ -79,8 +79,8 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 		using (BypassRuleChecks)
 		{
 			Id = aggregate.Id;
-			AppId = aggregate.AppId;
-			Environment = aggregate.Environment;
+			AppId = aggregate.TeamId;
+			Environment = aggregate.Name;
 		}
 	}
 
@@ -140,7 +140,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 
 		if (ChangedProperties.Contains(ItemsProperty))
 		{
-			Aggregate.AddOrUpdateItem(Items);
+			Aggregate.UpdateItem(Items);
 		}
 		else if (ChangedProperties.Contains(KeyProperty) && ChangedProperties.Contains(ValueProperty))
 		{

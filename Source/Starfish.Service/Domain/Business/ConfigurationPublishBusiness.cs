@@ -46,7 +46,7 @@ public class ConfigurationPublishBusiness : CommandObject<ConfigurationPublishBu
 
 		if (aggregate.Status == ConfigurationStatus.Disabled)
 		{
-			throw new ConfigurationDisabledException(appId, environment);
+			throw new ConfigurationDisabledException(appId);
 		}
 
 		aggregate.SetStatus(ConfigurationStatus.Published);

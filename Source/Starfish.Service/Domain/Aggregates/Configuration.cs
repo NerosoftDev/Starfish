@@ -24,6 +24,14 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		{
 			Secret = @event.Secret;
 		});
+		Register<ConfigurationPublishedEvent>(_ =>
+		{
+			SetStatus(ConfigurationStatus.Published);
+		});
+		Register<ConfigurationItemChangedEvent>(_ =>
+		{
+			SetStatus(ConfigurationStatus.Pending);
+		});
 	}
 
 	private Configuration(string teamId, string name)
@@ -102,7 +110,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 	{
 		var configuration = new Configuration(teamId, name);
 
-		configuration.AddOrUpdateItem(items);
+		configuration.UpdateItem(items);
 
 		configuration.RaiseEvent(new ConfigurationCreatedEvent(configuration));
 		return configuration;
@@ -110,6 +118,8 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 
 	internal void SetName(string name)
 	{
+		EnsureStatus();
+
 		ArgumentException.ThrowIfNullOrWhiteSpace(name);
 		if (string.Equals(name, Name, StringComparison.OrdinalIgnoreCase))
 		{
@@ -119,6 +129,16 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		RaiseEvent(new ConfigurationNameChangedEvent(Name, name));
 	}
 
+	internal void SetStatus(ConfigurationStatus status)
+	{
+		if (Status == status)
+		{
+			return;
+		}
+
+		RaiseEvent(new ConfigurationStatusChangedEvent(Status, status));
+	}
+
 	/// <summary>
 	/// 设置访问密钥
 	/// </summary>
@@ -126,6 +146,8 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 	/// <exception cref="BadRequestException">密钥不符合规则时引发异常</exception>
 	internal void SetSecret(string secret)
 	{
+		EnsureStatus();
+
 		ArgumentException.ThrowIfNullOrWhiteSpace(secret);
 
 		if (!Regex.IsMatch(secret, Constants.RegexPattern.Secret))
@@ -139,12 +161,9 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		}
 	}
 
-	internal void AddOrUpdateItem(IDictionary<string, string> items)
+	internal void UpdateItem(IDictionary<string, string> items)
 	{
-		if (Status == ConfigurationStatus.Disabled)
-		{
-			throw new InvalidOperationException(Resources.IDS_ERROR_CONFIG_DISABLED);
-		}
+		EnsureStatus();
 
 		Items ??= [];
 		Items.RemoveAll(t => !items.ContainsKey(t.Key));
@@ -162,15 +181,12 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 			}
 		}
 
-		Status = ConfigurationStatus.Pending;
+		RaiseEvent(new ConfigurationItemChangedEvent());
 	}
 
 	internal void UpdateItem(string key, string value)
 	{
-		if (Status == ConfigurationStatus.Disabled)
-		{
-			throw new InvalidOperationException(Resources.IDS_ERROR_CONFIG_DISABLED);
-		}
+		EnsureStatus();
 
 		Items ??= [];
 
@@ -181,28 +197,18 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 			throw new InvalidOperationException(string.Format(Resources.IDS_ERROR_CONFIG_KEY_NOT_EXISTS, key));
 		}
 
+		if (string.Equals(item.Value, value))
+		{
+			return;
+		}
+
 		item.Value = value;
 
-		Status = ConfigurationStatus.Pending;
+		RaiseEvent(new ConfigurationItemChangedEvent());
 	}
 
-	internal void SetStatus(ConfigurationStatus status)
+	private void CreateRevision(string version, string comment, string @operator)
 	{
-		if (Status == status)
-		{
-			return;
-		}
-
-		RaiseEvent(new ConfigurationStatusChangedEvent(Status, status));
-	}
-
-	internal void CreateRevision(string version, string comment, string @operator)
-	{
-		if (Items == null || Items.Count == 0)
-		{
-			return;
-		}
-
 		Revisions ??= [];
 
 		if (Revisions.Any(t => string.Equals(t.Version, version, StringComparison.OrdinalIgnoreCase)))
@@ -215,8 +221,37 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		var revision = new ConfigurationRevision(version, comment, data, @operator);
 
 		Revisions.Add(revision);
+	}
 
+	private void CreateArchive(string @operator)
+	{
+		Archive ??= ConfigurationArchive.Create(Id);
+		var data = Items.ToDictionary(t => t.Key, t => t.Value);
+
+		Archive.Update(JsonConvert.SerializeObject(data), @operator);
+	}
+
+	internal void Publish(string version, string comment, string @operator)
+	{
+		EnsureStatus();
+
+		if (Items == null || Items.Count == 0)
+		{
+			throw new InvalidOperationException("配置项为空");
+		}
+
+		CreateArchive(@operator);
+		CreateRevision(version, comment, @operator);
 		Version = version;
 		PublishTime = DateTime.Now;
+		RaiseEvent(new ConfigurationPublishedEvent());
+	}
+
+	private void EnsureStatus()
+	{
+		if (Status == ConfigurationStatus.Disabled)
+		{
+			throw new ConfigurationDisabledException(Id);
+		}
 	}
 }
