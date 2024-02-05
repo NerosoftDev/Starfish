@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Domain;
+﻿using System.Text.RegularExpressions;
+using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
 using Newtonsoft.Json;
 
@@ -7,7 +8,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 设置聚合根
 /// </summary>
-public sealed class Configuration : Aggregate<long>, IAuditing
+public sealed class Configuration : Aggregate<string>, IAuditing
 {
 	private Configuration()
 	{
@@ -15,17 +16,43 @@ public sealed class Configuration : Aggregate<long>, IAuditing
 		{
 			Status = @event.NewStatus;
 		});
+		Register<ConfigurationNameChangedEvent>(@event =>
+		{
+			Name = @event.NewName;
+		});
+		Register<ConfigurationSecretChangedEvent>(@event =>
+		{
+			Secret = @event.Secret;
+		});
+	}
+
+	private Configuration(string teamId, string name)
+		: this()
+	{
+		TeamId = teamId;
+		Name = name;
+		Status = ConfigurationStatus.Pending;
 	}
 
 	/// <summary>
-	/// 应用Id
+	/// 团队Id
 	/// </summary>
-	public string AppId { get; set; }
+	public string TeamId { get; set; }
 
 	/// <summary>
-	/// 应用环境
+	/// 配置名称
 	/// </summary>
-	public string Environment { get; set; }
+	public string Name { get; set; }
+
+	/// <summary>
+	/// 配置描述
+	/// </summary>
+	public string Description { get; set; }
+
+	/// <summary>
+	/// 访问密钥
+	/// </summary>
+	public string Secret { get; set; }
 
 	/// <summary>
 	/// 状态
@@ -67,23 +94,49 @@ public sealed class Configuration : Aggregate<long>, IAuditing
 	public HashSet<ConfigurationRevision> Revisions { get; set; }
 
 	/// <summary>
-	/// 应用信息
+	/// 配置归档
 	/// </summary>
-	public AppInfo App { get; set; }
+	public ConfigurationArchive Archive { get; set; }
 
-	internal static Configuration Create(string appId, string environment, IDictionary<string, string> items)
+	internal static Configuration Create(string teamId, string name, IDictionary<string, string> items)
 	{
-		var configuration = new Configuration
-		{
-			AppId = appId,
-			Environment = environment,
-			Status = ConfigurationStatus.Pending
-		};
+		var configuration = new Configuration(teamId, name);
 
 		configuration.AddOrUpdateItem(items);
 
 		configuration.RaiseEvent(new ConfigurationCreatedEvent(configuration));
 		return configuration;
+	}
+
+	internal void SetName(string name)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(name);
+		if (string.Equals(name, Name, StringComparison.OrdinalIgnoreCase))
+		{
+			return;
+		}
+
+		RaiseEvent(new ConfigurationNameChangedEvent(Name, name));
+	}
+
+	/// <summary>
+	/// 设置访问密钥
+	/// </summary>
+	/// <param name="secret"></param>
+	/// <exception cref="BadRequestException">密钥不符合规则时引发异常</exception>
+	internal void SetSecret(string secret)
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(secret);
+
+		if (!Regex.IsMatch(secret, Constants.RegexPattern.Secret))
+		{
+			throw new BadRequestException(Resources.IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE);
+		}
+
+		if (!string.IsNullOrEmpty(Id))
+		{
+			RaiseEvent(new ConfigurationSecretChangedEvent(Cryptography.SHA.Encrypt(secret)));
+		}
 	}
 
 	internal void AddOrUpdateItem(IDictionary<string, string> items)
