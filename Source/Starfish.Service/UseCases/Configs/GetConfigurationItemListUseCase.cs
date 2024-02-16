@@ -24,7 +24,7 @@ public record GetConfigurationItemListOutput(List<ConfigurationItemDto> Result) 
 /// <param name="Environment"></param>
 /// <param name="Skip"></param>
 /// <param name="Count"></param>
-public record GetConfigurationItemListInput(string Id, string Environment, int Skip, int Count) : IUseCaseInput;
+public record GetConfigurationItemListInput(string Id, int Skip, int Count) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例
@@ -63,7 +63,7 @@ public class GetConfigurationItemListUseCase : IGetConfigurationItemListUseCase
 			throw new AuthenticationException();
 		}
 
-		return _repository.GetItemListAsync(input.Id, input.Environment, input.Skip, input.Count, cancellationToken)
+		return _repository.GetItemListAsync(input.Id, 0, input.Count, cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

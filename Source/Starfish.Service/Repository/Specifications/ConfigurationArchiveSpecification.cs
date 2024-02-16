@@ -5,14 +5,14 @@ namespace Nerosoft.Starfish.Repository;
 
 internal static class ConfigurationArchiveSpecification
 {
-	public static Specification<ConfigurationArchive> AppIdEquals(string appId)
+	public static Specification<ConfigurationArchive> TeamIdEquals(string teamId)
 	{
-		return new DirectSpecification<ConfigurationArchive>(x => x.AppId == appId);
+		return new DirectSpecification<ConfigurationArchive>(x => x.Configuration.TeamId == teamId);
 	}
 
-	public static Specification<ConfigurationArchive> EnvironmentEquals(string environment)
+	public static Specification<ConfigurationArchive> NameEquals(string name)
 	{
-		environment = environment.Normalize(TextCaseType.Upper);
-		return new DirectSpecification<ConfigurationArchive>(x => x.Environment == environment);
+		name = name.Normalize(TextCaseType.Upper);
+		return new DirectSpecification<ConfigurationArchive>(x => x.Configuration.Name == name);
 	}
 }

@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 public interface IConfigurationValueUpdateUseCase : INonOutputUseCase<ConfigurationValueUpdateInput>;
 
-public record ConfigurationValueUpdateInput(string AppId, string Environment, string Key, string Value) : IUseCaseInput;
+public record ConfigurationValueUpdateInput(string Id, string Key, string Value) : IUseCaseInput;
 
 public class ConfigurationValueUpdateUseCase : IConfigurationValueUpdateUseCase
 {
@@ -19,7 +19,7 @@ public class ConfigurationValueUpdateUseCase : IConfigurationValueUpdateUseCase
 
 	public Task ExecuteAsync(ConfigurationValueUpdateInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new ConfigurationValueUpdateCommand(input.AppId, input.Environment, input.Key, input.Value);
+		var command = new ConfigurationValueUpdateCommand(input.Id, input.Key, input.Value);
 		return _bus.SendAsync(command, cancellationToken)
 		           .ContinueWith(task =>
 		           {

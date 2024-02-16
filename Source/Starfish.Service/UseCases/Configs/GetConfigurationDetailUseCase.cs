@@ -16,13 +16,13 @@ public interface IGetConfigurationDetailUseCase : IUseCase<GetConfigurationDetai
 /// 获取配置节点详情用例输出
 /// </summary>
 /// <param name="Result"></param>
-public record GetConfigurationDetailOutput(ConfigurationDetailDto Result) : IUseCaseOutput;
+public record GetConfigurationDetailOutput(ConfigurationDto Result) : IUseCaseOutput;
 
 /// <summary>
 /// 获取配置节点详情用例输入
 /// </summary>
-/// <param name="AppId"></param>
-public record GetConfigurationDetailInput(string AppId, string Environment) : IUseCaseInput;
+/// <param name="Id"></param>
+public record GetConfigurationDetailInput(string Id) : IUseCaseInput;
 
 /// <summary>
 /// 获取配置节点详情用例
@@ -43,19 +43,11 @@ public class GetConfigurationDetailUseCase : IGetConfigurationDetailUseCase
 	/// <inheritdoc />
 	public Task<GetConfigurationDetailOutput> ExecuteAsync(GetConfigurationDetailInput input, CancellationToken cancellationToken = default)
 	{
-		ISpecification<Configuration>[] specifications =
-		[
-			ConfigurationSpecification.AppIdEquals(input.AppId),
-			ConfigurationSpecification.EnvironmentEquals(input.Environment)
-		];
-
-		var predicate = new CompositeSpecification<Configuration>(PredicateOperator.AndAlso, specifications).Satisfy();
-
-		return _repository.GetAsync(predicate, false, [nameof(Configuration.App)], cancellationToken)
+		return _repository.GetAsync(input.Id, false, [], cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);
-			                  var result = TypeAdapter.ProjectedAs<ConfigurationDetailDto>(task.Result);
+			                  var result = TypeAdapter.ProjectedAs<ConfigurationDto>(task.Result);
 			                  return new GetConfigurationDetailOutput(result);
 		                  }, cancellationToken);
 	}

@@ -9,15 +9,15 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IPushRedisUseCase : INonOutputUseCase<PushRedisInput>;
 
-internal record PushRedisInput(string AppId, string Environment, PushRedisRequestDto Data) : IUseCaseInput;
+internal record PushRedisInput(string Id, PushRedisRequestDto Data) : IUseCaseInput;
 
 internal sealed class PushRedisUseCase : IPushRedisUseCase
 {
-	private readonly IConfigurationArchiveRepository _configurationRepository;
+	private readonly IConfigurationRepository _configurationRepository;
 	private readonly IAppInfoRepository _appInfoRepository;
 	private readonly UserPrincipal _identity;
 
-	public PushRedisUseCase(IConfigurationArchiveRepository configurationRepository, IAppInfoRepository appInfoRepository, UserPrincipal identity)
+	public PushRedisUseCase(IConfigurationRepository configurationRepository, IAppInfoRepository appInfoRepository, UserPrincipal identity)
 	{
 		_configurationRepository = configurationRepository;
 		_appInfoRepository = appInfoRepository;
@@ -26,30 +26,35 @@ internal sealed class PushRedisUseCase : IPushRedisUseCase
 
 	public async Task ExecuteAsync(PushRedisInput input, CancellationToken cancellationToken = default)
 	{
-		var permission = await _appInfoRepository.CheckPermissionAsync(input.AppId, _identity.UserId, cancellationToken);
+		var permission = await _appInfoRepository.CheckPermissionAsync(input.Id, _identity.UserId, cancellationToken);
 
 		if (!permission.IsIn(1, 2))
 		{
 			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
-		var archive = await _configurationRepository.GetAsync(input.AppId, input.Environment, cancellationToken);
+		var configuration = await _configurationRepository.GetAsync(input.Id, false, [nameof(Configuration.Archive)], cancellationToken);
 
-		if (archive == null)
+		if (configuration == null)
 		{
-			throw new ConfigurationNotFoundException(input.AppId, input.Environment);
+			throw new ConfigurationNotFoundException(input.Id);
 		}
 
-		if (string.IsNullOrWhiteSpace(archive.Data))
+		if (configuration.Archive == null)
+		{
+			throw new NotFoundException("Archive not found.");
+		}
+
+		if (string.IsNullOrWhiteSpace(configuration.Archive.Data))
 		{
 			throw new InvalidDataException();
 		}
 
-		var data = GzipHelper.DecompressFromBase64(archive.Data);
+		var data = GzipHelper.DecompressFromBase64(configuration.Archive.Data);
 
 		var items = JsonSerializer.Deserialize<Dictionary<string, string>>(data);
 
-		var connection = ConnectionMultiplexer.Connect(input.Data.ConnectionString);
+		var connection = await ConnectionMultiplexer.ConnectAsync(input.Data.ConnectionString);
 		using (connection)
 		{
 			var entries = items.Select(t => new HashEntry(t.Key, t.Value)).ToArray();

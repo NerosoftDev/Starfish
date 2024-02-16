@@ -16,7 +16,7 @@ internal interface IConfigurationApi
 	Task<IApiResponse<string>> GetItemsAsync(string id, string environment, [Header("x-format")] string format, CancellationToken cancellationToken = default);
 
 	[Get("/api/apps/{id}/configuration/{environment}/detail")]
-	Task<IApiResponse<ConfigurationDetailDto>> GetAsync(string id, string environment, CancellationToken cancellationToken = default);
+	Task<IApiResponse<ConfigurationDto>> GetAsync(string id, string environment, CancellationToken cancellationToken = default);
 
 	[Post("/api/apps/{id}/configuration/{environment}")]
 	Task<IApiResponse> CreateAsync(string id, string environment, [Header("x-format")] string format, [Body] ConfigurationEditDto data, CancellationToken cancellationToken = default);

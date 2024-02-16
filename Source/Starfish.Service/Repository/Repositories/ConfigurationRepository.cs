@@ -6,70 +6,40 @@ using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Repository;
 
-public class ConfigurationRepository : BaseRepository<DataContext, Configuration, long>, IConfigurationRepository
+public class ConfigurationRepository : BaseRepository<DataContext, Configuration, string>, IConfigurationRepository
 {
 	public ConfigurationRepository(IContextProvider provider)
 		: base(provider)
 	{
 	}
 
-	public Task<bool> ExistsAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	public Task<bool> ExistsAsync(string teamId, string name, CancellationToken cancellationToken = default)
 	{
 		ISpecification<Configuration>[] specifications =
 		[
-			ConfigurationSpecification.AppIdEquals(appId),
-			ConfigurationSpecification.EnvironmentEquals(environment)
+			ConfigurationSpecification.TeamIdEquals(teamId),
+			ConfigurationSpecification.NameEquals(name)
 		];
 
 		var predicate = new CompositeSpecification<Configuration>(PredicateOperator.AndAlso, specifications).Satisfy();
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
-	public Task<Configuration> GetAsync(string appId, string environment, bool tracking, string[] properties, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItem>> GetItemListAsync(string id, int skip, int count, CancellationToken cancellationToken = default)
 	{
-		ISpecification<Configuration>[] specifications =
-		[
-			ConfigurationSpecification.AppIdEquals(appId),
-			ConfigurationSpecification.EnvironmentEquals(environment)
-		];
-
-		var predicate = new CompositeSpecification<Configuration>(PredicateOperator.AndAlso, specifications).Satisfy();
-
-		return GetAsync(predicate, tracking, properties, cancellationToken);
-	}
-
-	public Task<List<ConfigurationItem>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default)
-	{
-		ISpecification<ConfigurationItem>[] specifications =
-		[
-			ConfigurationSpecification.ConfigurationAppIdEquals(appId),
-			ConfigurationSpecification.ConfigurationAppEnvironmentEquals(environment)
-		];
-
-		var predicate = new CompositeSpecification<ConfigurationItem>(PredicateOperator.AndAlso, specifications).Satisfy();
-
 		var query = Context.Set<ConfigurationItem>()
 		                   .AsQueryable()
-		                   .Include(t => t.Configuration);
-		return query.Where(predicate)
+		                   .AsNoTracking();
+		return query.Where(t => t.ConfigurationId == id)
 		            .Skip(skip)
 		            .Take(count)
 		            .ToListAsync(cancellationToken);
 	}
 
-	public Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string id, CancellationToken cancellationToken = default)
 	{
-		ISpecification<ConfigurationItem>[] specifications =
-		[
-			ConfigurationSpecification.ConfigurationAppIdEquals(appId),
-			ConfigurationSpecification.ConfigurationAppEnvironmentEquals(environment)
-		];
-
-		var predicate = new CompositeSpecification<ConfigurationItem>(PredicateOperator.AndAlso, specifications).Satisfy();
-
 		var query = Context.Set<ConfigurationItem>()
-		                   .AsQueryable()
-		                   .Include(t => t.Configuration);
-		return query.Where(predicate).CountAsync(cancellationToken);
+		                   .AsQueryable();
+		return query.Where(t => t.ConfigurationId == id).CountAsync(cancellationToken);
 	}
 }

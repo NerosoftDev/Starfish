@@ -61,13 +61,13 @@
                         <FluentLabel>@AppDetail?.Description</FluentLabel>
                     </FluentStack>
                 </FluentAccordionItem>
-                @if (ConfigurationDetail != null)
+                @if (Configuration != null)
                 {
                     <FluentAccordionItem Class="aside-right" Heading="@(Resources.IDS_CONFIG_INDEX_PANEL_TITLE_CONFIG_INFO)" Expanded="true">
                         <FluentStack Orientation="Orientation.Vertical">
-                            <FluentLabel>@string.Format(Resources.IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_VERSION, ConfigurationDetail?.Version ?? "--")</FluentLabel>
-                            <FluentLabel>@string.Format(Resources.IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_PUBLISH_TIME, ConfigurationDetail?.PublishTime)</FluentLabel>
-                            <FluentLabel>@string.Format(Resources.IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_UPDATE_TIME, ConfigurationDetail?.UpdateTime)</FluentLabel>
+                            <FluentLabel>@string.Format(Resources.IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_VERSION, Configuration?.Version ?? "--")</FluentLabel>
+                            <FluentLabel>@string.Format(Resources.IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_PUBLISH_TIME, Configuration?.PublishTime)</FluentLabel>
+                            <FluentLabel>@string.Format(Resources.IDS_CONFIG_INDEX_PANEL_LABEL_CONFIG_UPDATE_TIME, Configuration?.UpdateTime)</FluentLabel>
                         </FluentStack>
                     </FluentAccordionItem>
                 }
@@ -77,7 +77,7 @@
                             <FluentButton IconStart="@(new Icons.Regular.Size16.SyncOff())" OnClick="@OnSyncRedisClicked">@(Resources.IDS_CONFIG_INDEX_BUTTON_SYNC_REDIS)</FluentButton>
                             <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@OnDeleteClicked">@(Resources.IDS_CONFIG_INDEX_BUTTON_DELETE)</FluentButton>
                         </FluentStack>
-                        @if (ConfigurationDetail?.Status == "Pending")
+                        @if (Configuration?.Status == "Pending")
                         {
                             <FluentButton IconStart="@(new Icons.Regular.Size16.Send())" Appearance="Appearance.Accent" OnClick="@OnPublishClicked">@(Resources.IDS_CONFIG_INDEX_BUTTON_PUBLISH)</FluentButton>
                         }
@@ -106,7 +106,7 @@
 
     private int Total { get; set; }
 
-    private ConfigurationDetailDto ConfigurationDetail { get; set; }
+    private ConfigurationDto Configuration { get; set; }
 
     private AppInfoDetailDto AppDetail { get; set; }
 
@@ -158,7 +158,7 @@
     private Task LoadConfigurationDetailAsync(CancellationToken cancellationToken = default)
     {
         return ConfigurationApi.GetAsync(Id, Environment, cancellationToken)
-                               .EnsureSuccess(result => ConfigurationDetail = result, cancellationToken)
+                               .EnsureSuccess(result => Configuration = result, cancellationToken)
                                .Guard();
     }
 
@@ -175,11 +175,11 @@
         {
             Properties = new Dictionary<string, object>
             {
-                ["mode"] = ConfigurationDetail == null ? "create" : "update",
+                ["mode"] = Configuration == null ? "create" : "update",
                 ["format"] = Constants.Configuration.FormatJson
             }
         };
-        var title = ConfigurationDetail == null ? Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON : Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON;
+        var title = Configuration == null ? Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON : Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON;
 
         var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)", PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
@@ -195,12 +195,12 @@
         {
             Properties = new Dictionary<string, object>
             {
-                ["mode"] = ConfigurationDetail == null ? "create" : "update",
+                ["mode"] = Configuration == null ? "create" : "update",
                 ["format"] = Constants.Configuration.FormatText
             }
         };
 
-        var title = ConfigurationDetail == null ? Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT : Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT;
+        var title = Configuration == null ? Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT : Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT;
 
         var dialog = await DialogService.ShowDialogAsync<Edit>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)", PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;

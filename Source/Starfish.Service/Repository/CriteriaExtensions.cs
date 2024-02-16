@@ -99,9 +99,23 @@ public static class CriteriaExtensions
 			return specification;
 		}
 
-		if (!string.IsNullOrWhiteSpace(criteria.Environment))
+		if (!string.IsNullOrWhiteSpace(criteria.TeamId))
 		{
-			specification &= ConfigurationSpecification.EnvironmentEquals(criteria.Environment);
+			specification &= ConfigurationSpecification.TeamIdEquals(criteria.TeamId);
+		}
+
+		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
+		{
+			specification &= ConfigurationSpecification.Matches(criteria.Keyword);
+		}
+
+		if (criteria.Status > 0)
+		{
+			var status = (ConfigurationStatus)criteria.Status;
+			if (status != ConfigurationStatus.None && Enum.IsDefined(status))
+			{
+				specification &= ConfigurationSpecification.StatusEquals(status);
+			}
 		}
 
 		return specification;

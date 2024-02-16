@@ -3,7 +3,7 @@ using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Domain;
 
-public interface IConfigurationArchiveRepository : IBaseRepository<DataContext, ConfigurationArchive, long>
+public interface IConfigurationArchiveRepository : IBaseRepository<DataContext, ConfigurationArchive, string>
 {
-	Task<ConfigurationArchive> GetAsync(string appId, string environment, CancellationToken cancellationToken = default);
+	Task<ConfigurationArchive> GetAsync(string teamId, string name, CancellationToken cancellationToken = default);
 }

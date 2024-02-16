@@ -13,10 +13,9 @@ public interface IConfigurationPublishUseCase : INonOutputUseCase<ConfigurationP
 /// <summary>
 /// 配置节点发布输入
 /// </summary>
-/// <param name="AppId"></param>
-/// <param name="Environment"></param>
+/// <param name="Id"></param>
 /// <param name="Data"></param>
-public record ConfigurationPublishInput(string AppId, string Environment, ConfigurationPublishDto Data) : IUseCaseInput;
+public record ConfigurationPublishInput(string Id, ConfigurationPublishDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例
@@ -32,14 +31,7 @@ public class ConfigurationPublishUseCase : IConfigurationPublishUseCase
 
 	public async Task ExecuteAsync(ConfigurationPublishInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new ConfigurationPublishCommand(input.AppId, input.Environment);
+		var command = new ConfigurationPublishCommand(input.Id, input.Data.Version, input.Data.Comment);
 		await _bus.SendAsync(command, cancellationToken);
-
-		var @event = new ConfigurationPublishedEvent(input.AppId, input.Environment)
-		{
-			Version = input.Data.Version,
-			Comment = input.Data.Comment
-		};
-		await _bus.PublishAsync(@event, cancellationToken);
 	}
 }

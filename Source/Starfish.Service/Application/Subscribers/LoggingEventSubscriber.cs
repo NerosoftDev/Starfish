@@ -191,7 +191,7 @@ public sealed class LoggingEventSubscriber
 	[Subscribe]
 	public Task HandleAsync(ConfigurationCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_CREATE, @event.Configuration.AppId, @event.Configuration.Environment);
+		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_CREATE, @event.Configuration.Id, @event.Configuration.Name);
 
 		var command = new OperateLogCreateCommand
 		{
@@ -216,7 +216,7 @@ public sealed class LoggingEventSubscriber
 	public Task HandleAsync(ConfigurationDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		var aggregate = @event.GetAggregate<Configuration>();
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DELETE, aggregate.AppId, aggregate.Environment);
+		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DELETE, aggregate.Id, aggregate.Name);
 
 		var command = new OperateLogCreateCommand
 		{
@@ -233,7 +233,8 @@ public sealed class LoggingEventSubscriber
 	[Subscribe]
 	public Task HandleAsync(ConfigurationPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_PUBLISH, @event.AppId, @event.Environment);
+		var aggregate = @event.GetAggregate<Configuration>();
+		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_PUBLISH, aggregate.Id, aggregate.Name);
 
 		var command = new OperateLogCreateCommand
 		{
@@ -246,6 +247,4 @@ public sealed class LoggingEventSubscriber
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
-
-	
 }

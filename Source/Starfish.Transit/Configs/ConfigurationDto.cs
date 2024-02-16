@@ -1,29 +1,34 @@
 ﻿namespace Nerosoft.Starfish.Transit;
 
 /// <summary>
-/// 配置详情Dto
+/// 配置Dto
 /// </summary>
-public class ConfigurationDetailDto
+public class ConfigurationDto
 {
 	/// <summary>
 	/// Id
 	/// </summary>
-	public long Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
-	/// 应用Id
+	/// 团队Id
 	/// </summary>
-	public string AppId { get; set; }
+	public string TeamId { get; set; }
 
 	/// <summary>
-	/// 应用名称
+	/// 团队名称
 	/// </summary>
-	public string AppName { get; set; }
+	public string TeamName { get; set; }
 
 	/// <summary>
-	/// 应用环境
+	/// 配置名称
 	/// </summary>
-	public string Environment { get; set; }
+	public string Name { get; set; }
+
+	/// <summary>
+	/// 配置描述
+	/// </summary>
+	public string Description { get; set; }
 
 	/// <summary>
 	/// 当前版本号
@@ -43,7 +48,7 @@ public class ConfigurationDetailDto
 	/// <summary>
 	/// 状态名称
 	/// </summary>
-	public string StatusDescription { get; set; }
+	public string StatusName { get; set; }
 
 	/// <summary>
 	/// 修改时间

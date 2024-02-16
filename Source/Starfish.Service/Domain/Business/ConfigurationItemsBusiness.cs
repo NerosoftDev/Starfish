@@ -40,4 +40,33 @@ public class ConfigurationItemsBusiness : CommandObjectBase<ConfigurationItemsBu
 
 		await ConfigurationRepository.UpdateAsync(aggregate, true, cancellationToken);
 	}
+
+	[FactoryExecute]
+	protected async Task ExecuteAsync(string id, string key, string value, CancellationToken cancellationToken = default)
+	{
+		var aggregate = await ConfigurationRepository.GetAsync(id, true, cancellationToken);
+
+		if (aggregate == null)
+		{
+			throw new ConfigurationNotFoundException(id);
+		}
+
+		var permission = await TeamRepository.CheckPermissionAsync(id, Identity.UserId, cancellationToken);
+
+		switch (permission)
+		{
+			case PermissionState.None: // 无权限
+				throw new ConfigurationNotFoundException(id);
+			case PermissionState.Edit:
+				break;
+			case PermissionState.Read:
+				throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+
+		aggregate.UpdateItem(key, value);
+
+		await ConfigurationRepository.UpdateAsync(aggregate, true, cancellationToken);
+	}
 }

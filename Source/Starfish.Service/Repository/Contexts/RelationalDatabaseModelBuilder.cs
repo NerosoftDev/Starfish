@@ -15,20 +15,20 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasKey(t => t.Id);
 
 			entity.HasIndex(t => t.UserName)
-			.HasDatabaseName("IDX_USER_NAME")
-				  .IsUnique();
+			      .HasDatabaseName("IDX_USER_NAME")
+			      .IsUnique();
 
 			entity.HasIndex(t => t.Email)
-				  .HasDatabaseName("IDX_USER_EMAIL")
-				  .IsUnique();
+			      .HasDatabaseName("IDX_USER_EMAIL")
+			      .IsUnique();
 
 			entity.HasIndex(t => t.Phone)
-				  .HasDatabaseName("IDX_USER_PHONE")
-				  .IsUnique();
+			      .HasDatabaseName("IDX_USER_PHONE")
+			      .IsUnique();
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<UuidValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<UuidValueGenerator>();
 		});
 	}
 
@@ -41,15 +41,15 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasKey(t => t.Id);
 
 			entity.HasIndex(t => t.UserId).HasDatabaseName("IDX_ADMIN_USER_ID")
-				  .IsUnique();
+			      .IsUnique();
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.User)
-				  .WithMany()
-				  .HasForeignKey(t => t.UserId);
+			      .WithMany()
+			      .HasForeignKey(t => t.UserId);
 		});
 	}
 
@@ -64,12 +64,12 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasIndex(t => t.OwnerId).HasDatabaseName("IDX_TEAM_OWNER");
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<UuidValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<UuidValueGenerator>();
 
 			entity.HasMany(t => t.Members)
-				  .WithOne(t => t.Team)
-				  .HasForeignKey(t => t.TeamId);
+			      .WithOne(t => t.Team)
+			      .HasForeignKey(t => t.TeamId);
 		});
 	}
 
@@ -81,19 +81,19 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasKey(t => t.Id);
 
 			entity.HasIndex([nameof(TeamMember.TeamId), nameof(TeamMember.UserId)], "IDX_TEAM_MEMBER_UNIQUE")
-				  .IsUnique();
+			      .IsUnique();
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Team)
-				  .WithMany(t => t.Members)
-				  .HasForeignKey(t => t.TeamId);
+			      .WithMany(t => t.Members)
+			      .HasForeignKey(t => t.TeamId);
 
 			entity.HasOne(t => t.User)
-				  .WithMany()
-				  .HasForeignKey(t => t.UserId);
+			      .WithMany()
+			      .HasForeignKey(t => t.UserId);
 		});
 	}
 
@@ -108,8 +108,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasIndex(t => t.Status).HasDatabaseName("IDX_APP_INFO_TEAM_ID");
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<UuidValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<UuidValueGenerator>();
 		});
 	}
 
@@ -121,30 +121,26 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.HasKey(t => t.Id);
 
-			entity.HasIndex(t => t.AppId).HasDatabaseName("IDX_CONFIG_APP_ID");
+			entity.HasIndex(t => t.TeamId).HasDatabaseName("IDX_CONFIG_TEAM_ID");
 			entity.HasIndex(t => t.Status).HasDatabaseName("IDX_CONFIG_STATUS");
+			entity.HasIndex(t => t.Name).HasDatabaseName("IDX_CONFIG_NAME");
 
-			entity.HasIndex([nameof(Configuration.AppId), nameof(Configuration.Environment)], "IDX_CONFIG_UNIQUE")
-				  .IsUnique();
+			entity.HasIndex([nameof(Configuration.TeamId), nameof(Configuration.Name)], "IDX_CONFIG_UNIQUE")
+			      .IsUnique();
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
-
-			entity.HasOne(t => t.App)
-				  .WithMany()
-				  .HasForeignKey(t => t.AppId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasMany(t => t.Items)
-				  .WithOne()
-				  .HasForeignKey(t => t.ConfigurationId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .WithOne()
+			      .HasForeignKey(t => t.ConfigurationId)
+			      .OnDelete(DeleteBehavior.Cascade);
 
 			entity.HasMany(t => t.Revisions)
-				  .WithOne()
-				  .HasForeignKey(t => t.ConfigurationId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .WithOne()
+			      .HasForeignKey(t => t.ConfigurationId)
+			      .OnDelete(DeleteBehavior.Cascade);
 		});
 	}
 
@@ -158,16 +154,16 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.HasIndex(t => t.ConfigurationId).HasDatabaseName("IDX_CONFIG_ITEM_FK");
 			entity.HasIndex([nameof(ConfigurationItem.ConfigurationId), nameof(ConfigurationItem.Key)], "IDX_CONFIG_ITEM_UNIQUE")
-				  .IsUnique();
+			      .IsUnique();
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Configuration)
-				  .WithMany(t => t.Items)
-				  .HasForeignKey(t => t.ConfigurationId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .WithMany(t => t.Items)
+			      .HasForeignKey(t => t.ConfigurationId)
+			      .OnDelete(DeleteBehavior.Cascade);
 		});
 	}
 
@@ -179,13 +175,12 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.HasKey(t => t.Id);
 
-			entity.HasIndex(t => t.AppId).HasDatabaseName("IDX_CONFIG_ARCHIVE_APP_ID");
-			entity.HasIndex([nameof(ConfigurationArchive.AppId), nameof(ConfigurationArchive.Environment)], "IDX_CONFIG_ARCHIVE_UNIQUE")
-				  .IsUnique();
-
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired();
+
+			entity.HasOne(t => t.Configuration)
+			      .WithOne(t => t.Archive)
+			      .HasForeignKey(nameof(ConfigurationArchive.Id));
 		});
 	}
 
@@ -200,13 +195,13 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasIndex(t => t.ConfigurationId).HasDatabaseName("IDS_CONFIG_REVISION_FK");
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Configuration)
-				  .WithMany(t => t.Revisions)
-				  .HasForeignKey(t => t.ConfigurationId)
-				  .OnDelete(DeleteBehavior.Cascade);
+			      .WithMany(t => t.Revisions)
+			      .HasForeignKey(t => t.ConfigurationId)
+			      .OnDelete(DeleteBehavior.Cascade);
 		});
 	}
 
@@ -222,8 +217,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasIndex(t => t.Expires).HasDatabaseName("IDX_TOKEN_EXPIRES");
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 	}
 
@@ -240,8 +235,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasIndex(t => t.UserName).HasDatabaseName("IDX_OPERATE_LOG_USER_NAME");
 
 			entity.Property(t => t.Id)
-				  .IsRequired()
-				  .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
 	}
 }
