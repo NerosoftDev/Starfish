@@ -137,6 +137,8 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 			Aggregate.SetDescription(Description);
 		}
 
+		Aggregate.RaiseEvent(new ConfigurationUpdatedEvent());
+
 		await ConfigurationRepository.UpdateAsync(Aggregate, true, cancellationToken);
 	}
 

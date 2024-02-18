@@ -155,8 +155,8 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 
 	public Task PushRedisAsync(string id, ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetRequiredService<IPushRedisUseCase>();
-		var input = new PushRedisInput(id, data);
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationPushRedisUseCase>();
+		var input = new ConfigurationPushRedisInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 }

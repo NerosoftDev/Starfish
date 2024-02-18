@@ -7,26 +7,26 @@ using StackExchange.Redis;
 
 namespace Nerosoft.Starfish.UseCases;
 
-internal interface IPushRedisUseCase : INonOutputUseCase<PushRedisInput>;
+internal interface IConfigurationPushRedisUseCase : INonOutputUseCase<ConfigurationPushRedisInput>;
 
-internal record PushRedisInput(string Id, ConfigurationPushRedisRequestDto Data) : IUseCaseInput;
+internal record ConfigurationPushRedisInput(string Id, ConfigurationPushRedisRequestDto Data) : IUseCaseInput;
 
-internal sealed class PushRedisUseCase : IPushRedisUseCase
+internal sealed class ConfigurationPushRedisUseCase : IConfigurationPushRedisUseCase
 {
 	private readonly IConfigurationRepository _configurationRepository;
-	private readonly ITeamRepository _appInfoRepository;
+	private readonly ITeamRepository _teamRepository;
 	private readonly UserPrincipal _identity;
 
-	public PushRedisUseCase(IConfigurationRepository configurationRepository, ITeamRepository appInfoRepository, UserPrincipal identity)
+	public ConfigurationPushRedisUseCase(IConfigurationRepository configurationRepository, ITeamRepository teamRepository, UserPrincipal identity)
 	{
 		_configurationRepository = configurationRepository;
-		_appInfoRepository = appInfoRepository;
+		_teamRepository = teamRepository;
 		_identity = identity;
 	}
 
-	public async Task ExecuteAsync(PushRedisInput input, CancellationToken cancellationToken = default)
+	public async Task ExecuteAsync(ConfigurationPushRedisInput input, CancellationToken cancellationToken = default)
 	{
-		var permission = await _appInfoRepository.CheckPermissionAsync(input.Id, _identity.UserId, cancellationToken);
+		var permission = await _teamRepository.CheckPermissionAsync(input.Id, _identity.UserId, cancellationToken);
 
 		if (permission != PermissionState.Edit)
 		{

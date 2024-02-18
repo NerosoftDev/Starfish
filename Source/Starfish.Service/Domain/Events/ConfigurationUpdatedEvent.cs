@@ -3,8 +3,8 @@
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
-/// 应用信息密钥重置事件
+/// 应用信息更新事件
 /// </summary>
-public class AppInfoSecretChangedEvent : DomainEvent
+public class ConfigurationUpdatedEvent : DomainEvent
 {
 }

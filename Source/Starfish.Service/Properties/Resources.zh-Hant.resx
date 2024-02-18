@@ -174,23 +174,23 @@
     <comment />
   </data>
   <data name="IDS_ERROR_CONFIG_DISABLED" xml:space="preserve">
-    <value>設置已停用，[Id]：{0}。</value>
+    <value>配置已停用，[Id]：{0}。</value>
     <comment />
   </data>
   <data name="IDS_ERROR_CONFIG_DUPLICATE" xml:space="preserve">
-    <value>設置重複。</value>
+    <value>配置重複。</value>
     <comment />
   </data>
   <data name="IDS_ERROR_CONFIG_KEY_EXISTS" xml:space="preserve">
-    <value>設置項目“{0}”已經存在。</value>
+    <value>配置項“{0}”已經存在。</value>
     <comment />
   </data>
   <data name="IDS_ERROR_CONFIG_KEY_NOT_EXISTS" xml:space="preserve">
-    <value>設置項目“{0}”不存在。</value>
+    <value>配置項“{0}”不存在。</value>
     <comment />
   </data>
-  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
-    <value>設定不存在，[Id]：{0}。</value>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID" xml:space="preserve">
+    <value>配置不存在，[Id]：{0}。</value>
     <comment />
   </data>
   <data name="IDS_ERROR_CONFIG_NO_PENDING_ITEM" xml:space="preserve">
@@ -297,30 +297,6 @@
     <value>用戶名“{0}”不可用。</value>
     <comment />
   </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_CREATE" xml:space="preserve">
-    <value>新增應用程式 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_DELETE" xml:space="preserve">
-    <value>刪除應用程式 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_DISABLE" xml:space="preserve">
-    <value>停用應用程式 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_ENABLE" xml:space="preserve">
-    <value>啟用應用程式 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_RESET_SECRET" xml:space="preserve">
-    <value>重設應用程式密鑰 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_UPDATE" xml:space="preserve">
-    <value>更新應用程式 {0}({1})。</value>
-    <comment />
-  </data>
   <data name="IDS_MESSAGE_LOGS_AUTH_FAILED" xml:space="preserve">
     <value>用戶身份驗證失敗。</value>
     <comment />
@@ -330,19 +306,37 @@
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_CREATE" xml:space="preserve">
-    <value>建立設置，[應用程式]：{0}，[環境]：{1}。</value>
+    <value>建立配置，[Id]：{0}，[名稱]：{1}。</value>
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_DELETE" xml:space="preserve">
-    <value>刪除設置，[應用程式]：{0}，[環境]：{1}。</value>
+    <value>刪除配置，[Id]：{0}，[名稱]：{1}。</value>
+    <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_DISABLE" xml:space="preserve">
+    <value>停用配置，[Id]：{0}，[名稱]：{1}。</value>
+    <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_ENABLE" xml:space="preserve">
+    <value>啟用配置，[Id]：{0}，[名稱]：{1}。</value>
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_PUBLISH" xml:space="preserve">
-    <value>發佈設置，[應用程式]：{0}，[環境]：{1}。</value>
+    <value>發佈配置，[Id]：{0}，[名稱]：{1}。</value>
+    <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_RESET_SECRET" xml:space="preserve">
+    <value>重設訪問密鑰，[Id]：{0}，[名稱]：{1}。</value>
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
-    <value>更新設置，[應用程式]：{0}，[環境]：{1}。</value>
+    <value>更新配置，[Id]：{0}，[名稱]：{1}。</value>
     <comment />
+  </data>
+  <data name="IDS_ERROR_CONFIG_NO_ITEMS" xml:space="preserve">
+    <value>沒有找到配置項。</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
+    <value>配置不存在。</value>
   </data>
 </root>

@@ -8,6 +8,8 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public sealed class LoggingEventSubscriber
 {
+	private const string MODULE_CONFIG = "config";
+	
 	private readonly IBus _bus;
 
 	public LoggingEventSubscriber(IBus bus)
@@ -59,46 +61,23 @@ public sealed class LoggingEventSubscriber
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
-
+	
 	/// <summary>
-	/// 处理应用创建事件
-	/// </summary>
-	/// <param name="event"></param>
-	/// <param name="context"></param>
-	/// <param name="cancellationToken"></param>
-	[Subscribe]
-	public Task HandleAsync(AppInfoCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
-	{
-		var aggregate = @event.GetAggregate<AppInfo>();
-		var command = new OperateLogCreateCommand
-		{
-			Module = "apps",
-			Type = "create",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_CREATE, aggregate.Id, aggregate.Name),
-			OperateTime = DateTime.Now,
-			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
-		};
-
-		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
-	}
-
-	/// <summary>
-	/// 处理应用启用事件
+	/// 处理配置启用事件
 	/// </summary>
 	/// <param name="event"></param>
 	/// <param name="context"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(AppInfoEnabledEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationEnabledEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<AppInfo>();
+		var aggregate = @event.GetAggregate<Configuration>();
 		var command = new OperateLogCreateCommand
 		{
-			Module = "apps",
+			Module = MODULE_CONFIG,
 			Type = "status",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_ENABLE, aggregate.Id, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_ENABLE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -108,21 +87,21 @@ public sealed class LoggingEventSubscriber
 	}
 
 	/// <summary>
-	/// 处理应用禁用事件
+	/// 处理配置禁用事件
 	/// </summary>
 	/// <param name="event"></param>
 	/// <param name="context"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(AppInfoDisableEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationDisableEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<AppInfo>();
+		var aggregate = @event.GetAggregate<Configuration>();
 		var command = new OperateLogCreateCommand
 		{
-			Module = "appinfo",
+			Module = MODULE_CONFIG,
 			Type = "status",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_DISABLE, aggregate.Id, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DISABLE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -131,15 +110,22 @@ public sealed class LoggingEventSubscriber
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
+	/// <summary>
+	/// 处理配置密钥重置事件
+	/// </summary>
+	/// <param name="event"></param>
+	/// <param name="context"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(AppInfoSecretChangedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationSecretChangedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<AppInfo>();
+		var aggregate = @event.GetAggregate<Configuration>();
 		var command = new OperateLogCreateCommand
 		{
-			Module = "apps",
+			Module = MODULE_CONFIG,
 			Type = "secret",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_RESET_SECRET, aggregate.Id, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_RESET_SECRET, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -148,36 +134,27 @@ public sealed class LoggingEventSubscriber
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
+	/// <summary>
+	/// 处理配置更新事件
+	/// </summary>
+	/// <param name="event"></param>
+	/// <param name="context"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
 	[Subscribe]
-	public Task HandleAsync(AppInfoUpdatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
+	public Task HandleAsync(ConfigurationUpdatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var aggregate = @event.GetAggregate<AppInfo>();
+		var aggregate = @event.GetAggregate<Configuration>();
 		var command = new OperateLogCreateCommand
 		{
-			Module = "apps",
+			Module = MODULE_CONFIG,
 			Type = "update",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_UPDATE, aggregate.Id, aggregate.Name),
+			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_UPDATE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
 		};
 
-		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
-	}
-
-	[Subscribe]
-	public Task HandleAsync(AppInfoDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
-	{
-		var aggregate = @event.GetAggregate<AppInfo>();
-		var command = new OperateLogCreateCommand
-		{
-			Module = "apps",
-			Type = "delete",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_APPS_DELETE, aggregate.Id, aggregate.Name),
-			OperateTime = DateTime.Now,
-			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
-		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
@@ -195,7 +172,7 @@ public sealed class LoggingEventSubscriber
 
 		var command = new OperateLogCreateCommand
 		{
-			Module = "config",
+			Module = MODULE_CONFIG,
 			Type = "create",
 			Description = description,
 			OperateTime = DateTime.Now,
@@ -220,7 +197,7 @@ public sealed class LoggingEventSubscriber
 
 		var command = new OperateLogCreateCommand
 		{
-			Module = "config",
+			Module = MODULE_CONFIG,
 			Type = "delete",
 			Description = description,
 			OperateTime = DateTime.Now,
@@ -230,6 +207,13 @@ public sealed class LoggingEventSubscriber
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
 
+	/// <summary>
+	/// 处理配置发布事件
+	/// </summary>
+	/// <param name="event"></param>
+	/// <param name="context"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
 	[Subscribe]
 	public Task HandleAsync(ConfigurationPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
@@ -238,7 +222,7 @@ public sealed class LoggingEventSubscriber
 
 		var command = new OperateLogCreateCommand
 		{
-			Module = "config",
+			Module = MODULE_CONFIG,
 			Type = "publish",
 			Description = description,
 			OperateTime = DateTime.Now,

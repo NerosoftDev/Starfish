@@ -44,7 +44,7 @@ internal class ConfigurationAuthorizeUseCase : IConfigurationAuthorizeUseCase
 
 		if (configuration == null)
 		{
-			throw new ConfigurationNotFoundException(string.Empty);
+			throw new ConfigurationNotFoundException();
 		}
 
 		var encryptedSecret = Cryptography.SHA.Encrypt(input.Secret);

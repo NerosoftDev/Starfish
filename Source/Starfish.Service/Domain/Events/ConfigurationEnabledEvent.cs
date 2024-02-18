@@ -3,8 +3,8 @@
 namespace Nerosoft.Starfish.Domain;
 
 /// <summary>
-/// 应用禁用领域事件
+/// 应用启用领域事件
 /// </summary>
-public class AppInfoDisableEvent : DomainEvent
+public class ConfigurationEnabledEvent : DomainEvent
 {
 }

@@ -24,10 +24,6 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		{
 			Secret = @event.Secret;
 		});
-		Register<ConfigurationPublishedEvent>(_ =>
-		{
-			SetStatus(ConfigurationStatus.Published);
-		});
 		Register<ConfigurationItemChangedEvent>(_ =>
 		{
 			SetStatus(ConfigurationStatus.Pending);
@@ -124,16 +120,6 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		}
 
 		RaiseEvent(new ConfigurationNameChangedEvent(Name, name));
-	}
-
-	private void SetStatus(ConfigurationStatus status)
-	{
-		if (Status == status)
-		{
-			return;
-		}
-
-		RaiseEvent(new ConfigurationStatusChangedEvent(Status, status));
 	}
 
 	/// <summary>
@@ -234,22 +220,15 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 
 		if (Items == null || Items.Count == 0)
 		{
-			throw new InvalidOperationException("配置项为空");
+			throw new InvalidOperationException(Resources.IDS_ERROR_CONFIG_NO_ITEMS);
 		}
 
 		CreateArchive(@operator);
 		CreateRevision(version, comment, @operator);
 		Version = version;
 		PublishTime = DateTime.Now;
+		SetStatus(ConfigurationStatus.Published);
 		RaiseEvent(new ConfigurationPublishedEvent());
-	}
-
-	private void EnsureStatus()
-	{
-		if (Status == ConfigurationStatus.Disabled)
-		{
-			throw new ConfigurationDisabledException(Id);
-		}
 	}
 
 	internal void Disable()
@@ -260,6 +239,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		}
 
 		SetStatus(ConfigurationStatus.Disabled);
+		RaiseEvent(new ConfigurationDisableEvent());
 	}
 
 	internal void Enable()
@@ -270,10 +250,29 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		}
 
 		SetStatus(ConfigurationStatus.Pending);
+		RaiseEvent(new ConfigurationEnabledEvent());
 	}
 
 	internal void SetDescription(string description)
 	{
 		Description = description;
+	}
+
+	private void EnsureStatus()
+	{
+		if (Status == ConfigurationStatus.Disabled)
+		{
+			throw new ConfigurationDisabledException(Id);
+		}
+	}
+
+	private void SetStatus(ConfigurationStatus status)
+	{
+		if (Status == status)
+		{
+			return;
+		}
+
+		RaiseEvent(new ConfigurationStatusChangedEvent(Status, status));
 	}
 }

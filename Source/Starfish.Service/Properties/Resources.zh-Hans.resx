@@ -189,7 +189,7 @@
     <value>配置项 '{0}' 不存在。</value>
     <comment />
   </data>
-  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID" xml:space="preserve">
     <value>配置不存在，[Id]:{0}。</value>
     <comment />
   </data>
@@ -297,30 +297,6 @@
     <value>用户名'{0}'不可用。</value>
     <comment />
   </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_CREATE" xml:space="preserve">
-    <value>新增应用 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_DELETE" xml:space="preserve">
-    <value>删除应用 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_DISABLE" xml:space="preserve">
-    <value>禁用应用 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_ENABLE" xml:space="preserve">
-    <value>启用应用 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_RESET_SECRET" xml:space="preserve">
-    <value>重置应用密钥 {0}({1})。</value>
-    <comment />
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_UPDATE" xml:space="preserve">
-    <value>更新应用 {0}({1})。</value>
-    <comment />
-  </data>
   <data name="IDS_MESSAGE_LOGS_AUTH_FAILED" xml:space="preserve">
     <value>用户认证失败。</value>
     <comment />
@@ -330,19 +306,37 @@
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_CREATE" xml:space="preserve">
-    <value>新增配置，[应用]:{0}，[环境]:{1}。</value>
+    <value>新增配置，[Id]:{0}，[名称]:{1}。</value>
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_DELETE" xml:space="preserve">
-    <value>删除配置，[应用]:{0}，[环境]:{1}。</value>
+    <value>删除配置，[Id]:{0}，[名称]:{1}。</value>
+    <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_DISABLE" xml:space="preserve">
+    <value>禁用配置，[Id]:{0}，[名称]:{1}。</value>
+    <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_ENABLE" xml:space="preserve">
+    <value>启用配置，[Id]:{0}，[名称]:{1}。</value>
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_PUBLISH" xml:space="preserve">
-    <value>发布配置，[应用]:{0}，[环境]:{1}。</value>
+    <value>发布配置，[Id]:{0}，[名称]:{1}。</value>
+    <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_RESET_SECRET" xml:space="preserve">
+    <value>重置访问密钥，[Id]:{0}，[名称]:{1}。</value>
     <comment />
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
-    <value>更新配置，[应用]:{0}，[环境]:{1}。</value>
+    <value>更新配置，[Id]:{0}，[名称]:{1}。</value>
     <comment />
+  </data>
+  <data name="IDS_ERROR_CONFIG_NO_ITEMS" xml:space="preserve">
+    <value>没有找到配置项。</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
+    <value>配置不存在。</value>
   </data>
 </root>
