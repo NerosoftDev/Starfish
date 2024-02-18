@@ -52,41 +52,6 @@ public static class CriteriaExtensions
 	}
 
 	/// <summary>
-	/// 获取应用信息查询规约
-	/// </summary>
-	/// <param name="criteria"></param>
-	/// <returns></returns>
-	public static Specification<AppInfo> GetSpecification(this AppInfoCriteria criteria)
-	{
-		Specification<AppInfo> specification = new TrueSpecification<AppInfo>();
-		if (criteria == null)
-		{
-			return specification;
-		}
-
-		if (criteria.Status > 0)
-		{
-			var status = (AppStatus)criteria.Status;
-			if (status != AppStatus.None && Enum.IsDefined(status))
-			{
-				specification &= AppInfoSpecification.StatusEquals(status);
-			}
-		}
-
-		if (!string.IsNullOrEmpty(criteria.TeamId))
-		{
-			specification &= AppInfoSpecification.TeamIdEquals(criteria.TeamId);
-		}
-
-		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
-		{
-			specification &= AppInfoSpecification.NameContains(criteria.Keyword);
-		}
-
-		return specification;
-	}
-
-	/// <summary>
 	/// 获取配置节点查询规约
 	/// </summary>
 	/// <param name="criteria"></param>

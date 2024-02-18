@@ -15,7 +15,10 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
                                            IHandler<ConfigurationDeleteCommand>,
                                            IHandler<ConfigurationPublishCommand>,
                                            IHandler<ConfigurationValueUpdateCommand>,
-                                           IHandler<ConfigurationItemsUpdateCommand>
+                                           IHandler<ConfigurationItemsUpdateCommand>,
+                                           IHandler<ConfigurationSetSecretCommand>,
+                                           IHandler<ConfigurationDisableCommand>,
+                                           IHandler<ConfigurationEnableCommand>
 {
 	public ConfigurationCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
@@ -70,6 +73,7 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 		});
 	}
 
+	/// <inheritdoc />
 	public Task HandleAsync(ConfigurationValueUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
@@ -78,11 +82,39 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 		});
 	}
 
+	/// <inheritdoc />
 	public Task HandleAsync(ConfigurationItemsUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
 			await Factory.ExecuteAsync<ConfigurationItemsBusiness>(message.Id, message.Items, cancellationToken);
+		});
+	}
+
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationSetSecretCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			await Factory.ExecuteAsync<ConfigurationSecretBusiness>(message.Id, message.Secret, cancellationToken);
+		});
+	}
+
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationDisableCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			await Factory.ExecuteAsync<ConfigurationStatusBusiness>(message.Id, false, cancellationToken);
+		});
+	}
+
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationEnableCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			await Factory.ExecuteAsync<ConfigurationStatusBusiness>(message.Id, true, cancellationToken);
 		});
 	}
 }

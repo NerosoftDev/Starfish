@@ -31,4 +31,9 @@ internal class IdentityMappingProfile : Profile
 		CreateMap<Administrator, AdministratorItemDto>();
 		CreateMap<AdministratorAssignDto, AdministratorAssignCommand>();
 	}
+	
+	private static string Mask(string source)
+	{
+		return $"{source[..3]}******{source[^3..]}";
+	}
 }

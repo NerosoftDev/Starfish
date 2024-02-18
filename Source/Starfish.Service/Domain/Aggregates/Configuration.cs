@@ -149,7 +149,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 
 		if (!Regex.IsMatch(secret, Constants.RegexPattern.Secret))
 		{
-			throw new BadRequestException(Resources.IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE);
+			throw new BadRequestException(Resources.IDS_ERROR_CONFIG_SECRET_NOT_MATCHES_RULE);
 		}
 
 		if (!string.IsNullOrEmpty(Id))

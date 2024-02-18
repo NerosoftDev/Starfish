@@ -65,6 +65,42 @@ public interface IConfigurationApplicationService : IApplicationService
 	Task DeleteAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
+	/// 设置访问密钥
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="secret"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task SetSecretAsync(string id, string secret, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 禁用配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task DisableAsync(string id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 启用配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task EnableAsync(string id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 应用认证
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="teamId"></param>
+	/// <param name="name"></param>
+	/// <param name="secret"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<string> AuthorizeAsync(string id, string teamId, string name, string secret, CancellationToken cancellationToken = default);
+
+	/// <summary>
 	/// 更新配置项
 	/// </summary>
 	/// <param name="id"></param>
@@ -91,7 +127,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task PublishAsync(string id, ConfigurationPublishDto data, CancellationToken cancellationToken = default);
+	Task PublishAsync(string id, ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取已发布的配置
@@ -110,5 +146,5 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <returns></returns>
 	Task<string> GetItemsInTextAsync(string id, string format, CancellationToken cancellationToken = default);
 
-	Task PushRedisAsync(string id, PushRedisRequestDto data, CancellationToken cancellationToken = default);
+	Task PushRedisAsync(string id, ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default);
 }

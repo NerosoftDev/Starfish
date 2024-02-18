@@ -3,7 +3,7 @@
 /// <summary>
 /// 配置节点发布Dto
 /// </summary>
-public class ConfigurationPublishDto
+public class ConfigurationPublishRequestDto
 {
 	/// <summary>
 	/// 版本号

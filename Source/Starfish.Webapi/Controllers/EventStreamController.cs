@@ -1,5 +1,4 @@
-﻿using System.Security.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Nerosoft.Starfish.Application;
@@ -32,20 +31,14 @@ public class EventStreamController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[Route("/es")]
-	public async Task HandleAsync(string app, string secret, string env)
+	public async Task HandleAsync(string id, string teamId, string name, string secret)
 	{
-		var auth = await AuthAsync(app, secret);
-
-		if (!auth)
-		{
-			throw new AuthenticationException(Resources.IDS_ERROR_AUTHORIZE_FAILED);
-		}
-		//var environment = HttpContext.Request.Headers[Constants.RequestHeaders.Env];
+		var configId = await AuthAsync(id, teamId, name, secret);
 		Response.Headers.Append(HeaderNames.ContentType, "text/event-stream");
 		Response.Headers.Append(HeaderNames.Connection, "close");
 		try
 		{
-			var connection = _container.GetOrAdd(app, env, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(configId, HttpContext.Connection.Id);
 
 			while (await connection.Channel.Reader.WaitToReadAsync(HttpContext.RequestAborted))
 			{
@@ -71,16 +64,17 @@ public class EventStreamController : ControllerBase
 		finally
 		{
 			Response.Body.Close();
-			_container.Remove(app, env, HttpContext.Connection.Id);
+			_container.Remove(configId, HttpContext.Connection.Id);
 		}
 	}
 
-	private Task<bool> AuthAsync(string app, string secret)
+	private Task<string> AuthAsync(string id, string teamId, string name, string secret)
 	{
 		// var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
 		// var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
-		var service = HttpContext.RequestServices.GetRequiredService<IAppsApplicationService>();
-		return service.AuthorizeAsync(app, secret, HttpContext.RequestAborted);
+		var service = HttpContext.RequestServices.GetRequiredService<IConfigurationApplicationService>();
+		return service.AuthorizeAsync(id, teamId, name, secret, HttpContext.RequestAborted);
+		
 	}
 }

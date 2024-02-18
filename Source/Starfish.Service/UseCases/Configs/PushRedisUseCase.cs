@@ -9,15 +9,15 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IPushRedisUseCase : INonOutputUseCase<PushRedisInput>;
 
-internal record PushRedisInput(string Id, PushRedisRequestDto Data) : IUseCaseInput;
+internal record PushRedisInput(string Id, ConfigurationPushRedisRequestDto Data) : IUseCaseInput;
 
 internal sealed class PushRedisUseCase : IPushRedisUseCase
 {
 	private readonly IConfigurationRepository _configurationRepository;
-	private readonly IAppInfoRepository _appInfoRepository;
+	private readonly ITeamRepository _appInfoRepository;
 	private readonly UserPrincipal _identity;
 
-	public PushRedisUseCase(IConfigurationRepository configurationRepository, IAppInfoRepository appInfoRepository, UserPrincipal identity)
+	public PushRedisUseCase(IConfigurationRepository configurationRepository, ITeamRepository appInfoRepository, UserPrincipal identity)
 	{
 		_configurationRepository = configurationRepository;
 		_appInfoRepository = appInfoRepository;
@@ -28,7 +28,7 @@ internal sealed class PushRedisUseCase : IPushRedisUseCase
 	{
 		var permission = await _appInfoRepository.CheckPermissionAsync(input.Id, _identity.UserId, cancellationToken);
 
-		if (!permission.IsIn(1, 2))
+		if (permission != PermissionState.Edit)
 		{
 			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}

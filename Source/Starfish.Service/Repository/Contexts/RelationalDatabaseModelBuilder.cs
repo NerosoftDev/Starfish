@@ -97,22 +97,6 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 		});
 	}
 
-	protected override ModelBuilder ConfigureApplication(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<AppInfo>(entity =>
-		{
-			entity.ToTable("app_info");
-			entity.HasKey(t => t.Id);
-
-			entity.HasIndex(t => t.TeamId).HasDatabaseName("IDX_APP_TEAM_ID");
-			entity.HasIndex(t => t.Status).HasDatabaseName("IDX_APP_INFO_TEAM_ID");
-
-			entity.Property(t => t.Id)
-			      .IsRequired()
-			      .HasValueGenerator<UuidValueGenerator>();
-		});
-	}
-
 	protected override ModelBuilder ConfigureConfiguration(ModelBuilder modelBuilder)
 	{
 		return modelBuilder.Entity<Configuration>(entity =>

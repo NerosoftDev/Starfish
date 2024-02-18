@@ -15,7 +15,7 @@ public interface IConfigurationPublishUseCase : INonOutputUseCase<ConfigurationP
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Data"></param>
-public record ConfigurationPublishInput(string Id, ConfigurationPublishDto Data) : IUseCaseInput;
+public record ConfigurationPublishInput(string Id, ConfigurationPublishRequestDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例

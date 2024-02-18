@@ -3,7 +3,7 @@
 /// <summary>
 /// 同步配置到Redis请求Dto
 /// </summary>
-public class PushRedisRequestDto
+public class ConfigurationPushRedisRequestDto
 {
 	/// <summary>
 	/// Redis连接字符串

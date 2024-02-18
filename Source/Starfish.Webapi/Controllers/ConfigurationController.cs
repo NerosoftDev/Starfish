@@ -106,13 +106,50 @@ public class ConfigurationController : ControllerBase
 	}
 
 	/// <summary>
+	/// 设置访问密钥
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	[HttpPatch("{id}/secret")]
+	public async Task<IActionResult> SetSecretAsync(string id, [FromBody] ConfigurationSecretSetRequestDto data)
+	{
+		await _service.SetSecretAsync(id, data.Secret, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
+	/// 禁用配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	[HttpPatch("{id}/disable")]
+	public async Task<IActionResult> DisableAsync(string id)
+	{
+		await _service.DisableAsync(id, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
+	/// 启用配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	[HttpPatch("{id}/enable")]
+	public async Task<IActionResult> EnableAsync(string id)
+	{
+		await _service.EnableAsync(id, HttpContext.RequestAborted);
+		return Ok();
+	}
+
+	/// <summary>
 	/// 发布配置
 	/// </summary>
 	/// <param name="id">应用Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("{id}/publish")]
-	public async Task<IActionResult> PublishAsync(string id, [FromBody] ConfigurationPublishDto data)
+	public async Task<IActionResult> PublishAsync(string id, [FromBody] ConfigurationPublishRequestDto data)
 	{
 		await _service.PublishAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -125,7 +162,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPost("{id}/redis")]
-	public async Task<IActionResult> PushRedisAsync(string id, [FromBody] PushRedisRequestDto data)
+	public async Task<IActionResult> PushRedisAsync(string id, [FromBody] ConfigurationPushRedisRequestDto data)
 	{
 		await _service.PushRedisAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
