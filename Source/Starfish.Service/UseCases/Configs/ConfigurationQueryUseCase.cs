@@ -20,7 +20,7 @@ internal class ConfigurationQueryUseCase : IConfigurationQueryUseCase
 		_repository = repository;
 	}
 
-	public Task<ConfigurationQueryOutput> ExecuteAsync(ConfigurationQueryInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task<ConfigurationQueryOutput> ExecuteAsync(ConfigurationQueryInput input, CancellationToken cancellationToken = default)
 	{
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();

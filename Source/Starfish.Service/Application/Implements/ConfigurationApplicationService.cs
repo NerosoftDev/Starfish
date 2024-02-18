@@ -19,7 +19,10 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 
 	public Task<int> CountAsync(ConfigurationCriteria criteria, CancellationToken cancellationToken = default)
 	{
-		throw new NotImplementedException();
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationCountUseCase>();
+		var input = new ConfigurationCountInput(criteria);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />

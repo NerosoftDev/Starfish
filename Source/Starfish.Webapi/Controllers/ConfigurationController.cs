@@ -45,7 +45,7 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="criteria"></param>
 	/// <returns></returns>
-	[HttpGet("@count")]
+	[HttpGet("count")]
 	[Produces(typeof(int))]
 	public async Task<IActionResult> CountAsync([FromQuery] ConfigurationCriteria criteria)
 	{
@@ -58,7 +58,7 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="id">应用Id</param>
 	/// <returns></returns>
-	[HttpGet]
+	[HttpGet("{id}")]
 	[Produces<ConfigurationDto>]
 	public async Task<IActionResult> GetAsync(string id)
 	{
@@ -178,6 +178,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id}/item/{key}")]
+	[Consumes("text/plain")]
 	public async Task<IActionResult> UpdateValueAsync(string id, string key, [FromBody] string data)
 	{
 		key = HttpUtility.UrlDecode(key);
@@ -193,6 +194,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id}/item")]
+	[Consumes("text/plain")]
 	public async Task<IActionResult> UpdateItemsAsync(string id, [FromHeader(Name = "x-format")] string format, [FromBody] string data)
 	{
 		await _service.UpdateItemsAsync(id, format, data, HttpContext.RequestAborted);

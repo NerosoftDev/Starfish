@@ -78,7 +78,7 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 		});
 	}
 
-	public Task HandleAsync(ConfigurationItemsUpdateCommand message, MessageContext context, CancellationToken cancellationToken = new CancellationToken())
+	public Task HandleAsync(ConfigurationItemsUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{

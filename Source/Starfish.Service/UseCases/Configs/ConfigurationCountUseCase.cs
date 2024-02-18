@@ -20,7 +20,7 @@ internal class ConfigurationCountUseCase : IConfigurationCountUseCase
 		_repository = repository;
 	}
 
-	public Task<ConfigurationCountOutput> ExecuteAsync(ConfigurationCountInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task<ConfigurationCountOutput> ExecuteAsync(ConfigurationCountInput input, CancellationToken cancellationToken = default)
 	{
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();
