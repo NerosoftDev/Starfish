@@ -111,7 +111,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPatch("{id}/secret")]
+	[HttpPut("{id}/secret")]
 	public async Task<IActionResult> SetSecretAsync(string id, [FromBody] ConfigurationSecretSetRequestDto data)
 	{
 		await _service.SetSecretAsync(id, data.Secret, HttpContext.RequestAborted);
@@ -123,7 +123,7 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPatch("{id}/disable")]
+	[HttpPut("{id}/disable")]
 	public async Task<IActionResult> DisableAsync(string id)
 	{
 		await _service.DisableAsync(id, HttpContext.RequestAborted);
@@ -135,7 +135,7 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPatch("{id}/enable")]
+	[HttpPut("{id}/enable")]
 	public async Task<IActionResult> EnableAsync(string id)
 	{
 		await _service.EnableAsync(id, HttpContext.RequestAborted);

@@ -23,11 +23,20 @@ internal interface IConfigurationApi
 	[Delete("/api/configuration/{id}")]
 	Task<IApiResponse> DeleteAsync(string id, CancellationToken cancellationToken = default);
 
+	[Put("/api/configuration/{id}/secret")]
+	Task<IApiResponse> SetSecretAsync(string id, [Body] ConfigurationSecretSetRequestDto data, CancellationToken cancellationToken = default);
+
+	[Put("/api/Configuration/{id}/disable")]
+	Task<IApiResponse> DisableAsync(string id, CancellationToken cancellationToken = default);
+
+	[Put("/api/Configuration/{id}/enable")]
+	Task<IApiResponse> EnableAsync(string id, CancellationToken cancellationToken = default);
+
 	[Post("/api/configuration/{id}/publish")]
-	Task<IApiResponse> PublishAsync(string id, [Body] ConfigurationPublishDto data, CancellationToken cancellationToken = default);
+	Task<IApiResponse> PublishAsync(string id, [Body] ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default);
 
 	[Post("/api/configuration/{id}/redis")]
-	Task<IApiResponse> PushRedisAsync(string id, [Body] PushRedisRequestDto data, CancellationToken cancellationToken = default);
+	Task<IApiResponse> PushRedisAsync(string id, [Body] ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default);
 
 	[Get("/api/configuration/{id}/item")]
 	[Headers("x-format: application/json")]
