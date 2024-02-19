@@ -52,5 +52,5 @@ internal interface IConfigurationApi
 	Task<IApiResponse> UpdateValueAsync(string id, string key, [Body] string data, CancellationToken cancellationToken = default);
 
 	[Put("/api/configuration/{id}/item")]
-	Task<IApiResponse> UpdateItemsAsync(string id, [Header("x-format")] string format, [Body] string data, CancellationToken cancellationToken = default);
+	Task<IApiResponse> UpdateItemsAsync(string id, [Body] ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default);
 }
