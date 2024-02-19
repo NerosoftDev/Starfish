@@ -19,7 +19,7 @@
 
         <FluentTextArea Style="width: 100%"
                         Label="Value"
-                        @bind-Value="Request.Value"/>
+                        @bind-Value="Value"/>
     </FluentStack>
 </FluentDialogBody>
 
@@ -40,11 +40,11 @@
 
     private string Key => Content?.Properties?.TryGetValue("key") as string;
 
-    private ConfigurationValueUpdateDto Request { get; } = new();
+    private string Value { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Request.Value = Content?.Properties?.TryGetValue("value") as string;
+        Value = Content?.Properties?.TryGetValue("value") as string;
         await Task.CompletedTask;
     }
 
@@ -53,7 +53,7 @@
         try
         {
             Loading = true;
-            await ConfigurationApi.UpdateItemValueAsync(Content.AppId, Content.Environment, Key, Request)
+            await ConfigurationApi.UpdateValueAsync(Content.Id, Key, Value)
                             .EnsureSuccess();
             await Dialog.CloseAsync(Content);
         }
