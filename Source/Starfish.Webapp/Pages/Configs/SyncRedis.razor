@@ -42,7 +42,7 @@
 
     private bool Loading { get; set; }
 
-    private PushRedisRequestDto Request { get; } = new();
+    private ConfigurationPushRedisRequestDto Request { get; } = new();
 
     private async Task SaveAsync()
     {
@@ -50,7 +50,7 @@
         {
             Loading = true;
 
-            await ConfigurationApi.PushRedisAsync(Content.AppId, Content.Environment, Request)
+            await ConfigurationApi.PushRedisAsync(Content.Id, Request)
                                       .EnsureSuccess();
 
             await Dialog.CloseAsync(Content);
