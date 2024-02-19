@@ -114,10 +114,10 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task UpdateItemsAsync(string id, string format, string data, CancellationToken cancellationToken = default)
+	public Task UpdateItemsAsync(string id, ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationItemsUpdateUseCase>();
-		var input = new ConfigurationItemsUpdateInput(id, format, data);
+		var input = new ConfigurationItemsUpdateInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 

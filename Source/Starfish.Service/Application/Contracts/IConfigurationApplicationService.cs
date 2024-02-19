@@ -118,7 +118,7 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateItemsAsync(string id, string format, string data, CancellationToken cancellationToken = default);
+	Task UpdateItemsAsync(string id, ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 发布配置

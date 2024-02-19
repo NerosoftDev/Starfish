@@ -1,12 +1,13 @@
 ﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
 using Nerosoft.Starfish.Application;
+using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
 public interface IConfigurationItemsUpdateUseCase : INonOutputUseCase<ConfigurationItemsUpdateInput>;
 
-public record ConfigurationItemsUpdateInput(string Id, string Format, string Data);
+public record ConfigurationItemsUpdateInput(string Id, ConfigurationItemsUpdateDto Data);
 
 public class ConfigurationItemsUpdateUseCase : IConfigurationItemsUpdateUseCase
 {
@@ -21,7 +22,7 @@ public class ConfigurationItemsUpdateUseCase : IConfigurationItemsUpdateUseCase
 
 	public Task ExecuteAsync(ConfigurationItemsUpdateInput input, CancellationToken cancellationToken = default)
 	{
-		var format = input.Format?.Normalize(TextCaseType.Lower).Trim(TextTrimType.All);
+		var format = input.Data.Type?.Normalize(TextCaseType.Lower).Trim(TextTrimType.All);
 		var parserName = format switch
 		{
 			Constants.Configuration.FormatText => "text",
@@ -32,8 +33,8 @@ public class ConfigurationItemsUpdateUseCase : IConfigurationItemsUpdateUseCase
 		};
 
 		var parser = _provider.GetKeyedService<IConfigurationParser>(parserName);
-		var data = Cryptography.Base64.Decrypt(input.Data);
-		var command = new ConfigurationItemsUpdateCommand(input.Id, parser.Parse(data));
+		var data = Cryptography.Base64.Decrypt(input.Data.Data);
+		var command = new ConfigurationItemsUpdateCommand(input.Id, input.Data.Mode, parser.Parse(data));
 
 		return _bus.SendAsync(command, cancellationToken)
 		           .ContinueWith(task =>

@@ -227,14 +227,12 @@ public class ConfigurationController : ControllerBase
 	/// 更新配置项
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
 	[HttpPut("{id}/item")]
-	[Consumes("text/plain")]
-	public async Task<IActionResult> UpdateItemsAsync(string id, [FromHeader(Name = "x-format")] string format, [FromBody] string data)
+	public async Task<IActionResult> UpdateItemsAsync(string id, [FromBody] ConfigurationItemsUpdateDto data)
 	{
-		await _service.UpdateItemsAsync(id, format, data, HttpContext.RequestAborted);
+		await _service.UpdateItemsAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
 	}
 }
