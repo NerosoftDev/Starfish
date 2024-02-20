@@ -22,7 +22,7 @@ public class ConfigurationItemsBusiness : CommandObjectBase<ConfigurationItemsBu
 			throw new ConfigurationNotFoundException(id);
 		}
 
-		var permission = await TeamRepository.CheckPermissionAsync(id, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.UserId, cancellationToken);
 
 		switch (permission)
 		{

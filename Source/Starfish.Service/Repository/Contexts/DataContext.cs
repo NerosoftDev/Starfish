@@ -78,8 +78,10 @@ public sealed class DataContext : DataContextBase<DataContext>
 			}
 		}
 
-		var events = GetTrackedEvents();
 		var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+
+		var events = GetTrackedEvents();
+
 		if (result > 0 && events.Count > 0)
 		{
 			var options = new PublishOptions

@@ -114,7 +114,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.Property(t => t.Id)
 			      .IsRequired()
-			      .HasValueGenerator<SnowflakeIdValueGenerator>();
+			      .HasValueGenerator<UuidValueGenerator>();
 
 			entity.HasMany(t => t.Items)
 			      .WithOne()
@@ -124,6 +124,11 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasMany(t => t.Revisions)
 			      .WithOne()
 			      .HasForeignKey(t => t.ConfigurationId)
+			      .OnDelete(DeleteBehavior.Cascade);
+
+			entity.HasOne(t => t.Archive)
+			      .WithOne()
+			      .HasForeignKey<ConfigurationArchive>()
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
 	}
@@ -161,10 +166,6 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.Property(t => t.Id)
 			      .IsRequired();
-
-			entity.HasOne(t => t.Configuration)
-			      .WithOne(t => t.Archive)
-			      .HasForeignKey(nameof(ConfigurationArchive.Id));
 		});
 	}
 

@@ -15,6 +15,8 @@ internal class ConfigurationMappingProfile : Profile
 		CreateMap<ConfigurationItem, ConfigurationItemDto>();
 		CreateMap<Configuration, ConfigurationDto>()
 			.ForMember(dest => dest.StatusName, options => options.MapFrom(src => GetStatusDescription(src.Status)));
+		CreateMap<ConfigurationEditDto, ConfigurationCreateCommand>();
+		CreateMap<ConfigurationEditDto, ConfigurationUpdateCommand>();
 	}
 
 	private static string GetStatusDescription(ConfigurationStatus status)
