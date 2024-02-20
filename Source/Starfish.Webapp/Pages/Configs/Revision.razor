@@ -1,15 +1,12 @@
-﻿@page "/apps/{appId:long}/configs/{configId}/revision"
+﻿@page "/configs/{id}/revision"
 
 <FluentBreadcrumb Style="margin-bottom: 16px;">
     <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentBreadcrumbItem>
-    <FluentBreadcrumbItem Href="@($"/apps/{AppId}/configs")">@(Resources.IDS_BREADCRUMB_CONFIG)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/configs">@(Resources.IDS_MENU_TEXT_CONFIGS)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="@($"/configs/{Id}")">@(Resources.IDS_BREADCRUMB_CONFIG)</FluentBreadcrumbItem>
 </FluentBreadcrumb>
 
 @code {
     [Parameter]
-    public string AppId { get; set; }
-    
-    [Parameter]
-    public long ConfigId { get; set; }
+    public string Id { get; set; }
 }

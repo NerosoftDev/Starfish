@@ -1,0 +1,174 @@
+﻿@page "/configs/{id}"
+
+@attribute [Authorize]
+
+@inject IDialogService DialogService
+@inject IConfigurationApi ConfigurationApi
+
+<FluentBreadcrumb Style="margin-bottom: 16px;">
+    <FluentBreadcrumbItem Href="/">@(Resources.IDS_MENU_TEXT_HOME)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="/configs">@(Resources.IDS_MENU_TEXT_CONFIGS)</FluentBreadcrumbItem>
+    <FluentBreadcrumbItem Href="@($"/configs/{Id}")">@(Resources.IDS_BREADCRUMB_CONFIG)</FluentBreadcrumbItem>
+</FluentBreadcrumb>
+
+<FluentCard>
+    <FluentGrid>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <div class="search-bar">
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)"
+                              @bind-Value="Keyword"/>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">
+                    @(Resources.IDS_COMMON_SEARCH)
+                </FluentButton>
+                <FluentSpacer/>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.CodeText())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(Constants.Configuration.FormatJson))">@(Resources.IDS_CONFIG_INDEX_BUTTON_EDIT_JSON)</FluentButton>
+                @if (Configuration?.Status == "Pending")
+                {
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Send())" OnClick="@OnPublishClicked">@(Resources.IDS_CONFIG_INDEX_BUTTON_PUBLISH)</FluentButton>
+                }
+                <FluentButton IconStart="@(new Icons.Regular.Size16.SyncOff())" OnClick="@OnSyncRedisClicked">@(Resources.IDS_CONFIG_INDEX_BUTTON_SYNC_REDIS)</FluentButton>
+            </div>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46"
+                            GenerateHeader="GenerateHeaderOption.Sticky"
+                            TGridItem="ConfigurationItemDto"
+                            GridTemplateColumns="1fr 1fr 0.2fr">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_CONFIG_INDEX_COLUMN_KEY)" Property="@(c => c.Key)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_CONFIG_INDEX_COLUMN_VALUE)" Property="@(c => c.Value)"/>
+                <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditValueClicked(context.Key, context.Value))"/>
+                </TemplateColumn>
+            </FluentDataGrid>
+        </FluentGridItem>
+        <FluentGridItem lg="12" sm="12" md="12">
+            <FluentDataGridPaginator State="@Pagination"/>
+        </FluentGridItem>
+    </FluentGrid>
+</FluentCard>
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal Identity { get; set; }
+
+    private string Keyword { get; set; }
+
+    private GridItemsProvider<ConfigurationItemDto> _provider;
+
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
+
+    private int Total { get; set; }
+
+    private ConfigurationDto Configuration { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthenticationState;
+
+        Identity = new UserPrincipal(user.User);
+
+        await LoadConfigurationDetailAsync();
+
+        _provider = async request =>
+        {
+            List<ConfigurationItemDto> items = null;
+            var tasks = new List<Task>
+            {
+                ConfigurationApi.GetItemListAsync(Id, Keyword, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
+                                .EnsureSuccess(result => items = result, request.CancellationToken)
+            };
+
+            if (request.StartIndex == 0)
+            {
+                tasks.Add(
+                    ConfigurationApi.GetItemCountAsync(Id, request.CancellationToken)
+                                    .EnsureSuccess(result => Total = result, request.CancellationToken)
+                );
+            }
+
+            await Task.WhenAll(tasks).Guard();
+            await Pagination.SetTotalItemCountAsync(Total);
+            return GridItemsProviderResult.From(items, Total);
+        };
+    }
+
+    private async Task OnEditClicked(string format)
+    {
+        var args = new EditDialogArgs(Id)
+        {
+            Properties = new Dictionary<string, object>
+            {
+                ["format"] = format //Constants.Configuration.FormatText
+            }
+        };
+
+        var title = format switch
+        {
+            Constants.Configuration.FormatText => Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_TEXT,
+            Constants.Configuration.FormatJson => Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON,
+            _ => string.Empty
+        };
+
+        var dialog = await DialogService.ShowDialogAsync<EditItems>(args, new DialogParameters { Title = title, Width = "calc(100% - 2px)", Height = "calc(100% - 2px)", PreventDismissOnOverlayClick = true });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnEditValueClicked(string key, string value)
+    {
+        var args = new EditDialogArgs(Id)
+        {
+            Properties = new Dictionary<string, object>
+            {
+                ["key"] = key,
+                ["value"] = value
+            }
+        };
+
+        var dialog = await DialogService.ShowDialogAsync<EditValue>(args, new DialogParameters { Title = Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_VALUE, PreventDismissOnOverlayClick = true });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
+    }
+
+    private async Task OnPublishClicked()
+    {
+        var args = new EditDialogArgs(Id);
+        var dialog = await DialogService.ShowDialogAsync<Publish>(args, new DialogParameters { Title = Resources.IDS_CONFIG_PUBLISH_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await LoadConfigurationDetailAsync();
+        }
+    }
+
+    private async Task OnSyncRedisClicked()
+    {
+        var args = new EditDialogArgs(Id);
+        await DialogService.ShowDialogAsync<SyncRedis>(args, new DialogParameters { Title = Resources.IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE, PreventDismissOnOverlayClick = true });
+    }
+
+    private async Task OnSearchClicked()
+    {
+        await Pagination.SetCurrentPageIndexAsync(0);
+    }
+
+    private Task LoadConfigurationDetailAsync(CancellationToken cancellationToken = default)
+    {
+        return ConfigurationApi.GetAsync(Id, cancellationToken)
+                               .EnsureSuccess(result => Configuration = result, cancellationToken)
+                               .Guard();
+    }
+
+}
