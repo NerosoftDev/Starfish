@@ -117,75 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>App detail</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_CODE" xml:space="preserve">
-    <value>Code</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_NAME" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_STATUS" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_TEAM" xml:space="preserve">
-    <value>Team</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
-    <value>Code</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
-    <value>Secret</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
-    <value>Select a team</value>
-  </data>
-  <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>Add app</value>
-  </data>
-  <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>Edit app</value>
-  </data>
-  <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>Add app</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
-    <value>Code</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_ID" xml:space="preserve">
-    <value>App Id</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_TEAM" xml:space="preserve">
-    <value>Team</value>
-  </data>
-  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>Are you sure to remove this app '{0}'?</value>
-  </data>
-  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>Remove App</value>
-  </data>
-  <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
-    <value>The system will encrypt the secret and can not be decrypted. You should keep the secret yourself. If you forget the origin secret, please reset it.</value>
-  </data>
-  <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
-    <value>Reset secret</value>
-  </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
     <value>Detail</value>
   </data>
@@ -259,16 +190,55 @@
     <value>Yes</value>
   </data>
   <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
-    <value>Are you sure delete this configuration?</value>
+    <value>Are you sure delete configuration '{0}'?</value>
   </data>
   <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
     <value>Delete configuration</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_PUBLISH_TIME" xml:space="preserve">
+    <value>Publish time</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>Configuration detail</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SELECT_TEAM" xml:space="preserve">
+    <value>Select team</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_ADD" xml:space="preserve">
+    <value>Add configuration</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>Create from Json</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
     <value>Create from Text</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT" xml:space="preserve">
+    <value>Edit configuration</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
     <value>Edit as Json</value>
@@ -281,6 +251,9 @@
   </data>
   <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
     <value>Environment</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>Add configuration</value>
   </data>
   <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
     <value>Delete</value>
@@ -299,6 +272,15 @@
   </data>
   <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
     <value>Key</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_TEAM" xml:space="preserve">
+    <value>Team</value>
   </data>
   <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
     <value>Value</value>
@@ -338,6 +320,15 @@
   </data>
   <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
     <value>Publish configuration</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
+    <value>The system will encrypt the secret and can not be decrypted. You should keep the secret yourself. If you forget the origin secret, please reset it.</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
+    <value>Reset secret</value>
   </data>
   <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
     <value>Start</value>
@@ -419,6 +410,9 @@
   </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
     <value>Apps</value>
+  </data>
+  <data name="IDS_MENU_TEXT_CONFIGS" xml:space="preserve">
+    <value>Configurations</value>
   </data>
   <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
     <value>Home</value>
@@ -584,5 +578,8 @@
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>User name</value>
+  </data>
+  <data name="IDS_USER_RESET_PASSWORD_DIALOG_TITLE" xml:space="preserve">
+    <value>Reset password</value>
   </data>
 </root>

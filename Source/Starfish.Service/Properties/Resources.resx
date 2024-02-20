@@ -171,6 +171,9 @@
   <data name="IDS_ERROR_CONFIG_KEY_NOT_EXISTS" xml:space="preserve">
     <value>Configuration key '{0}' not exists.</value>
   </data>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
+    <value>Configuration not exists.</value>
+  </data>
   <data name="IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID" xml:space="preserve">
     <value>Configuration not exists, [Id]:{0}.</value>
   </data>
@@ -281,8 +284,5 @@
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
     <value>Update configuration, [Id]:{0}, [Name]:{1}.</value>
-  </data>
-  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
-    <value>Configuration not exists.</value>
   </data>
 </root>

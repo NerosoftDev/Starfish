@@ -117,75 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>应用详情</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_CODE" xml:space="preserve">
-    <value>应用代码</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>应用描述</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_NAME" xml:space="preserve">
-    <value>应用名称</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_STATUS" xml:space="preserve">
-    <value>应用状态</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_TEAM" xml:space="preserve">
-    <value>团队</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
-    <value>应用代码</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>应用描述</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>应用名称</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
-    <value>访问密钥</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
-    <value>选择所属团队</value>
-  </data>
-  <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>新增应用</value>
-  </data>
-  <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>编辑应用</value>
-  </data>
-  <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>新增</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
-    <value>代码</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_ID" xml:space="preserve">
-    <value>应用Id</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
-    <value>名称</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
-    <value>状态</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_TEAM" xml:space="preserve">
-    <value>团队</value>
-  </data>
-  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>确定要删除应用 '{0}'？</value>
-  </data>
-  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>删除应用</value>
-  </data>
-  <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
-    <value>访问密钥将被加密存储且无法解密，请自行保管。如果忘记密钥，请重新设置。</value>
-  </data>
-  <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
-    <value>重置密钥</value>
-  </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
     <value>应用详情</value>
   </data>
@@ -259,16 +190,40 @@
     <value>是</value>
   </data>
   <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
-    <value>确定要删除配置吗？</value>
+    <value>确定要删除配置'{0}'吗？</value>
   </data>
   <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
     <value>删除配置</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_ID" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>配置详情</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>密钥</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SELECT_TEAM" xml:space="preserve">
+    <value>选择团队</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_ADD" xml:space="preserve">
+    <value>新增配置</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>从Json创建</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
     <value>从文本创建</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT" xml:space="preserve">
+    <value>编辑配置</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
     <value>编辑Json</value>
@@ -281,6 +236,9 @@
   </data>
   <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
     <value>应用环境</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>新增配置</value>
   </data>
   <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
     <value>删除</value>
@@ -299,6 +257,15 @@
   </data>
   <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
     <value>键</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_TEAM" xml:space="preserve">
+    <value>团队</value>
   </data>
   <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
     <value>值</value>
@@ -338,6 +305,15 @@
   </data>
   <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
     <value>发布配置</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>密钥</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
+    <value>访问密钥将被加密存储且无法解密，请自行保管。如果忘记密钥，请重新设置。</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
+    <value>重置密钥</value>
   </data>
   <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
     <value>开始同步</value>
@@ -419,6 +395,9 @@
   </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
     <value>应用</value>
+  </data>
+  <data name="IDS_MENU_TEXT_CONFIGS" xml:space="preserve">
+      <value>配置</value>
   </data>
   <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
     <value>首页</value>
@@ -584,5 +563,23 @@
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用户名</value>
+  </data>
+  <data name="IDS_USER_RESET_PASSWORD_DIALOG_TITLE" xml:space="preserve">
+    <value>重置密码</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_PUBLISH_TIME" xml:space="preserve">
+    <value>发布时间</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_STATUS" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>版本</value>
   </data>
 </root>

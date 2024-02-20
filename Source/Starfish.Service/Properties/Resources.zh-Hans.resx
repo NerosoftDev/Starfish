@@ -189,9 +189,15 @@
     <value>配置项 '{0}' 不存在。</value>
     <comment />
   </data>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
+    <value>配置不存在。</value>
+  </data>
   <data name="IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID" xml:space="preserve">
     <value>配置不存在，[Id]:{0}。</value>
     <comment />
+  </data>
+  <data name="IDS_ERROR_CONFIG_NO_ITEMS" xml:space="preserve">
+    <value>没有找到配置项。</value>
   </data>
   <data name="IDS_ERROR_CONFIG_NO_PENDING_ITEM" xml:space="preserve">
     <value>没有待发布的配置。</value>
@@ -332,11 +338,5 @@
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
     <value>更新配置，[Id]:{0}，[名称]:{1}。</value>
     <comment />
-  </data>
-  <data name="IDS_ERROR_CONFIG_NO_ITEMS" xml:space="preserve">
-    <value>没有找到配置项。</value>
-  </data>
-  <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
-    <value>配置不存在。</value>
   </data>
 </root>

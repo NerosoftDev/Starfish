@@ -117,75 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IDS_APPS_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>應用詳情</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_CODE" xml:space="preserve">
-    <value>應用代碼</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>應用描述</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_NAME" xml:space="preserve">
-    <value>應用名稱</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_STATUS" xml:space="preserve">
-    <value>應用狀態</value>
-  </data>
-  <data name="IDS_APPS_DETAIL_LABEL_TEAM" xml:space="preserve">
-    <value>團隊</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_CODE" xml:space="preserve">
-    <value>應用代碼</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>應用描述</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_NAME" xml:space="preserve">
-    <value>應用名稱</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_SECRET" xml:space="preserve">
-    <value>訪問密鑰</value>
-  </data>
-  <data name="IDS_APPS_EDIT_LABEL_SELECT_TEAM" xml:space="preserve">
-    <value>選擇所屬團隊</value>
-  </data>
-  <data name="IDS_APPS_EDIT_TITLE_ADD" xml:space="preserve">
-    <value>新增應用</value>
-  </data>
-  <data name="IDS_APPS_EDIT_TITLE_EDIT" xml:space="preserve">
-    <value>編輯應用</value>
-  </data>
-  <data name="IDS_APPS_INDEX_BUTTON_ADD" xml:space="preserve">
-    <value>新增</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_CODE" xml:space="preserve">
-    <value>代碼</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_ID" xml:space="preserve">
-    <value>應用Id</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_NAME" xml:space="preserve">
-    <value>姓名</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_STATUS" xml:space="preserve">
-    <value>狀態</value>
-  </data>
-  <data name="IDS_APPS_INDEX_COLUMN_TEAM" xml:space="preserve">
-    <value>團隊</value>
-  </data>
-  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_MESSAGE" xml:space="preserve">
-    <value>確定要刪除此應用“{0}”嗎？</value>
-  </data>
-  <data name="IDS_APPS_INDEX_REMOVE_CONFIRMATION_TITLE" xml:space="preserve">
-    <value>刪除應用</value>
-  </data>
-  <data name="IDS_APPS_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
-    <value>存取密鑰將被加密儲存且無法解密，請自行保管。 如果忘記密鑰，請重新設定。</value>
-  </data>
-  <data name="IDS_APPS_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
-    <value>重置密鑰</value>
-  </data>
   <data name="IDS_BREADCRUMB_APPS_DETAIL" xml:space="preserve">
     <value>應用詳情</value>
   </data>
@@ -259,10 +190,13 @@
     <value>是</value>
   </data>
   <data name="IDS_CONFIG_DELETE_CONFIRM_MESSAGE" xml:space="preserve">
-    <value>確定要刪除配置嗎？</value>
+    <value>確定要刪除配置'{0}'嗎？</value>
   </data>
   <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
     <value>刪除配置</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_ID" xml:space="preserve">
+    <value>Id</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>從Json創建</value>
@@ -281,6 +215,9 @@
   </data>
   <data name="IDS_CONFIG_EDIT_LABEL_ENVIRONMENT" xml:space="preserve">
     <value>應用環境</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_BUTTON_ADD" xml:space="preserve">
+    <value>新增配置</value>
   </data>
   <data name="IDS_CONFIG_INDEX_BUTTON_DELETE" xml:space="preserve">
     <value>刪除</value>
@@ -338,6 +275,15 @@
   </data>
   <data name="IDS_CONFIG_PUBLISH_DIALOG_TITLE" xml:space="preserve">
     <value>發佈配置</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>密鑰</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_TIPS" xml:space="preserve">
+    <value>存取密鑰將被加密儲存且無法解密，請自行保管。 如果忘記密鑰，請重新設定。</value>
+  </data>
+  <data name="IDS_CONFIG_RESET_SECRET_DIALOG_TITLE" xml:space="preserve">
+    <value>重置密鑰</value>
   </data>
   <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_BUTTON_START" xml:space="preserve">
     <value>開始同步</value>
@@ -419,6 +365,9 @@
   </data>
   <data name="IDS_MENU_TEXT_APPS" xml:space="preserve">
     <value>應用</value>
+  </data>
+  <data name="IDS_MENU_TEXT_CONFIGS" xml:space="preserve">
+      <value>配置</value>
   </data>
   <data name="IDS_MENU_TEXT_HOME" xml:space="preserve">
     <value>首頁</value>
@@ -584,5 +533,53 @@
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用戶名</value>
+  </data>
+  <data name="IDS_USER_RESET_PASSWORD_DIALOG_TITLE" xml:space="preserve">
+    <value>重設密碼</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_PUBLISH_TIME" xml:space="preserve">
+    <value>發佈時間</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_STATUS" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>配置詳情</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>密鑰</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SELECT_TEAM" xml:space="preserve">
+    <value>選擇團隊</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_ADD" xml:space="preserve">
+    <value>新增配置</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT" xml:space="preserve">
+    <value>編輯配置</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_TEAM" xml:space="preserve">
+    <value>團隊</value>
   </data>
 </root>
