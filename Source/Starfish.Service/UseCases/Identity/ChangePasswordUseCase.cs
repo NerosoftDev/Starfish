@@ -7,11 +7,11 @@ using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IChangePasswordUseCase : INonOutputUseCase<ChangePasswordInput>;
+internal interface IChangePasswordUseCase : INonOutputUseCase<ChangePasswordInput>;
 
-public record ChangePasswordInput(string OldPassword, string NewPassword) : IUseCaseInput;
+internal record ChangePasswordInput(string OldPassword, string NewPassword) : IUseCaseInput;
 
-public class ChangePasswordUseCase : IChangePasswordUseCase
+internal class ChangePasswordUseCase : IChangePasswordUseCase
 {
 	private readonly IUserRepository _repository;
 	private readonly IBus _bus;

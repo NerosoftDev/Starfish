@@ -8,19 +8,19 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 配置节点发布用例接口
 /// </summary>
-public interface IConfigurationPublishUseCase : INonOutputUseCase<ConfigurationPublishInput>;
+internal interface IConfigurationPublishUseCase : INonOutputUseCase<ConfigurationPublishInput>;
 
 /// <summary>
 /// 配置节点发布输入
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Data"></param>
-public record ConfigurationPublishInput(string Id, ConfigurationPublishRequestDto Data) : IUseCaseInput;
+internal record ConfigurationPublishInput(string Id, ConfigurationPublishRequestDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例
 /// </summary>
-public class ConfigurationPublishUseCase : IConfigurationPublishUseCase
+internal class ConfigurationPublishUseCase : IConfigurationPublishUseCase
 {
 	private readonly IBus _bus;
 

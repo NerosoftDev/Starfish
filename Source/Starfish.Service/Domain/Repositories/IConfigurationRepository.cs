@@ -14,7 +14,7 @@ public interface IConfigurationRepository : IBaseRepository<DataContext, Configu
 	/// <returns></returns>
 	Task<bool> ExistsAsync(string teamId, string name, CancellationToken cancellationToken = default);
 
-	Task<List<ConfigurationItem>> GetItemListAsync(string id, int skip, int count, CancellationToken cancellationToken = default);
+	Task<List<ConfigurationItem>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default);
 
-	Task<int> GetItemCountAsync(string id, CancellationToken cancellationToken = default);
+	Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default);
 }

@@ -7,13 +7,13 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ITeamCountUseCase : IUseCase<TeamCountInput, TeamCountOutput>;
+internal interface ITeamCountUseCase : IUseCase<TeamCountInput, TeamCountOutput>;
 
-public record TeamCountInput(TeamCriteria Criteria) : IUseCaseInput;
+internal record TeamCountInput(TeamCriteria Criteria) : IUseCaseInput;
 
-public record TeamCountOutput(int Result) : IUseCaseOutput;
+internal record TeamCountOutput(int Result) : IUseCaseOutput;
 
-public class TeamCountUseCase : ITeamCountUseCase
+internal class TeamCountUseCase : ITeamCountUseCase
 {
 	private readonly ITeamRepository _repository;
 	private readonly UserPrincipal _identity;

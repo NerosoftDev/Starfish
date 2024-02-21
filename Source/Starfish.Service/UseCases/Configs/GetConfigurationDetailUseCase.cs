@@ -10,24 +10,24 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 获取配置节点详情用例接口
 /// </summary>
-public interface IGetConfigurationDetailUseCase : IUseCase<GetConfigurationDetailInput, GetConfigurationDetailOutput>;
+internal interface IGetConfigurationDetailUseCase : IUseCase<GetConfigurationDetailInput, GetConfigurationDetailOutput>;
 
 /// <summary>
 /// 获取配置节点详情用例输出
 /// </summary>
 /// <param name="Result"></param>
-public record GetConfigurationDetailOutput(ConfigurationDto Result) : IUseCaseOutput;
+internal record GetConfigurationDetailOutput(ConfigurationDto Result) : IUseCaseOutput;
 
 /// <summary>
 /// 获取配置节点详情用例输入
 /// </summary>
 /// <param name="Id"></param>
-public record GetConfigurationDetailInput(string Id) : IUseCaseInput;
+internal record GetConfigurationDetailInput(string Id) : IUseCaseInput;
 
 /// <summary>
 /// 获取配置节点详情用例
 /// </summary>
-public class GetConfigurationDetailUseCase : IGetConfigurationDetailUseCase
+internal class GetConfigurationDetailUseCase : IGetConfigurationDetailUseCase
 {
 	private readonly IConfigurationRepository _repository;
 

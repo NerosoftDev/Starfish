@@ -12,7 +12,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	public Task<List<ConfigurationDto>> QueryAsync(ConfigurationCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationQueryUseCase>();
-		var input = new ConfigurationQueryInput(criteria, skip, count);
+		var input = new GenericQueryInput<ConfigurationCriteria>(criteria, skip, count);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
@@ -26,19 +26,19 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<List<ConfigurationItemDto>> GetItemListAsync(string id, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItemDto>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemListUseCase>();
-		var input = new GetConfigurationItemListInput(id, skip, count);
+		var input = new GetConfigurationItemListInput(id, key, skip, count);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<int> GetItemCountAsync(string id, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemCountUseCase>();
-		var input = new GetConfigurationItemCountInput(id);
+		var input = new GetConfigurationItemCountInput(id, key);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
@@ -143,7 +143,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	{
 		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>()
 		                                .GetKeyedService<IConfigurationParser>(format.Normalize(TextCaseType.Lower));
-		return GetItemListAsync(id, 0, int.MaxValue, cancellationToken)
+		return GetItemListAsync(id, string.Empty, 0, int.MaxValue, cancellationToken)
 			.ContinueWith(task =>
 			{
 				task.WaitAndUnwrapException(cancellationToken);

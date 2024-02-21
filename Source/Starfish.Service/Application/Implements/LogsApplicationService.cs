@@ -13,7 +13,7 @@ public class LogsApplicationService : BaseApplicationService, ILogsApplicationSe
 	public Task<List<OperateLogDto>> QueryAsync(OperateLogCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<ILogsQueryUseCase>();
-		return useCase.ExecuteAsync(new LogsQueryUseCaseInput(criteria, skip, count), cancellationToken)
+		return useCase.ExecuteAsync(new GenericQueryInput<OperateLogCriteria>(criteria, skip, count), cancellationToken)
 					  .ContinueWith(task => task.Result.Logs, cancellationToken);
 	}
 

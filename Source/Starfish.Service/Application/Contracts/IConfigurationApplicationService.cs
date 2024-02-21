@@ -16,19 +16,21 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// 获取配置项列表
 	/// </summary>
 	/// <param name="id"></param>
+	/// <param name="key"></param>
 	/// <param name="skip"></param>
 	/// <param name="count"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<ConfigurationItemDto>> GetItemListAsync(string id, int skip, int count, CancellationToken cancellationToken = default);
+	Task<List<ConfigurationItemDto>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置项数量
 	/// </summary>
 	/// <param name="id"></param>
+	/// <param name="key"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<int> GetItemCountAsync(string id, CancellationToken cancellationToken = default);
+	Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置详情
@@ -114,7 +116,6 @@ public interface IConfigurationApplicationService : IApplicationService
 	/// 批量更新配置项
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="format"></param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>

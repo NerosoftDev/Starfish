@@ -4,11 +4,11 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IConfigurationValueUpdateUseCase : INonOutputUseCase<ConfigurationValueUpdateInput>;
+internal interface IConfigurationValueUpdateUseCase : INonOutputUseCase<ConfigurationValueUpdateInput>;
 
-public record ConfigurationValueUpdateInput(string Id, string Key, string Value) : IUseCaseInput;
+internal record ConfigurationValueUpdateInput(string Id, string Key, string Value) : IUseCaseInput;
 
-public class ConfigurationValueUpdateUseCase : IConfigurationValueUpdateUseCase
+internal class ConfigurationValueUpdateUseCase : IConfigurationValueUpdateUseCase
 {
 	private readonly IBus _bus;
 

@@ -6,11 +6,11 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IConfigurationCreateUseCase : IUseCase<ConfigurationCreateInput, string>;
+internal interface IConfigurationCreateUseCase : IUseCase<ConfigurationCreateInput, string>;
 
-public record ConfigurationCreateInput(string TeamId, ConfigurationEditDto Data) : IUseCaseInput;
+internal record ConfigurationCreateInput(string TeamId, ConfigurationEditDto Data) : IUseCaseInput;
 
-public class ConfigurationCreateUseCase : IConfigurationCreateUseCase
+internal class ConfigurationCreateUseCase : IConfigurationCreateUseCase
 {
 	private readonly IBus _bus;
 

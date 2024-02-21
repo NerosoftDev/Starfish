@@ -5,11 +5,11 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IConfigurationItemsUpdateUseCase : INonOutputUseCase<ConfigurationItemsUpdateInput>;
+internal interface IConfigurationItemsUpdateUseCase : INonOutputUseCase<ConfigurationItemsUpdateInput>;
 
-public record ConfigurationItemsUpdateInput(string Id, ConfigurationItemsUpdateDto Data);
+internal record ConfigurationItemsUpdateInput(string Id, ConfigurationItemsUpdateDto Data);
 
-public class ConfigurationItemsUpdateUseCase : IConfigurationItemsUpdateUseCase
+internal class ConfigurationItemsUpdateUseCase : IConfigurationItemsUpdateUseCase
 {
 	private readonly IBus _bus;
 	private readonly IServiceProvider _provider;

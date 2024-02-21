@@ -9,27 +9,27 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 获取符合条件的配置列表用例接口
 /// </summary>
-public interface IGetConfigurationItemListUseCase : IUseCase<GetConfigurationItemListInput, GetConfigurationItemListOutput>;
+internal interface IGetConfigurationItemListUseCase : IUseCase<GetConfigurationItemListInput, GetConfigurationItemListOutput>;
 
 /// <summary>
 /// 获取符合条件的配置列表用例输出
 /// </summary>
 /// <param name="Result"></param>
-public record GetConfigurationItemListOutput(List<ConfigurationItemDto> Result) : IUseCaseOutput;
+internal record GetConfigurationItemListOutput(List<ConfigurationItemDto> Result) : IUseCaseOutput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例输入
 /// </summary>
 /// <param name="Id"></param>
-/// <param name="Environment"></param>
+/// <param name="Key"></param>
 /// <param name="Skip"></param>
 /// <param name="Count"></param>
-public record GetConfigurationItemListInput(string Id, int Skip, int Count) : IUseCaseInput;
+internal record GetConfigurationItemListInput(string Id, string Key, int Skip, int Count) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例
 /// </summary>
-public class GetConfigurationItemListUseCase : IGetConfigurationItemListUseCase
+internal class GetConfigurationItemListUseCase : IGetConfigurationItemListUseCase
 {
 	private readonly IConfigurationRepository _repository;
 	private readonly UserPrincipal _identity;
@@ -63,7 +63,7 @@ public class GetConfigurationItemListUseCase : IGetConfigurationItemListUseCase
 			throw new AuthenticationException();
 		}
 
-		return _repository.GetItemListAsync(input.Id, 0, input.Count, cancellationToken)
+		return _repository.GetItemListAsync(input.Id, input.Key, input.Skip, input.Count, cancellationToken)
 		                  .ContinueWith(task =>
 		                  {
 			                  task.WaitAndUnwrapException(cancellationToken);

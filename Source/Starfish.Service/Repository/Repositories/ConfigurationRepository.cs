@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Repository;
 using Nerosoft.Starfish.Domain;
@@ -25,21 +26,45 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
-	public Task<List<ConfigurationItem>> GetItemListAsync(string id, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItem>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<ConfigurationItem>()
 		                   .AsQueryable()
 		                   .AsNoTracking();
-		return query.Where(t => t.ConfigurationId == id)
+		var expressions = new List<Expression<Func<ConfigurationItem, bool>>>
+		{
+			t=>t.ConfigurationId == id
+		};
+
+		if (!string.IsNullOrWhiteSpace(key))
+		{
+			expressions.Add(t => t.Key.Contains(key));
+		}
+
+		var predicate = expressions.Compose();
+
+		return query.Where(predicate)
 		            .Skip(skip)
 		            .Take(count)
 		            .ToListAsync(cancellationToken);
 	}
 
-	public Task<int> GetItemCountAsync(string id, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<ConfigurationItem>()
 		                   .AsQueryable();
-		return query.Where(t => t.ConfigurationId == id).CountAsync(cancellationToken);
+		var expressions = new List<Expression<Func<ConfigurationItem, bool>>>
+		{
+			t=>t.ConfigurationId == id
+		};
+
+		if (!string.IsNullOrWhiteSpace(key))
+		{
+			expressions.Add(t => t.Key.Contains(key));
+		}
+
+		var predicate = expressions.Compose();
+
+		return query.Where(predicate).CountAsync(cancellationToken);
 	}
 }

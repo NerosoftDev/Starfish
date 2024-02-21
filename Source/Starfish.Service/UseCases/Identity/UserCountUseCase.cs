@@ -5,9 +5,9 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserCountUseCase : IUseCase<UserCriteria, int>;
+internal interface IUserCountUseCase : IUseCase<UserCriteria, int>;
 
-public class UserCountUseCase : IUserCountUseCase
+internal class UserCountUseCase : IUserCountUseCase
 {
 	private readonly IUserRepository _repository;
 

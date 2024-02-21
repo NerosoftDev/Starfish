@@ -172,13 +172,14 @@ public class ConfigurationController : ControllerBase
 	/// 获取配置项列表
 	/// </summary>
 	/// <param name="id">应用Id</param>
+	/// <param name="key"></param>
 	/// <param name="skip"></param>
 	/// <param name="count"></param>
 	/// <param name="format"></param>
 	/// <returns></returns>
 	[HttpGet("{id}/item")]
 	[Produces(typeof(List<ConfigurationItemDto>))]
-	public async Task<IActionResult> GetItemListAsync(string id, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
+	public async Task<IActionResult> GetItemListAsync(string id, string key, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
 	{
 		switch (format)
 		{
@@ -189,7 +190,7 @@ public class ConfigurationController : ControllerBase
 				var json = await _service.GetItemsInTextAsync(id, "json", HttpContext.RequestAborted);
 				return Ok(json);
 			default:
-				var result = await _service.GetItemListAsync(id, skip, count, HttpContext.RequestAborted);
+				var result = await _service.GetItemListAsync(id, key, skip, count, HttpContext.RequestAborted);
 				return Ok(result);
 		}
 	}
@@ -198,12 +199,13 @@ public class ConfigurationController : ControllerBase
 	/// 获取配置项数量
 	/// </summary>
 	/// <param name="id">应用Id</param>
+	/// <param name="keyword">关键字</param>
 	/// <returns></returns>
 	[HttpGet("{id}/item/count")]
 	[Produces(typeof(int))]
-	public async Task<IActionResult> GetItemCountAsync(string id)
+	public async Task<IActionResult> GetItemCountAsync(string id, string keyword)
 	{
-		var result = await _service.GetItemCountAsync(id, HttpContext.RequestAborted);
+		var result = await _service.GetItemCountAsync(id, keyword, HttpContext.RequestAborted);
 		return Ok(result);
 	}
 

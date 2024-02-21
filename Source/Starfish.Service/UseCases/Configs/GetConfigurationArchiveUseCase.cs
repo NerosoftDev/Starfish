@@ -3,13 +3,13 @@ using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IGetConfigurationArchiveUseCase : IUseCase<GetConfigurationArchiveInput, GetConfigurationArchiveOutput>;
+internal interface IGetConfigurationArchiveUseCase : IUseCase<GetConfigurationArchiveInput, GetConfigurationArchiveOutput>;
 
-public record GetConfigurationArchiveOutput(string Result) : IUseCaseOutput;
+internal record GetConfigurationArchiveOutput(string Result) : IUseCaseOutput;
 
-public record GetConfigurationArchiveInput(string Id) : IUseCaseInput;
+internal record GetConfigurationArchiveInput(string Id) : IUseCaseInput;
 
-public class GetConfigurationArchiveUseCase : IGetConfigurationArchiveUseCase
+internal class GetConfigurationArchiveUseCase : IGetConfigurationArchiveUseCase
 {
 	private readonly IConfigurationRepository _repository;
 

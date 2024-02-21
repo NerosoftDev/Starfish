@@ -5,9 +5,7 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-internal interface IConfigurationQueryUseCase : IUseCase<ConfigurationQueryInput, ConfigurationQueryOutput>;
-
-internal record ConfigurationQueryInput(ConfigurationCriteria Criteria, int Skip, int Count) : IUseCaseInput;
+internal interface IConfigurationQueryUseCase : IUseCase<GenericQueryInput<ConfigurationCriteria>, ConfigurationQueryOutput>;
 
 internal record ConfigurationQueryOutput(List<ConfigurationDto> Result) : IUseCaseOutput;
 
@@ -20,7 +18,7 @@ internal class ConfigurationQueryUseCase : IConfigurationQueryUseCase
 		_repository = repository;
 	}
 
-	public Task<ConfigurationQueryOutput> ExecuteAsync(ConfigurationQueryInput input, CancellationToken cancellationToken = default)
+	public Task<ConfigurationQueryOutput> ExecuteAsync(GenericQueryInput<ConfigurationCriteria> input, CancellationToken cancellationToken = default)
 	{
 		var specification = input.Criteria.GetSpecification();
 		var predicate = specification.Satisfy();

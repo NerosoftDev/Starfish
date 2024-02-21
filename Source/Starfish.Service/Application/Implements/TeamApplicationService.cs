@@ -9,7 +9,7 @@ public class TeamApplicationService : BaseApplicationService, ITeamApplicationSe
 	public Task<List<TeamItemDto>> QueryAsync(TeamCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var userCase = LazyServiceProvider.GetService<ITeamQueryUseCase>();
-		var input = new TeamQueryInput(criteria, skip, count);
+		var input = new GenericQueryInput<TeamCriteria>(criteria, skip, count);
 		return userCase.ExecuteAsync(input, cancellationToken)
 		               .ContinueWith(task => task.Result.Result, cancellationToken);
 	}

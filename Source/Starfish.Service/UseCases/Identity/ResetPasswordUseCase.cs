@@ -4,11 +4,11 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IResetPasswordUseCase : INonOutputUseCase<ResetPasswordInput>;
+internal interface IResetPasswordUseCase : INonOutputUseCase<ResetPasswordInput>;
 
-public record ResetPasswordInput(string Id, string Password) : IUseCaseInput;
+internal record ResetPasswordInput(string Id, string Password) : IUseCaseInput;
 
-public class ResetPasswordUseCase : IResetPasswordUseCase
+internal class ResetPasswordUseCase : IResetPasswordUseCase
 {
 	private readonly IBus _bus;
 

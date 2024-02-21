@@ -4,11 +4,11 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ISetConfigurationSecretUseCase : INonOutputUseCase<SetConfigurationSecretInput>;
+internal interface ISetConfigurationSecretUseCase : INonOutputUseCase<SetConfigurationSecretInput>;
 
-public record SetConfigurationSecretInput(string Id, string Secret) : IUseCaseInput;
+internal record SetConfigurationSecretInput(string Id, string Secret) : IUseCaseInput;
 
-public class SetConfigurationSecretUseCase : ISetConfigurationSecretUseCase
+internal class SetConfigurationSecretUseCase : ISetConfigurationSecretUseCase
 {
 	private readonly IBus _bus;
 

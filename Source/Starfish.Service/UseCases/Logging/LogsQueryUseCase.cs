@@ -10,28 +10,18 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 日志搜索用例
 /// </summary>
-public interface ILogsQueryUseCase : IUseCase<LogsQueryUseCaseInput, LogsQueryUseCaseOutput>
-{
-}
-
-/// <summary>
-/// 日志搜索用例输入
-/// </summary>
-/// <param name="Criteria"></param>
-/// <param name="Skip"></param>
-/// <param name="Count"></param>
-public record LogsQueryUseCaseInput(OperateLogCriteria Criteria, int Skip, int Count) : IUseCaseInput;
+internal interface ILogsQueryUseCase : IUseCase<GenericQueryInput<OperateLogCriteria>, LogsQueryUseCaseOutput>;
 
 /// <summary>
 /// 日志搜索用例输出
 /// </summary>
 /// <param name="Logs"></param>
-public record LogsQueryUseCaseOutput(List<OperateLogDto> Logs) : IUseCaseOutput;
+internal record LogsQueryUseCaseOutput(List<OperateLogDto> Logs) : IUseCaseOutput;
 
 /// <summary>
 /// 日志搜索用例
 /// </summary>
-public class LogsQueryUseCase : ILogsQueryUseCase
+internal class LogsQueryUseCase : ILogsQueryUseCase
 {
 	private readonly IOperateLogRepository _repository;
 	private readonly UserPrincipal _identity;
@@ -48,18 +38,8 @@ public class LogsQueryUseCase : ILogsQueryUseCase
 	}
 
 	/// <inheritdoc />
-	public async Task<LogsQueryUseCaseOutput> ExecuteAsync(LogsQueryUseCaseInput input, CancellationToken cancellationToken = default)
+	public async Task<LogsQueryUseCaseOutput> ExecuteAsync(GenericQueryInput<OperateLogCriteria> input, CancellationToken cancellationToken = default)
 	{
-		if (input.Skip < 0)
-		{
-			throw new BadRequestException(Resources.IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE);
-		}
-
-		if (input.Count <= 0)
-		{
-			throw new BadRequestException(Resources.IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0);
-		}
-
 		if (!_identity.IsAuthenticated)
 		{
 			throw new AuthenticationException();
