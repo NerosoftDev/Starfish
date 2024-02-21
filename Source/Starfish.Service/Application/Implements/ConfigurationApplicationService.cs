@@ -9,89 +9,141 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class ConfigurationApplicationService : BaseApplicationService, IConfigurationApplicationService
 {
+	public Task<List<ConfigurationDto>> QueryAsync(ConfigurationCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationQueryUseCase>();
+		var input = new GenericQueryInput<ConfigurationCriteria>(criteria, skip, count);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
+	}
+
+	public Task<int> CountAsync(ConfigurationCriteria criteria, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationCountUseCase>();
+		var input = new ConfigurationCountInput(criteria);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(t => t.Result.Result, cancellationToken);
+	}
+
 	/// <inheritdoc />
-	public Task<List<ConfigurationItemDto>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItemDto>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemListUseCase>();
-		var input = new GetConfigurationItemListInput(appId, environment, skip, count);
+		var input = new GetConfigurationItemListInput(id, key, skip, count);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemCountUseCase>();
-		var input = new GetConfigurationItemCountInput(appId, environment);
+		var input = new GetConfigurationItemCountInput(id, key);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<ConfigurationDetailDto> GetDetailAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	public Task<ConfigurationDto> GetDetailAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationDetailUseCase>();
-		var input = new GetConfigurationDetailInput(appId, environment);
+		var input = new GetConfigurationDetailInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<long> CreateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default)
+	public Task<string> CreateAsync(string teamId, ConfigurationEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationCreateUseCase>();
-		var input = new ConfigurationCreateInput(appId, environment, format, data);
+		var input = new ConfigurationCreateInput(teamId, data);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public async Task UpdateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default)
+	public async Task UpdateAsync(string id, ConfigurationEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationUpdateUseCase>();
-		var input = new ConfigurationUpdateInput(appId, environment, format, data);
+		var input = new ConfigurationUpdateInput(id, data);
 		await useCase.ExecuteAsync(input, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task DeleteAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	public Task DeleteAsync(string id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationDeleteUseCase>();
-		var input = new ConfigurationDeleteInput(appId, environment);
+		var input = new ConfigurationDeleteInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
+	public Task SetSecretAsync(string id, string secret, CancellationToken cancellationToken = default)
+	{
+		var input = new SetConfigurationSecretInput(id, secret);
+		var useCase = LazyServiceProvider.GetRequiredService<ISetConfigurationSecretUseCase>();
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	public Task DisableAsync(string id, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationDisableUseCase>();
+		var input = new ConfigurationDisableInput(id);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	public Task EnableAsync(string id, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationEnableUseCase>();
+		var input = new ConfigurationEnableInput(id);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	public Task<string> AuthorizeAsync(string id, string teamId, string name, string secret, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationAuthorizeUseCase>();
+		var input = new ConfigurationAuthorizeInput(id, teamId, name, secret);
+		return useCase.ExecuteAsync(input, cancellationToken)
+		              .ContinueWith(t => t.Result.Id, cancellationToken);
+	}
+
 	/// <inheritdoc />
-	public Task UpdateAsync(string appId, string environment, string key, string value, CancellationToken cancellationToken = default)
+	public Task UpdateValueAsync(string id, string key, string value, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationValueUpdateUseCase>();
-		var input = new ConfigurationValueUpdateInput(appId, environment, key, value);
+		var input = new ConfigurationValueUpdateInput(id, key, value);
+		return useCase.ExecuteAsync(input, cancellationToken);
+	}
+
+	public Task UpdateItemsAsync(string id, ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationItemsUpdateUseCase>();
+		var input = new ConfigurationItemsUpdateInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task PublishAsync(string appId, string environment, ConfigurationPublishDto data, CancellationToken cancellationToken = default)
+	public Task PublishAsync(string id, ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationPublishUseCase>();
-		var input = new ConfigurationPublishInput(appId, environment, data);
+		var input = new ConfigurationPublishInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<string> GetArchiveAsync(string appId, string environment, CancellationToken cancellationToken = default)
+	public Task<string> GetArchiveAsync(string id, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationRawUseCase>();
-		var input = new GetConfigurationRawInput(appId, environment);
+		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationArchiveUseCase>();
+		var input = new GetConfigurationArchiveInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Result, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<string> GetItemsInTextAsync(string appId, string environment, string format, CancellationToken cancellationToken = default)
+	public Task<string> GetItemsInTextAsync(string id, string format, CancellationToken cancellationToken = default)
 	{
 		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>()
 		                                .GetKeyedService<IConfigurationParser>(format.Normalize(TextCaseType.Lower));
-		return GetItemListAsync(appId, environment, 0, int.MaxValue, cancellationToken)
+		return GetItemListAsync(id, string.Empty, 0, int.MaxValue, cancellationToken)
 			.ContinueWith(task =>
 			{
 				task.WaitAndUnwrapException(cancellationToken);
@@ -101,10 +153,10 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 			}, cancellationToken);
 	}
 
-	public Task PushRedisAsync(string appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default)
-	{ 
-		var useCase = LazyServiceProvider.GetRequiredService<IPushRedisUseCase>();
-		var input = new PushRedisInput(appId, environment, data);
+	public Task PushRedisAsync(string id, ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationPushRedisUseCase>();
+		var input = new ConfigurationPushRedisInput(id, data);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 }

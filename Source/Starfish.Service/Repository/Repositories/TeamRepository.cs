@@ -30,4 +30,26 @@ public class TeamRepository : BaseRepository<DataContext, Team, string>, ITeamRe
 		                   .Where(x => x.TeamId == id);
 		return query.ToListAsync(cancellationToken);
 	}
+
+	public async Task<PermissionState> CheckPermissionAsync(string id, string userId, CancellationToken cancellationToken = default)
+	{
+		var query = from team in Context.Set<Team>()
+		            join member in Context.Set<TeamMember>() on team.Id equals member.TeamId
+		            where team.Id == id
+		            select new
+		            {
+			            member.UserId,
+			            IsOwner = member.UserId == team.OwnerId
+		            };
+
+		var result = await query.ToListAsync(cancellationToken);
+
+		var user = result.FirstOrDefault(x => x.UserId == userId);
+		if (user == null)
+		{
+			return PermissionState.None;
+		}
+
+		return user.IsOwner ? PermissionState.Edit : PermissionState.Read;
+	}
 }

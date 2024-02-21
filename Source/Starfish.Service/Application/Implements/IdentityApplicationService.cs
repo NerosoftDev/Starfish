@@ -16,16 +16,9 @@ public class IdentityApplicationService : BaseApplicationService, IIdentityAppli
 		IdentityUseCaseOutput output = type switch
 		{
 			"password" => await LazyServiceProvider.GetService<IGrantWithPasswordUseCase>()
-			                                       .ExecuteAsync(new GrantWithPasswordUseCaseInput
-			                                       {
-				                                       UserName = data.GetValueOrDefault("username"),
-				                                       Password = data.GetValueOrDefault("password")
-			                                       }, cancellationToken),
+			                                       .ExecuteAsync(new GrantWithPasswordUseCaseInput(data.GetValueOrDefault("username"), data.GetValueOrDefault("password")), cancellationToken),
 			"refresh_token" => await LazyServiceProvider.GetService<IGrantWithRefreshTokenUseCase>()
-			                                            .ExecuteAsync(new GrantWithRefreshTokenUseCaseInput
-			                                            {
-				                                            Token = data.GetValueOrDefault("refresh_token")
-			                                            }, cancellationToken),
+			                                            .ExecuteAsync(new GrantWithRefreshTokenUseCaseInput(data.GetValueOrDefault("refresh_token")), cancellationToken),
 			"otp" => throw new NotSupportedException(),
 			_ => throw new NotSupportedException()
 		};

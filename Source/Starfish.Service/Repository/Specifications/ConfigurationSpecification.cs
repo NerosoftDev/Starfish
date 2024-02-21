@@ -5,19 +5,32 @@ namespace Nerosoft.Starfish.Repository;
 
 internal static class ConfigurationSpecification
 {
-	public static Specification<Configuration> IdEquals(long id)
+	public static Specification<Configuration> IdEquals(string id)
 	{
 		return new DirectSpecification<Configuration>(x => x.Id == id);
 	}
 
-	public static Specification<Configuration> AppIdEquals(string appId)
+	public static Specification<Configuration> TeamIdEquals(string appId)
 	{
-		return new DirectSpecification<Configuration>(x => x.AppId == appId);
+		return new DirectSpecification<Configuration>(x => x.TeamId == appId);
 	}
 
-	public static Specification<Configuration> EnvironmentEquals(string environment)
+	public static Specification<Configuration> NameEquals(string name)
 	{
-		return new DirectSpecification<Configuration>(x => x.Environment == environment);
+		name = name.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<Configuration>(x => x.Name.ToLower() == name);
+	}
+
+	public static Specification<Configuration> NameContains(string name)
+	{
+		name = name.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<Configuration>(x => x.Name.ToLower().Contains(name));
+	}
+
+	public static Specification<Configuration> DescriptionContains(string description)
+	{
+		description = description.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<Configuration>(x => x.Description.ToLower().Contains(description));
 	}
 
 	public static Specification<Configuration> StatusEquals(ConfigurationStatus status)
@@ -25,13 +38,14 @@ internal static class ConfigurationSpecification
 		return new DirectSpecification<Configuration>(x => x.Status == status);
 	}
 
-	public static Specification<ConfigurationItem> ConfigurationAppIdEquals(string appId)
+	public static Specification<Configuration> Matches(string keyword)
 	{
-		return new DirectSpecification<ConfigurationItem>(x => x.Configuration.AppId == appId);
-	}
+		var specifications = new List<ISpecification<Configuration>>
+		{
+			NameContains(keyword),
+			DescriptionContains(keyword)
+		};
 
-	public static Specification<ConfigurationItem> ConfigurationAppEnvironmentEquals(string environment)
-	{
-		return new DirectSpecification<ConfigurationItem>(x => x.Configuration.Environment == environment);
+		return new CompositeSpecification<Configuration>(PredicateOperator.OrElse, specifications.ToArray());
 	}
 }

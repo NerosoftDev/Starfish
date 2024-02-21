@@ -4,13 +4,13 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ITeamMemberQueryUseCase : IUseCase<TeamMemberQueryInput, TeamMemberQueryOutput>;
+internal interface ITeamMemberQueryUseCase : IUseCase<TeamMemberQueryInput, TeamMemberQueryOutput>;
 
-public record TeamMemberQueryOutput(List<TeamMemberDto> Result) : IUseCaseOutput;
+internal record TeamMemberQueryOutput(List<TeamMemberDto> Result) : IUseCaseOutput;
 
-public record TeamMemberQueryInput(string Id) : IUseCaseInput;
+internal record TeamMemberQueryInput(string Id) : IUseCaseInput;
 
-public class TeamMemberQueryUseCase : ITeamMemberQueryUseCase
+internal class TeamMemberQueryUseCase : ITeamMemberQueryUseCase
 {
 	private readonly ITeamRepository _repository;
 

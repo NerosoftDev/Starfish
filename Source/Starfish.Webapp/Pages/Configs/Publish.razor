@@ -38,7 +38,7 @@
 
     private bool Loading { get; set; }
 
-    private ConfigurationPublishDto Request { get; } = new();
+    private ConfigurationPublishRequestDto Request { get; } = new();
 
     private async Task PublishAsync()
     {
@@ -46,7 +46,7 @@
         {
             Loading = true;
 
-            await ConfigurationApi.PublishAsync(Content.AppId, Content.Environment, Request)
+            await ConfigurationApi.PublishAsync(Content.Id, Request)
                             .EnsureSuccess();
 
             await Dialog.CloseAsync(Content);

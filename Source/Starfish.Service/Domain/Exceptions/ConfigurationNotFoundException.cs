@@ -5,13 +5,13 @@
 /// </summary>
 public class ConfigurationNotFoundException : NotFoundException
 {
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="appId">应用Id</param>
-	/// <param name="environment">应用环境</param>
-	public ConfigurationNotFoundException(string appId, string environment)
-		: base(string.Format(Resources.IDS_ERROR_CONFIG_NOT_EXISTS, appId, environment))
+	public ConfigurationNotFoundException()
+		: base(Resources.IDS_ERROR_CONFIG_NOT_EXISTS)
+	{
+	}
+
+	public ConfigurationNotFoundException(string id)
+		: base(string.Format(Resources.IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID, id))
 	{
 	}
 }

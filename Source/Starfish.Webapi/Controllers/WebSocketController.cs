@@ -1,5 +1,4 @@
 ﻿using System.Net.WebSockets;
-using System.Security.Authentication;
 using System.Threading.Channels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,26 +29,21 @@ public class WebSocketController : ControllerBase
 	/// </summary>
 	/// <returns></returns>
 	[Route("/ws")]
-	public async Task HandleAsync(string app, string secret, string env)
+	public async Task HandleAsync(string id, string teamId, string name, string secret)
 	{
 		if (HttpContext.WebSockets.IsWebSocketRequest)
 		{
-			var auth = await AuthAsync(app, secret);
-
-			if (!auth)
-			{
-				throw new AuthenticationException(Resources.IDS_ERROR_AUTHORIZE_FAILED);
-			}
+			var configId = await AuthAsync(id, teamId, name, secret);
 
 			using var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 
-			var connection = _container.GetOrAdd(app, env, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(configId, HttpContext.Connection.Id);
 
 			await Task.WhenAny(MonitorChannelAsync(connection.Channel, socket), MonitorClientAsync(socket));
 
 			await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
 
-			_container.Remove(app, env, HttpContext.Connection.Id);
+			_container.Remove(configId, HttpContext.Connection.Id);
 		}
 		else
 		{
@@ -97,12 +91,13 @@ public class WebSocketController : ControllerBase
 		}
 	}
 
-	private Task<bool> AuthAsync(string app, string secret)
+	private Task<string> AuthAsync(string id, string teamId, string name, string secret)
 	{
 		// var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
 		// var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
-		var service = HttpContext.RequestServices.GetRequiredService<IAppsApplicationService>();
-		return service.AuthorizeAsync(app, secret, HttpContext.RequestAborted);
+		var service = HttpContext.RequestServices.GetRequiredService<IConfigurationApplicationService>();
+		return service.AuthorizeAsync(id, teamId, name, secret, HttpContext.RequestAborted);
+		
 	}
 }

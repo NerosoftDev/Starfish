@@ -4,11 +4,11 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ITeamMemberRemoveUseCase : INonOutputUseCase<TeamMemberRemoveInput>;
+internal interface ITeamMemberRemoveUseCase : INonOutputUseCase<TeamMemberRemoveInput>;
 
-public record TeamMemberRemoveInput(string Id, List<string> UserIds) : IUseCaseInput;
+internal record TeamMemberRemoveInput(string Id, List<string> UserIds) : IUseCaseInput;
 
-public class TeamMemberRemoveUseCase : ITeamMemberRemoveUseCase
+internal class TeamMemberRemoveUseCase : ITeamMemberRemoveUseCase
 {
 	private readonly IBus _bus;
 

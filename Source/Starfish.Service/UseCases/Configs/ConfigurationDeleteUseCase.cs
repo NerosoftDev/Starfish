@@ -7,19 +7,18 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 删除配置节点用例接口
 /// </summary>
-public interface IConfigurationDeleteUseCase : INonOutputUseCase<ConfigurationDeleteInput>;
+internal interface IConfigurationDeleteUseCase : INonOutputUseCase<ConfigurationDeleteInput>;
 
 /// <summary>
 /// 删除配置节点输入
 /// </summary>
-/// <param name="AppId"></param>
-/// <param name="Environment"></param>
-public record ConfigurationDeleteInput(string AppId, string Environment) : IUseCaseInput;
+/// <param name="Id"></param>
+internal record ConfigurationDeleteInput(string Id) : IUseCaseInput;
 
 /// <summary>
 /// 删除配置节点用例
 /// </summary>
-public class ConfigurationDeleteUseCase : IConfigurationDeleteUseCase
+internal class ConfigurationDeleteUseCase : IConfigurationDeleteUseCase
 {
 	private readonly IBus _bus;
 
@@ -30,7 +29,7 @@ public class ConfigurationDeleteUseCase : IConfigurationDeleteUseCase
 
 	public Task ExecuteAsync(ConfigurationDeleteInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new ConfigurationDeleteCommand(input.AppId, input.Environment);
+		var command = new ConfigurationDeleteCommand(input.Id);
 		return _bus.SendAsync(command, cancellationToken);
 	}
 }

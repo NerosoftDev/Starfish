@@ -5,37 +5,49 @@ namespace Nerosoft.Starfish.Webapp.Rest;
 
 internal interface IConfigurationApi
 {
-	[Get("/api/apps/{id}/configuration/{environment}/item")]
+	[Get("/api/configuration")]
+	Task<IApiResponse<List<ConfigurationDto>>> QueryAsync([Query] ConfigurationCriteria criteria, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
+
+	[Post("/api/configuration")]
+	Task<IApiResponse> CreateAsync(string teamId, [Body] ConfigurationEditDto data, CancellationToken cancellationToken = default);
+
+	[Get("/api/configuration/count")]
+	Task<IApiResponse<int>> CountAsync([Query] ConfigurationCriteria criteria, CancellationToken cancellationToken = default);
+
+	[Get("/api/configuration/{id}")]
+	Task<IApiResponse<ConfigurationDto>> GetAsync(string id, CancellationToken cancellationToken = default);
+
+	[Put("/api/configuration/{id}")]
+	Task<IApiResponse> UpdateAsync(string id, [Body] ConfigurationEditDto data, CancellationToken cancellationToken = default);
+
+	[Delete("/api/configuration/{id}")]
+	Task<IApiResponse> DeleteAsync(string id, CancellationToken cancellationToken = default);
+
+	[Put("/api/configuration/{id}/secret")]
+	Task<IApiResponse> SetSecretAsync(string id, [Body] ConfigurationSecretSetRequestDto data, CancellationToken cancellationToken = default);
+
+	[Put("/api/Configuration/{id}/{availability}")]
+	Task<IApiResponse> ChangeStatusAsync(string id, string availability, CancellationToken cancellationToken = default);
+
+	[Post("/api/configuration/{id}/publish")]
+	Task<IApiResponse> PublishAsync(string id, [Body] ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default);
+
+	[Post("/api/configuration/{id}/redis")]
+	Task<IApiResponse> PushRedisAsync(string id, [Body] ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default);
+
+	[Get("/api/configuration/{id}/item")]
 	[Headers("x-format: application/json")]
-	Task<IApiResponse<List<ConfigurationItemDto>>> GetItemListAsync(string id, string environment, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
+	Task<IApiResponse<List<ConfigurationItemDto>>> GetItemListAsync(string id, string keyword, int skip = Constants.Query.Skip, int count = Constants.Query.Count, CancellationToken cancellationToken = default);
 
-	[Get("/api/apps/{id}/configuration/{environment}/item/count")]
-	Task<IApiResponse<int>> GetItemCountAsync(string id, string environment, CancellationToken cancellationToken = default);
+	[Get("/api/configuration/{id}/item")]
+	Task<IApiResponse<string>> GetItemsAsync(string id, [Header("x-format")] string format, CancellationToken cancellationToken = default);
 
-	[Get("/api/apps/{id}/configuration/{environment}/item")]
-	Task<IApiResponse<string>> GetItemsAsync(string id, string environment, [Header("x-format")] string format, CancellationToken cancellationToken = default);
+	[Get("/api/configuration/{id}/item/count")]
+	Task<IApiResponse<int>> GetItemCountAsync(string id, CancellationToken cancellationToken = default);
 
-	[Get("/api/apps/{id}/configuration/{environment}/detail")]
-	Task<IApiResponse<ConfigurationDetailDto>> GetAsync(string id, string environment, CancellationToken cancellationToken = default);
+	[Put("/api/configuration/{id}/item/{key}")]
+	Task<IApiResponse> UpdateValueAsync(string id, string key, [Body] string data, CancellationToken cancellationToken = default);
 
-	[Post("/api/apps/{id}/configuration/{environment}")]
-	Task<IApiResponse> CreateAsync(string id, string environment, [Header("x-format")] string format, [Body] ConfigurationEditDto data, CancellationToken cancellationToken = default);
-
-	[Put("/api/apps/{id}/configuration/{environment}")]
-	Task<IApiResponse> UpdateAsync(string id, string environment, [Header("x-format")] string format, [Body] ConfigurationEditDto data, CancellationToken cancellationToken = default);
-
-	[Delete("/api/apps/{id}/configuration/{environment}")]
-	Task<IApiResponse> DeleteAsync(string id, string environment, CancellationToken cancellationToken = default);
-
-	[Put("/api/apps/{id}/configuration/{environment}/{key}")]
-	Task<IApiResponse> UpdateItemValueAsync(string id, string environment, string key, [Body] ConfigurationValueUpdateDto data, CancellationToken cancellationToken = default);
-
-	[Post("/api/apps/{id}/configuration/{environment}/publish")]
-	Task<IApiResponse> PublishAsync(string id, string environment, [Body] ConfigurationPublishDto data, CancellationToken cancellationToken = default);
-
-	[Get("/api/apps/{id}/configuration/{environment}/archive")]
-	Task<IApiResponse<string>> GetArchivedAsync(string id, string environment, CancellationToken cancellationToken = default);
-
-	[Post("/api/apps/{id}/configuration/{environment}/redis")]
-	Task<IApiResponse> PushRedisAsync(string id, string environment, [Body] PushRedisRequestDto data);
+	[Put("/api/configuration/{id}/item")]
+	Task<IApiResponse> UpdateItemsAsync(string id, [Body] ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default);
 }

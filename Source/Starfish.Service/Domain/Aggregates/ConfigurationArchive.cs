@@ -5,20 +5,11 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置归档
 /// </summary>
-public sealed class ConfigurationArchive : Aggregate<long>
+public sealed class ConfigurationArchive : Aggregate<string>
 {
 	private ConfigurationArchive()
-	{ }
-
-	/// <summary>
-	/// 应用Id
-	/// </summary>
-	public string AppId { get; set; }
-
-	/// <summary>
-	/// 应用环境
-	/// </summary>
-	public string Environment { get; set; }
+	{
+	}
 
 	/// <summary>
 	/// 配置数据
@@ -35,12 +26,13 @@ public sealed class ConfigurationArchive : Aggregate<long>
 	/// </summary>
 	public DateTime ArchiveTime { get; set; }
 
-	internal static ConfigurationArchive Create(string appId, string environment)
+	public Configuration Configuration { get; set; }
+
+	internal static ConfigurationArchive Create(string configId)
 	{
 		var entity = new ConfigurationArchive()
 		{
-			AppId = appId,
-			Environment = environment
+			Id = configId
 		};
 
 		return entity;

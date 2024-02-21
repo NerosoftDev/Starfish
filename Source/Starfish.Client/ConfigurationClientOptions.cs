@@ -10,12 +10,7 @@ public class ConfigurationClientOptions
 	/// <summary>
 	/// 应用Id
 	/// </summary>
-	public string App { get; set; }
-
-	/// <summary>
-	/// 应用环境
-	/// </summary>
-	public string Env { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// 密钥
@@ -67,9 +62,9 @@ public class ConfigurationClientOptions
 			throw new InvalidOperationException(Resources.IDS_ERROR_STARFISH_SECTION_NOT_FOUND);
 		}
 
-		var app = section[nameof(App)];
+		var id = section[nameof(Id)];
 
-		if (string.IsNullOrWhiteSpace(app))
+		if (string.IsNullOrWhiteSpace(id))
 		{
 			throw new InvalidOperationException(Resources.IDS_ERROR_APP_SECTION_NOT_FOUND);
 		}
@@ -83,8 +78,7 @@ public class ConfigurationClientOptions
 		var options = new ConfigurationClientOptions
 		{
 			Host = host,
-			App = app,
-			Env = section[nameof(Env)] ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+			Id = id,
 			Secret = section[nameof(Secret)],
 			CacheDirectory = section[nameof(CacheDirectory)] ?? AppDomain.CurrentDomain.BaseDirectory
 		};

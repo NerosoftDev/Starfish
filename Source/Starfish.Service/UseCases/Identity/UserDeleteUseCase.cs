@@ -4,11 +4,11 @@ using Nerosoft.Starfish.Application;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserDeleteUseCase : INonOutputUseCase<UserDeleteInput>;
+internal interface IUserDeleteUseCase : INonOutputUseCase<UserDeleteInput>;
 
-public record UserDeleteInput(string Id) : IUseCaseInput;
+internal record UserDeleteInput(string Id) : IUseCaseInput;
 
-public class UserDeleteUseCase : IUserDeleteUseCase
+internal class UserDeleteUseCase : IUserDeleteUseCase
 {
 	private readonly IBus _bus;
 

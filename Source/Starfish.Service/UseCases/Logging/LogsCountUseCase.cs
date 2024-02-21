@@ -9,24 +9,24 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 日志数量查询用例接口
 /// </summary>
-public interface ILogsCountUseCase : IUseCase<LogsCountUseCaseInput, LogsCountUseCaseOutput>;
+internal interface ILogsCountUseCase : IUseCase<LogsCountUseCaseInput, LogsCountUseCaseOutput>;
 
 /// <summary>
 /// 日志数量查询用例输入
 /// </summary>
 /// <param name="Criteria"></param>
-public record LogsCountUseCaseInput(OperateLogCriteria Criteria) : IUseCaseInput;
+internal record LogsCountUseCaseInput(OperateLogCriteria Criteria) : IUseCaseInput;
 
 /// <summary>
 /// 日志数量查询用例输出
 /// </summary>
 /// <param name="Count"></param>
-public record LogsCountUseCaseOutput(int Count) : IUseCaseOutput;
+internal record LogsCountUseCaseOutput(int Count) : IUseCaseOutput;
 
 /// <summary>
 /// 日志数量查询用例
 /// </summary>
-public class LogsCountUseCase : ILogsCountUseCase
+internal class LogsCountUseCase : ILogsCountUseCase
 {
 	private readonly IOperateLogRepository _repository;
 	private readonly UserPrincipal _user;

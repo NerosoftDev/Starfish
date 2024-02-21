@@ -6,13 +6,13 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserDetailUseCase : IUseCase<UserDetailInput, UserDetailOutput>;
+internal interface IUserDetailUseCase : IUseCase<UserDetailInput, UserDetailOutput>;
 
-public record UserDetailOutput(UserDetailDto Result) : IUseCaseOutput;
+internal record UserDetailOutput(UserDetailDto Result) : IUseCaseOutput;
 
-public record UserDetailInput(string Id) : IUseCaseInput;
+internal record UserDetailInput(string Id) : IUseCaseInput;
 
-public class UserDetailUseCase : IUserDetailUseCase
+internal class UserDetailUseCase : IUserDetailUseCase
 {
 	private readonly IUserRepository _repository;
 

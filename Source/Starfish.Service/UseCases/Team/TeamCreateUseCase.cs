@@ -5,13 +5,13 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ITeamCreateUseCase : IUseCase<TeamCreateInput, TeamCreateOutput>;
+internal interface ITeamCreateUseCase : IUseCase<TeamCreateInput, TeamCreateOutput>;
 
-public record TeamCreateInput(TeamEditDto Data) : IUseCaseInput;
+internal record TeamCreateInput(TeamEditDto Data) : IUseCaseInput;
 
-public record TeamCreateOutput(string Result) : IUseCaseOutput;
+internal record TeamCreateOutput(string Result) : IUseCaseOutput;
 
-public class TeamCreateUseCase : ITeamCreateUseCase
+internal class TeamCreateUseCase : ITeamCreateUseCase
 {
 	private readonly IBus _bus;
 

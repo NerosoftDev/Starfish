@@ -1,11 +1,11 @@
-﻿@using Nerosoft.Starfish.Common
-@implements IDialogContentComponent<EditDialogArgs>
+﻿@implements IDialogContentComponent<string>
 
 @inject IConfigurationApi ConfigurationApi
+@inject ITeamApi TeamApi
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
-        <FluentIcon Value="@(new Icons.Regular.Size24.Settings())"/>
+        <FluentIcon Value="@(new Icons.Regular.Size24.Apps())"/>
         <FluentLabel Typo="Typography.PaneHeader">
             @Dialog.Instance.Parameters.Title
         </FluentLabel>
@@ -14,13 +14,31 @@
 
 <FluentDialogBody>
     <FluentStack Orientation="Orientation.Vertical">
-        <FluentTextField Style="width: 100%"
-                         Label="@(Resources.IDS_CONFIG_EDIT_LABEL_ENVIRONMENT)"
-                         @bind-Value="Content.Environment" ReadOnly="true"/>
+        @if (string.IsNullOrEmpty(Content))
+        {
+            <FluentSelect Style="width: 100%"
+                          Required="true"
+                          TOption="TeamItemDto"
+                          Label="@(Resources.IDS_CONFIG_EDIT_DIALOG_LABEL_SELECT_TEAM)"
+                          Items="@Teams"
+                          OptionValue="@(p => p.Id.ToString())"
+                          OptionText="@(p => p.Name)"
+                          @bind-Value="@TeamId"/>
+        }
 
-        <div style="height: 100%; width: 100%;">
-            <StandaloneCodeEditor @ref="_editor" CssClass="monaco-editor-container" ConstructionOptions="EditorConstructionOptions" OnDidInit="EditorOnDidInit" />
-        </div>
+        <FluentTextField Style="width: 100%" Required="true"
+                         Label="@(Resources.IDS_CONFIG_EDIT_DIALOG_LABEL_NAME)"
+                         @bind-Value="Name"/>
+
+        @if (string.IsNullOrEmpty(Content))
+        {
+            <FluentTextField Style="width: 100%" Required="true"
+                             Label="@(Resources.IDS_CONFIG_EDIT_DIALOG_LABEL_SECRET)"
+                             @bind-Value="Secret"/>
+        }
+        <FluentTextArea Style="width: 100%"
+                        Label="@(Resources.IDS_CONFIG_EDIT_DIALOG_LABEL_DESCRIPTION)"
+                        @bind-Value="Description"/>
     </FluentStack>
 </FluentDialogBody>
 
@@ -32,68 +50,75 @@
 @code {
 
     [Parameter]
-    public EditDialogArgs Content { get; set; }
+    public string Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
 
-    private string Mode => Content?.Properties?.TryGetValue("mode") as string;
+    private bool Loading { get; set; }
 
-    private string Format => Content?.Properties?.TryGetValue("format") as string;
+    private List<TeamItemDto> Teams { get; } = [];
 
-    private StandaloneCodeEditor _editor = null!;
+    /// <summary>
+    /// 团队Id
+    /// </summary>
+    private string TeamId { get; set; }
+
+    /// <summary>
+    /// 应用名称
+    /// </summary>
+    private string Name { get; set; } = default!;
+
+    /// <summary>
+    /// 密钥
+    /// </summary>
+    private string Secret { get; set; }
+
+    /// <summary>
+    /// 应用描述
+    /// </summary>
+    private string Description { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        if (Mode == "update")
-        {
-            await LoadValueAsync();
-        }
-    }
+        await base.OnInitializedAsync();
 
-    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
-    {
-        var options = new StandaloneEditorConstructionOptions
+        var tasks = new List<Task>
         {
-            AutomaticLayout = true,
-            Theme = "vs-dark"
+            string.IsNullOrEmpty(Content) ? LoadTeamsAsync() : LoadDetailAsync(Content)
         };
 
-        options.Language = Format switch
-        {
-            Constants.Configuration.FormatJson => "json",
-            Constants.Configuration.FormatText => "text",
-            _ => options.Language
-        };
-
-        return options;
+        await Task.WhenAll(tasks);
     }
-
-    private async Task EditorOnDidInit()
-    {
-        await Task.CompletedTask;
-    }
-
-    private bool Loading { get; set; }
 
     private async Task SaveAsync()
     {
         try
         {
             Loading = true;
-            var value = await _editor.GetValue();
-            var request = new ConfigurationEditDto()
+
+            if (!string.IsNullOrEmpty(Content))
             {
-                Type = "diff",
-                Data = Cryptography.Base64.Encrypt(value)
-            };
-            var task = Mode switch
+                var request = new ConfigurationEditDto
+                {
+                    Name = Name,
+                    Description = Description
+                };
+                await ConfigurationApi.UpdateAsync(Content, request)
+                                      .EnsureSuccess();
+            }
+            else
             {
-                "create" => ConfigurationApi.CreateAsync(Content.AppId, Content.Environment, Format, request).EnsureSuccess(),
-                "update" => ConfigurationApi.UpdateAsync(Content.AppId, Content.Environment, Format, request).EnsureSuccess(),
-                _ => Task.CompletedTask
-            };
-            await task;
+                var request = new ConfigurationEditDto()
+                {
+                    Name = Name,
+                    Secret = Secret,
+                    Description = Description
+                };
+                await ConfigurationApi.CreateAsync(TeamId, request)
+                                      .EnsureSuccess();
+            }
+
             await Dialog.CloseAsync(Content);
         }
         catch (Exception exception)
@@ -111,14 +136,49 @@
         await Dialog.CancelAsync();
     }
 
-    private Task LoadValueAsync()
+    private async Task LoadTeamsAsync()
     {
-        return ConfigurationApi.GetItemsAsync(Content.AppId, Content.Environment, Format)
-                         .EnsureSuccess(result=>
+        await TeamApi.QueryAsync(new TeamCriteria(), 1, 100)
+                     .EnsureSuccess(result =>
+                     {
+                         if (result == null)
                          {
-                             var value = Cryptography.Base64.Decrypt(result);
-                             _editor.SetValue(value);
-                         })
-                         .Guard();
+                             return;
+                         }
+
+                         Teams.Clear();
+                         Teams.AddRange(result);
+                         if (result.Count > 0)
+                         {
+                             TeamId = result[0].Id.ToString();
+                         }
+                     })
+                     .Guard();
     }
+
+    private async Task LoadDetailAsync(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            return;
+        }
+
+        await ConfigurationApi.GetAsync(id)
+                              .EnsureSuccess(result =>
+                              {
+                                  if (result == null)
+                                  {
+                                      return;
+                                  }
+
+                                  Content = result.Id;
+                                  Name = result.Name;
+                                  Description = result.Description;
+                              })
+                              .Guard(async _ =>
+                              {
+                                  await Dialog.CancelAsync();
+                              });
+    }
+
 }

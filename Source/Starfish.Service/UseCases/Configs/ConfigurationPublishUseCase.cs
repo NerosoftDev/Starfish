@@ -8,20 +8,19 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 配置节点发布用例接口
 /// </summary>
-public interface IConfigurationPublishUseCase : INonOutputUseCase<ConfigurationPublishInput>;
+internal interface IConfigurationPublishUseCase : INonOutputUseCase<ConfigurationPublishInput>;
 
 /// <summary>
 /// 配置节点发布输入
 /// </summary>
-/// <param name="AppId"></param>
-/// <param name="Environment"></param>
+/// <param name="Id"></param>
 /// <param name="Data"></param>
-public record ConfigurationPublishInput(string AppId, string Environment, ConfigurationPublishDto Data) : IUseCaseInput;
+internal record ConfigurationPublishInput(string Id, ConfigurationPublishRequestDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例
 /// </summary>
-public class ConfigurationPublishUseCase : IConfigurationPublishUseCase
+internal class ConfigurationPublishUseCase : IConfigurationPublishUseCase
 {
 	private readonly IBus _bus;
 
@@ -32,14 +31,7 @@ public class ConfigurationPublishUseCase : IConfigurationPublishUseCase
 
 	public async Task ExecuteAsync(ConfigurationPublishInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new ConfigurationPublishCommand(input.AppId, input.Environment);
+		var command = new ConfigurationPublishCommand(input.Id, input.Data.Version, input.Data.Comment);
 		await _bus.SendAsync(command, cancellationToken);
-
-		var @event = new ConfigurationPublishedEvent(input.AppId, input.Environment)
-		{
-			Version = input.Data.Version,
-			Comment = input.Data.Comment
-		};
-		await _bus.PublishAsync(@event, cancellationToken);
 	}
 }
