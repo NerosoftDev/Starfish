@@ -1,13 +1,19 @@
-﻿namespace Nerosoft.Starfish.Application;
+﻿using Nerosoft.Euonia.Domain;
 
-public class ConfigurationUpdateCommand : ConfigurationAbstractCommand
+namespace Nerosoft.Starfish.Application;
+
+public class ConfigurationUpdateCommand : Command
 {
-	public ConfigurationUpdateCommand(string appId, string environment)
-		: base(appId, environment)
+	public ConfigurationUpdateCommand(string id)
 	{
-		AppId = appId;
-		Environment = environment;
+		Id = id;
 	}
 
-	public IDictionary<string, string> Data { get; set; }
+	public string Id { get; set; }
+
+	public string Name { get; set; }
+
+	public string Description { get; set; }
+
+	public string Secret { get; set; }
 }

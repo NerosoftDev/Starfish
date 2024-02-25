@@ -12,30 +12,22 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 刷新令牌用例接口
 /// </summary>
-public interface IGrantWithRefreshTokenUseCase : IUseCase<GrantWithRefreshTokenUseCaseInput, GrantWithRefreshTokenUseCaseOutput>;
+internal interface IGrantWithRefreshTokenUseCase : IUseCase<GrantWithRefreshTokenUseCaseInput, GrantWithRefreshTokenUseCaseOutput>;
 
 /// <summary>
 /// 刷新令牌输入参数
 /// </summary>
-public class GrantWithRefreshTokenUseCaseInput : IUseCaseInput
-{
-	/// <summary>
-	/// 刷新令牌
-	/// </summary>
-	public string Token { get; set; }
-}
+internal record GrantWithRefreshTokenUseCaseInput(string Token) : IUseCaseInput;
 
 /// <summary>
 /// 刷新令牌输出
 /// </summary>
-public class GrantWithRefreshTokenUseCaseOutput : IdentityUseCaseOutput
-{
-}
+internal record GrantWithRefreshTokenUseCaseOutput : IdentityUseCaseOutput;
 
 /// <summary>
 /// 刷新令牌用例
 /// </summary>
-public class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
+internal class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 {
 	private readonly IServiceProvider _provider;
 

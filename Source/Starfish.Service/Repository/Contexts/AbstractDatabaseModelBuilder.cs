@@ -11,7 +11,6 @@ internal abstract class AbstractDatabaseModelBuilder : IModelBuilder
 		ConfigureAdministrator(modelBuilder);
 		ConfigureTeam(modelBuilder);
 		ConfigureTeamMember(modelBuilder);
-		ConfigureApplication(modelBuilder);
 		ConfigureConfiguration(modelBuilder);
 		ConfigureConfigurationItem(modelBuilder);
 		ConfigureConfigurationArchive(modelBuilder);
@@ -27,8 +26,6 @@ internal abstract class AbstractDatabaseModelBuilder : IModelBuilder
 	protected abstract ModelBuilder ConfigureTeam(ModelBuilder modelBuilder);
 
 	protected abstract ModelBuilder ConfigureTeamMember(ModelBuilder modelBuilder);
-
-	protected abstract ModelBuilder ConfigureApplication(ModelBuilder modelBuilder);
 
 	protected abstract ModelBuilder ConfigureConfiguration(ModelBuilder modelBuilder);
 

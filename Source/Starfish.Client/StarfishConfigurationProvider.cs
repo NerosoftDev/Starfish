@@ -21,7 +21,7 @@ internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposabl
 	public StarfishConfigurationProvider(ConfigurationClientOptions options)
 	{
 		_options = options;
-		_cacheFile = Path.Combine(_options.CacheDirectory, $"{_options.App}.starfish.{_options.Env}.cache");
+		_cacheFile = Path.Combine(_options.CacheDirectory, $"{_options.Id}.starfish.cache");
 		HostChanged += OnHostChanged;
 		ConnectionLost += (_, _) =>
 		{
@@ -58,8 +58,8 @@ internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposabl
 		var uri = new Uri(args.Host);
 		IConfigurationClient client = uri.Scheme switch
 		{
-			"http" or "https" => new HttpConfigurationClient(uri,  _options.App, _options.Secret, _options.Env),
-			"ws" or "wss" => new SocketConfigurationClient(uri,  _options.App, _options.Secret, _options.Env),
+			"http" or "https" => new HttpConfigurationClient(uri,  _options.Id, _options.Secret),
+			"ws" or "wss" => new SocketConfigurationClient(uri,  _options.Id, _options.Secret),
 			_ => throw new NotSupportedException(string.Format(Resources.IDS_ERROR_SCHEMA_NOT_SUPPORTED, uri.Scheme)),
 		};
 		try

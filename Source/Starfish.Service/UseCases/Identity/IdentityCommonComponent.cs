@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 用户认证公共组件
 /// </summary>
-public class IdentityCommonComponent
+internal class IdentityCommonComponent
 {
 	private readonly IConfiguration _configuration;
 

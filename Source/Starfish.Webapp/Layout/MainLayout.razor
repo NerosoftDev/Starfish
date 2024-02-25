@@ -29,7 +29,7 @@
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
         <FluentNavMenu Width="360" Class="nav-menu-panel" Collapsible="true">
             <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Href="/" Match="NavLinkMatch.All">@(Resources.IDS_MENU_TEXT_HOME)</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.Apps())" Href="/apps">@(Resources.IDS_MENU_TEXT_APPS)</FluentNavLink>
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.Apps())" Href="/configs">@(Resources.IDS_MENU_TEXT_CONFIGS)</FluentNavLink>
             @if (Identity?.IsInRole("SA") == true)
             {
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.People())" Href="/user">@(Resources.IDS_MENU_TEXT_USER)</FluentNavLink>

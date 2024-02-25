@@ -8,105 +8,144 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public interface IConfigurationApplicationService : IApplicationService
 {
+	Task<List<ConfigurationDto>> QueryAsync(ConfigurationCriteria criteria, int skip, int count, CancellationToken cancellationToken = default);
+
+	Task<int> CountAsync(ConfigurationCriteria criteria, CancellationToken cancellationToken = default);
+
 	/// <summary>
 	/// 获取配置项列表
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
+	/// <param name="key"></param>
 	/// <param name="skip"></param>
 	/// <param name="count"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<List<ConfigurationItemDto>> GetItemListAsync(string appId, string environment, int skip, int count, CancellationToken cancellationToken = default);
+	Task<List<ConfigurationItemDto>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置项数量
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
+	/// <param name="key"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<int> GetItemCountAsync(string appId, string environment, CancellationToken cancellationToken = default);
+	Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取配置详情
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ConfigurationDetailDto> GetDetailAsync(string appId, string environment, CancellationToken cancellationToken = default);
+	Task<ConfigurationDto> GetDetailAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 新建配置
 	/// </summary>
-	/// <param name="appId">应用Id</param>
-	/// <param name="environment">应用环境</param>
-	/// <param name="format"></param>
+	/// <param name="teamId">团队Id</param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<long> CreateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default);
+	Task<string> CreateAsync(string teamId, ConfigurationEditDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新配置
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
-	/// <param name="format"></param>
+	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(string appId, string environment, string format, ConfigurationEditDto data, CancellationToken cancellationToken = default);
+	Task UpdateAsync(string id, ConfigurationEditDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除节点
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task DeleteAsync(string appId, string environment, CancellationToken cancellationToken = default);
+	Task DeleteAsync(string id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 设置访问密钥
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="secret"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task SetSecretAsync(string id, string secret, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 禁用配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task DisableAsync(string id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 启用配置
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task EnableAsync(string id, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 应用认证
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="teamId"></param>
+	/// <param name="name"></param>
+	/// <param name="secret"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<string> AuthorizeAsync(string id, string teamId, string name, string secret, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 更新配置项
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
 	/// <param name="key"></param>
 	/// <param name="value"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(string appId, string environment, string key, string value, CancellationToken cancellationToken = default);
+	Task UpdateValueAsync(string id, string key, string value, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 批量更新配置项
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="data"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task UpdateItemsAsync(string id, ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 发布配置
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task PublishAsync(string appId, string environment, ConfigurationPublishDto data, CancellationToken cancellationToken = default);
+	Task PublishAsync(string id, ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取已发布的配置
 	/// </summary>
-	/// <param name="appId">应用Id</param>
-	/// <param name="environment">应用环境</param>
+	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<string> GetArchiveAsync(string appId, string environment, CancellationToken cancellationToken = default);
+	Task<string> GetArchiveAsync(string id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 获取指定格式的配置
 	/// </summary>
-	/// <param name="appId"></param>
-	/// <param name="environment"></param>
+	/// <param name="id"></param>
 	/// <param name="format"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<string> GetItemsInTextAsync(string appId, string environment, string format, CancellationToken cancellationToken = default);
+	Task<string> GetItemsInTextAsync(string id, string format, CancellationToken cancellationToken = default);
 
-	Task PushRedisAsync(string appId, string environment, PushRedisRequestDto data, CancellationToken cancellationToken = default);
+	Task PushRedisAsync(string id, ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default);
 }

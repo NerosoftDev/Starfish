@@ -5,11 +5,11 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface IUserUpdateUseCase : INonOutputUseCase<UserUpdateInput>;
+internal interface IUserUpdateUseCase : INonOutputUseCase<UserUpdateInput>;
 
-public record UserUpdateInput(string Id, UserUpdateDto Data) : IUseCaseInput;
+internal record UserUpdateInput(string Id, UserUpdateDto Data) : IUseCaseInput;
 
-public class UserUpdateUseCase : IUserUpdateUseCase
+internal class UserUpdateUseCase : IUserUpdateUseCase
 {
 	private readonly IBus _bus;
 

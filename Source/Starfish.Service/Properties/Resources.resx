@@ -138,12 +138,6 @@
   <data name="IDS_DICTIONARY_NAME_SA" xml:space="preserve">
     <value>System administrator</value>
   </data>
-  <data name="IDS_ENUM_APPINFO_STATUS_DISABLED" xml:space="preserve">
-    <value>Disabled</value>
-  </data>
-  <data name="IDS_ENUM_APPINFO_STATUS_ENABLED" xml:space="preserve">
-    <value>Enabled</value>
-  </data>
   <data name="IDS_ENUM_CONFIG_STATUS_DISABLED" xml:space="preserve">
     <value>Disabled</value>
   </data>
@@ -152,21 +146,6 @@
   </data>
   <data name="IDS_ENUM_CONFIG_STATUS_PUBLISHED" xml:space="preserve">
     <value>Published</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_NOT_ENABLED" xml:space="preserve">
-    <value>App not enabled, [Id]:{0}.</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_NOT_EXISTS" xml:space="preserve">
-    <value>App not exists, [Id]:{0}.</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_SECRET_NOT_MATCHES_RULE" xml:space="preserve">
-    <value>The secret not matches rule.</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_SECRET_REQUIRED" xml:space="preserve">
-    <value>App secret is required.</value>
-  </data>
-  <data name="IDS_ERROR_APPINFO_STATUS_INVALID" xml:space="preserve">
-    <value>Invalid app status.</value>
   </data>
   <data name="IDS_ERROR_COMMON_AUTHORIZE_FAILED" xml:space="preserve">
     <value>Authorize failed.</value>
@@ -181,10 +160,10 @@
     <value>Data format required.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_DISABLED" xml:space="preserve">
-    <value>Configuration was disabled, [App]:{0}, [Env]:{1}.</value>
+    <value>Configuration was disabled, [Id]:{0}.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_DUPLICATE" xml:space="preserve">
-    <value>Configuration was duplicated, [App]:{0}, [Env]:{1}.</value>
+    <value>Configuration was duplicated.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_KEY_EXISTS" xml:space="preserve">
     <value>Configuration key '{0}' exists.</value>
@@ -193,10 +172,25 @@
     <value>Configuration key '{0}' not exists.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_NOT_EXISTS" xml:space="preserve">
-    <value>Configuration not exists, [App]:{0}, [Env]:{1}.</value>
+    <value>Configuration not exists.</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID" xml:space="preserve">
+    <value>Configuration not exists, [Id]:{0}.</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_NO_ITEMS" xml:space="preserve">
+    <value>No configuration items were found.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_NO_PENDING_ITEM" xml:space="preserve">
     <value>No pending item to publish.</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_SECRET_NOT_MATCHES_RULE" xml:space="preserve">
+    <value>The secret not matches rule.</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_SECRET_REQUIRED" xml:space="preserve">
+    <value>App secret is required.</value>
+  </data>
+  <data name="IDS_ERROR_CONFIG_STATUS_INVALID" xml:space="preserve">
+    <value>Invalid app status.</value>
   </data>
   <data name="IDS_ERROR_CONFIG_VERSION_NUMBER_EXISTS" xml:space="preserve">
     <value>Version number '{0}' already exists.</value>
@@ -264,24 +258,6 @@
   <data name="IDS_ERROR_USER_USERNAME_UNAVAILABLE" xml:space="preserve">
     <value>UserName '{0}' not available.</value>
   </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_CREATE" xml:space="preserve">
-    <value>Create app {0}({1}).</value>
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_DELETE" xml:space="preserve">
-    <value>Delete app {0}({1}).</value>
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_DISABLE" xml:space="preserve">
-    <value>Disable app {0}({1}).</value>
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_ENABLE" xml:space="preserve">
-    <value>Enable app {0}({1}).</value>
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_RESET_SECRET" xml:space="preserve">
-    <value>Reset app secret {0}({1}).</value>
-  </data>
-  <data name="IDS_MESSAGE_LOGS_APPS_UPDATE" xml:space="preserve">
-    <value>Update app {0}({1}).</value>
-  </data>
   <data name="IDS_MESSAGE_LOGS_AUTH_FAILED" xml:space="preserve">
     <value>User authenticate failed.</value>
   </data>
@@ -289,15 +265,24 @@
     <value>User authenticate successfully.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_CREATE" xml:space="preserve">
-    <value>Create configuration, [App]:{0}, [Env]:{1}.</value>
+    <value>Create configuration, [Id]:{0}, [Name]:{1}.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_DELETE" xml:space="preserve">
-    <value>Delete configuration, [App]:{0}, [Env]:{1}.</value>
+    <value>Delete configuration, [Id]:{0}, [Name]:{1}.</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_DISABLE" xml:space="preserve">
+    <value>Disable configuration, [Id]:{0}, [Name]:{1}.</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_ENABLE" xml:space="preserve">
+    <value>Enable configuration, [Id]:{0}, [Name]:{1}.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_PUBLISH" xml:space="preserve">
-    <value>Publish configuration, [App]:{0}, [Env]:{1}.</value>
+    <value>Publish configuration, [Id]:{0}, [Name]:{1}.</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_CONFIG_RESET_SECRET" xml:space="preserve">
+    <value>Reset configuration secret, [Id]:{0}, [Name]:{1}.</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
-    <value>Update configuration, [App]:{0}, [Env]:{1}.</value>
+    <value>Update configuration, [Id]:{0}, [Name]:{1}.</value>
   </data>
 </root>

@@ -1,19 +1,19 @@
-﻿namespace Nerosoft.Starfish.Application;
+﻿using Nerosoft.Euonia.Domain;
 
-public class ConfigurationCreateCommand : ConfigurationAbstractCommand
+namespace Nerosoft.Starfish.Application;
+
+public class ConfigurationCreateCommand : Command
 {
-	public ConfigurationCreateCommand(string appId, string environment)
-		: base(appId, environment)
+	public ConfigurationCreateCommand(string teamId)
 	{
+		TeamId = teamId;
 	}
-	
-	/// <summary>
-	/// 描述
-	/// </summary>
+
+	public string TeamId { get; set; }
+
+	public string Name { get; set; }
+
 	public string Description { get; set; }
 
-	/// <summary>
-	/// 配置项内容
-	/// </summary>
-	public IDictionary<string, string> Data { get; set; }
+	public string Secret { get; set; }
 }

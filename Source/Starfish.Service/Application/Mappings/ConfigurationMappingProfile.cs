@@ -13,9 +13,10 @@ internal class ConfigurationMappingProfile : Profile
 	public ConfigurationMappingProfile()
 	{
 		CreateMap<ConfigurationItem, ConfigurationItemDto>();
-		CreateMap<Configuration, ConfigurationDetailDto>()
-			.ForMember(dest => dest.StatusDescription, options => options.MapFrom(src => GetStatusDescription(src.Status)))
-			.ForMember(dest => dest.AppName, options => options.MapFrom(src => src.App.Name));
+		CreateMap<Configuration, ConfigurationDto>()
+			.ForMember(dest => dest.StatusName, options => options.MapFrom(src => GetStatusDescription(src.Status)));
+		CreateMap<ConfigurationEditDto, ConfigurationCreateCommand>();
+		CreateMap<ConfigurationEditDto, ConfigurationUpdateCommand>();
 	}
 
 	private static string GetStatusDescription(ConfigurationStatus status)

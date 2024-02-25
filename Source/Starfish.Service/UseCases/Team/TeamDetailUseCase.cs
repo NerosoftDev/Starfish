@@ -8,13 +8,13 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ITeamDetailUseCase : IUseCase<TeamDetailInput, TeamDetailOutput>;
+internal interface ITeamDetailUseCase : IUseCase<TeamDetailInput, TeamDetailOutput>;
 
-public record TeamDetailInput(string Id) : IUseCaseInput;
+internal record TeamDetailInput(string Id) : IUseCaseInput;
 
-public record TeamDetailOutput(TeamDetailDto Result) : IUseCaseOutput;
+internal record TeamDetailOutput(TeamDetailDto Result) : IUseCaseOutput;
 
-public class TeamDetailUseCase : ITeamDetailUseCase
+internal class TeamDetailUseCase : ITeamDetailUseCase
 {
 	private readonly ITeamRepository _repository;
 	private readonly UserPrincipal _identity;

@@ -33,6 +33,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" />
         <PackageReference Include="MongoDB.EntityFrameworkCore" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     </ItemGroup>
     
     <ItemGroup>

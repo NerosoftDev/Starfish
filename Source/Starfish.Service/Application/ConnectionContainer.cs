@@ -22,33 +22,28 @@ public class ConnectionContainer
 
 	private async void OnClientConnected(object sender, ClientConnectedEventArgs e)
 	{
-		var raw = await _service.GetArchiveAsync(e.AppId, e.Environment);
-		var key = $"{e.AppId}-{e.Environment}";
-		if (_connections.TryGetValue(key, out var connection))
+		var raw = await _service.GetArchiveAsync(e.ConfigId);
+		if (_connections.TryGetValue(e.ConfigId, out var connection))
 		{
 			await connection.Channel.Writer.WriteAsync(Tuple.Create(e.ConnectionId, raw));
 		}
 	}
 
-	public ConnectionInfo GetOrAdd(string appId, string environment, string connectionId)
+	public ConnectionInfo GetOrAdd(string configId, string connectionId)
 	{
-		var key = $"{appId}-{environment}";
-
-		var connection = _connections.AddOrUpdate(key, _ => ConnectionInfo.New(connectionId), (_, info) =>
+		var connection = _connections.AddOrUpdate(configId, _ => ConnectionInfo.New(connectionId), (_, info) =>
 		{
 			info.AddClient(connectionId);
 			return info;
 		});
 
-		OnConnected?.Invoke(this, new ClientConnectedEventArgs { AppId = appId, Environment = environment, ConnectionId = connectionId });
+		OnConnected?.Invoke(this, new ClientConnectedEventArgs { ConfigId = configId, ConnectionId = connectionId });
 		return connection;
 	}
 
-	public void Remove(string appId, string environment, string connectionId)
+	public void Remove(string configId, string connectionId)
 	{
-		var key = $"{appId}-{environment}";
-
-		if (!_connections.TryGetValue(key, out var info))
+		if (!_connections.TryGetValue(configId, out var info))
 		{
 			return;
 		}
@@ -56,7 +51,7 @@ public class ConnectionContainer
 		info.RemoveClient(connectionId);
 		if (info.Clients.Count == 0)
 		{
-			_connections.TryRemove(key, out _);
+			_connections.TryRemove(configId, out _);
 		}
 	}
 
@@ -64,8 +59,7 @@ public class ConnectionContainer
 	public async Task HandleAsync(ConfigurationArchiveUpdatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		var aggregate = @event.GetAggregate<ConfigurationArchive>();
-		var key = $"{aggregate.AppId}-{aggregate.Environment}";
-		if (_connections.TryGetValue(key, out var connection))
+		if (_connections.TryGetValue(aggregate.Id, out var connection))
 		{
 			await connection.Channel.Writer.WriteAsync(Tuple.Create("*", aggregate.Data), cancellationToken);
 		}
@@ -73,10 +67,7 @@ public class ConnectionContainer
 
 	public class ClientConnectedEventArgs : EventArgs
 	{
-		public string AppId { get; set; }
-
-		public string Environment { get; set; }
-
+		public string ConfigId { get; set; }
 		public string ConnectionId { get; set; }
 	}
 }

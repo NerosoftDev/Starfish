@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 身份验证用例输出
 /// </summary>
-public abstract class IdentityUseCaseOutput : IUseCaseOutput
+public abstract record IdentityUseCaseOutput : IUseCaseOutput
 {
 	/// <summary>
 	/// 访问令牌

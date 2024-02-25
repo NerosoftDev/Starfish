@@ -30,7 +30,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	public Task<List<UserItemDto>> QueryAsync(UserCriteria criteria, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserQueryUseCase>();
-		var input = new UserSearchInput(criteria, skip, count);
+		var input = new GenericQueryInput<UserCriteria>(criteria, skip, count);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}

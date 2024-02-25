@@ -11,12 +11,12 @@ public class ConfigurationCriteria
 	public string TeamId { get; set; }
 
 	/// <summary>
-	/// App唯一编码
+	/// 关键字
 	/// </summary>
-	public string AppName { get; set; }
+	public string Keyword { get; set; }
 
 	/// <summary>
-	/// 应用环境
+	/// 状态
 	/// </summary>
-	public string Environment { get; set; }
+	public int Status { get; set; }
 }

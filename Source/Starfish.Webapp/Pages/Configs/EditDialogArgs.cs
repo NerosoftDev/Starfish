@@ -2,15 +2,12 @@
 
 public class EditDialogArgs
 {
-	public EditDialogArgs(string appId, string environment)
+	public EditDialogArgs(string id)
 	{
-		AppId = appId;
-		Environment = environment;
+		Id = id;
 	}
 
-	public string AppId { get; set; }
-
-	public string Environment { get; set; }
+	public string Id { get; set; }
 
 	public Dictionary<string, object> Properties { get; set; }
 }

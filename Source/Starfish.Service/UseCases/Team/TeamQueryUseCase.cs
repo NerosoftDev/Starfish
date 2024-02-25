@@ -7,13 +7,11 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-public interface ITeamQueryUseCase : IUseCase<TeamQueryInput, TeamQueryOutput>;
+internal interface ITeamQueryUseCase : IUseCase<GenericQueryInput<TeamCriteria>, TeamQueryOutput>;
 
-public record TeamQueryInput(TeamCriteria Criteria, int Skip, int Count) : IUseCaseInput;
+internal record TeamQueryOutput(List<TeamItemDto> Result) : IUseCaseOutput;
 
-public record TeamQueryOutput(List<TeamItemDto> Result) : IUseCaseOutput;
-
-public class TeamQueryUseCase : ITeamQueryUseCase
+internal class TeamQueryUseCase : ITeamQueryUseCase
 {
 	private readonly ITeamRepository _repository;
 	private readonly UserPrincipal _identity;
@@ -24,18 +22,8 @@ public class TeamQueryUseCase : ITeamQueryUseCase
 		_identity = identity;
 	}
 
-	public Task<TeamQueryOutput> ExecuteAsync(TeamQueryInput input, CancellationToken cancellationToken = default)
+	public Task<TeamQueryOutput> ExecuteAsync(GenericQueryInput<TeamCriteria> input, CancellationToken cancellationToken = default)
 	{
-		if (input.Skip < 0)
-		{
-			throw new BadRequestException(Resources.IDS_ERROR_PARAM_SKIP_CANNOT_BE_NEGATIVE);
-		}
-
-		if (input.Count <= 0)
-		{
-			throw new BadRequestException(Resources.IDS_ERROR_PARAM_COUNT_MUST_GREATER_THAN_0);
-		}
-
 		if (!_identity.IsAuthenticated)
 		{
 			throw new AuthenticationException();

@@ -20,7 +20,7 @@ internal class AdministratorDeleteUseCase : IAdministratorDeleteUseCase
 		_user = user;
 	}
 
-	public Task ExecuteAsync(AdministratorDeleteInput input, CancellationToken cancellationToken = new CancellationToken())
+	public Task ExecuteAsync(AdministratorDeleteInput input, CancellationToken cancellationToken = default)
 	{
 		_user.EnsureInRoles(["SA"]);
 

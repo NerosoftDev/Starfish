@@ -11,7 +11,7 @@ public class UseCaseModule : ModuleContextBase
 	public override void ConfigureServices(ServiceConfigurationContext context)
 	{
 		var types = typeof(UseCaseModule).Assembly.GetTypes()
-		                                 .Where(t => t.IsClass && t.IsPublic && t.Name.EndsWith("UseCase"));
+		                                 .Where(t => t.IsClass && t.Name.EndsWith("UseCase"));
 
 		foreach (var type in types)
 		{

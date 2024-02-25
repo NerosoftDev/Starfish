@@ -10,13 +10,15 @@ namespace Nerosoft.Starfish.Application;
 /// 应用配置命令处理器
 /// </summary>
 public class ConfigurationCommandHandler : CommandHandlerBase,
-                                     IHandler<ConfigurationCreateCommand>,
-                                     IHandler<ConfigurationUpdateCommand>,
-                                     IHandler<ConfigurationDeleteCommand>,
-                                     IHandler<ConfigurationPublishCommand>,
-                                     IHandler<ConfigurationValueUpdateCommand>,
-                                     IHandler<ConfigurationRevisionCreateCommand>,
-                                     IHandler<ConfigurationArchiveCreateCommand>
+                                           IHandler<ConfigurationCreateCommand>,
+                                           IHandler<ConfigurationUpdateCommand>,
+                                           IHandler<ConfigurationDeleteCommand>,
+                                           IHandler<ConfigurationPublishCommand>,
+                                           IHandler<ConfigurationValueUpdateCommand>,
+                                           IHandler<ConfigurationItemsUpdateCommand>,
+                                           IHandler<ConfigurationSetSecretCommand>,
+                                           IHandler<ConfigurationDisableCommand>,
+                                           IHandler<ConfigurationEnableCommand>
 {
 	public ConfigurationCommandHandler(IUnitOfWorkManager unitOfWork, IObjectFactory factory)
 		: base(unitOfWork, factory)
@@ -28,10 +30,13 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			var business = await Factory.CreateAsync<ConfigurationGeneralBusiness>(cancellationToken);
-			business.AppId = message.AppId;
-			business.Environment = message.Environment;
-			business.Items = message.Data;
+			business.TeamId = message.TeamId;
+			business.Name = message.Name;
+			business.Description = message.Description;
+			business.Secret = message.Secret;
+
 			_ = await business.SaveAsync(false, cancellationToken);
+
 			return business.Id;
 		}, context.Response);
 	}
@@ -40,8 +45,10 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<ConfigurationGeneralBusiness>(message.AppId, message.Environment, cancellationToken);
-			business.Items = message.Data;
+			var business = await Factory.FetchAsync<ConfigurationGeneralBusiness>(message.Id, cancellationToken);
+			business.Name = message.Name;
+			business.Description = message.Description;
+			business.Secret = message.Secret;
 			_ = await business.SaveAsync(true, cancellationToken);
 		});
 	}
@@ -51,7 +58,7 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<ConfigurationGeneralBusiness>(message.AppId, message.Environment, cancellationToken);
+			var business = await Factory.FetchAsync<ConfigurationGeneralBusiness>(message.Id, cancellationToken);
 			business.MarkAsDelete();
 			await business.SaveAsync(false, cancellationToken);
 		});
@@ -62,35 +69,52 @@ public class ConfigurationCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			await Factory.ExecuteAsync<ConfigurationPublishBusiness>(message.AppId, message.Environment, cancellationToken);
+			await Factory.ExecuteAsync<ConfigurationPublishBusiness>(message.Id, message.Version, message.Comment, cancellationToken);
 		});
 	}
 
+	/// <inheritdoc />
 	public Task HandleAsync(ConfigurationValueUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<ConfigurationGeneralBusiness>(message.AppId, message.Environment, cancellationToken);
-			business.Key = message.Key;
-			business.Value = message.Value;
-			_ = await business.SaveAsync(true, cancellationToken);
+			await Factory.ExecuteAsync<ConfigurationItemsBusiness>(message.Id, message.Key, message.Value, cancellationToken);
 		});
 	}
 
-	public Task HandleAsync(ConfigurationRevisionCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationItemsUpdateCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
-			var argument = new ConfigurationRevisionArgument(message.Version, message.Comment, context.User?.Identity?.Name);
-			await Factory.ExecuteAsync<ConfigurationRevisionBusiness>(message.AppId, message.Environment, argument, cancellationToken);
+			await Factory.ExecuteAsync<ConfigurationItemsBusiness>(message.Id, message.Items, cancellationToken);
 		});
 	}
 
-	public Task HandleAsync(ConfigurationArchiveCreateCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationSetSecretCommand message, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		return ExecuteAsync(async () =>
 		{
-			await Factory.ExecuteAsync<ConfigurationArchiveBusiness>(message.AppId, message.Environment, context.User?.Identity?.Name, cancellationToken);
+			await Factory.ExecuteAsync<ConfigurationSecretBusiness>(message.Id, message.Secret, cancellationToken);
+		});
+	}
+
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationDisableCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			await Factory.ExecuteAsync<ConfigurationStatusBusiness>(message.Id, false, cancellationToken);
+		});
+	}
+
+	/// <inheritdoc />
+	public Task HandleAsync(ConfigurationEnableCommand message, MessageContext context, CancellationToken cancellationToken = default)
+	{
+		return ExecuteAsync(async () =>
+		{
+			await Factory.ExecuteAsync<ConfigurationStatusBusiness>(message.Id, true, cancellationToken);
 		});
 	}
 }

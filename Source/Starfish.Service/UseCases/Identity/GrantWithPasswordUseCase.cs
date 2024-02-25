@@ -10,35 +10,22 @@ namespace Nerosoft.Starfish.UseCases;
 /// <summary>
 /// 密码登录用例接口
 /// </summary>
-public interface IGrantWithPasswordUseCase : IUseCase<GrantWithPasswordUseCaseInput, GrantWithPasswordUseCaseOutput>;
+internal interface IGrantWithPasswordUseCase : IUseCase<GrantWithPasswordUseCaseInput, GrantWithPasswordUseCaseOutput>;
 
 /// <summary>
 /// 密码登录输入参数
 /// </summary>
-public class GrantWithPasswordUseCaseInput : IUseCaseInput
-{
-	/// <summary>
-	/// 用户名
-	/// </summary>
-	public string UserName { get; init; }
-
-	/// <summary>
-	/// 密码
-	/// </summary>
-	public string Password { get; init; }
-}
+internal record GrantWithPasswordUseCaseInput(string UserName, string Password) : IUseCaseInput;
 
 /// <summary>
 /// 密码登录输出参数
 /// </summary>
-public class GrantWithPasswordUseCaseOutput : IdentityUseCaseOutput
-{
-}
+internal record GrantWithPasswordUseCaseOutput : IdentityUseCaseOutput;
 
 /// <summary>
 /// 密码登录用例
 /// </summary>
-public class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
+internal class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 {
 	private readonly IServiceProvider _provider;
 
