@@ -1,21 +1,3 @@
-# app_info
-
-```sql
-CREATE TABLE `app_info`  (
-  `Id` varchar(32) NOT NULL,
-  `TeamId` varchar(32) NOT NULL,
-  `Name` varchar(100) NOT NULL,
-  `Secret` varchar(255) NOT NULL,
-  `Description` varchar(500) NULL DEFAULT NULL,
-  `Status` int NOT NULL,
-  `CreateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`Id`) USING BTREE,
-  INDEX `IDX_APP_INFO_STATUS`(`Status` ASC) USING BTREE,
-  INDEX `IDX_APP_INFO_TEAM_ID`(`TeamId` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
-```
-
 # operate_log
 
 ```sql
@@ -40,8 +22,10 @@ CREATE TABLE `operate_log`  (
 ```sql
 CREATE TABLE `configuration`  (
   `Id` bigint NOT NULL,
-  `AppId` varchar(32) NOT NULL,
-  `Environment` varchar(50) NOT NULL,
+  `TeamId` varchar(32) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Secret` varchar(255) NOT NULL,
+  `Description` varchar(500) NULL DEFAULT NULL,
   `Status` int NOT NULL,
   `Version` varchar(20) NULL DEFAULT NULL,
   `PublishTime` datetime NULL DEFAULT NULL,
@@ -50,8 +34,8 @@ CREATE TABLE `configuration`  (
   `CreatedBy` varchar(64) NOT NULL,
   `UpdatedBy` varchar(64) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
-  UNIQUE INDEX `IDX_CONFIG_UNIQUE`(`AppId` ASC, `Environment` ASC) USING BTREE,
-  INDEX `IDX_CONFIG_APP_ID`(`AppId` ASC) USING BTREE,
+  UNIQUE INDEX `IDX_CONFIG_UNIQUE`(`TeamId` ASC, `Name` ASC) USING BTREE,
+  INDEX `IDX_CONFIG_TEAM_ID`(`TeamId` ASC) USING BTREE,
   INDEX `IDX_CONFIG_STATUS`(`Status` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
