@@ -9,7 +9,7 @@ public class ConnectionContainer
 {
 	public event EventHandler<ClientConnectedEventArgs> OnConnected;
 
-	private static readonly ConcurrentDictionary<string, ConnectionInfo> _connections = new(StringComparer.OrdinalIgnoreCase);
+	private static readonly ConcurrentDictionary<string, ConnectionChannel> _connections = new(StringComparer.OrdinalIgnoreCase);
 
 	private readonly IConfigurationApplicationService _service;
 
@@ -29,16 +29,24 @@ public class ConnectionContainer
 		}
 	}
 
-	public ConnectionInfo GetOrAdd(string configId, string connectionId)
+	public ConnectionChannel GetOrAdd(string configId, string connectionId)
 	{
-		var connection = _connections.AddOrUpdate(configId, _ => ConnectionInfo.New(connectionId), (_, info) =>
-		{
-			info.AddClient(connectionId);
-			return info;
-		});
+		var channel = _connections.GetOrAdd(configId, _ => ConnectionChannel.New());
+
+		channel.AddClient(connectionId);
 
 		OnConnected?.Invoke(this, new ClientConnectedEventArgs { ConfigId = configId, ConnectionId = connectionId });
-		return connection;
+		return channel;
+	}
+
+	public List<ConnectionInfo> GetConnections(string configId)
+	{
+		return _connections.TryGetValue(configId, out var info) ? info.Connections : null;
+	}
+
+	public List<ConnectionInfo> GetConnections()
+	{
+		return _connections.SelectMany(t => t.Value.Connections).ToList();
 	}
 
 	public void Remove(string configId, string connectionId)
@@ -49,7 +57,7 @@ public class ConnectionContainer
 		}
 
 		info.RemoveClient(connectionId);
-		if (info.Clients.Count == 0)
+		if (info.Connections.Count == 0)
 		{
 			_connections.TryRemove(configId, out _);
 		}
@@ -68,34 +76,47 @@ public class ConnectionContainer
 	public class ClientConnectedEventArgs : EventArgs
 	{
 		public string ConfigId { get; set; }
+
 		public string ConnectionId { get; set; }
+
+		public DateTime ConnectedTime { get; set; }
 	}
 }
 
-public class ConnectionInfo
+public class ConnectionChannel
 {
-	public List<string> Clients { get; } = [];
+	public List<ConnectionInfo> Connections { get; private set; }
 
 	public Channel<Tuple<string, string>> Channel { get; private init; }
 
-	public static ConnectionInfo New(string connectionId)
+	public static ConnectionChannel New()
 	{
-		var info = new ConnectionInfo
+		var info = new ConnectionChannel
 		{
 			Channel = System.Threading.Channels.Channel.CreateUnbounded<Tuple<string, string>>()
 		};
-		info.AddClient(connectionId);
 
 		return info;
 	}
 
 	public void AddClient(string connectionId)
 	{
-		Clients.Add(connectionId);
+		Connections.Add(new ConnectionInfo
+		{
+			ConnectionId = connectionId,
+			ConnectedTime = DateTime.Now
+		});
 	}
 
 	public void RemoveClient(string connectionId)
 	{
-		Clients.Remove(connectionId);
+		Connections.RemoveAll(t => t.ConnectionId == connectionId);
 	}
+}
+
+public class ConnectionInfo
+{
+	public string ConnectionId { get; set; }
+
+	public DateTime ConnectedTime { get; set; }
 }
