@@ -27,7 +27,7 @@ public sealed class TokenEventSubscriber : IHandler<UserAuthSucceedEvent>,
 			Type = "refresh_token",
 			Token = message.RefreshToken,
 			Issues = message.TokenIssueTime,
-			Subject = message.UserId.ToString(),
+			Subject = message.UserId,
 			Expires = message.TokenIssueTime.AddDays(30)
 		};
 		return _bus.SendAsync(command, cancellationToken);

@@ -1,8 +1,6 @@
 ﻿using Nerosoft.Euonia.Application;
-using Nerosoft.Euonia.Linq;
 using Nerosoft.Euonia.Mapping;
 using Nerosoft.Starfish.Domain;
-using Nerosoft.Starfish.Repository;
 using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;

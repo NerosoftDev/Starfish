@@ -1,5 +1,4 @@
 ﻿using Nerosoft.Euonia.Business;
-using Nerosoft.Euonia.Claims;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
 
