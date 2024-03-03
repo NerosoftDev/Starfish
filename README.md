@@ -199,9 +199,8 @@ app.Run();
 {
     "Starfish": {
         "Host": "http://localhost:5000",
-        "App": "Starfish.Sample.Blazor",
-        "Secret": "123456",
-        "Env": "Development"
+        "Id": "5lNc9zQGdG7",
+        "Secret": "123456"
     }
 }
 ```
@@ -249,12 +248,13 @@ See the Swagger UI at [http://localhost:5229/swagger](http://localhost:5229/swag
  - Docker support. / 支持Docker部署。
  - MongoDB support. / 支持MongoDB。
  - User registration. / 用户注册。
+ - Yaml support. / 支持Yaml。
 
 ## v1.3
 
  - Multiple node deployment. / 支持多节点部署。
  - Common configuration. / 公共配置。
- - Customized environments. / 自定义环境。
+ - Real-time connections refreshing. / 实时连接信息刷新。
 
 ## v2.0
 
