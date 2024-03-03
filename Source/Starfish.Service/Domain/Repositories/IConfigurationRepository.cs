@@ -16,5 +16,5 @@ public interface IConfigurationRepository : IBaseRepository<DataContext, Configu
 
 	Task<List<ConfigurationItem>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default);
 
-	Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default);
+	Task<int> GetItemCountAsync(string id, string key, Func<IQueryable<ConfigurationItem>,IQueryable<ConfigurationItem>> action, CancellationToken cancellationToken = default);
 }

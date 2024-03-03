@@ -166,6 +166,10 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.Property(t => t.Id)
 			      .IsRequired();
+
+			entity.HasOne(t => t.Configuration)
+			      .WithOne(t => t.Archive)
+			      .OnDelete(DeleteBehavior.Cascade);
 		});
 	}
 

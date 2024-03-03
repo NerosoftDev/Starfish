@@ -33,7 +33,7 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		                   .AsNoTracking();
 		var expressions = new List<Expression<Func<ConfigurationItem, bool>>>
 		{
-			t=>t.ConfigurationId == id
+			t => t.ConfigurationId == id
 		};
 
 		if (!string.IsNullOrWhiteSpace(key))
@@ -49,14 +49,25 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		            .ToListAsync(cancellationToken);
 	}
 
-	public Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(string id, string key, Func<IQueryable<ConfigurationItem>, IQueryable<ConfigurationItem>> action, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<ConfigurationItem>()
 		                   .AsQueryable();
+
+		if (action != null)
+		{
+			query = action(query);
+		}
+
 		var expressions = new List<Expression<Func<ConfigurationItem, bool>>>
 		{
-			t=>t.ConfigurationId == id
+			t => t.Id > 0
 		};
+
+		if (!string.IsNullOrWhiteSpace(id))
+		{
+			expressions.Add(t => t.ConfigurationId == id);
+		}
 
 		if (!string.IsNullOrWhiteSpace(key))
 		{

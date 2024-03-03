@@ -96,6 +96,11 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 		}
 
 		var aggregate = Configuration.Create(TeamId, Name);
+		if (!string.IsNullOrWhiteSpace(Secret))
+		{
+			aggregate.SetSecret(Secret);
+		}
+
 		await ConfigurationRepository.InsertAsync(aggregate, true, cancellationToken);
 		Id = aggregate.Id;
 	}
