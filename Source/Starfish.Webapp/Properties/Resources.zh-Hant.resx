@@ -192,14 +192,50 @@
   <data name="IDS_CONFIG_DELETE_CONFIRM_TITLE" xml:space="preserve">
     <value>刪除配置</value>
   </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
   <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_ID" xml:space="preserve">
     <value>Id</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_PUBLISH_TIME" xml:space="preserve">
+    <value>發佈時間</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_STATUS" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_VERSION" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="IDS_CONFIG_DETAIL_DIALOG_TITLE" xml:space="preserve">
+    <value>配置詳情</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_NAME" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SECRET" xml:space="preserve">
+    <value>密鑰</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SELECT_TEAM" xml:space="preserve">
+    <value>選擇團隊</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_ADD" xml:space="preserve">
+    <value>新增配置</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_JSON" xml:space="preserve">
     <value>從Json創建</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_CREATE_FROM_TEXT" xml:space="preserve">
     <value>從文本創建</value>
+  </data>
+  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT" xml:space="preserve">
+    <value>編輯配置</value>
   </data>
   <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT_AS_JSON" xml:space="preserve">
     <value>編輯Json</value>
@@ -233,6 +269,15 @@
   </data>
   <data name="IDS_CONFIG_INDEX_COLUMN_KEY" xml:space="preserve">
     <value>鍵</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_NAME" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_STATUS" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="IDS_CONFIG_INDEX_COLUMN_TEAM" xml:space="preserve">
+    <value>團隊</value>
   </data>
   <data name="IDS_CONFIG_INDEX_COLUMN_VALUE" xml:space="preserve">
     <value>值</value>
@@ -296,6 +341,36 @@
   </data>
   <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
     <value>同步到Redis</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONFIGURATION" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONFIGURATION_ID" xml:space="preserve">
+    <value>配置Id</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONFIGURATION_NAME" xml:space="preserve">
+    <value>配置名稱</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONNECTED_TIME" xml:space="preserve">
+    <value>連接時間</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONNECTION_ID" xml:space="preserve">
+    <value>連接Id</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONNECTION_TYPE" xml:space="preserve">
+    <value>連接方式</value>
+  </data>
+  <data name="IDS_HOME_LABEL_CONFIGURATIONS" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="IDS_HOME_LABEL_CONFIGURATION_ITEMS" xml:space="preserve">
+    <value>配置項</value>
+  </data>
+  <data name="IDS_HOME_LABEL_CONNECTIONS" xml:space="preserve">
+    <value>連接</value>
+  </data>
+  <data name="IDS_HOME_LABEL_TEAMS" xml:space="preserve">
+    <value>團隊</value>
   </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>登入</value>
@@ -530,80 +605,5 @@
   </data>
   <data name="IDS_USER_RESET_PASSWORD_DIALOG_TITLE" xml:space="preserve">
     <value>重設密碼</value>
-  </data>
-  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>描述</value>
-  </data>
-  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_NAME" xml:space="preserve">
-    <value>名稱</value>
-  </data>
-  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_PUBLISH_TIME" xml:space="preserve">
-    <value>發佈時間</value>
-  </data>
-  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_STATUS" xml:space="preserve">
-    <value>狀態</value>
-  </data>
-  <data name="IDS_CONFIG_DETAIL_DIALOG_LABEL_VERSION" xml:space="preserve">
-    <value>版本</value>
-  </data>
-  <data name="IDS_CONFIG_DETAIL_DIALOG_TITLE" xml:space="preserve">
-    <value>配置詳情</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_DESCRIPTION" xml:space="preserve">
-    <value>描述</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_NAME" xml:space="preserve">
-    <value>名稱</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SECRET" xml:space="preserve">
-    <value>密鑰</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_LABEL_SELECT_TEAM" xml:space="preserve">
-    <value>選擇團隊</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_ADD" xml:space="preserve">
-    <value>新增配置</value>
-  </data>
-  <data name="IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT" xml:space="preserve">
-    <value>編輯配置</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_NAME" xml:space="preserve">
-    <value>名稱</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_STATUS" xml:space="preserve">
-    <value>狀態</value>
-  </data>
-  <data name="IDS_CONFIG_INDEX_COLUMN_TEAM" xml:space="preserve">
-    <value>團隊</value>
-  </data>
-  <data name="IDS_HOME_LABEL_CONFIGURATIONS" xml:space="preserve">
-    <value>配置</value>
-  </data>
-  <data name="IDS_HOME_LABEL_CONFIGURATION_ITEMS" xml:space="preserve">
-    <value>配置項</value>
-  </data>
-  <data name="IDS_HOME_LABEL_CONNECTIONS" xml:space="preserve">
-    <value>連接</value>
-  </data>
-  <data name="IDS_HOME_LABEL_TEAMS" xml:space="preserve">
-    <value>團隊</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONFIGURATION_ID" xml:space="preserve">
-    <value>配置Id</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONFIGURATION_NAME" xml:space="preserve">
-    <value>配置名稱</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONNECTION_ID" xml:space="preserve">
-    <value>連接Id</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONNECTION_TYPE" xml:space="preserve">
-    <value>連接方式</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONNECTED_TIME" xml:space="preserve">
-    <value>連接時間</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONFIGURATION" xml:space="preserve">
-    <value>配置</value>
   </data>
 </root>
