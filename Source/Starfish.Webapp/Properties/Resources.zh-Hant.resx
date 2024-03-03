@@ -576,4 +576,34 @@
   <data name="IDS_CONFIG_INDEX_COLUMN_TEAM" xml:space="preserve">
     <value>團隊</value>
   </data>
+  <data name="IDS_HOME_LABEL_CONFIGURATIONS" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="IDS_HOME_LABEL_CONFIGURATION_ITEMS" xml:space="preserve">
+    <value>配置項</value>
+  </data>
+  <data name="IDS_HOME_LABEL_CONNECTIONS" xml:space="preserve">
+    <value>連接</value>
+  </data>
+  <data name="IDS_HOME_LABEL_TEAMS" xml:space="preserve">
+    <value>團隊</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONFIGURATION_ID" xml:space="preserve">
+    <value>配置Id</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONFIGURATION_NAME" xml:space="preserve">
+    <value>配置名稱</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONNECTION_ID" xml:space="preserve">
+    <value>連接Id</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONNECTION_TYPE" xml:space="preserve">
+    <value>連接方式</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONNECTED_TIME" xml:space="preserve">
+    <value>連接時間</value>
+  </data>
+  <data name="IDS_HOME_COLUMN_CONFIGURATION" xml:space="preserve">
+    <value>配置</value>
+  </data>
 </root>
