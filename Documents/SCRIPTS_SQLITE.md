@@ -1,30 +1,4 @@
-﻿# app_info
-
-```sqlite
-CREATE TABLE "app_info" (
-  "Id" text(32) NOT NULL,
-  "TeamId" text(32) NOT NULL,
-  "Name" text(50) NOT NULL,
-  "Code" text(50) NOT NULL,
-  "Secret" text(50) NOT NULL,
-  "Description" text(500),
-  "Status" integer NOT NULL DEFAULT 1,
-  "CreateTime" text NOT NULL,
-  "UpdateTime" text NOT NULL,
-  PRIMARY KEY ("Id")
-);
-
-CREATE INDEX "IDX_APP_INFO_STATUS"
-ON "app_info" (
-  "Status" ASC
-);
-CREATE INDEX "IDX_APP_INFO_TEAM_ID"
-ON "app_info" (
-  "TeamId" ASC
-);
-```
-
-# operate_log
+﻿# operate_log
 
 ```sqlite
 CREATE TABLE "operate_log" (
@@ -58,8 +32,10 @@ ON "operate_log" (
 ```sqlite
 CREATE TABLE "configuration" (
   "Id" integer NOT NULL,
-  "AppId" text(32) NOT NULL,
-  "Environment" text NOT NULL,
+  "TeamId" text(32) NOT NULL,
+  "Name" text NOT NULL,
+  "Secret" text(50) NOT NULL,
+  "Description" text(500),
   "Status" integer NOT NULL DEFAULT 1,
   "Version" text,
   "PublishTime" text,
@@ -70,9 +46,9 @@ CREATE TABLE "configuration" (
   PRIMARY KEY ("Id")
 );
 
-CREATE INDEX "IDX_CONFIG_APP_ID"
+CREATE INDEX "IDX_CONFIG_TEAM_ID"
 ON "configuration" (
-  "AppId" ASC
+  "TeamId" ASC
 );
 CREATE INDEX "IDX_CONFIG_STATUS"
 ON "configuration" (
@@ -80,8 +56,8 @@ ON "configuration" (
 );
 CREATE UNIQUE INDEX "IDX_CONFIG_UNIQUE"
 ON "configuration" (
-  "AppId" ASC,
-  "Environment" ASC
+  "TeamId" ASC,
+  "Name" ASC
 );
 ```
 

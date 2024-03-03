@@ -1,35 +1,3 @@
-# app_info
-
-```sql
-CREATE TABLE [appinfo] (
-  [Id] varchar(32)  NOT NULL,
-  [TeamId] varchar(32)  NOT NULL,
-  [Name] varchar(100) NOT NULL,
-  [Secret] varchar(255) NOT NULL,
-  [Description] varchar(500) NULL,
-  [Status] int  NOT NULL,
-  [CreateTime] datetime DEFAULT getdate() NOT NULL,
-  [UpdateTime] datetime DEFAULT getdate() NOT NULL,
-  PRIMARY KEY CLUSTERED ([Id])
-)
-GO
-
-ALTER TABLE [appinfo] SET (LOCK_ESCALATION = TABLE)
-GO
-
-CREATE NONCLUSTERED INDEX [IDX_APP_INFO_STATUS]
-ON [appinfo] (
-  [Status] ASC
-)
-GO
-
-CREATE NONCLUSTERED INDEX [IDX_APP_INFO_TEAM_ID]
-ON [appinfo] (
-  [TeamId] ASC
-)
-GO
-```
-
 # operate_log
 
 ```sql
@@ -73,8 +41,10 @@ GO
 ```sql
 CREATE TABLE [configuration] (
   [Id] bigint  NOT NULL,
-  [AppId] varchar(32)  NOT NULL,
-  [Environment] varchar(50) NOT NULL,
+  [TeamId] varchar(32)  NOT NULL,
+  [Name] varchar(100) NOT NULL,
+  [Secret] varchar(255) NOT NULL,
+  [Description] varchar(500) NULL,
   [Status] int  NOT NULL,
   [Version] varchar(20) NULL,
   [PublishTime] datetime  NULL,
@@ -91,14 +61,14 @@ GO
 
 CREATE UNIQUE NONCLUSTERED INDEX [IDX_CONFIG_UNIQUE]
 ON [configuration] (
-  [AppId] ASC,
-  [Environment] ASC
+  [TeamId] ASC,
+  [Name] ASC
 )
 GO
 
-CREATE NONCLUSTERED INDEX [IDX_CONFIG_APP_ID]
+CREATE NONCLUSTERED INDEX [IDX_CONFIG_TEAM_ID]
 ON [configuration] (
-  [AppId] ASC
+  [TeamId] ASC
 )
 GO
 

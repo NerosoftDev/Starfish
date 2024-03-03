@@ -46,12 +46,11 @@ public class Startup
 		{
 			app.UseDeveloperExceptionPage();
 			app.UseSwagger();
-			
 		}
-
+		
 		lifetime.ApplicationStarted.Register(() => OnStarted(app));
 		lifetime.ApplicationStopping.Register(() => OnStopping(app));
-		lifetime.ApplicationStopped.Register(() => OnStarted(app));
+		lifetime.ApplicationStopped.Register(() => OnStopped(app));
 
 		app.UseWebSockets();
 
@@ -79,16 +78,19 @@ public class Startup
 
 	private void OnStarted(IApplicationBuilder app)
 	{
+		app.ApplicationServices.GetService<ILoggerFactory>().CreateLogger<Startup>().LogInformation("Application started");
 		//"On-started" logic
 	}
 
 	private void OnStopping(IApplicationBuilder app)
 	{
+		app.ApplicationServices.GetService<ILoggerFactory>().CreateLogger<Startup>().LogInformation("Application stopping");
 		//"On-stopping" logic
 	}
 
 	private void OnStopped(IApplicationBuilder app)
 	{
+		app.ApplicationServices.GetService<ILoggerFactory>().CreateLogger<Startup>().LogInformation("Application stopped");
 		//"On-stopped" logic
 	}
 }

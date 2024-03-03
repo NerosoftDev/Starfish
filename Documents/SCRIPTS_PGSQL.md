@@ -1,27 +1,3 @@
-# app_info
-
-```sql
-CREATE TABLE "public"."appinfo" (
-  "Id" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "TeamId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "Name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "Secret" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "Description" varchar(500) COLLATE "pg_catalog"."default",
-  "Status" int4 NOT NULL,
-  "CreateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "UpdateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY ("Id")
-)
-;
-
-CREATE INDEX "IDX_APP_INFO_STATUS" ON "public"."appinfo" USING btree (
-  "Status" "pg_catalog"."int4_ops" ASC NULLS LAST
-);
-CREATE INDEX "IDX_APP_INFO_TEAM_ID" ON "public"."appinfo" USING btree (
-  "TeamId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
-```
-
 # operate_log
 
 ```sql
@@ -54,8 +30,10 @@ CREATE INDEX "IDX_OPERATE_LOG_USER_NAME" ON "public"."operate_log" USING btree (
 ```sql
 CREATE TABLE "public"."configuration" (
   "Id" int8 NOT NULL,
-  "AppId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "Environment" varchar(25) COLLATE "pg_catalog"."default" NOT NULL,
+  "TeamId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
+  "Name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+  "Secret" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "Description" varchar(500) COLLATE "pg_catalog"."default",
   "Status" int4 NOT NULL,
   "Version" varchar(20) COLLATE "pg_catalog"."default",
   "PublishTime" timestamp(6),
@@ -64,18 +42,17 @@ CREATE TABLE "public"."configuration" (
   "CreatedBy" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "UpdatedBy" date NOT NULL,
   PRIMARY KEY ("Id")
-)
-;
+);
 
-CREATE INDEX "IDX_CONFIG_APP_ID" ON "public"."configuration" USING btree (
-  "AppId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+CREATE INDEX "IDX_CONFIG_TEAM_ID" ON "public"."configuration" USING btree (
+  "TeamId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 CREATE INDEX "IDX_CONFIG_STATUS" ON "public"."configuration" USING btree (
   "Status" "pg_catalog"."int4_ops" ASC NULLS LAST
 );
 CREATE UNIQUE INDEX "IDX_CONFIG_UNIQUE" ON "public"."configuration" USING btree (
-  "AppId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "Environment" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+  "TeamId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "Name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 ```
 

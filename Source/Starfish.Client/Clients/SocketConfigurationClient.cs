@@ -9,7 +9,7 @@ internal class SocketConfigurationClient : IConfigurationClient
 
 	public SocketConfigurationClient(Uri host, string id, string secret)
 	{
-		_uri = new Uri($"{host.AbsoluteUri}ws?app={id}&secret={secret}");
+		_uri = new Uri($"{host.AbsoluteUri}ws?id={id}&secret={secret}");
 		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Team, team);
 		// _client.Options.SetRequestHeader(Constants.RequestHeaders.App, app);
 		// _client.Options.SetRequestHeader(Constants.RequestHeaders.Secret, secret);

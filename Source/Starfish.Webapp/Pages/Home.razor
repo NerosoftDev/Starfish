@@ -2,4 +2,114 @@
 
 @attribute [Authorize]
 
+@inject IDashboardApi DashboardApi
+
 <PageTitle>Home</PageTitle>
+
+<FluentGrid>
+    <FluentGridItem lg="4" md="4" sm="6">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Horizontal">
+                <div>
+                    <p>@Resources.IDS_HOME_LABEL_CONNECTIONS</p>
+                    <h2>@ConnectionCount</h2>
+                </div>
+                <FluentSpacer />
+                <div>
+                    <FluentIcon Value="@(new Icons.Regular.Size28.PlugDisconnected())" />
+                </div>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem lg="4" md="4" sm="6">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Horizontal">
+                <div>
+                    <p>@Resources.IDS_HOME_LABEL_CONFIGURATIONS</p>
+                    <h2>@ConfigurationItemCount<span>/</span>@ConfigurationCount</h2>
+                </div>
+                <FluentSpacer />
+                <div>
+                    <FluentIcon Value="@(new Icons.Regular.Size28.Settings())" />
+                </div>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem lg="4" md="4" sm="6">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Horizontal">
+                <div>
+                    <p>@Resources.IDS_HOME_LABEL_TEAMS</p>
+                    <h2>@TeamCount</h2>
+                </div>
+                <FluentSpacer />
+                <div>
+                    <FluentIcon Value="@(new Icons.Regular.Size28.PeopleTeam())" />
+                </div>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+</FluentGrid>
+
+<FluentGrid>
+    <FluentGridItem lg="12">
+        <FluentCard>
+            <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46"
+                            GenerateHeader="GenerateHeaderOption.Sticky"
+                            TGridItem="ConnectionInfoDto">
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_HOME_COLUMN_CONNECTION_ID)" Property="@(c => c.ConnectionId)" />
+                @* <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
+                    <FluentLabel>@context.ConfigurationId</FluentLabel>
+                </TemplateColumn> *@
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_HOME_COLUMN_CONFIGURATION)" Property="@(c => c.ConfigurationId)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_HOME_COLUMN_CONNECTION_TYPE)" Property="@(c => c.ConnectionType)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_HOME_COLUMN_CONNECTED_TIME)" Property="@(c => c.ConnectedTime)" />
+            </FluentDataGrid>
+        </FluentCard>
+    </FluentGridItem>
+</FluentGrid>
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private UserPrincipal Identity { get; set; }
+
+    private int ConnectionCount { get; set; }
+
+    private int TeamCount { get; set; }
+
+    private int ConfigurationCount { get; set; }
+
+    private int ConfigurationItemCount { get; set; }
+
+    private GridItemsProvider<ConnectionInfoDto> _provider;
+
+    private PaginationState Pagination { get; } = new() { ItemsPerPage = Constants.Query.Count };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthenticationState;
+
+        Identity = new UserPrincipal(user.User);
+
+        var tasks = new List<Task>
+        {
+            DashboardApi.GetConnectionCountAsync().ContinueWith(task => ConnectionCount= task.Result.EnsureSuccess()),
+            DashboardApi.GetTeamCountAsync().ContinueWith(task => TeamCount= task.Result.EnsureSuccess()),
+            DashboardApi.GetConfigurationCountAsync().ContinueWith(task=> ConfigurationCount = task.Result.EnsureSuccess()),
+            DashboardApi.GetConfigurationItemCountAsync().ContinueWith(task=> ConfigurationItemCount = task.Result.EnsureSuccess())
+        };
+        await Task.WhenAll(tasks).Guard();
+
+        _provider = async request =>
+        {
+            List<ConnectionInfoDto> items = null;
+            await DashboardApi.GetConnectionsListAsync(request.CancellationToken)
+                                .EnsureSuccess(result => items = result, request.CancellationToken);
+            return GridItemsProviderResult.From(items, 0);
+        };
+    }
+
+}
