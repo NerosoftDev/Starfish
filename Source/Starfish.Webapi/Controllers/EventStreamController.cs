@@ -38,7 +38,7 @@ public class EventStreamController : ControllerBase
 		Response.Headers.Append(HeaderNames.Connection, "close");
 		try
 		{
-			var connection = _container.GetOrAdd(configId, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(configId, HttpContext.Connection.Id, "event-stream");
 
 			while (await connection.Channel.Reader.WaitToReadAsync(HttpContext.RequestAborted))
 			{

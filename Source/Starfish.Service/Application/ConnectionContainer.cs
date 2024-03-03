@@ -23,17 +23,22 @@ public class ConnectionContainer
 	private async void OnClientConnected(object sender, ClientConnectedEventArgs e)
 	{
 		var raw = await _service.GetArchiveAsync(e.ConfigId);
+		if (string.IsNullOrEmpty(raw))
+		{
+			return;
+		}
+
 		if (_connections.TryGetValue(e.ConfigId, out var connection))
 		{
 			await connection.Channel.Writer.WriteAsync(Tuple.Create(e.ConnectionId, raw));
 		}
 	}
 
-	public ConnectionChannel GetOrAdd(string configId, string connectionId)
+	public ConnectionChannel GetOrAdd(string configId, string connectionId, string connectionType)
 	{
-		var channel = _connections.GetOrAdd(configId, _ => ConnectionChannel.New());
+		var channel = _connections.GetOrAdd(configId, _ => ConnectionChannel.New(configId));
 
-		channel.AddClient(connectionId);
+		channel.AddClient(connectionId, connectionType);
 
 		OnConnected?.Invoke(this, new ClientConnectedEventArgs { ConfigId = configId, ConnectionId = connectionId });
 		return channel;
@@ -46,7 +51,7 @@ public class ConnectionContainer
 
 	public List<ConnectionInfo> GetConnections()
 	{
-		return _connections.SelectMany(t => t.Value.Connections).ToList();
+		return _connections.SelectMany(t => t.Value.Connections ?? []).ToList();
 	}
 
 	public void Remove(string configId, string connectionId)
@@ -85,13 +90,21 @@ public class ConnectionContainer
 
 public class ConnectionChannel
 {
+	private ConnectionChannel(string configId)
+	{
+		ConfigId = configId;
+		Connections = [];
+	}
+
+	public string ConfigId { get; }
+
 	public List<ConnectionInfo> Connections { get; private set; }
 
 	public Channel<Tuple<string, string>> Channel { get; private init; }
 
-	public static ConnectionChannel New()
+	public static ConnectionChannel New(string configId)
 	{
-		var info = new ConnectionChannel
+		var info = new ConnectionChannel(configId)
 		{
 			Channel = System.Threading.Channels.Channel.CreateUnbounded<Tuple<string, string>>()
 		};
@@ -99,11 +112,13 @@ public class ConnectionChannel
 		return info;
 	}
 
-	public void AddClient(string connectionId)
+	public void AddClient(string connectionId, string type)
 	{
 		Connections.Add(new ConnectionInfo
 		{
+			ConfigurationId = ConfigId,
 			ConnectionId = connectionId,
+			ConnectionType = type,
 			ConnectedTime = DateTime.Now
 		});
 	}
@@ -116,7 +131,11 @@ public class ConnectionChannel
 
 public class ConnectionInfo
 {
+	public string ConfigurationId { get; set; }
+
 	public string ConnectionId { get; set; }
+
+	public string ConnectionType { get; set; }
 
 	public DateTime ConnectedTime { get; set; }
 }

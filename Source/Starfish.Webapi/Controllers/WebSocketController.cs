@@ -37,7 +37,7 @@ public class WebSocketController : ControllerBase
 
 			using var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 
-			var connection = _container.GetOrAdd(configId, HttpContext.Connection.Id);
+			var connection = _container.GetOrAdd(configId, HttpContext.Connection.Id, "websocket");
 
 			await Task.WhenAny(MonitorChannelAsync(connection.Channel, socket), MonitorClientAsync(socket));
 
@@ -98,6 +98,5 @@ public class WebSocketController : ControllerBase
 
 		var service = HttpContext.RequestServices.GetRequiredService<IConfigurationApplicationService>();
 		return service.AuthorizeAsync(id, teamId, name, secret, HttpContext.RequestAborted);
-		
 	}
 }
