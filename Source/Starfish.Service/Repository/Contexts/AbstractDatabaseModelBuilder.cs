@@ -8,7 +8,6 @@ internal abstract class AbstractDatabaseModelBuilder : IModelBuilder
 	public virtual void Configure(ModelBuilder modelBuilder)
 	{
 		ConfigureUser(modelBuilder);
-		ConfigureAdministrator(modelBuilder);
 		ConfigureTeam(modelBuilder);
 		ConfigureTeamMember(modelBuilder);
 		ConfigureConfiguration(modelBuilder);
@@ -20,9 +19,7 @@ internal abstract class AbstractDatabaseModelBuilder : IModelBuilder
 	}
 
 	protected abstract ModelBuilder ConfigureUser(ModelBuilder modelBuilder);
-
-	protected abstract ModelBuilder ConfigureAdministrator(ModelBuilder modelBuilder);
-
+	
 	protected abstract ModelBuilder ConfigureTeam(ModelBuilder modelBuilder);
 
 	protected abstract ModelBuilder ConfigureTeamMember(ModelBuilder modelBuilder);

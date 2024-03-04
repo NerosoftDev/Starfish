@@ -31,28 +31,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .HasValueGenerator<UuidValueGenerator>();
 		});
 	}
-
-	protected override ModelBuilder ConfigureAdministrator(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<Administrator>(entity =>
-		{
-			entity.ToTable("administrator");
-
-			entity.HasKey(t => t.Id);
-
-			entity.HasIndex(t => t.UserId).HasDatabaseName("IDX_ADMIN_USER_ID")
-			      .IsUnique();
-
-			entity.Property(t => t.Id)
-			      .IsRequired()
-			      .HasValueGenerator<SnowflakeIdValueGenerator>();
-
-			entity.HasOne(t => t.User)
-			      .WithMany()
-			      .HasForeignKey(t => t.UserId);
-		});
-	}
-
+	
 	protected override ModelBuilder ConfigureTeam(ModelBuilder modelBuilder)
 	{
 		return modelBuilder.Entity<Team>(entity =>

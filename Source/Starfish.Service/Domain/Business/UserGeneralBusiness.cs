@@ -28,6 +28,8 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	public static readonly PropertyInfo<string> NickNameProperty = RegisterProperty<string>(p => p.NickName);
 	public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(p => p.Email);
 	public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(p => p.Phone);
+	public static readonly PropertyInfo<bool> IsAdminProperty = RegisterProperty<bool>(p => p.IsAdmin);
+	public static readonly PropertyInfo<bool> ReservedProperty = RegisterProperty<bool>(p => p.Reserved);
 
 	public string Id
 	{
@@ -63,6 +65,18 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	{
 		get => GetProperty(PhoneProperty);
 		set => SetProperty(PhoneProperty, value);
+	}
+
+	public bool IsAdmin
+	{
+		get => GetProperty(IsAdminProperty);
+		set => SetProperty(IsAdminProperty, value);
+	}
+
+	public bool Reserved
+	{
+		get => GetProperty(ReservedProperty);
+		set => SetProperty(ReservedProperty, value);
 	}
 
 	protected override void AddRules()
@@ -111,13 +125,15 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		}
 
 		user.SetNickName(NickName ?? UserName);
+		user.SetIsAdmin(IsAdmin);
+		user.Reserved = Reserved;
 
 		return Repository.InsertAsync(user, true, cancellationToken)
-						 .ContinueWith(task =>
-						 {
-							 task.WaitAndUnwrapException(cancellationToken);
-							 Id = task.Result.Id;
-						 }, cancellationToken);
+		                 .ContinueWith(task =>
+		                 {
+			                 task.WaitAndUnwrapException(cancellationToken);
+			                 Id = task.Result.Id;
+		                 }, cancellationToken);
 	}
 
 	[FactoryUpdate]
@@ -141,6 +157,11 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		if (ChangedProperties.Contains(PasswordProperty))
 		{
 			Aggregate.ChangePassword(Password);
+		}
+
+		if (ChangedProperties.Contains(IsAdminProperty))
+		{
+			Aggregate.SetIsAdmin(IsAdmin);
 		}
 
 		return _repository.UpdateAsync(Aggregate, true, cancellationToken);

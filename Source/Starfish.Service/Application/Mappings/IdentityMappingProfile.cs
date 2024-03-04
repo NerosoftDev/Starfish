@@ -27,9 +27,6 @@ internal class IdentityMappingProfile : Profile
 			.ForMember(dest => dest.NickName, options => options.MapFrom(src => src.User.NickName))
 			.ForMember(dest => dest.Email, options => options.MapFrom(src => src.User.Email))
 			.ForMember(dest => dest.Phone, options => options.MapFrom(src => src.User.Phone));
-
-		CreateMap<Administrator, AdministratorItemDto>();
-		CreateMap<AdministratorAssignDto, AdministratorAssignCommand>();
 	}
 	
 	private static string Mask(string source)

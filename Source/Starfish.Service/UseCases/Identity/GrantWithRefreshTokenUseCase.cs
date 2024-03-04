@@ -43,9 +43,6 @@ internal class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 	private IUserRepository UserRepository => _provider.GetService<IUserRepository>();
 	private ITokenRepository TokenRepository => _provider.GetService<ITokenRepository>();
 
-	private IAdministratorRepository _adminRespository;
-	private IAdministratorRepository AdminRepository => _adminRespository ??= _provider.GetService<IAdministratorRepository>();
-
 	private IdentityCommonComponent _component;
 	private IdentityCommonComponent Component => _component ??= _provider.GetService<IdentityCommonComponent>();
 
@@ -88,10 +85,9 @@ internal class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 			{
 				throw new AuthenticationException(Resources.IDS_ERROR_USER_LOCKOUT);
 			}
-
-			var administrator = await AdminRepository.GetByUserIdAsync(user.Id, cancellationToken);
-			var roles = administrator?.Roles?.Split(",");
-
+			
+			string[] roles = user.IsAdmin ? ["SA"] : [];
+			
 			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{
