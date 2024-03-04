@@ -76,4 +76,11 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	Task ResetPasswordAsync(string id, string password, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// 初始化用户
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task InitializeAsync(CancellationToken cancellationToken = default);
 }

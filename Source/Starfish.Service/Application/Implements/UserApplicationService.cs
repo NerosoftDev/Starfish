@@ -72,4 +72,11 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 		var input = new ResetPasswordInput(id, password);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
+
+	public Task InitializeAsync(CancellationToken cancellationToken = default)
+	{
+		var useCase = LazyServiceProvider.GetService<IUserInitializeUseCase>();
+		return useCase.ExecuteAsync(cancellationToken);
+	}
+
 }
