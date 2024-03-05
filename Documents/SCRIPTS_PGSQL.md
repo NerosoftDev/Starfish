@@ -29,7 +29,7 @@ CREATE INDEX "IDX_OPERATE_LOG_USER_NAME" ON "public"."operate_log" USING btree (
 
 ```sql
 CREATE TABLE "public"."configuration" (
-  "Id" int8 NOT NULL,
+  "Id" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "TeamId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "Name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "Secret" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -60,7 +60,7 @@ CREATE UNIQUE INDEX "IDX_CONFIG_UNIQUE" ON "public"."configuration" USING btree 
 
 ```sql
 CREATE TABLE "public"."configuration_archive" (
-  "Id" int8 NOT NULL,
+  "Id" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "AppId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "Environment" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "Data" text COLLATE "pg_catalog"."default",
@@ -69,11 +69,6 @@ CREATE TABLE "public"."configuration_archive" (
   PRIMARY KEY ("Id")
 )
 ;
-
-CREATE UNIQUE INDEX "IDX_CONFIG_ARCHIVE_UNIQUE" ON "public"."configuration_archive" USING btree (
-  "AppId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "Environment" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
 ```
 
 # configuration_item
@@ -81,7 +76,7 @@ CREATE UNIQUE INDEX "IDX_CONFIG_ARCHIVE_UNIQUE" ON "public"."configuration_archi
 ```sql
 CREATE TABLE "public"."configuration_item" (
   "Id" int8 NOT NULL,
-  "ConfigurationId" int8 NOT NULL,
+  "ConfigurationId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "Key" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "Value" text COLLATE "pg_catalog"."default",
   "UpdatedTime" timestamp(6) NOT NULL,
@@ -104,7 +99,7 @@ CREATE UNIQUE INDEX "IDX_CONFIG_ITEM_UNIQUE" ON "public"."configuration_item" US
 ```sql
 CREATE TABLE "public"."configuration_revision" (
   "Id" int8 NOT NULL,
-  "ConfigurationId" int8 NOT NULL,
+  "ConfigurationId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "Data" text COLLATE "pg_catalog"."default",
   "Comment" varchar(1000) COLLATE "pg_catalog"."default",
   "Version" varchar(25) COLLATE "pg_catalog"."default" NOT NULL,
@@ -198,6 +193,7 @@ CREATE TABLE "public"."user" (
   "AccessFailedCount" int4 NOT NULL DEFAULT 0,
   "LockoutEnd" timestamp(6),
   "Reserved" bool NOT NULL DEFAULT false,
+  "IsAdmin" bool NOT NULL DEFAULT false,
   "Source" int4 NOT NULL,
   "CreateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "UpdateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -215,22 +211,5 @@ CREATE INDEX "IDX_USER_PHONE" ON "public"."user" USING btree (
 );
 CREATE INDEX "IDX_USER_USERNAME" ON "public"."user" USING btree (
   "UserName" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
-```
-
-# user_role
-
-```sql
-CREATE TABLE "public"."user_role" (
-  "Id" int8 NOT NULL,
-  "UserId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "Name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  PRIMARY KEY ("Id")
-)
-;
-
-CREATE UNIQUE INDEX "IDX_USER_ROLE_UNIQUE" ON "public"."user_role" USING btree (
-  "UserId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "Name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 ```

@@ -31,7 +31,7 @@ ON "operate_log" (
 
 ```sqlite
 CREATE TABLE "configuration" (
-  "Id" integer NOT NULL,
+  "Id" text(32) NOT NULL,
   "TeamId" text(32) NOT NULL,
   "Name" text NOT NULL,
   "Secret" text(50) NOT NULL,
@@ -65,19 +65,11 @@ ON "configuration" (
 
 ```sqlite
 CREATE TABLE "configuration_archive" (
-  "Id" integer NOT NULL,
-  "AppId" text(32) NOT NULL,
-  "Environment" text NOT NULL,
+  "Id" text(32) NOT NULL,
   "Data" text,
   "Operator" text NOT NULL,
   "ArchiveTime" text NOT NULL,
   PRIMARY KEY ("Id")
-);
-
-CREATE UNIQUE INDEX "IDX_CONFIG_ARCHIVE_UNIQUE"
-ON "configuration_archive" (
-  "AppId" ASC,
-  "Environment" ASC
 );
 ```
 
@@ -86,7 +78,7 @@ ON "configuration_archive" (
 ```sqlite
 CREATE TABLE "configuration_item" (
   "Id" integer NOT NULL,
-  "ConfigurationId" integer NOT NULL,
+  "ConfigurationId" text(32) NOT NULL,
   "Key" text NOT NULL,
   "Value" text,
   "UpdateTime" text NOT NULL,
@@ -110,7 +102,7 @@ ON "configuration_item" (
 ```sqlite
 CREATE TABLE "configuration_revision" (
   "Id" integer NOT NULL,
-  "ConfigurationId" integer NOT NULL,
+  "ConfigurationId" text(32) NOT NULL,
   "Data" text,
   "Comment" text,
   "Version" text NOT NULL,
@@ -206,6 +198,7 @@ CREATE TABLE "user" (
   "AccessFailedCount" integer NOT NULL DEFAULT 0,
   "LockoutEnd" text,
   "Reserved" integer NOT NULL DEFAULT 0,
+  "IsAdmin" integer NOT NULL DEFAULT 0,
   "Source" integer NOT NULL,
   "CreateTime" text NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "UpdateTime" text NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -225,22 +218,5 @@ ON "user" (
 CREATE UNIQUE INDEX "IDX_USER_USERNAME"
 ON "user" (
   "UserName" ASC
-);
-```
-
-# user_role
-
-```sqlite
-CREATE TABLE "user_role" (
-  "Id" integer NOT NULL,
-  "UserId" text(32) NOT NULL,
-  "Name" text(20) NOT NULL,
-  PRIMARY KEY ("Id")
-);
-
-CREATE UNIQUE INDEX "IDX_USER_ROLE_UNIQUE"
-ON "user_role" (
-  "UserId" ASC,
-  "Name" ASC
 );
 ```

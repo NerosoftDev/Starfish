@@ -40,8 +40,8 @@ GO
 
 ```sql
 CREATE TABLE [configuration] (
-  [Id] bigint  NOT NULL,
-  [TeamId] varchar(32)  NOT NULL,
+  [Id] varchar(32) NOT NULL,
+  [TeamId] varchar(32) NOT NULL,
   [Name] varchar(100) NOT NULL,
   [Secret] varchar(255) NOT NULL,
   [Description] varchar(500) NULL,
@@ -83,23 +83,11 @@ GO
 
 ```sql
 CREATE TABLE [configuration_archive] (
-  [Id] bigint  NOT NULL,
-  [AppId] varchar(32)  NOT NULL,
-  [Environment] varchar(50) NOT NULL,
+  [Id] varchar(32) NOT NULL,
   [Data] text NULL,
   [Operator] varchar(64) NOT NULL,
   [ArchiveTime] datetime  NOT NULL,
   PRIMARY KEY CLUSTERED ([Id])
-)
-GO
-
-ALTER TABLE [configuration_archive] SET (LOCK_ESCALATION = TABLE)
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_CONFIG_ARCHIVE_UNIQUE]
-ON [configuration_archive] (
-  [AppId] ASC,
-  [Environment] ASC
 )
 GO
 ```
@@ -108,8 +96,8 @@ GO
 
 ```sql
 CREATE TABLE [configuration_item] (
-  [Id] bigint  NOT NULL,
-  [ConfigurationId] bigint  NOT NULL,
+  [Id] bigint NOT NULL,
+  [ConfigurationId] varchar(32) NOT NULL,
   [Key] varchar(255) NOT NULL,
   [Value] text NULL,
   [UpdateTime] datetime DEFAULT getdate() NOT NULL,
@@ -139,10 +127,10 @@ GO
 
 ```sql
 CREATE TABLE [configuration_revision] (
-  [Id] bigint  NOT NULL,
-  [ConfigurationId] bigint  NOT NULL,
+  [Id] bigint NOT NULL,
+  [ConfigurationId] varchar(32) NOT NULL,
   [Data] text NULL,
-  [Comment] varchar(1000) COLLATE SQL_Latin1_General_CP1_CI_AS DEFAULT NULL NULL,
+  [Comment] varchar(1000) NULL,
   [Version] varchar(25) NOT NULL,
   [Operator] varchar(64) NOT NULL,
   [CreateTime] datetime DEFAULT getdate() NOT NULL,
@@ -260,6 +248,7 @@ CREATE TABLE [user] (
   [AccessFailedCount] int  NOT NULL,
   [LockoutEnd] datetime DEFAULT NULL NULL,
   [Reserved] bit DEFAULT 0 NOT NULL,
+  [IsAdmin] bit DEFAULT 0 NOT NULL,
   [Source] int  NOT NULL,
   [CreateTime] datetime getdate() NOT NULL,
   [UpdateTime] datetime getdate() NOT NULL,
@@ -287,28 +276,6 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX [IDX_USER_PHONE]
 ON [user] (
   [Phone] ASC
-)
-GO
-```
-
-# user_role
-
-```sql
-CREATE TABLE [user_role] (
-  [Id] bigint  NOT NULL,
-  [UserId] varchar(32)  NOT NULL,
-  [Name] varchar(100) NOT NULL,
-  PRIMARY KEY CLUSTERED ([Id])
-)
-GO
-
-ALTER TABLE [user_role] SET (LOCK_ESCALATION = TABLE)
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX [IDX_USER_ROLE_UNIQUE]
-ON [user_role] (
-  [UserId] ASC,
-  [Name] ASC
 )
 GO
 ```

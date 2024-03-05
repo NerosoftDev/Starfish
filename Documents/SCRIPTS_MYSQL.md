@@ -149,6 +149,7 @@ CREATE TABLE `user`  (
   `AccessFailedCount` int NOT NULL DEFAULT 0,
   `LockoutEnd` datetime NULL DEFAULT NULL,
   `Reserved` bit(1) NOT NULL DEFAULT b'0',
+  `IsAdmin` bit(1) NOT NULL DEFAULT b'0',
   `Source` int NOT NULL,
   `CreateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UpdateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -158,17 +159,5 @@ CREATE TABLE `user`  (
   UNIQUE INDEX `IDX_USER_USERNAME`(`UserName` ASC) USING BTREE,
   UNIQUE INDEX `IDX_USER_EMAIL`(`Email` ASC) USING BTREE,
   UNIQUE INDEX `IDX_USER_PHONE`(`Phone` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
-```
-
-# user_role
-
-```sql
-CREATE TABLE `user_role`  (
-  `Id` bigint NOT NULL,
-  `UserId` varchar(32) NOT NULL,
-  `Name` varchar(100) NOT NULL,
-  PRIMARY KEY (`Id`) USING BTREE,
-  UNIQUE INDEX `IDX_USER_ROLE_UNIQUE`(`UserId` ASC, `Name` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 ```
