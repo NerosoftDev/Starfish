@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
@@ -81,7 +82,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 	protected override void AddRules()
 	{
-		Rules.AddRule(new DuplicateUserNameCheckRule());
+		Rules.AddRule(_provider.GetServiceOrCreateInstance<UserNameAvailabilityCheckRule>());
 		Rules.AddRule(new DuplicateEmailCheckRule());
 		Rules.AddRule(new DuplicatePhoneCheckRule());
 		Rules.AddRule(new PasswordStrengthRule());
@@ -129,11 +130,11 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		user.Reserved = Reserved;
 
 		return Repository.InsertAsync(user, true, cancellationToken)
-		                 .ContinueWith(task =>
-		                 {
-			                 task.WaitAndUnwrapException(cancellationToken);
-			                 Id = task.Result.Id;
-		                 }, cancellationToken);
+						 .ContinueWith(task =>
+						 {
+							 task.WaitAndUnwrapException(cancellationToken);
+							 Id = task.Result.Id;
+						 }, cancellationToken);
 	}
 
 	[FactoryUpdate]
@@ -178,14 +179,31 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		return _repository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
-	public class DuplicateUserNameCheckRule : RuleBase
+	public class UserNameAvailabilityCheckRule : RuleBase
 	{
+		private readonly IConfiguration _configuration;
+
+		public UserNameAvailabilityCheckRule(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+
 		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
 		{
 			var target = (UserGeneralBusiness)context.Target;
 			if (!target.IsInsert)
 			{
 				return;
+			}
+
+			if (!target.Reserved)
+			{
+				var reserved = _configuration.GetValue<List<string>>("ReservedUsernames");
+				if (reserved.Contains(target.UserName, StringComparison.OrdinalIgnoreCase))
+				{
+					context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_USERNAME_UNAVAILABLE, target.UserName));
+					return;
+				}
 			}
 
 			var repository = target.Repository;
