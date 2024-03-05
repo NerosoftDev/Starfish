@@ -31,6 +31,11 @@ public class UserDetailDto
 	public string NickName { get; set; }
 
 	/// <summary>
+	/// 是否管理员
+	/// </summary>
+	public bool IsAdmin { get; set; }
+
+	/// <summary>
 	/// 创建时间
 	/// </summary>
 	public DateTime CreateTime { get; set; }

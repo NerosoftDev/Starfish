@@ -11,7 +11,17 @@ public class UserUpdateDto
 	public string Email { get; set; }
 
 	/// <summary>
+	/// 电话号码
+	/// </summary>
+	public string Phone { get; set; }
+
+	/// <summary>
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }
+
+	/// <summary>
+	/// 是否是管理员
+	/// </summary>
+	public bool IsAdmin { get; set; }
 }
