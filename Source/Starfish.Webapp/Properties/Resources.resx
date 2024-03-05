@@ -570,6 +570,9 @@
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="IDS_USER_INDEX_COLUMN_IS_ADMIN" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
     <value>Nick name</value>
   </data>
@@ -588,11 +591,17 @@
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="IDS_USER_LABEL_IS_ADMIN" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
   <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
     <value>Nick name</value>
   </data>
   <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="IDS_USER_LABEL_PHONE" xml:space="preserve">
+    <value>Phone number</value>
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>User name</value>

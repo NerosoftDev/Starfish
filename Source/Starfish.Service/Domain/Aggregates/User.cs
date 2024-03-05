@@ -16,7 +16,7 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	private User()
 	{
 	}
-	
+
 	/// <summary>
 	/// 初始化用户聚合根
 	/// </summary>
@@ -76,6 +76,11 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// </summary>
 	/// <remarks>预留账号不允许删除、设置角色等</remarks>
 	public bool Reserved { get; set; }
+
+	/// <summary>
+	/// 是否是管理员
+	/// </summary>
+	public bool IsAdmin { get; set; }
 
 	/// <summary>
 	/// 来源
@@ -153,6 +158,21 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	internal void SetNickName(string nickName)
 	{
 		NickName = nickName;
+	}
+
+	internal void SetIsAdmin(bool isAdmin)
+	{
+		if (Reserved)
+		{
+			return;
+		}
+
+		if (isAdmin == IsAdmin)
+		{
+			return;
+		}
+
+		IsAdmin = isAdmin;
 	}
 
 	/// <summary>

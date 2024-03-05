@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Nerosoft.Euonia.Business;
 using Nerosoft.Euonia.Domain;
 using Nerosoft.Starfish.Service;
@@ -28,6 +29,8 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	public static readonly PropertyInfo<string> NickNameProperty = RegisterProperty<string>(p => p.NickName);
 	public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(p => p.Email);
 	public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(p => p.Phone);
+	public static readonly PropertyInfo<bool> IsAdminProperty = RegisterProperty<bool>(p => p.IsAdmin);
+	public static readonly PropertyInfo<bool> ReservedProperty = RegisterProperty<bool>(p => p.Reserved);
 
 	public string Id
 	{
@@ -65,9 +68,21 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		set => SetProperty(PhoneProperty, value);
 	}
 
+	public bool IsAdmin
+	{
+		get => GetProperty(IsAdminProperty);
+		set => SetProperty(IsAdminProperty, value);
+	}
+
+	public bool Reserved
+	{
+		get => GetProperty(ReservedProperty);
+		set => SetProperty(ReservedProperty, value);
+	}
+
 	protected override void AddRules()
 	{
-		Rules.AddRule(new DuplicateUserNameCheckRule());
+		Rules.AddRule(_provider.GetServiceOrCreateInstance<UserNameAvailabilityCheckRule>());
 		Rules.AddRule(new DuplicateEmailCheckRule());
 		Rules.AddRule(new DuplicatePhoneCheckRule());
 		Rules.AddRule(new PasswordStrengthRule());
@@ -111,6 +126,8 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		}
 
 		user.SetNickName(NickName ?? UserName);
+		user.SetIsAdmin(IsAdmin);
+		user.Reserved = Reserved;
 
 		return Repository.InsertAsync(user, true, cancellationToken)
 						 .ContinueWith(task =>
@@ -123,6 +140,11 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	[FactoryUpdate]
 	protected override Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
+		if (!HasChangedProperties)
+		{
+			return Task.CompletedTask;
+		}
+
 		if (ChangedProperties.Contains(EmailProperty))
 		{
 			Aggregate.SetEmail(Email);
@@ -143,6 +165,11 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			Aggregate.ChangePassword(Password);
 		}
 
+		if (ChangedProperties.Contains(IsAdminProperty))
+		{
+			Aggregate.SetIsAdmin(IsAdmin);
+		}
+
 		return _repository.UpdateAsync(Aggregate, true, cancellationToken);
 	}
 
@@ -157,14 +184,31 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		return _repository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
-	public class DuplicateUserNameCheckRule : RuleBase
+	public class UserNameAvailabilityCheckRule : RuleBase
 	{
+		private readonly IConfiguration _configuration;
+
+		public UserNameAvailabilityCheckRule(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+
 		public override async Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
 		{
 			var target = (UserGeneralBusiness)context.Target;
 			if (!target.IsInsert)
 			{
 				return;
+			}
+
+			if (!target.Reserved)
+			{
+				var reserved = _configuration.GetValue<List<string>>("ReservedUsernames");
+				if (reserved.Contains(target.UserName, StringComparison.OrdinalIgnoreCase))
+				{
+					context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_USERNAME_UNAVAILABLE, target.UserName));
+					return;
+				}
 			}
 
 			var repository = target.Repository;

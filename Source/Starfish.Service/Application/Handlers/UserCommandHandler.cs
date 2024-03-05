@@ -31,11 +31,13 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			var business = await Factory.CreateAsync<UserGeneralBusiness>(cancellationToken);
-			business.UserName = message.Item1.UserName;
-			business.Password = message.Item1.Password;
-			business.NickName = message.Item1.NickName;
-			business.Email = message.Item1.Email;
-			business.Phone = message.Item1.Phone;
+			business.UserName = message.UserName;
+			business.Password = message.Password;
+			business.NickName = message.NickName;
+			business.Email = message.Email;
+			business.Phone = message.Phone;
+			business.IsAdmin = message.IsAdmin;
+			business.Reserved = message.Reserved;
 			business.MarkAsInsert();
 			await business.SaveAsync(false, cancellationToken);
 
@@ -52,7 +54,11 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 
 			business.Email = message.Item2.Email;
 			business.NickName = message.Item2.NickName;
+			business.Phone = message.Item2.Phone;
+			business.IsAdmin = message.Item2.IsAdmin;
+
 			business.MarkAsUpdate();
+			
 			await business.SaveAsync(true, cancellationToken);
 		});
 	}

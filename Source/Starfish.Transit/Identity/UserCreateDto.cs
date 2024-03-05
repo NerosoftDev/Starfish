@@ -24,9 +24,14 @@ public class UserCreateDto
 	/// 电话
 	/// </summary>
 	public string Phone { get; set; }
-	
+
 	/// <summary>
 	/// 昵称
 	/// </summary>
 	public string NickName { get; set; }
+
+	/// <summary>
+	/// 是否是管理员
+	/// </summary>
+	public bool IsAdmin { get; set; }
 }

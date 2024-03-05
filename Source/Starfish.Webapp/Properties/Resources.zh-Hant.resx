@@ -345,12 +345,6 @@
   <data name="IDS_HOME_COLUMN_CONFIGURATION" xml:space="preserve">
     <value>配置</value>
   </data>
-  <data name="IDS_HOME_COLUMN_CONFIGURATION_ID" xml:space="preserve">
-    <value>配置Id</value>
-  </data>
-  <data name="IDS_HOME_COLUMN_CONFIGURATION_NAME" xml:space="preserve">
-    <value>配置名稱</value>
-  </data>
   <data name="IDS_HOME_COLUMN_CONNECTED_TIME" xml:space="preserve">
     <value>連接時間</value>
   </data>
@@ -576,6 +570,9 @@
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
     <value>電子郵件</value>
   </data>
+  <data name="IDS_USER_INDEX_COLUMN_IS_ADMIN" xml:space="preserve">
+    <value>管理員</value>
+  </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
     <value>昵稱</value>
   </data>
@@ -594,11 +591,17 @@
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
     <value>電子郵件</value>
   </data>
+  <data name="IDS_USER_LABEL_IS_ADMIN" xml:space="preserve">
+    <value>管理員</value>
+  </data>
   <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
     <value>昵稱</value>
   </data>
   <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
     <value>密碼</value>
+  </data>
+  <data name="IDS_USER_LABEL_PHONE" xml:space="preserve">
+    <value>手機號</value>
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用戶名</value>

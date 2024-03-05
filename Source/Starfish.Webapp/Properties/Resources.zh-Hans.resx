@@ -570,6 +570,9 @@
   <data name="IDS_USER_INDEX_COLUMN_EMAIL" xml:space="preserve">
     <value>邮箱</value>
   </data>
+  <data name="IDS_USER_INDEX_COLUMN_IS_ADMIN" xml:space="preserve">
+    <value>管理员</value>
+  </data>
   <data name="IDS_USER_INDEX_COLUMN_NICK_NAME" xml:space="preserve">
     <value>昵称</value>
   </data>
@@ -588,11 +591,17 @@
   <data name="IDS_USER_LABEL_EMAIL" xml:space="preserve">
     <value>邮箱</value>
   </data>
+  <data name="IDS_USER_LABEL_IS_ADMIN" xml:space="preserve">
+    <value>管理员</value>
+  </data>
   <data name="IDS_USER_LABEL_NICKNAME" xml:space="preserve">
     <value>昵称</value>
   </data>
   <data name="IDS_USER_LABEL_PASSWORD" xml:space="preserve">
     <value>密码</value>
+  </data>
+  <data name="IDS_USER_LABEL_PHONE" xml:space="preserve">
+    <value>手机号</value>
   </data>
   <data name="IDS_USER_LABEL_USERNAME" xml:space="preserve">
     <value>用户名</value>

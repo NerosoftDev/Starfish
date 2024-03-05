@@ -1,9 +1,9 @@
 ﻿namespace Nerosoft.Starfish.Transit;
 
 /// <summary>
-/// 管理员编辑数据传输对象
+/// 添加团队成员请求Dto
 /// </summary>
-public class AdministratorAssignDto
+public class TeamMemberAppendDto
 {
 	/// <summary>
 	/// 用户Id
@@ -13,5 +13,5 @@ public class AdministratorAssignDto
 	/// <summary>
 	/// 角色
 	/// </summary>
-	public List<string> Roles { get; set; }
+	public string Role { get; set; }
 }

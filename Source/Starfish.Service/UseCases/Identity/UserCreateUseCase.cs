@@ -1,5 +1,6 @@
 ﻿using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
+using Nerosoft.Euonia.Mapping;
 using Nerosoft.Starfish.Application;
 using Nerosoft.Starfish.Transit;
 
@@ -22,7 +23,7 @@ internal class UserCreateUseCase : IUserCreateUseCase
 
 	public Task<UserCreateOutput> ExecuteAsync(UserCreateInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new UserCreateCommand(input.Data);
+		var command = TypeAdapter.ProjectedAs<UserCreateCommand>(input.Data);
 		return _bus.SendAsync<UserCreateCommand, string>(command, cancellationToken)
 		           .ContinueWith(task => new UserCreateOutput(task.Result), cancellationToken);
 	}

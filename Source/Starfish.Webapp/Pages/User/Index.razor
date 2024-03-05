@@ -15,31 +15,32 @@
     <FluentGrid>
         <FluentGridItem lg="12" sm="12" md="12">
             <div class="search-bar">
-                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword"/>
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Keyword" />
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
-                <FluentSpacer/>
+                <FluentSpacer />
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Accent" OnClick="@(() => OnEditClicked(string.Empty))">@(Resources.IDS_USER_BUTTON_TEXT_ADD)</FluentButton>
             </div>
         </FluentGridItem>
         <FluentGridItem lg="12" sm="12" md="12">
             <FluentDataGrid ItemsProvider="_provider" Pagination="Pagination" ItemSize="46"
                             GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="UserItemDto"
-                            GridTemplateColumns="0.5fr 0.5fr 1fr 1fr 0.2fr">
+                            GridTemplateColumns="0.5fr 0.5fr 1fr 1fr 0.4fr 0.2fr">
                 <TemplateColumn Title="@(Resources.IDS_USER_INDEX_COLUMN_USER_NAME)" Align="@Align.Start">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnDetailClicked(context.Id))">@(context.UserName)</FluentButton>
                 </TemplateColumn>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_NICK_NAME)" Property="@(c => c.NickName)"/>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_EMAIL)" Property="@(c => c.Email)"/>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_PHONE)" Property="@(c => c.Phone)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_NICK_NAME)" Property="@(c => c.NickName)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_EMAIL)" Property="@(c => c.Email)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_PHONE)" Property="@(c => c.Phone)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_USER_INDEX_COLUMN_IS_ADMIN)" Property="@(c => c.IsAdmin ? Resources.IDS_COMMON_YES : Resources.IDS_COMMON_NO)" />
                 <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))"/>
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetPasswordClicked(context.Id))"/>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OnEditClicked(context.Id))" />
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.LockClosedKey())" OnClick="@(() => OnResetPasswordClicked(context.Id))" />
                 </TemplateColumn>
             </FluentDataGrid>
         </FluentGridItem>
 
         <FluentGridItem lg="12" sm="12" md="12">
-            <FluentDataGridPaginator State="@Pagination"/>
+            <FluentDataGridPaginator State="@Pagination" />
         </FluentGridItem>
     </FluentGrid>
 </FluentCard>
@@ -59,10 +60,10 @@
         {
             List<UserItemDto> items = null;
             var tasks = new List<Task>
-            {
+                {
                 Api.SearchAsync(Criteria, request.StartIndex, Pagination.ItemsPerPage, request.CancellationToken)
                    .EnsureSuccess(result => items = result, request.CancellationToken)
-            };
+                };
 
             if (request.StartIndex == 0)
             {

@@ -4,7 +4,7 @@
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
-        <FluentIcon Value="@(new Icons.Regular.Size24.People())"/>
+        <FluentIcon Value="@(new Icons.Regular.Size24.People())" />
         <FluentLabel Typo="Typography.PaneHeader">
             @Dialog.Instance.Parameters.Title
         </FluentLabel>
@@ -16,25 +16,32 @@
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_USERNAME)"
                          @bind-Value="UserName"
-                         ReadOnly="@(!string.IsNullOrEmpty(Content))"/>
+                         ReadOnly="@(!string.IsNullOrEmpty(Content))" />
         @if (string.IsNullOrEmpty(Content))
         {
             <FluentTextField Style="width: 100%"
                              Label="@(Resources.IDS_USER_LABEL_PASSWORD)"
                              @bind-Value="Password"
-                             TextFieldType="TextFieldType.Password"/>
+                             TextFieldType="TextFieldType.Password" />
             <FluentTextField Style="width: 100%"
                              Label="@(Resources.IDS_USER_LABEL_CONFIRM_PASSWORD)"
                              @bind-Value="Confirm"
-                             TextFieldType="TextFieldType.Password"/>
+                             TextFieldType="TextFieldType.Password" />
         }
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_NICKNAME)"
-                         @bind-Value="NickName"/>
+                         @bind-Value="NickName" />
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_EMAIL)"
                          @bind-Value="Email"
-                         TextFieldType="TextFieldType.Email"/>
+                         TextFieldType="TextFieldType.Email" />
+
+        <FluentTextField Style="width: 100%"
+                         Label="@(Resources.IDS_USER_LABEL_PHONE)"
+                         @bind-Value="Phone"
+                         TextFieldType="TextFieldType.Tel" />
+
+        <FluentSwitch Label="@(Resources.IDS_USER_LABEL_IS_ADMIN)" @bind-Value="IsAdmin" />
     </FluentStack>
 </FluentDialogBody>
 
@@ -63,6 +70,10 @@
 
     private string Email { get; set; }
 
+    private string Phone { get; set; }
+
+    private bool IsAdmin { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -77,10 +88,12 @@
             if (!string.IsNullOrEmpty(Content))
             {
                 var request = new UserUpdateDto
-                {
-                    NickName = NickName,
-                    Email = Email
-                };
+                    {
+                        NickName = NickName,
+                        Email = Email,
+                        Phone = Phone,
+                        IsAdmin = IsAdmin
+                    };
 
                 await Api.UpdateAsync(Content, request)
                          .EnsureSuccess();
@@ -93,12 +106,14 @@
                 }
 
                 var request = new UserCreateDto
-                {
-                    UserName = UserName,
-                    Password = Password,
-                    NickName = NickName,
-                    Email = Email
-                };
+                    {
+                        UserName = UserName,
+                        Password = Password,
+                        NickName = NickName,
+                        Email = Email,
+                        Phone = Phone,
+                        IsAdmin = IsAdmin
+                    };
 
                 await Api.CreateAsync(request)
                          .EnsureSuccess();
@@ -140,6 +155,8 @@
                      UserName = result.UserName;
                      NickName = result.NickName;
                      Email = result.Email;
+                     Phone = result.Phone;
+                     IsAdmin = result.IsAdmin;
                  });
     }
 
