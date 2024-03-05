@@ -49,6 +49,8 @@ public sealed class ApplicationServiceModule : ModuleContextBase
 		ConfigureCachingServices(context.Services);
 
 		ConfigureBusServices(context.Services);
+
+		context.Services.AddHostedService<UserInitializeService>();
 	}
 
 	private void ConfigureCachingServices(IServiceCollection services)

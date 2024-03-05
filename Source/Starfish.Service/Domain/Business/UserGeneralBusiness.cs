@@ -140,6 +140,11 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	[FactoryUpdate]
 	protected override Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
+		if (!HasChangedProperties)
+		{
+			return Task.CompletedTask;
+		}
+
 		if (ChangedProperties.Contains(EmailProperty))
 		{
 			Aggregate.SetEmail(Email);

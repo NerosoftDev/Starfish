@@ -1,8 +1,8 @@
+using Microsoft.Extensions.Configuration;
 using Nerosoft.Euonia.Application;
 using Nerosoft.Euonia.Bus;
-using Nerosoft.Euonia.Mapping;
 using Nerosoft.Starfish.Application;
-using Nerosoft.Starfish.Transit;
+using Nerosoft.Starfish.Domain;
 
 namespace Nerosoft.Starfish.UseCases;
 
@@ -11,23 +11,38 @@ internal interface IUserInitializeUseCase : IParameterlessUseCase;
 internal class UserInitializeUseCase : IUserInitializeUseCase
 {
 	private readonly IBus _bus;
+	private readonly IUserRepository _repository;
+	private readonly IConfiguration _configuration;
 
-	public UserInitializeUseCase(IBus bus)
+	public UserInitializeUseCase(IBus bus, IUserRepository repository, IConfiguration configuration)
 	{
 		_bus = bus;
+		_repository = repository;
+		_configuration = configuration;
 	}
 
 	public async Task ExecuteAsync(CancellationToken cancellationToken = default)
 	{
-		var userCreateDto = new UserCreateDto
+		var username = _configuration["InitializeUser:UserName"];
+
+		if (string.IsNullOrWhiteSpace(username))
 		{
-			UserName = "starfish",
-			Password = "starfish.888",
-			NickName = "admin",
-			IsAdmin = true
+			return;
+		}
+
+		var exists = await _repository.CheckUserNameExistsAsync(username, cancellationToken);
+		if (exists)
+		{
+			return;
+		}
+
+		var command = new UserCreateCommand
+		{
+			UserName = _configuration["InitializeUser:UserName"],
+			Password = _configuration["InitializeUser:Password"],
+			IsAdmin = true,
+			Reserved = true
 		};
-		var command = TypeAdapter.ProjectedAs<UserCreateCommand>(userCreateDto);
-		command.Reserved = true;
-		await _bus.SendAsync<UserCreateCommand, string>(command, cancellationToken);
+		await _bus.SendAsync<UserCreateCommand, string>(command, cancellationToken).ContinueWith(task => task.WaitAndUnwrapException());
 	}
 }

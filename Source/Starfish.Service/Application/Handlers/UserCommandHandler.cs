@@ -54,7 +54,11 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 
 			business.Email = message.Item2.Email;
 			business.NickName = message.Item2.NickName;
+			business.Phone = message.Item2.Phone;
+			business.IsAdmin = message.Item2.IsAdmin;
+
 			business.MarkAsUpdate();
+			
 			await business.SaveAsync(true, cancellationToken);
 		});
 	}

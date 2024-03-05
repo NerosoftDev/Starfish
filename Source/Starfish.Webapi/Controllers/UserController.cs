@@ -128,16 +128,4 @@ public class UserController : ControllerBase
 		await _service.ChangePasswordAsync(data.OldPassword, data.NewPassword, HttpContext.RequestAborted);
 		return Ok();
 	}
-
-	/// <summary>
-	/// 初始化用户数据
-	/// </summary>
-	/// <returns></returns>
-	[HttpPost("init")]
-	[AllowAnonymous]
-	public async Task<IActionResult> InitializeAsync()
-	{
-		await _service.InitializeAsync(HttpContext.RequestAborted);
-		return Ok();
-	}
 }
