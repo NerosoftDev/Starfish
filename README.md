@@ -137,13 +137,79 @@ Deploy & Run/部署与运行
 ### Deploy/部署
 
 ```bash
-docker pull nerosoft/starfish:latest
 ```
 
 ### Configuration/配置
 
-```bash
+```json
+{
+    "ConnectionStrings": {
+        "Default": ""
+    },
+    "DatabaseType": "",
+    "JwtBearerOptions": {
+        "Scheme": "Bearer",
+        "RequireHttpsMetadata": false,
+        "ApiName": "starfish_api",
+        "AuthorityUrl": "http://localhost:5229",
+        "TokenIssuer": "localhost",
+        "TokenKey": "NEROSOFT-STARFISH-WEBAPI"
+    },
+    "CorsOrigins": [
+        "https://localhost"
+    ],
+    "ServiceBus": {
+        "Provider": "inmemory",
+        "InMemory": {
+            "MultipleSubscriberInstance": false
+        }
+    },
+    "InitializeUser": {
+        "UserName": "admin",
+        "Password": "Starfish.8888"
+    },
+    "ReservedUsernames": [
+        "starfish",
+        "admin",
+        "administrator",
+        "root"
+    ],
+    "FeatureManagement": {
+        "UserRegistration": true
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "AllowedHosts": "*"
+}
 ```
+
+|Key|Description|Type|Options|
+|---|---|---|---|---|
+|ConnectionStrings|Database connection string|Object|N/A|
+| - Default|Default database connection string|String|N/A|
+|DatabaseType|Database type|String|mysql/sqlite/sqlserver/mongo/postgresql|
+|JwtBearerOptions|JWT Bearer options|Object|N/A|
+| - Scheme|Scheme|String|Bearer|
+| - RequireHttpsMetadata|Require HTTPS metadata|Boolean|true/false|
+| - ApiName|API name|String|starfish_api|
+| - AuthorityUrl|Authority URL|String|http://localhost:5229|
+| - TokenIssuer|Token issuer|String|localhost|
+| - TokenKey||String|N/A|
+|CorsOrigins|CORS origins|String array|N/A|
+|ServiceBus|Service bus options|Object|N/A|
+| - Provider|Message transport provider|String|inmemory/rabbitmq|
+| - InMemory|InMemory options|Object|N/A|
+| - - MultipleSubscriberInstance|N/A|Boolean|true/false|
+|InitializeUser|Options to initialize user|Object|N/A|
+| - UserName|Username|String|N/A|
+| - Password|Password|String|N/A|
+|ReservedUsernames|Reserved usernames|String array|N/A|
+|FeatureManagement|Feature management|Object|N/A|
+| - UserRegistration|A value indicate whether user registration is enabled or not|Boolean|true/false|
 
 ## Client/客户端
 
