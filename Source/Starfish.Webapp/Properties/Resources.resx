@@ -183,6 +183,9 @@
   <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
     <value>Submit</value>
   </data>
+  <data name="IDS_COMMON_SUBTITLE" xml:space="preserve">
+    <value>Configuration management &amp; service discovery</value>
+  </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
     <value>Yes</value>
   </data>
@@ -342,6 +345,9 @@
   <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
     <value>Sync to Redis</value>
   </data>
+  <data name="IDS_ERROR_PASSWORD_NOT_MATCH" xml:space="preserve">
+    <value>The password you entered are not the same.</value>
+  </data>
   <data name="IDS_HOME_COLUMN_CONFIGURATION" xml:space="preserve">
     <value>Configuration</value>
   </data>
@@ -366,8 +372,17 @@
   <data name="IDS_HOME_LABEL_TEAMS" xml:space="preserve">
     <value>Teams</value>
   </data>
+  <data name="IDS_HOME_PAGE_TITLE" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="IDS_LOGIN_BUTTON_TEXT_FORGET_PASSWORD" xml:space="preserve">
+    <value>Forget password?</value>
+  </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="IDS_LOGIN_BUTTON_TEXT_REGISTER" xml:space="preserve">
+    <value>Register new user</value>
   </data>
   <data name="IDS_LOGIN_PAGE_TITLE" xml:space="preserve">
     <value>Login</value>

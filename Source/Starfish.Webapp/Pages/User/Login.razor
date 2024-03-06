@@ -6,6 +6,7 @@
 
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider Authentication
+@inject IConfiguration Configuration
 @inject IJSRuntime Script
 @inject IToastService ToastService
 @inject IIdentityApi Api
@@ -19,7 +20,7 @@
                 <img alt="logo" class="logo" src="logo.svg">
                 <span class="title" style="color:#fcab66; font-size: 24px;">Starfish</span>
             </div>
-            <div class="desc">配置管理和服务发现</div>
+            <div class="desc">@(Resources.IDS_COMMON_SUBTITLE)</div>
         </div>
         <FluentCard>
             <FluentStack Orientation="Orientation.Vertical" VerticalGap="12" HorizontalAlignment="HorizontalAlignment.Center">
@@ -28,10 +29,10 @@
                         <FluentTab Label="@(Resources.IDS_LOGIN_TAB_USERNAME)" Id="Tab-Password" Style="padding:16px 0">
                             <FluentStack Orientation="Orientation.Vertical">
                                 <FluentTextField @bind-Value="UserName" Placeholder="@(Resources.IDS_LOGIN_PLACEHOLDER_USERNAME)" Style="width: 100%">
-                                    <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral"/>
+                                    <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral" />
                                 </FluentTextField>
                                 <FluentTextField @bind-Value="Password" Placeholder="@(Resources.IDS_LOGIN_PLACEHOLDER_PASSWORD)" Style="width: 100%" TextFieldType="TextFieldType.Password">
-                                    <FluentIcon Value="@(new Icons.Regular.Size24.ShieldKeyhole())" Slot="start" Color="Color.Neutral"/>
+                                    <FluentIcon Value="@(new Icons.Regular.Size24.ShieldKeyhole())" Slot="start" Color="Color.Neutral" />
                                 </FluentTextField>
                             </FluentStack>
                         </FluentTab>
@@ -40,15 +41,17 @@
                 </FluentBodyContent>
                 <div style="width: 100%; display: flex;align-items: center;">
                     <FluentButton Style="width: 100px;" Loading="Loading" Appearance="Appearance.Accent" OnClick="@OnClick">@(Resources.IDS_LOGIN_BUTTON_TEXT_LOGIN)</FluentButton>
-                    <FluentSpacer/>
-                    <a href="">Forget password?</a>
+                    <FluentSpacer />
+                    <a href="">@(Resources.IDS_LOGIN_BUTTON_TEXT_FORGET_PASSWORD)</a>
                 </div>
-
-                <FluentButton Appearance="Appearance.Lightweight" OnClick="@OnRegisterClicked">Register new user?</FluentButton>
+                @if (Configuration.GetValue<bool>("FeatureManagement:UserRegistration"))
+                {
+                    <FluentButton Appearance="Appearance.Lightweight" OnClick="@OnRegisterClicked">@(Resources.IDS_LOGIN_BUTTON_TEXT_REGISTER)</FluentButton>
+                }
             </FluentStack>
         </FluentCard>
     </FluentStack>
-    <FluentToastProvider MaxToastCount="10"/>
+    <FluentToastProvider MaxToastCount="10" />
 </div>
 
 @code {
@@ -113,10 +116,10 @@
     private async Task<AuthResponseDto> SubmitAsync(CancellationToken cancellationToken = default)
     {
         var dto = new AuthRequestDto
-        {
-            UserName = UserName,
-            Password = Password
-        };
+            {
+                UserName = UserName,
+                Password = Password
+            };
         return await Api.GrantTokenAsync(dto, cancellationToken).EnsureSuccess(cancellationToken);
     }
 
