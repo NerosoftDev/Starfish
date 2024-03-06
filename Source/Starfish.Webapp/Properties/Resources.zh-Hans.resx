@@ -183,6 +183,9 @@
   <data name="IDS_COMMON_SUBMIT" xml:space="preserve">
     <value>提交</value>
   </data>
+  <data name="IDS_COMMON_SUBTITLE" xml:space="preserve">
+    <value>配置管理和服务发现</value>
+  </data>
   <data name="IDS_COMMON_YES" xml:space="preserve">
     <value>是</value>
   </data>
@@ -342,6 +345,9 @@
   <data name="IDS_CONFIG_SYNC_REDIS_DIALOG_TITLE" xml:space="preserve">
     <value>同步到Redis</value>
   </data>
+  <data name="IDS_ERROR_PASSWORD_NOT_MATCH" xml:space="preserve">
+    <value>您输入的密码不一致。</value>
+  </data>
   <data name="IDS_HOME_COLUMN_CONFIGURATION" xml:space="preserve">
     <value>配置</value>
   </data>
@@ -366,8 +372,17 @@
   <data name="IDS_HOME_LABEL_TEAMS" xml:space="preserve">
     <value>团队</value>
   </data>
+  <data name="IDS_HOME_PAGE_TITLE" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="IDS_LOGIN_BUTTON_TEXT_FORGET_PASSWORD" xml:space="preserve">
+    <value>忘记密码？</value>
+  </data>
   <data name="IDS_LOGIN_BUTTON_TEXT_LOGIN" xml:space="preserve">
     <value>登录</value>
+  </data>
+  <data name="IDS_LOGIN_BUTTON_TEXT_REGISTER" xml:space="preserve">
+    <value>注册新用户</value>
   </data>
   <data name="IDS_LOGIN_PAGE_TITLE" xml:space="preserve">
     <value>登录</value>

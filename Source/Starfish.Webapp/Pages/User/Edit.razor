@@ -102,7 +102,7 @@
             {
                 if (!string.Equals(Password, Confirm))
                 {
-                    throw new Exception("Password not match.");
+                    throw new ValidationException(Resources.IDS_ERROR_PASSWORD_NOT_MATCH);
                 }
 
                 var request = new UserCreateDto
