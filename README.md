@@ -188,7 +188,7 @@ Deploy & Run/部署与运行
 ```
 
 |Key|Description|Type|Options|
-|---|---|---|---|---|
+|---|---|---|---|
 |ConnectionStrings|Database connection string|Object|N/A|
 | - Default|Default database connection string|String|N/A|
 |DatabaseType|Database type|String|mysql/sqlite/sqlserver/mongo/postgresql|
