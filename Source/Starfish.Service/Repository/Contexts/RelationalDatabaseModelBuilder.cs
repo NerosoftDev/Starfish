@@ -34,7 +34,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 	
 	protected override ModelBuilder ConfigureTeam(ModelBuilder modelBuilder)
 	{
-		return modelBuilder.Entity<Team>(entity =>
+		modelBuilder.Entity<Team>(entity =>
 		{
 			entity.ToTable("team");
 			entity.HasKey(t => t.Id);
@@ -50,11 +50,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .WithOne(t => t.Team)
 			      .HasForeignKey(t => t.TeamId);
 		});
-	}
 
-	protected override ModelBuilder ConfigureTeamMember(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<TeamMember>(entity =>
+		modelBuilder.Entity<TeamMember>(entity =>
 		{
 			entity.ToTable("team_member");
 			entity.HasKey(t => t.Id);
@@ -74,11 +71,13 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .WithMany()
 			      .HasForeignKey(t => t.UserId);
 		});
+
+		return modelBuilder;
 	}
 
 	protected override ModelBuilder ConfigureConfiguration(ModelBuilder modelBuilder)
 	{
-		return modelBuilder.Entity<Configuration>(entity =>
+		modelBuilder.Entity<Configuration>(entity =>
 		{
 			entity.ToTable("configuration");
 
@@ -110,11 +109,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .HasForeignKey<ConfigurationArchive>()
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
-	}
 
-	protected override ModelBuilder ConfigureConfigurationItem(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<ConfigurationItem>(entity =>
+		modelBuilder.Entity<ConfigurationItem>(entity =>
 		{
 			entity.ToTable("configuration_item");
 
@@ -133,11 +129,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .HasForeignKey(t => t.ConfigurationId)
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
-	}
 
-	protected override ModelBuilder ConfigureConfigurationArchive(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<ConfigurationArchive>(entity =>
+		modelBuilder.Entity<ConfigurationArchive>(entity =>
 		{
 			entity.ToTable("configuration_archive");
 
@@ -150,11 +143,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .WithOne(t => t.Archive)
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
-	}
 
-	protected override ModelBuilder ConfigureConfigurationRevision(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<ConfigurationRevision>(entity =>
+		modelBuilder.Entity<ConfigurationRevision>(entity =>
 		{
 			entity.ToTable("configuration_revision");
 
@@ -171,11 +161,13 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .HasForeignKey(t => t.ConfigurationId)
 			      .OnDelete(DeleteBehavior.Cascade);
 		});
+
+		return modelBuilder;
 	}
 
-	protected override ModelBuilder ConfigureToken(ModelBuilder modelBuilder)
+	protected override ModelBuilder ConfigureSupported(ModelBuilder modelBuilder)
 	{
-		return modelBuilder.Entity<Token>(entity =>
+		modelBuilder.Entity<Token>(entity =>
 		{
 			entity.ToTable("token");
 
@@ -188,11 +180,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .IsRequired()
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
-	}
 
-	protected override ModelBuilder ConfigureOperationLog(ModelBuilder modelBuilder)
-	{
-		return modelBuilder.Entity<OperateLog>(entity =>
+		modelBuilder.Entity<OperateLog>(entity =>
 		{
 			entity.ToTable("operate_log");
 
@@ -206,5 +195,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .IsRequired()
 			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 		});
+
+		return modelBuilder;
 	}
 }
