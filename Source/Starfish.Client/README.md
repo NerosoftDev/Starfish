@@ -35,9 +35,8 @@ in `appsettings.json`
 {
     "Starfish": {
         "Host": "http://localhost:5000",
-        "App": "Starfish.Sample.Blazor",
-        "Secret": "123456",
-        "Env": "Development"
+        "Id": "5lNc9zQGdG7",
+        "Secret": "123456"
     }
 }
 ```
