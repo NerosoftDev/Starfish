@@ -189,7 +189,7 @@ internal class TokenGeneratorBuilder
 			Issuer = Issuer,
 			Audience = Audience,
 			IssuedAt = IssueTime,
-			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), Algorithm)
 		};
 
 		var token = handler.CreateToken(descriptor);
