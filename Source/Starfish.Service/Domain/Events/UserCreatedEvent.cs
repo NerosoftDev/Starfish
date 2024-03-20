@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 用户创建事件
 /// </summary>
-public sealed class UserCreatedEvent : DomainEvent
+internal sealed class UserCreatedEvent : DomainEvent
 {
 	/// <summary>
 	/// 用户名
