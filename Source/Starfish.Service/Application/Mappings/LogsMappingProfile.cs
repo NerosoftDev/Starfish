@@ -15,17 +15,20 @@ internal class LogsMappingProfile : Profile
 	public LogsMappingProfile()
 	{
 		CreateMap<OperateLog, OperateLogDto>()
-			.ForMember(dest => dest.Type, opt => opt.MapFrom(src => GetTypeName(src.Type)));
+			.ForMember(dest => dest.Description, opt => opt.MapFrom(GetDescription));
 	}
 
-	private static string GetTypeName(string type)
+	private static string GetDescription(OperateLog source, OperateLogDto destination, object obj, ResolutionContext context)
 	{
-		return type.ToLowerInvariant() switch
+		var key = $"IDS_LOG_MESSAGE_{source.Module}_{source.Type}".Normalize(TextCaseType.Upper).Replace(".", "_");
+
+		var value = Resources.ResourceManager.GetString(key);
+
+		if (string.IsNullOrEmpty(value))
 		{
-			"auth.password" => "密码登录",
-			"auth.refresh_token" => "刷新Token",
-			"auth.otp" => "验证码登录",
-			_ => type
-		};
+			return value;
+		}
+
+		return string.Format(value, source.Content);
 	}
 }

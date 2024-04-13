@@ -24,7 +24,7 @@ public sealed class OperateLog : Aggregate<long>
 	/// <summary>
 	/// 描述
 	/// </summary>
-	public string Description { get; set; }
+	public string Content { get; set; }
 
 	/// <summary>
 	/// 用户名
@@ -46,13 +46,13 @@ public sealed class OperateLog : Aggregate<long>
 	/// </summary>
 	public string RequestTraceId { get; set; }
 
-	internal static OperateLog Create(string module, string type, string description, string userName, DateTime operateTime, string error, string requestTraceId)
+	internal static OperateLog Create(string module, string type, string content, string userName, DateTime operateTime, string error, string requestTraceId)
 	{
 		return new OperateLog
 		{
 			Module = module,
 			Type = type,
-			Description = description,
+			Content = content,
 			UserName = userName,
 			OperateTime = operateTime,
 			Error = error,
