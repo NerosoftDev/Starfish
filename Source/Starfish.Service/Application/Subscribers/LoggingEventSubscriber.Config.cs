@@ -21,7 +21,7 @@ internal partial class LoggingEventSubscriber
 		var command = new OperateLogCreateCommand
 		{
 			Module = MODULE_CONFIG,
-			Type = "status",
+			Type = "status.enable",
 			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_ENABLE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
@@ -45,7 +45,7 @@ internal partial class LoggingEventSubscriber
 		var command = new OperateLogCreateCommand
 		{
 			Module = MODULE_CONFIG,
-			Type = "status",
+			Type = "status.disable",
 			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DISABLE, aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
