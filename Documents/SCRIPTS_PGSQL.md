@@ -5,7 +5,7 @@ CREATE TABLE "public"."operate_log" (
   "Id" int8 NOT NULL,
   "Module" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
   "Type" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "Description" varchar(2000) COLLATE "pg_catalog"."default",
+  "Content" varchar(2000) COLLATE "pg_catalog"."default",
   "UserName" varchar(255) COLLATE "pg_catalog"."default",
   "OperateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "Error" varchar(2000) COLLATE "pg_catalog"."default",

@@ -5,7 +5,7 @@ CREATE TABLE [operate_log] (
   [Id] bigint  NOT NULL,
   [Module] varchar(20) NOT NULL,
   [Type] varchar(50) NOT NULL,
-  [Description] varchar(2000) NULL,
+  [Content] varchar(2000) NULL,
   [UserName] varchar(64) NULL,
   [OperateTime] datetime DEFAULT getdate() NOT NULL,
   [Error] varchar(2000) NULL,
