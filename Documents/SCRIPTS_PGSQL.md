@@ -86,10 +86,10 @@ CREATE TABLE "public"."configuration_item" (
 ;
 
 CREATE INDEX "IDX_CONFIG_ITEM_FK" ON "public"."configuration_item" USING btree (
-  "ConfigurationId" "pg_catalog"."int8_ops" ASC NULLS LAST
+  "ConfigurationId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 CREATE UNIQUE INDEX "IDX_CONFIG_ITEM_UNIQUE" ON "public"."configuration_item" USING btree (
-  "ConfigurationId" "pg_catalog"."int8_ops" ASC NULLS LAST,
+  "ConfigurationId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "Key" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 ```
@@ -110,7 +110,7 @@ CREATE TABLE "public"."configuration_revision" (
 ;
 
 CREATE INDEX "IDS_CONFIG_REVISION_FK" ON "public"."configuration_revision" USING btree (
-  "ConfigurationId" "pg_catalog"."int8_ops" ASC NULLS LAST
+  "ConfigurationId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 ```
 
