@@ -22,7 +22,6 @@
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" />
-        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" />
         <PackageReference Include="Refit" />
         <PackageReference Include="Refit.HttpClientFactory" />
         <PackageReference Include="Refit.Newtonsoft.Json" />
