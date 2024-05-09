@@ -102,7 +102,7 @@ public class UserController : ControllerBase
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
 	}
-	
+
 	/// <summary>
 	/// 重置指定用户密码
 	/// </summary>

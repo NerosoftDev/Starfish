@@ -45,7 +45,7 @@ internal class ChangePasswordUseCase : IChangePasswordUseCase
 			throw new BadRequestException(Resources.IDS_ERROR_PASSWORD_INCORRECT);
 		}
 
-		var command = new ChangePasswordCommand(user.Id, input.NewPassword);
+		var command = new ChangePasswordCommand(user.Id, input.NewPassword, "change");
 		await _bus.SendAsync(command, cancellationToken);
 	}
 }
