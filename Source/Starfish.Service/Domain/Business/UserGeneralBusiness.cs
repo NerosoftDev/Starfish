@@ -160,11 +160,6 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			Aggregate.SetNickName(NickName);
 		}
 
-		if (ChangedProperties.Contains(PasswordProperty))
-		{
-			Aggregate.ChangePassword(Password);
-		}
-
 		if (ChangedProperties.Contains(IsAdminProperty))
 		{
 			Aggregate.SetIsAdmin(IsAdmin);
@@ -272,8 +267,6 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 	public class PasswordStrengthRule : RuleBase
 	{
-		private const string REGEX_PATTERN = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\x00-\xff]{8,32}$";
-
 		public override Task ExecuteAsync(IRuleContext context, CancellationToken cancellationToken = default)
 		{
 			var target = (UserGeneralBusiness)context.Target;
@@ -284,12 +277,12 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 				{
 					context.AddErrorResult(Resources.IDS_ERROR_USER_RULE_PASSWORD_REQUIRED);
 				}
-				else if (!Regex.IsMatch(target.Password, REGEX_PATTERN))
+				else if (!Regex.IsMatch(target.Password, Constants.RegexPattern.Password))
 				{
 					context.AddErrorResult(Resources.IDS_ERROR_USER_RULE_PASSWORD_NOT_MARCHED_RULES);
 				}
 			}
-			else if (target.IsUpdate && target.ChangedProperties.Contains(PasswordProperty) && !Regex.IsMatch(target.Password, REGEX_PATTERN))
+			else if (target.IsUpdate && target.ChangedProperties.Contains(PasswordProperty) && !Regex.IsMatch(target.Password, Constants.RegexPattern.Password))
 			{
 				context.AddErrorResult(Resources.IDS_ERROR_USER_RULE_PASSWORD_NOT_MARCHED_RULES);
 			}

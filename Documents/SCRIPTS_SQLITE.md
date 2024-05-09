@@ -5,7 +5,7 @@ CREATE TABLE "operate_log" (
   "Id" integer NOT NULL,
   "Module" text NOT NULL,
   "Type" text NOT NULL,
-  "Description" text,
+  "Content" text,
   "UserName" text,
   "OperateTime" text NOT NULL,
   "Error" text,

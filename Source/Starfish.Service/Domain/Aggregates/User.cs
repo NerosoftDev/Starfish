@@ -21,14 +21,13 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// 初始化用户聚合根
 	/// </summary>
 	/// <param name="userName"></param>
-	/// <param name="passwordHash"></param>
-	/// <param name="passwordSalt"></param>
-	private User(string userName, string passwordHash, string passwordSalt)
+	/// <param name="password"></param>
+	/// 
+	private User(string userName, string password)
 		: this()
 	{
 		UserName = userName;
-		PasswordHash = passwordHash;
-		PasswordSalt = passwordSalt;
+		SetPassword(password);
 	}
 
 	/// <summary>
@@ -115,22 +114,25 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// <returns></returns>
 	internal static User Create(string userName, string password)
 	{
-		var salt = RandomUtility.GenerateUniqueId();
-		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
-		var entity = new User(userName, hash, salt);
+		var entity = new User(userName, password);
 		return entity;
 	}
 
 	/// <summary>
-	/// 修改密码
+	/// 设置密码
 	/// </summary>
 	/// <param name="password"></param>
-	internal void ChangePassword(string password)
+	/// <param name="actionType"></param>
+	internal void SetPassword(string password, string actionType = null)
 	{
 		var salt = RandomUtility.GenerateUniqueId();
 		var hash = Cryptography.DES.Encrypt(password, Encoding.UTF8.GetBytes(salt));
 		PasswordHash = hash;
 		PasswordSalt = salt;
+		if (!string.IsNullOrWhiteSpace(actionType))
+		{
+			RaiseEvent(new UserPasswordChangedEvent { Type = actionType });
+		}
 	}
 
 	/// <summary>

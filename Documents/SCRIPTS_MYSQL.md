@@ -5,7 +5,7 @@ CREATE TABLE `operate_log`  (
   `Id` bigint NOT NULL,
   `Module` varchar(20) NOT NULL,
   `Type` varchar(50) NOT NULL,
-  `Description` varchar(2000) NULL DEFAULT NULL,
+  `Content` varchar(2000) NULL DEFAULT NULL,
   `UserName` varchar(64) NULL DEFAULT NULL,
   `OperateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Error` varchar(2000) NULL DEFAULT NULL,

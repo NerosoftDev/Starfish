@@ -43,7 +43,7 @@ public class TeamMemberBusiness : EditableObjectBase<TeamMemberBusiness>
 	{
 		foreach (var userId in UserIds)
 		{
-			Aggregate.AddMember(userId);
+			Aggregate.AppendMember(userId);
 		}
 
 		return TeamRepository.UpdateAsync(Aggregate, true, cancellationToken);

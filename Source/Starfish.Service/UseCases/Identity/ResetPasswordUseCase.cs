@@ -19,7 +19,7 @@ internal class ResetPasswordUseCase : IResetPasswordUseCase
 
 	public Task ExecuteAsync(ResetPasswordInput input, CancellationToken cancellationToken = default)
 	{
-		var command = new ChangePasswordCommand(input.Id, input.Password);
+		var command = new ChangePasswordCommand(input.Id, input.Password, "reset");
 		return _bus.SendAsync(command, cancellationToken);
 	}
 }
