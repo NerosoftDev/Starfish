@@ -11,11 +11,12 @@ public class ChangePasswordCommand : Command
 	{
 	}
 
-	public ChangePasswordCommand(string userId, string password)
+	public ChangePasswordCommand(string userId, string password, string actionType)
 		: this()
 	{
 		UserId = userId;
 		Password = password;
+		ActionType = actionType;
 	}
 
 	/// <summary>
@@ -27,4 +28,10 @@ public class ChangePasswordCommand : Command
 	/// 新密码
 	/// </summary>
 	public string Password { get; set; }
+
+	/// <summary>
+	/// 操作方式
+	/// </summary>
+	/// <value>change-修改；reset-重置</value>
+	public string ActionType { get; set; }
 }

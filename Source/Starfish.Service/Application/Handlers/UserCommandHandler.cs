@@ -10,10 +10,10 @@ namespace Nerosoft.Starfish.Application;
 /// 用户命令处理器
 /// </summary>
 public sealed class UserCommandHandler : CommandHandlerBase,
-                                         IHandler<UserCreateCommand>,
-                                         IHandler<UserUpdateCommand>,
-                                         IHandler<ChangePasswordCommand>,
-                                         IHandler<UserDeleteCommand>
+										 IHandler<UserCreateCommand>,
+										 IHandler<UserUpdateCommand>,
+										 IHandler<ChangePasswordCommand>,
+										 IHandler<UserDeleteCommand>
 {
 	/// <summary>
 	/// 初始化<see cref="UserCommandHandler"/>.
@@ -58,7 +58,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			business.IsAdmin = message.Item2.IsAdmin;
 
 			business.MarkAsUpdate();
-			
+
 			await business.SaveAsync(true, cancellationToken);
 		});
 	}
@@ -68,11 +68,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 	{
 		return ExecuteAsync(async () =>
 		{
-			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.UserId, cancellationToken);
-
-			business.Password = message.Password;
-			business.MarkAsUpdate();
-			await business.SaveAsync(true, cancellationToken);
+			_ = await Factory.ExecuteAsync<UserPasswordBusiness>(message.UserId, message.Password, message.ActionType, cancellationToken);
 		});
 	}
 
