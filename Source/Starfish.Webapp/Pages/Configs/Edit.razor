@@ -138,7 +138,7 @@
 
     private async Task LoadTeamsAsync()
     {
-        await TeamApi.QueryAsync(new TeamCriteria(), 1, 100)
+        await TeamApi.QueryAsync(new TeamCriteria(), 0, 100)
                      .EnsureSuccess(result =>
                      {
                          if (result == null)
