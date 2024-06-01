@@ -51,12 +51,9 @@ public class ObservableRangeCollection<T> : ObservableCollection<T>
 			return;
 		}
 
-		var changedItems = collection is List<T>
-			? (List<T>)collection
-			: new List<T>(collection);
+		var changedItems = collection as List<T> ?? [..collection];
 
-		RaiseChangeNotificationEvents(
-			action: NotifyCollectionChangedAction.Add,
+		RaiseChangeNotificationEvents(action: NotifyCollectionChangedAction.Add,
 			changedItems: changedItems,
 			startingIndex: startIndex);
 	}
