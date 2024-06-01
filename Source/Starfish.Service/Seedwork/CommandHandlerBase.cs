@@ -50,7 +50,7 @@ public abstract class CommandHandlerBase
 		var response = new CommandResponse(messageId);
 		try
 		{
-			using (var uow = UnitOfWork.Begin())
+			using (var uow = UnitOfWork.Begin(true, true))
 			{
 				await action();
 				await uow.CommitAsync();
@@ -79,7 +79,7 @@ public abstract class CommandHandlerBase
 		try
 		{
 			TResult result;
-			using (var uow = UnitOfWork.Begin())
+			using (var uow = UnitOfWork.Begin(true, true))
 			{
 				result = await action();
 				await uow.CommitAsync();
@@ -102,7 +102,7 @@ public abstract class CommandHandlerBase
 	/// <returns></returns>
 	protected virtual async Task ExecuteAsync([NotNull] Func<Task> action)
 	{
-		using var uow = UnitOfWork.Begin();
+		using var uow = UnitOfWork.Begin(true, true);
 		await action();
 		await uow.CommitAsync();
 	}
@@ -116,7 +116,7 @@ public abstract class CommandHandlerBase
 	/// <returns></returns>
 	protected virtual async Task ExecuteAsync<TResult>([NotNull] Func<Task<TResult>> action, Action<TResult> next)
 	{
-		using var uow = UnitOfWork.Begin();
+		using var uow = UnitOfWork.Begin(true, true);
 		var result = await action();
 		await uow.CommitAsync();
 		next(result);
