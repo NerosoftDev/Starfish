@@ -22,7 +22,6 @@ internal partial class LoggingEventSubscriber
 			Type = @event.AuthType,
 			UserName = @event.UserName,
 			OperateTime = DateTime.Now,
-			Description = Resources.IDS_MESSAGE_LOGS_AUTH_SUCCEED,
 			RequestTraceId = context.RequestTraceId
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -42,7 +41,7 @@ internal partial class LoggingEventSubscriber
 		{
 			Module = MODULE_AUTH,
 			Type = @event.AuthType,
-			Description = Resources.IDS_MESSAGE_LOGS_AUTH_FAILED,
+			Content = Resources.IDS_MESSAGE_LOGS_AUTH_FAILED,
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			Error = @event.Error

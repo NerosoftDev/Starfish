@@ -258,37 +258,37 @@
   <data name="IDS_ERROR_USER_USERNAME_UNAVAILABLE" xml:space="preserve">
     <value>UserName '{0}' not available.</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_AUTH_OTP" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_AUTH_OTP" xml:space="preserve">
     <value>Login with one-time-password</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_AUTH_PASSWORD" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_AUTH_PASSWORD" xml:space="preserve">
     <value>Login with password</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_AUTH_REFRESH_TOKEN" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_AUTH_REFRESH_TOKEN" xml:space="preserve">
     <value>Refresh token</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_TEAM_CREATE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_TEAM_CREATE" xml:space="preserve">
     <value>Create team</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_TEAM_MEMBER_APPEND" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_TEAM_MEMBER_APPEND" xml:space="preserve">
     <value>Add new member</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_TEAM_MEMBER_REMOVE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_TEAM_MEMBER_REMOVE" xml:space="preserve">
     <value>Remove member</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_TEAM_UPDATE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_TEAM_UPDATE" xml:space="preserve">
     <value>Update team</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_USER_CREATE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_MESSAGE_USER_CREATE" xml:space="preserve">
     <value>Create user</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_USER_PASSWORD_CHANGE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_USER_PASSWORD_CHANGE" xml:space="preserve">
     <value>Change password</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_USER_PASSWORD_RESET" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_USER_PASSWORD_RESET" xml:space="preserve">
     <value>Reset password</value>
   </data>
-  <data name="IDS_LOG_MESSAGE_USER_UPDATE" xml:space="preserve">
+  <data name="IDS_MESSAGE_LOGS_USER_UPDATE" xml:space="preserve">
     <value>Update user</value>
   </data>
   <data name="IDS_MESSAGE_LOGS_AUTH_FAILED" xml:space="preserve">

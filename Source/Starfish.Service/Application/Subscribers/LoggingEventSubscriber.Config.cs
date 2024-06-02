@@ -1,5 +1,6 @@
 ﻿using Nerosoft.Euonia.Bus;
 using Nerosoft.Starfish.Domain;
+using Newtonsoft.Json;
 
 namespace Nerosoft.Starfish.Application;
 
@@ -22,7 +23,7 @@ internal partial class LoggingEventSubscriber
 		{
 			Module = MODULE_CONFIG,
 			Type = "status.enable",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_ENABLE, aggregate.Id, aggregate.Name),
+			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -46,7 +47,7 @@ internal partial class LoggingEventSubscriber
 		{
 			Module = MODULE_CONFIG,
 			Type = "status.disable",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DISABLE, aggregate.Id, aggregate.Name),
+			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -70,7 +71,7 @@ internal partial class LoggingEventSubscriber
 		{
 			Module = MODULE_CONFIG,
 			Type = "secret",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_RESET_SECRET, aggregate.Id, aggregate.Name),
+			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -94,7 +95,7 @@ internal partial class LoggingEventSubscriber
 		{
 			Module = MODULE_CONFIG,
 			Type = "update",
-			Description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_UPDATE, aggregate.Id, aggregate.Name),
+			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -113,13 +114,11 @@ internal partial class LoggingEventSubscriber
 	[Subscribe]
 	public Task HandleAsync(ConfigurationCreatedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_CREATE, @event.Configuration.Id, @event.Configuration.Name);
-
 		var command = new OperateLogCreateCommand
 		{
 			Module = MODULE_CONFIG,
 			Type = "create",
-			Description = description,
+			Content = GenerateLogContent(@event.Configuration.Id, @event.Configuration.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -138,13 +137,12 @@ internal partial class LoggingEventSubscriber
 	public Task HandleAsync(ConfigurationDeletedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		var aggregate = @event.GetAggregate<Configuration>();
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_DELETE, aggregate.Id, aggregate.Name);
 
 		var command = new OperateLogCreateCommand
 		{
 			Module = MODULE_CONFIG,
 			Type = "delete",
-			Description = description,
+			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
@@ -163,17 +161,28 @@ internal partial class LoggingEventSubscriber
 	public Task HandleAsync(ConfigurationPublishedEvent @event, MessageContext context, CancellationToken cancellationToken = default)
 	{
 		var aggregate = @event.GetAggregate<Configuration>();
-		var description = string.Format(Resources.IDS_MESSAGE_LOGS_CONFIG_PUBLISH, aggregate.Id, aggregate.Name);
 
 		var command = new OperateLogCreateCommand
 		{
 			Module = MODULE_CONFIG,
 			Type = "publish",
-			Description = description,
+			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
 			UserName = context.User?.Identity?.Name
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
+	}
+
+	private static string GenerateLogContent(params object[] args)
+	{
+		if (args == null || args.Length == 0)
+		{
+			return string.Empty;
+		}
+
+		var items = args.Select(t => t.ToString());
+
+		return JsonConvert.SerializeObject(items);
 	}
 }
