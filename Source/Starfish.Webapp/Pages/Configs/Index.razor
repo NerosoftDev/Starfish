@@ -118,7 +118,7 @@
         var title = string.IsNullOrEmpty(id) ? Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_ADD : Resources.IDS_CONFIG_EDIT_DIALOG_TITLE_EDIT;
         var dialog = await DialogService.ShowDialogAsync<Edit>(id, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
         var result = await dialog.Result;
-        if (result.Cancelled)
+        if (!result.Cancelled)
         {
             await Pagination.SetCurrentPageIndexAsync(0);
         }
