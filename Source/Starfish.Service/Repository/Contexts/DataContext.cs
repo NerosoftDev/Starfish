@@ -108,6 +108,15 @@ public sealed class DataContext : DataContextBase<DataContext>
 		base.OnModelCreating(modelBuilder);
 	}
 
+	protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+	{
+		base.ConfigureConventions(configurationBuilder);
+		configurationBuilder.Properties<DateTime>()
+		                    .HaveConversion<UniversalTimeConverter>();
+		configurationBuilder.Properties<DateTime?>()
+		                    .HaveConversion<UniversalTimeConverter>();
+	}
+
 	private List<DomainEvent> GetTrackedEvents()
 	{
 		var entries = ChangeTracker.Entries<IHasDomainEvents>();

@@ -137,10 +137,16 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		{
 			throw new BadRequestException(Resources.IDS_ERROR_CONFIG_SECRET_NOT_MATCHES_RULE);
 		}
+		
+		var secretHash = Cryptography.SHA.Encrypt(secret);
 
 		if (!string.IsNullOrEmpty(Id))
 		{
-			RaiseEvent(new ConfigurationSecretChangedEvent(Cryptography.SHA.Encrypt(secret)));
+			RaiseEvent(new ConfigurationSecretChangedEvent(secretHash));
+		}
+		else
+		{
+			Secret = secretHash;
 		}
 	}
 

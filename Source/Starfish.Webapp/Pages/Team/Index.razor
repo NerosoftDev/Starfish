@@ -99,7 +99,12 @@
     private async Task OnEditClicked(string id)
     {
         var title = string.IsNullOrEmpty(id) ? Resources.IDS_TEAM_EDIT_TITLE_ADD : Resources.IDS_TEAM_EDIT_TITLE_EDIT;
-        await DialogService.ShowDialogAsync<Edit>(id ?? string.Empty, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
+        var dialog = await DialogService.ShowDialogAsync<Edit>(id ?? string.Empty, new DialogParameters { Title = title, PreventDismissOnOverlayClick = true });
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            await Pagination.SetCurrentPageIndexAsync(0);
+        }
     }
 
     private async Task OnSearchClicked()

@@ -66,7 +66,7 @@ internal class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 
 			var passwordHash = Cryptography.DES.Encrypt(input.Password, Encoding.UTF8.GetBytes(user.PasswordSalt));
 
-			if (string.Equals(user.PasswordHash, passwordHash))
+			if (!string.Equals(user.PasswordHash, passwordHash))
 			{
 				throw new AuthenticationException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
 			}

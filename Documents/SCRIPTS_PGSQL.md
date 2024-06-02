@@ -11,8 +11,7 @@ CREATE TABLE "public"."operate_log" (
   "Error" varchar(2000) COLLATE "pg_catalog"."default",
   "RequestTraceId" varchar(40) COLLATE "pg_catalog"."default" NOT NULL,
   PRIMARY KEY ("Id")
-)
-;
+);
 
 CREATE INDEX "IDX_OPERATE_LOG_MODULE" ON "public"."operate_log" USING btree (
   "Module" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
@@ -40,7 +39,7 @@ CREATE TABLE "public"."configuration" (
   "CreateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "UpdateTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "CreatedBy" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "UpdatedBy" date NOT NULL,
+  "UpdatedBy" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   PRIMARY KEY ("Id")
 );
 
@@ -61,14 +60,11 @@ CREATE UNIQUE INDEX "IDX_CONFIG_UNIQUE" ON "public"."configuration" USING btree 
 ```sql
 CREATE TABLE "public"."configuration_archive" (
   "Id" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "AppId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "Environment" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "Data" text COLLATE "pg_catalog"."default",
   "Operator" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
   "ArchiveTime" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY ("Id")
-)
-;
+);
 ```
 
 # configuration_item
@@ -79,11 +75,8 @@ CREATE TABLE "public"."configuration_item" (
   "ConfigurationId" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "Key" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "Value" text COLLATE "pg_catalog"."default",
-  "UpdatedTime" timestamp(6) NOT NULL,
-  "UpdatedBy" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
   PRIMARY KEY ("Id")
-)
-;
+);
 
 CREATE INDEX "IDX_CONFIG_ITEM_FK" ON "public"."configuration_item" USING btree (
   "ConfigurationId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
@@ -106,8 +99,7 @@ CREATE TABLE "public"."configuration_revision" (
   "Operator" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
   "CreateTime" timestamp(6) NOT NULL,
   PRIMARY KEY ("Id")
-)
-;
+);
 
 CREATE INDEX "IDS_CONFIG_REVISION_FK" ON "public"."configuration_revision" USING btree (
   "ConfigurationId" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST

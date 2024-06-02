@@ -307,6 +307,15 @@
     <value>用户认证失败。</value>
     <comment />
   </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_OTP" xml:space="preserve">
+    <value>验证码登录</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_PASSWORD" xml:space="preserve">
+    <value>账号密码登录</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_REFRESH_TOKEN" xml:space="preserve">
+    <value>令牌登录</value>
+  </data>
   <data name="IDS_MESSAGE_LOGS_AUTH_SUCCEED" xml:space="preserve">
     <value>用户认证成功。</value>
     <comment />
@@ -338,5 +347,29 @@
   <data name="IDS_MESSAGE_LOGS_CONFIG_UPDATE" xml:space="preserve">
     <value>更新配置，[Id]:{0}，[名称]:{1}。</value>
     <comment />
+  </data>
+  <data name="IDS_MESSAGE_LOGS_MESSAGE_USER_CREATE" xml:space="preserve">
+    <value>新增用户</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_CREATE" xml:space="preserve">
+    <value>新增团队</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_MEMBER_APPEND" xml:space="preserve">
+    <value>添加团队成员</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_MEMBER_REMOVE" xml:space="preserve">
+    <value>移除团队成员</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_UPDATE" xml:space="preserve">
+    <value>编辑团队信息</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_USER_PASSWORD_CHANGE" xml:space="preserve">
+    <value>修改登录密码</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_USER_PASSWORD_RESET" xml:space="preserve">
+    <value>重置登录密码</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_USER_UPDATE" xml:space="preserve">
+    <value>编辑用户信息</value>
   </data>
 </root>

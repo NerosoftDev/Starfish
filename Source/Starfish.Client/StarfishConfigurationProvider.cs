@@ -55,11 +55,16 @@ internal class StarfishConfigurationProvider : ConfigurationProvider, IDisposabl
 
 	private async void OnHostChanged(object sender, HostChangedEventArgs args)
 	{
+		if (string.IsNullOrWhiteSpace(args.Host))
+		{
+			return;
+		}
+
 		var uri = new Uri(args.Host);
 		IConfigurationClient client = uri.Scheme switch
 		{
-			"http" or "https" => new HttpConfigurationClient(uri,  _options.Id, _options.Secret),
-			"ws" or "wss" => new SocketConfigurationClient(uri,  _options.Id, _options.Secret),
+			"http" or "https" => new HttpConfigurationClient(uri, _options.Id, _options.Secret),
+			"ws" or "wss" => new SocketConfigurationClient(uri, _options.Id, _options.Secret),
 			_ => throw new NotSupportedException(string.Format(Resources.IDS_ERROR_SCHEMA_NOT_SUPPORTED, uri.Scheme)),
 		};
 		try

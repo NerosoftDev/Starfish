@@ -31,7 +31,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .HasValueGenerator<UuidValueGenerator>();
 		});
 	}
-	
+
 	protected override ModelBuilder ConfigureTeam(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Team>(entity =>

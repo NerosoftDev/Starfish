@@ -20,7 +20,7 @@ public class OperateLogCreateCommand : Command
 	/// <summary>
 	/// 描述
 	/// </summary>
-	public string Description { get; set; }
+	public string Content { get; set; }
 
 	/// <summary>
 	/// 用户名
