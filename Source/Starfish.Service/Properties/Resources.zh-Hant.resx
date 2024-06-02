@@ -339,4 +339,37 @@
     <value>更新配置，[Id]：{0}，[名稱]：{1}。</value>
     <comment />
   </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_OTP" xml:space="preserve">
+    <value>驗證碼登錄</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_PASSWORD" xml:space="preserve">
+    <value>帳號密碼登錄</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_AUTH_REFRESH_TOKEN" xml:space="preserve">
+    <value>令牌登錄</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_MESSAGE_USER_CREATE" xml:space="preserve">
+    <value>創建用戶</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_CREATE" xml:space="preserve">
+    <value>創建團隊</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_MEMBER_APPEND" xml:space="preserve">
+    <value>添加新成員</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_MEMBER_REMOVE" xml:space="preserve">
+    <value>移除團隊成員</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_TEAM_UPDATE" xml:space="preserve">
+    <value>編輯團隊訊息</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_USER_PASSWORD_CHANGE" xml:space="preserve">
+    <value>更改密碼</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_USER_PASSWORD_RESET" xml:space="preserve">
+    <value>重設密碼</value>
+  </data>
+  <data name="IDS_MESSAGE_LOGS_USER_UPDATE" xml:space="preserve">
+    <value>編輯用戶訊息</value>
+  </data>
 </root>
