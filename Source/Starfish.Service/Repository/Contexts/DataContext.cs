@@ -112,9 +112,9 @@ public sealed class DataContext : DataContextBase<DataContext>
 	{
 		base.ConfigureConventions(configurationBuilder);
 		configurationBuilder.Properties<DateTime>()
-		                    .HaveConversion<DateTimeStorageConverter>();
+		                    .HaveConversion<UniversalTimeConverter>();
 		configurationBuilder.Properties<DateTime?>()
-		                    .HaveConversion<DateTimeStorageConverter>();
+		                    .HaveConversion<UniversalTimeConverter>();
 	}
 
 	private List<DomainEvent> GetTrackedEvents()
