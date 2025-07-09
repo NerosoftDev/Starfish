@@ -31,9 +31,9 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 		return ExecuteAsync(async () =>
 		{
 			var business = await Factory.CreateAsync<UserGeneralBusiness>(cancellationToken);
-			business.UserName = message.UserName;
+			business.Username = message.Username;
 			business.Password = message.Password;
-			business.NickName = message.NickName;
+			business.Nickname = message.Nickname;
 			business.Email = message.Email;
 			business.Phone = message.Phone;
 			business.IsAdmin = message.IsAdmin;
@@ -53,7 +53,7 @@ public sealed class UserCommandHandler : CommandHandlerBase,
 			var business = await Factory.FetchAsync<UserGeneralBusiness>(message.Item1, cancellationToken);
 
 			business.Email = message.Item2.Email;
-			business.NickName = message.Item2.NickName;
+			business.Nickname = message.Item2.NickName;
 			business.Phone = message.Item2.Phone;
 			business.IsAdmin = message.Item2.IsAdmin;
 

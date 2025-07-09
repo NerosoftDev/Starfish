@@ -23,7 +23,7 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="data"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task UpdateAsync(string id, UserUpdateDto data, CancellationToken cancellationToken = default);
+	Task UpdateAsync(long id, UserUpdateDto data, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 查询符合条件的用户列表
@@ -49,7 +49,7 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<UserDetailDto> GetAsync(string id, CancellationToken cancellationToken = default);
+	Task<UserDetailDto> GetAsync(long id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 删除用户
@@ -57,7 +57,7 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task DeleteAsync(string id, CancellationToken cancellationToken = default);
+	Task DeleteAsync(long id, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 修改密码
@@ -75,7 +75,7 @@ public interface IUserApplicationService : IApplicationService
 	/// <param name="password"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task ResetPasswordAsync(string id, string password, CancellationToken cancellationToken = default);
+	Task ResetPasswordAsync(long id, string password, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 初始化用户

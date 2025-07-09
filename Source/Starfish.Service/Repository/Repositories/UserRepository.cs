@@ -8,7 +8,7 @@ namespace Nerosoft.Starfish.Repository;
 /// <summary>
 /// 用户仓储
 /// </summary>
-public sealed class UserRepository : BaseRepository<DataContext, User, string>, IUserRepository
+public sealed class UserRepository : BaseRepository<DataContext, User, long>, IUserRepository
 {
 	/// <summary>
 	/// 初始化<see cref="UserRepository"/>.
@@ -20,21 +20,21 @@ public sealed class UserRepository : BaseRepository<DataContext, User, string>, 
 	}
 
 	/// <inheritdoc />
-	public Task<User> FindByUserNameAsync(string userName, bool tracking, CancellationToken cancellationToken = default)
+	public Task<User> FindByUserNameAsync(string username, bool tracking, CancellationToken cancellationToken = default)
 	{
-		return GetAsync(t => t.UserName == userName, tracking, [], cancellationToken);
+		return GetAsync(t => t.Username == username, tracking, [], cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<bool> CheckUserNameExistsAsync(string userName, CancellationToken cancellationToken = default)
+	public Task<bool> CheckUsernameExistsAsync(string username, CancellationToken cancellationToken = default)
 	{
-		var specification = UserSpecification.UserNameEquals(userName);
+		var specification = UserSpecification.UserNameEquals(username);
 		var predicate = specification.Satisfy();
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task<bool> CheckEmailExistsAsync(string email, string ignoreId, CancellationToken cancellationToken = default)
+	public Task<bool> CheckEmailExistsAsync(string email, long ignoreId, CancellationToken cancellationToken = default)
 	{
 		ISpecification<User>[] specifications =
 		[
@@ -45,7 +45,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, string>, 
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
-	public Task<bool> CheckPhoneExistsAsync(string phone, string ignoreId, CancellationToken cancellationToken = default)
+	public Task<bool> CheckPhoneExistsAsync(string phone, long ignoreId, CancellationToken cancellationToken = default)
 	{
 		ISpecification<User>[] specifications =
 		[

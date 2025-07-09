@@ -19,11 +19,11 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task UpdateAsync(string id, UserUpdateDto data, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(long id, UserUpdateDto data, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<IUserUpdateUseCase>();
-		var input = new UserUpdateInput(id, data);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new UserUpdateCommand(id, data);
+		// Use the bus to send the command for updating the user
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
 	/// <inheritdoc />
@@ -43,7 +43,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task<UserDetailDto> GetAsync(string id, CancellationToken cancellationToken = default)
+	public Task<UserDetailDto> GetAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IUserDetailUseCase>();
 		var input = new UserDetailInput(id);
@@ -52,11 +52,10 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 	}
 
 	/// <inheritdoc />
-	public Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+	public Task DeleteAsync(long id, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<IUserDeleteUseCase>();
-		var input = new UserDeleteInput(id);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new UserDeleteCommand(id);
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
 	public Task ChangePasswordAsync(string oldPassword, string newPassword, CancellationToken cancellationToken = default)
@@ -66,7 +65,7 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task ResetPasswordAsync(string id, string password, CancellationToken cancellationToken = default)
+	public Task ResetPasswordAsync(long id, string password, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<IResetPasswordUseCase>();
 		var input = new ResetPasswordInput(id, password);

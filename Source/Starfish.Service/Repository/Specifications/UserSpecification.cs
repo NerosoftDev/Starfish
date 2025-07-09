@@ -13,7 +13,7 @@ internal static class UserSpecification
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<User> IdEquals(string id)
+	public static Specification<User> IdEquals(long id)
 	{
 		return new DirectSpecification<User>(t => t.Id == id);
 	}
@@ -23,7 +23,7 @@ internal static class UserSpecification
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	public static Specification<User> IdNotEquals(string id)
+	public static Specification<User> IdNotEquals(long id)
 	{
 		return new DirectSpecification<User>(t => t.Id != id);
 	}
@@ -31,24 +31,24 @@ internal static class UserSpecification
 	/// <summary>
 	/// 用户名等于
 	/// </summary>
-	/// <param name="userName"></param>
+	/// <param name="username"></param>
 	/// <returns></returns>
-	public static Specification<User> UserNameEquals(string userName)
+	public static Specification<User> UserNameEquals(string username)
 	{
-		userName = userName.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<User>(t => t.UserName == userName);
+		username = username.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<User>(t => t.Username == username);
 	}
 
-	public static Specification<User> UserNameContains(string userName)
+	public static Specification<User> UserNameContains(string username)
 	{
-		userName = userName.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<User>(t => t.UserName.Contains(userName));
+		username = username.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<User>(t => t.Username.Contains(username));
 	}
 
-	public static Specification<User> NickNameContains(string nickName)
+	public static Specification<User> NickNameContains(string nickname)
 	{
-		nickName = nickName.Normalize(TextCaseType.Lower);
-		return new DirectSpecification<User>(t => t.NickName.ToLower().Contains(nickName));
+		nickname = nickname.Normalize(TextCaseType.Lower);
+		return new DirectSpecification<User>(t => t.Nickname.ToLower().Contains(nickname));
 	}
 
 	/// <summary>
