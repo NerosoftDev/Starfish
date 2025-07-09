@@ -11,7 +11,7 @@ internal class UserPasswordBusiness : CommandObjectBase<UserPasswordBusiness>, I
 	public IUserRepository Repository { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(string id, string password, string actionType, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(long id, string password, string actionType, CancellationToken cancellationToken = default)
 	{
 		if (string.IsNullOrWhiteSpace(password))
 		{

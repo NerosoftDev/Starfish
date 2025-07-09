@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 用户聚合根
 /// </summary>
-public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, ITombstone
+public sealed class User : Aggregate<long>, IHasCreateTime, IHasUpdateTime, ITombstone
 {
 	/// <summary>
 	/// 初始化<see cref="User"/>实例
@@ -20,20 +20,20 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// <summary>
 	/// 初始化用户聚合根
 	/// </summary>
-	/// <param name="userName"></param>
+	/// <param name="username"></param>
 	/// <param name="password"></param>
 	/// 
-	private User(string userName, string password)
+	private User(string username, string password)
 		: this()
 	{
-		UserName = userName;
+		Username = username;
 		SetPassword(password);
 	}
 
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	public string UserName { get; set; }
+	public string Username { get; set; }
 
 	/// <summary>
 	/// 密码加密后的哈希字符串
@@ -48,7 +48,7 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// <summary>
 	/// 昵称
 	/// </summary>
-	public string NickName { get; set; }
+	public string Nickname { get; set; }
 
 	/// <summary>
 	/// 邮箱
@@ -109,12 +109,12 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// <summary>
 	/// 新建用户
 	/// </summary>
-	/// <param name="userName"></param>
+	/// <param name="username"></param>
 	/// <param name="password"></param>
 	/// <returns></returns>
-	internal static User Create(string userName, string password)
+	internal static User Create(string username, string password)
 	{
-		var entity = new User(userName, password);
+		var entity = new User(username, password);
 		return entity;
 	}
 
@@ -156,10 +156,10 @@ public sealed class User : Aggregate<string>, IHasCreateTime, IHasUpdateTime, IT
 	/// <summary>
 	/// 设置用户昵称
 	/// </summary>
-	/// <param name="nickName"></param>
-	internal void SetNickName(string nickName)
+	/// <param name="nickname"></param>
+	internal void SetNickname(string nickname)
 	{
-		NickName = nickName;
+		Nickname = nickname;
 	}
 
 	internal void SetIsAdmin(bool isAdmin)

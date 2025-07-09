@@ -23,25 +23,25 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 	private User Aggregate { get; set; }
 
-	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
-	public static readonly PropertyInfo<string> UserNameProperty = RegisterProperty<string>(p => p.UserName);
+	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
+	public static readonly PropertyInfo<string> UsernameProperty = RegisterProperty<string>(p => p.Username);
 	public static readonly PropertyInfo<string> PasswordProperty = RegisterProperty<string>(p => p.Password);
-	public static readonly PropertyInfo<string> NickNameProperty = RegisterProperty<string>(p => p.NickName);
+	public static readonly PropertyInfo<string> NicknameProperty = RegisterProperty<string>(p => p.Nickname);
 	public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(p => p.Email);
 	public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(p => p.Phone);
 	public static readonly PropertyInfo<bool> IsAdminProperty = RegisterProperty<bool>(p => p.IsAdmin);
 	public static readonly PropertyInfo<bool> ReservedProperty = RegisterProperty<bool>(p => p.Reserved);
 
-	public string Id
+	public long Id
 	{
 		get => GetProperty(IdProperty);
 		private set => LoadProperty(IdProperty, value);
 	}
 
-	public string UserName
+	public string Username
 	{
-		get => GetProperty(UserNameProperty);
-		set => SetProperty(UserNameProperty, value);
+		get => GetProperty(UsernameProperty);
+		set => SetProperty(UsernameProperty, value);
 	}
 
 	public string Password
@@ -50,10 +50,10 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		set => SetProperty(PasswordProperty, value);
 	}
 
-	public string NickName
+	public string Nickname
 	{
-		get => GetProperty(NickNameProperty);
-		set => SetProperty(NickNameProperty, value);
+		get => GetProperty(NicknameProperty);
+		set => SetProperty(NicknameProperty, value);
 	}
 
 	public string Email
@@ -82,7 +82,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 
 	protected override void AddRules()
 	{
-		Rules.AddRule(_provider.GetServiceOrCreateInstance<UserNameAvailabilityCheckRule>());
+		Rules.AddRule(_provider.GetServiceOrCreateInstance<UsernameAvailabilityCheckRule>());
 		Rules.AddRule(new DuplicateEmailCheckRule());
 		Rules.AddRule(new DuplicatePhoneCheckRule());
 		Rules.AddRule(new PasswordStrengthRule());
@@ -95,7 +95,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var user = await Repository.GetAsync(id, query => query.AsTracking(), cancellationToken);
 
@@ -104,8 +104,8 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		using (BypassRuleChecks)
 		{
 			Id = user.Id;
-			UserName = user.UserName;
-			NickName = user.NickName;
+			Username = user.Username;
+			Nickname = user.Nickname;
 			Email = user.Email;
 			Phone = user.Phone;
 		}
@@ -114,7 +114,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 	[FactoryInsert]
 	protected override Task InsertAsync(CancellationToken cancellationToken = default)
 	{
-		var user = User.Create(UserName, Password);
+		var user = User.Create(Username, Password);
 		if (!string.IsNullOrWhiteSpace(Email))
 		{
 			user.SetEmail(Email);
@@ -125,7 +125,7 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			user.SetPhone(Phone);
 		}
 
-		user.SetNickName(NickName ?? UserName);
+		user.SetNickname(Nickname ?? Username);
 		user.SetIsAdmin(IsAdmin);
 		user.Reserved = Reserved;
 
@@ -155,9 +155,9 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			Aggregate.SetPhone(Phone);
 		}
 
-		if (ChangedProperties.Contains(NickNameProperty))
+		if (ChangedProperties.Contains(NicknameProperty))
 		{
-			Aggregate.SetNickName(NickName);
+			Aggregate.SetNickname(Nickname);
 		}
 
 		if (ChangedProperties.Contains(IsAdminProperty))
@@ -179,11 +179,11 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 		return _repository.DeleteAsync(Aggregate, true, cancellationToken);
 	}
 
-	public class UserNameAvailabilityCheckRule : RuleBase
+	public class UsernameAvailabilityCheckRule : RuleBase
 	{
 		private readonly IConfiguration _configuration;
 
-		public UserNameAvailabilityCheckRule(IConfiguration configuration)
+		public UsernameAvailabilityCheckRule(IConfiguration configuration)
 		{
 			_configuration = configuration;
 		}
@@ -199,18 +199,18 @@ internal class UserGeneralBusiness : EditableObjectBase<UserGeneralBusiness>, ID
 			if (!target.Reserved)
 			{
 				var reserved = _configuration.GetValue<List<string>>("ReservedUsernames");
-				if (reserved.Contains(target.UserName, StringComparison.OrdinalIgnoreCase))
+				if (reserved.Contains(target.Username, StringComparison.OrdinalIgnoreCase))
 				{
-					context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_USERNAME_UNAVAILABLE, target.UserName));
+					context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_USERNAME_UNAVAILABLE, target.Username));
 					return;
 				}
 			}
 
 			var repository = target.Repository;
-			var exists = await repository.CheckUserNameExistsAsync(target.UserName, cancellationToken);
+			var exists = await repository.CheckUsernameExistsAsync(target.Username, cancellationToken);
 			if (exists)
 			{
-				context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_USERNAME_UNAVAILABLE, target.UserName));
+				context.AddErrorResult(string.Format(Resources.IDS_ERROR_USER_USERNAME_UNAVAILABLE, target.Username));
 			}
 		}
 	}

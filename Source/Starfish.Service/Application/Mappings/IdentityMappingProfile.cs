@@ -23,8 +23,8 @@ internal class IdentityMappingProfile : Profile
 		CreateMap<Team, TeamDetailDto>();
 
 		CreateMap<TeamMember, TeamMemberDto>()
-			.ForMember(dest => dest.UserName, options => options.MapFrom(src => src.User.UserName))
-			.ForMember(dest => dest.NickName, options => options.MapFrom(src => src.User.NickName))
+			.ForMember(dest => dest.Username, options => options.MapFrom(src => src.User.Username))
+			.ForMember(dest => dest.Nickname, options => options.MapFrom(src => src.User.Nickname))
 			.ForMember(dest => dest.Email, options => options.MapFrom(src => src.User.Email))
 			.ForMember(dest => dest.Phone, options => options.MapFrom(src => src.User.Phone));
 	}
