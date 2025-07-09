@@ -35,7 +35,7 @@ public class IdentityController : ControllerBase
 	{
 		var data = new Dictionary<string, string>
 		{
-			{ "username", request.UserName },
+			{ "username", request.Username },
 			{ "password", request.Password },
 			{ "grant_type", "password" }
 		};
