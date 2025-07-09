@@ -23,7 +23,7 @@ public class TokenCreateCommand : Command
 	/// <summary>
 	/// 用户ID
 	/// </summary>
-	public string Subject { get; set; }
+	public long Subject { get; set; }
 
 	/// <summary>
 	/// 颁发时间

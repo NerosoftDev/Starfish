@@ -29,7 +29,7 @@ public sealed class OperateLog : Aggregate<long>
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	public string UserName { get; set; }
+	public string Username { get; set; }
 
 	/// <summary>
 	/// 操作时间
@@ -53,7 +53,7 @@ public sealed class OperateLog : Aggregate<long>
 			Module = module,
 			Type = type,
 			Content = content,
-			UserName = userName,
+			Username = userName,
 			OperateTime = operateTime,
 			Error = error,
 			RequestTraceId = requestTraceId

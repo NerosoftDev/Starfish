@@ -57,9 +57,9 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id}")]
+	[HttpGet("{id:long}")]
 	[Produces(typeof(UserDetailDto))]
-	public async Task<IActionResult> GetAsync(string id)
+	public async Task<IActionResult> GetAsync(long id)
 	{
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
@@ -84,8 +84,8 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id}")]
-	public async Task<IActionResult> UpdateAsync(string id, [FromBody] UserUpdateDto data)
+	[HttpPut("{id:long}")]
+	public async Task<IActionResult> UpdateAsync(long id, [FromBody] UserUpdateDto data)
 	{
 		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -96,8 +96,8 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpDelete("{id}")]
-	public async Task<IActionResult> DeleteAsync(string id)
+	[HttpDelete("{id:long}")]
+	public async Task<IActionResult> DeleteAsync(long id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -109,9 +109,9 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id}/password")]
+	[HttpPut("{id:long}/password")]
 	[Authorize(Roles = "SA")]
-	public async Task<IActionResult> ResetPasswordAsync(string id, [FromBody] ResetPasswordRequestDto data)
+	public async Task<IActionResult> ResetPasswordAsync(long id, [FromBody] ResetPasswordRequestDto data)
 	{
 		await _service.ResetPasswordAsync(id, data.Password, HttpContext.RequestAborted);
 		return Ok();

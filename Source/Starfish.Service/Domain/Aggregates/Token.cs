@@ -23,7 +23,7 @@ public sealed class Token : Entity<long>
 	/// <param name="subject"></param>
 	/// <param name="issues"></param>
 	/// <param name="expires"></param>
-	private Token(string type, string key, string subject, DateTime issues, DateTime? expires = null)
+	private Token(string type, string key, long subject, DateTime issues, DateTime? expires = null)
 		: this()
 	{
 		Type = type;
@@ -49,7 +49,7 @@ public sealed class Token : Entity<long>
 	/// <summary>
 	/// 用户ID
 	/// </summary>
-	public string Subject { get; set; }
+	public long Subject { get; set; }
 
 	/// <summary>
 	/// 颁发时间
@@ -70,7 +70,7 @@ public sealed class Token : Entity<long>
 	/// <param name="issues">颁发时间</param>
 	/// <param name="expires">过期时间</param>
 	/// <returns></returns>
-	internal static Token Create(string type, string token, string subject, DateTime issues, DateTime? expires = null)
+	internal static Token Create(string type, string token, long subject, DateTime issues, DateTime? expires = null)
 	{
 		var key = token.ToSha256();
 		return new Token(type, key, subject, issues, expires);
