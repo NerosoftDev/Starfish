@@ -8,12 +8,12 @@ public class UserItemDto
 	/// <summary>
 	/// Id
 	/// </summary>
-	public string Id { get; set; }
+	public long Id { get; set; }
 
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	public string UserName { get; set; }
+	public string Username { get; set; }
 
 	/// <summary>
 	/// 邮箱
@@ -28,7 +28,7 @@ public class UserItemDto
 	/// <summary>
 	/// 昵称
 	/// </summary>
-	public string NickName { get; set; }
+	public string Nickname { get; set; }
 
 	/// <summary>
 	/// 是否管理员
