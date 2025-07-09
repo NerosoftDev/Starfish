@@ -19,7 +19,7 @@
         </div>
         <FluentCard>
             <FluentStack Orientation="Orientation.Vertical">
-                <FluentTextField @bind-Value="UserName" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_USER_NAME)" Style="width: 100%" Required="true">
+                <FluentTextField @bind-Value="Username" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_USER_NAME)" Style="width: 100%" Required="true">
                     <FluentIcon Value="@(new Icons.Regular.Size24.Person())" Slot="start" Color="Color.Neutral"/>
                 </FluentTextField>
                 <FluentTextField @bind-Value="Password" Placeholder="@(Resources.IDS_REGISTER_PLACEHOLDER_PASSWORD)" Style="width: 100%" Required="true" TextFieldType="TextFieldType.Password">
@@ -48,7 +48,7 @@
 
     private bool Loading { get; set; }
 
-    private string UserName { get; set; }
+    private string Username { get; set; }
 
     private string Password { get; set; }
 

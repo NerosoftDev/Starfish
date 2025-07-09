@@ -1,10 +1,10 @@
-﻿@implements IDialogContentComponent<string>
+﻿@implements IDialogContentComponent<long>
 
 @inject IUserApi Api
 
 <FluentDialogHeader ShowDismiss="true">
     <FluentStack VerticalAlignment="VerticalAlignment.Center">
-        <FluentIcon Value="@(new Icons.Regular.Size24.People())" />
+        <FluentIcon Value="@(new Icons.Regular.Size24.People())"/>
         <FluentLabel Typo="Typography.PaneHeader">
             @Dialog.Instance.Parameters.Title
         </FluentLabel>
@@ -15,52 +15,53 @@
     <FluentStack Orientation="Orientation.Vertical">
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_USERNAME)"
-                         @bind-Value="UserName"
-                         ReadOnly="@(!string.IsNullOrEmpty(Content))" />
-        @if (string.IsNullOrEmpty(Content))
+                         @bind-Value="Username"
+                         ReadOnly="@(Content > 0)"/>
+        @if (Content > 0)
         {
             <FluentTextField Style="width: 100%"
                              Label="@(Resources.IDS_USER_LABEL_PASSWORD)"
                              @bind-Value="Password"
-                             TextFieldType="TextFieldType.Password" />
+                             TextFieldType="TextFieldType.Password"/>
             <FluentTextField Style="width: 100%"
                              Label="@(Resources.IDS_USER_LABEL_CONFIRM_PASSWORD)"
                              @bind-Value="Confirm"
-                             TextFieldType="TextFieldType.Password" />
+                             TextFieldType="TextFieldType.Password"/>
         }
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_NICKNAME)"
-                         @bind-Value="NickName" />
+                         @bind-Value="NickName"/>
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_EMAIL)"
                          @bind-Value="Email"
-                         TextFieldType="TextFieldType.Email" />
+                         TextFieldType="TextFieldType.Email"/>
 
         <FluentTextField Style="width: 100%"
                          Label="@(Resources.IDS_USER_LABEL_PHONE)"
                          @bind-Value="Phone"
-                         TextFieldType="TextFieldType.Tel" />
+                         TextFieldType="TextFieldType.Tel"/>
 
-        <FluentSwitch Label="@(Resources.IDS_USER_LABEL_IS_ADMIN)" @bind-Value="IsAdmin" />
+        <FluentSwitch Label="@(Resources.IDS_USER_LABEL_IS_ADMIN)" @bind-Value="IsAdmin"/>
     </FluentStack>
 </FluentDialogBody>
 
 <FluentDialogFooter>
-    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync" Loading="Loading">@(Resources.IDS_COMMON_SAVE)</FluentButton>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync"
+                  Loading="Loading">@(Resources.IDS_COMMON_SAVE)</FluentButton>
     <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">@(Resources.IDS_COMMON_CANCEL)</FluentButton>
 </FluentDialogFooter>
 
 @code {
 
     [Parameter]
-    public string Content { get; set; }
+    public long Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
 
     private bool Loading { get; set; }
 
-    private string UserName { get; set; }
+    private string Username { get; set; }
 
     private string Password { get; set; }
 
@@ -85,15 +86,15 @@
         try
         {
             Loading = true;
-            if (!string.IsNullOrEmpty(Content))
+            if (Content > 0)
             {
                 var request = new UserUpdateDto
-                    {
-                        NickName = NickName,
-                        Email = Email,
-                        Phone = Phone,
-                        IsAdmin = IsAdmin
-                    };
+                {
+                    NickName = NickName,
+                    Email = Email,
+                    Phone = Phone,
+                    IsAdmin = IsAdmin
+                };
 
                 await Api.UpdateAsync(Content, request)
                          .EnsureSuccess();
@@ -106,14 +107,14 @@
                 }
 
                 var request = new UserCreateDto
-                    {
-                        UserName = UserName,
-                        Password = Password,
-                        NickName = NickName,
-                        Email = Email,
-                        Phone = Phone,
-                        IsAdmin = IsAdmin
-                    };
+                {
+                    Username = Username,
+                    Password = Password,
+                    Nickname = NickName,
+                    Email = Email,
+                    Phone = Phone,
+                    IsAdmin = IsAdmin
+                };
 
                 await Api.CreateAsync(request)
                          .EnsureSuccess();
@@ -136,9 +137,9 @@
         await Dialog.CancelAsync();
     }
 
-    private async Task LoadAsync(string id)
+    private async Task LoadAsync(long id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (id <= 0)
         {
             return;
         }
@@ -152,8 +153,8 @@
                      }
 
                      Content = result.Id;
-                     UserName = result.UserName;
-                     NickName = result.NickName;
+                     Username = result.Username;
+                     NickName = result.Nickname;
                      Email = result.Email;
                      Phone = result.Phone;
                      IsAdmin = result.IsAdmin;
