@@ -15,7 +15,7 @@ internal interface IGrantWithPasswordUseCase : IUseCase<GrantWithPasswordUseCase
 /// <summary>
 /// 密码登录输入参数
 /// </summary>
-internal record GrantWithPasswordUseCaseInput(string UserName, string Password) : IUseCaseInput;
+internal record GrantWithPasswordUseCaseInput(string Username, string Password) : IUseCaseInput;
 
 /// <summary>
 /// 密码登录输出参数
@@ -53,12 +53,12 @@ internal class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 		var events = new List<ApplicationEvent>();
 		try
 		{
-			if (string.IsNullOrWhiteSpace(input.UserName) || string.IsNullOrWhiteSpace(input.Password))
+			if (string.IsNullOrWhiteSpace(input.Username) || string.IsNullOrWhiteSpace(input.Password))
 			{
 				throw new BadRequestException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
 			}
 
-			var user = await UserRepository.FindByUserNameAsync(input.UserName, false, cancellationToken);
+			var user = await UserRepository.FindByUsernameAsync(input.Username, false, cancellationToken);
 			if (user == null)
 			{
 				throw new BadRequestException(Resources.IDS_ERROR_USER_USERNAME_OR_PASSWORD_IS_INVALID);
@@ -78,17 +78,17 @@ internal class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 
 			string[] roles = user.IsAdmin ? ["SA"] : [];
 			
-			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
+			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id.ToString(), user.Username, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{
 				AuthType = "password",
 				RefreshToken = refreshToken,
 				UserId = user.Id,
-				UserName = user.UserName,
+				Username = user.Username,
 				TokenIssueTime = issuesAt,
 				Data = new Dictionary<string, string>
 				{
-					{ "username", input.UserName }
+					{ "username", input.Username }
 				}
 			});
 			return new GrantWithPasswordUseCaseOutput
@@ -107,7 +107,7 @@ internal class GrantWithPasswordUseCase : IGrantWithPasswordUseCase
 				AuthType = "password",
 				Data = new Dictionary<string, string>
 				{
-					{ "username", input.UserName }
+					{ "username", input.Username }
 				},
 				Error = exception.Message
 			});

@@ -26,7 +26,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -50,7 +50,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -74,7 +74,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -98,7 +98,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -121,7 +121,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(@event.Configuration.Id, @event.Configuration.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
@@ -145,7 +145,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}
@@ -169,7 +169,7 @@ internal partial class LoggingEventSubscriber
 			Content = GenerateLogContent(aggregate.Id, aggregate.Name),
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId,
-			UserName = context.User?.Identity?.Name
+			Username = context.User?.Identity?.Name
 		};
 		return _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
 	}

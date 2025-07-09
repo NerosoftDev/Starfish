@@ -14,7 +14,7 @@ internal sealed partial class LoggingEventSubscriber
 		{
 			Module = MODULE_USER,
 			Type = "create",
-			UserName = @event.UserName,
+			Username = @event.Username,
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId
 		};
@@ -29,7 +29,7 @@ internal sealed partial class LoggingEventSubscriber
 		{
 			Module = MODULE_USER,
 			Type = "password",
-			UserName = aggregate.UserName,
+			Username = aggregate.Username,
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId
 		};

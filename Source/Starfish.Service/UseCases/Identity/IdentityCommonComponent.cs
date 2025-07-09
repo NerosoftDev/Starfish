@@ -23,7 +23,7 @@ internal class IdentityCommonComponent
 	/// 生成访问令牌
 	/// </summary>
 	/// <param name="userId">用户Id</param>
-	/// <param name="userName">用户名</param>
+	/// <param name="username">用户名</param>
 	/// <param name="roles">角色</param>
 	/// <returns>
 	///	<para>Item1-访问令牌</para>
@@ -31,12 +31,12 @@ internal class IdentityCommonComponent
 	/// <para>Item3-颁发时间</para>
 	/// <para>Item4-过期时间</para>
 	/// </returns>
-	public Tuple<string, string, DateTime, DateTime> GenerateAccessToken(string userId, string userName, IEnumerable<string> roles = null)
+	public Tuple<string, string, DateTime, DateTime> GenerateAccessToken(string userId, string username, IEnumerable<string> roles = null)
 	{
 		var issueTime = DateTime.UtcNow;
 		var expiresAt = issueTime.AddDays(1);
 
-		var builder = TokenGenerator.Create(userId, userName)
+		var builder = TokenGenerator.Create(userId, username)
 		                            .WithSigningKey(_configuration.GetValue<string>("JwtBearerOptions:TokenKey"))
 		                            .WithIssuer(_configuration.GetValue<string>("JwtBearerOptions:TokenIssuer"))
 		                            .AddRole(roles?.ToArray())

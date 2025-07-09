@@ -49,7 +49,7 @@ internal class LogsQueryUseCase : ILogsQueryUseCase
 
 		if (!_identity.IsInRole("SA"))
 		{
-			specification &= OperateLogSpecification.UserNameEquals(_identity.Username);
+			specification &= OperateLogSpecification.UsernameEquals(_identity.Username);
 		}
 
 		var predicate = specification.Satisfy();

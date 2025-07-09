@@ -30,5 +30,5 @@ public abstract record IdentityUseCaseOutput : IUseCaseOutput
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public string UserId { get; set; }
+	public long UserId { get; set; }
 }

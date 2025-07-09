@@ -10,7 +10,7 @@ internal interface IUserDetailUseCase : IUseCase<UserDetailInput, UserDetailOutp
 
 internal record UserDetailOutput(UserDetailDto Result) : IUseCaseOutput;
 
-internal record UserDetailInput(string Id) : IUseCaseInput;
+internal record UserDetailInput(long Id) : IUseCaseInput;
 
 internal class UserDetailUseCase : IUserDetailUseCase
 {

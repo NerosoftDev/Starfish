@@ -49,7 +49,7 @@ internal class LogsCountUseCase : ILogsCountUseCase
 
 		if (!_user.IsInRole("SA"))
 		{
-			specification &= OperateLogSpecification.UserNameEquals(_user.Username);
+			specification &= OperateLogSpecification.UsernameEquals(_user.Username);
 		}
 
 		var predicate = specification.Satisfy();

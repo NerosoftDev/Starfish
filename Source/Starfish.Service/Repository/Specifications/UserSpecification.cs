@@ -33,13 +33,13 @@ internal static class UserSpecification
 	/// </summary>
 	/// <param name="username"></param>
 	/// <returns></returns>
-	public static Specification<User> UserNameEquals(string username)
+	public static Specification<User> UsernameEquals(string username)
 	{
 		username = username.Normalize(TextCaseType.Lower);
 		return new DirectSpecification<User>(t => t.Username == username);
 	}
 
-	public static Specification<User> UserNameContains(string username)
+	public static Specification<User> UsernameContains(string username)
 	{
 		username = username.Normalize(TextCaseType.Lower);
 		return new DirectSpecification<User>(t => t.Username.Contains(username));
@@ -72,7 +72,7 @@ internal static class UserSpecification
 	{
 		ISpecification<User>[] specifications =
 		[
-			UserNameContains(keyword),
+			UsernameContains(keyword),
 			NickNameContains(keyword),
 			EmailContains(keyword)
 		];

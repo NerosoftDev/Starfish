@@ -20,7 +20,7 @@ internal partial class LoggingEventSubscriber
 		{
 			Module = MODULE_AUTH,
 			Type = @event.AuthType,
-			UserName = @event.UserName,
+			Username = @event.Username,
 			OperateTime = DateTime.Now,
 			RequestTraceId = context.RequestTraceId
 		};

@@ -88,13 +88,13 @@ internal class GrantWithRefreshTokenUseCase : IGrantWithRefreshTokenUseCase
 			
 			string[] roles = user.IsAdmin ? ["SA"] : [];
 			
-			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id, user.UserName, roles);
+			var (accessToken, refreshToken, issuesAt, expiresAt) = Component.GenerateAccessToken(user.Id.ToString(), user.Username, roles);
 			@events.Add(new UserAuthSucceedEvent
 			{
 				AuthType = "refresh_token",
 				RefreshToken = refreshToken,
 				UserId = user.Id,
-				UserName = user.UserName,
+				Username = user.Username,
 				TokenIssueTime = issuesAt,
 				Data = new Dictionary<string, string>
 				{

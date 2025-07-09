@@ -16,7 +16,7 @@ internal partial class LoggingEventSubscriber
 			Module = MODULE_TEAM,
 			Type = "create",
 			OperateTime = DateTime.Now,
-			UserName = context.User?.Identity?.Name,
+			Username = context.User?.Identity?.Name,
 			RequestTraceId = context.RequestTraceId
 		};
 		await _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -31,7 +31,7 @@ internal partial class LoggingEventSubscriber
 			Module = MODULE_TEAM,
 			Type = "member.append",
 			OperateTime = DateTime.Now,
-			UserName = context.User?.Identity?.Name,
+			Username = context.User?.Identity?.Name,
 			RequestTraceId = context.RequestTraceId
 		};
 		await _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);
@@ -46,7 +46,7 @@ internal partial class LoggingEventSubscriber
 			Module = MODULE_TEAM,
 			Type = "member.remove",
 			OperateTime = DateTime.Now,
-			UserName = context.User?.Identity?.Name,
+			Username = context.User?.Identity?.Name,
 			RequestTraceId = context.RequestTraceId
 		};
 		await _bus.SendAsync(command, new SendOptions { RequestTraceId = context.RequestTraceId }, null, cancellationToken);

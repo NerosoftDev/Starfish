@@ -23,14 +23,14 @@ internal class UserInitializeUseCase : IUserInitializeUseCase
 
 	public async Task ExecuteAsync(CancellationToken cancellationToken = default)
 	{
-		var username = _configuration["InitializeUser:UserName"];
+		var username = _configuration["InitializeUser:Username"];
 
 		if (string.IsNullOrWhiteSpace(username))
 		{
 			return;
 		}
 
-		var exists = await _repository.CheckUserNameExistsAsync(username, cancellationToken);
+		var exists = await _repository.CheckUsernameExistsAsync(username, cancellationToken);
 		if (exists)
 		{
 			return;
@@ -38,7 +38,7 @@ internal class UserInitializeUseCase : IUserInitializeUseCase
 
 		var command = new UserCreateCommand
 		{
-			UserName = _configuration["InitializeUser:UserName"],
+			Username = _configuration["InitializeUser:Username"],
 			Password = _configuration["InitializeUser:Password"],
 			IsAdmin = true,
 			Reserved = true

@@ -31,7 +31,7 @@ internal class ChangePasswordUseCase : IChangePasswordUseCase
 			throw new AuthenticationException();
 		}
 
-		var user = await _repository.GetAsync(_user.UserId, null, cancellationToken);
+		var user = await _repository.GetAsync(_user.GetUserIdOfInt64(), null, cancellationToken);
 
 		if (user == null)
 		{

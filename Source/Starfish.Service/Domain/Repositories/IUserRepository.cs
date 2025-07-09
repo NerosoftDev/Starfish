@@ -15,7 +15,7 @@ public interface IUserRepository : IBaseRepository<DataContext, User, long>
 	/// <param name="tracking"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<User> FindByUserNameAsync(string username, bool tracking, CancellationToken cancellationToken = default);
+	Task<User> FindByUsernameAsync(string username, bool tracking, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 检查用户名是否存在
