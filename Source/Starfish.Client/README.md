@@ -27,7 +27,7 @@ dotnet add package Starfish.Client
 <PackageReference Include="Starfish.Client" Version="$(StarfishVersion)" />
 ```
 
-### Configurate Starfish service
+### Configure Starfish service
 
 in `appsettings.json`
 
