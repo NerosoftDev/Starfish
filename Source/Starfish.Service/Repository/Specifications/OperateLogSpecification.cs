@@ -11,21 +11,21 @@ internal class OperateLogSpecification
 	/// <summary>
 	/// 用户名等于
 	/// </summary>
-	/// <param name="userName"></param>
+	/// <param name="username"></param>
 	/// <returns></returns>
-	public static Specification<OperateLog> UserNameEquals(string userName)
+	public static Specification<OperateLog> UsernameEquals(string username)
 	{
-		return new DirectSpecification<OperateLog>(x => x.UserName == userName);
+		return new DirectSpecification<OperateLog>(x => x.Username == username);
 	}
 
 	/// <summary>
 	/// 用户名包含
 	/// </summary>
-	/// <param name="userName"></param>
+	/// <param name="username"></param>
 	/// <returns></returns>
-	public static Specification<OperateLog> UserNameContains(string userName)
+	public static Specification<OperateLog> UsernameContains(string username)
 	{
-		return new DirectSpecification<OperateLog>(x => x.UserName.Contains(userName));
+		return new DirectSpecification<OperateLog>(x => x.Username.Contains(username));
 	}
 
 	public static Specification<OperateLog> ModuleEquals(string module)

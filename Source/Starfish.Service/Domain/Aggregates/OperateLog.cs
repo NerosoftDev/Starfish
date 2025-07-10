@@ -46,14 +46,14 @@ public sealed class OperateLog : Aggregate<long>
 	/// </summary>
 	public string RequestTraceId { get; set; }
 
-	internal static OperateLog Create(string module, string type, string content, string userName, DateTime operateTime, string error, string requestTraceId)
+	internal static OperateLog Create(string module, string type, string content, string username, DateTime operateTime, string error, string requestTraceId)
 	{
 		return new OperateLog
 		{
 			Module = module,
 			Type = type,
 			Content = content,
-			Username = userName,
+			Username = username,
 			OperateTime = operateTime,
 			Error = error,
 			RequestTraceId = requestTraceId

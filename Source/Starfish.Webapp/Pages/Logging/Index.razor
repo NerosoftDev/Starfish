@@ -14,7 +14,7 @@
     <FluentGrid>
         <FluentGridItem lg="12" sm="12" md="12">
             <div class="search-bar">
-                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.UserName" />
+                <FluentSearch Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)" @bind-Value="Criteria.Username" />
                 <FluentDatePicker @bind-Value="@Criteria.MinTime" />
                 <FluentDatePicker @bind-Value="@Criteria.MaxTime" />
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@OnSearchClicked">@(Resources.IDS_COMMON_SEARCH)</FluentButton>
@@ -29,7 +29,7 @@
                             GridTemplateColumns="1fr 0.8fr 0.2fr 0.4fr 0.2fr">
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_DESCRIPTION)" Property="@(c => c.Description)" Tooltip="true" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_ERROR)" Property="@(c => c.Error)" Tooltip="true" />
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_USER_NAME)" Property="@(c => c.UserName)" />
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_USER_NAME)" Property="@(c => c.Username)" />
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_LOGS_INDEX_COLUMN_OPERATE_TIME)" Property="@(c => c.OperateTime)" Format="yyyy-MM-dd HH:mm:ss" />
                 <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
                     <FluentButton Appearance="Appearance.Lightweight" OnClick="@(() => OnGotoDetailClicked(context))">@(Resources.IDS_LOGS_INDEX_BUTTON_GOTO_DETAIL)</FluentButton>
