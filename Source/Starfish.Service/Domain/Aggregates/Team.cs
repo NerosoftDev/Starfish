@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 团队聚合根对象
 /// </summary>
-public sealed class Team : Aggregate<string>,
+public sealed class Team : Aggregate<long>,
 						   IAuditing
 {
 	/// <summary>
@@ -22,7 +22,7 @@ public sealed class Team : Aggregate<string>,
 	/// <summary>
 	/// 团队负责人Id
 	/// </summary>
-	public string OwnerId { get; set; }
+	public long OwnerId { get; set; }
 
 	/// <summary>
 	/// 团队成员数
@@ -39,7 +39,7 @@ public sealed class Team : Aggregate<string>,
 
 	public HashSet<TeamMember> Members { get; set; }
 
-	internal static Team Create(string name, string description, string ownerId)
+	internal static Team Create(string name, string description, long ownerId)
 	{
 		var team = new Team
 		{
@@ -84,7 +84,7 @@ public sealed class Team : Aggregate<string>,
 	/// 添加团队成员
 	/// </summary>
 	/// <param name="userId"></param>
-	internal void AppendMember(string userId)
+	internal void AppendMember(long userId)
 	{
 		Members ??= [];
 
@@ -97,7 +97,7 @@ public sealed class Team : Aggregate<string>,
 
 		MemberCount++;
 
-		if (!string.IsNullOrEmpty(Id))
+		if (Id > 0)
 		{
 			RaiseEvent(new TeamMemberAppendedEvent { UserId = userId });
 		}
@@ -108,7 +108,7 @@ public sealed class Team : Aggregate<string>,
 	/// </summary>
 	/// <param name="userId"></param>
 	/// <exception cref="InvalidOperationException"></exception>
-	internal void RemoveMember(string userId)
+	internal void RemoveMember(long userId)
 	{
 		if (Members == null || Members.All(t => t.UserId != userId))
 		{

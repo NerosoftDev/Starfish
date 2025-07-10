@@ -4,5 +4,5 @@ namespace Nerosoft.Starfish.Domain;
 
 internal sealed class TeamMemberAppendedEvent : DomainEvent
 {
-	public string UserId { get; set; }
+	public long UserId { get; set; }
 }

@@ -5,14 +5,14 @@ using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Repository;
 
-public class TeamRepository : BaseRepository<DataContext, Team, string>, ITeamRepository
+public class TeamRepository : BaseRepository<DataContext, Team, long>, ITeamRepository
 {
 	public TeamRepository(IContextProvider provider)
 		: base(provider)
 	{
 	}
 
-	public Task<List<Team>> GetTeamsOfUserAsync(string userId, CancellationToken cancellationToken = default)
+	public Task<List<Team>> GetTeamsOfUserAsync(long userId, CancellationToken cancellationToken = default)
 	{
 		var memberSet = Context.Set<TeamMember>();
 		var teamSet = Context.Set<Team>();
@@ -23,7 +23,7 @@ public class TeamRepository : BaseRepository<DataContext, Team, string>, ITeamRe
 		return query.ToListAsync(cancellationToken);
 	}
 
-	public Task<List<TeamMember>> GetMembersAsync(string id, CancellationToken cancellationToken = default)
+	public Task<List<TeamMember>> GetMembersAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<TeamMember>()
 		                   .Include(t => t.User)
@@ -31,7 +31,7 @@ public class TeamRepository : BaseRepository<DataContext, Team, string>, ITeamRe
 		return query.ToListAsync(cancellationToken);
 	}
 
-	public async Task<PermissionState> CheckPermissionAsync(string id, string userId, CancellationToken cancellationToken = default)
+	public async Task<PermissionState> CheckPermissionAsync(long id, long userId, CancellationToken cancellationToken = default)
 	{
 		var query = from team in Context.Set<Team>()
 		            join member in Context.Set<TeamMember>() on team.Id equals member.TeamId

@@ -13,11 +13,11 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 
 	private Team Aggregate { get; set; }
 
-	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
+	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
 	public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(p => p.Name);
 	public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(p => p.Description);
 
-	public string Id
+	public long Id
 	{
 		get => GetProperty(IdProperty);
 		private set => LoadProperty(IdProperty, value);
@@ -47,7 +47,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await TeamRepository.GetAsync(id, true, [], cancellationToken);
 
@@ -64,7 +64,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 	[FactoryInsert]
 	protected override Task InsertAsync(CancellationToken cancellationToken = default)
 	{
-		var team = Team.Create(Name, Description, Identity.UserId);
+		var team = Team.Create(Name, Description, Identity.GetUserIdOfInt64());
 		return TeamRepository.InsertAsync(team, true, cancellationToken)
 		                     .ContinueWith(task =>
 		                     {
@@ -97,7 +97,7 @@ public class TeamGeneralBusiness : EditableObjectBase<TeamGeneralBusiness>, IDom
 
 			if (!target.IsInsert)
 			{
-				if (target.Aggregate.OwnerId != target.Identity.UserId)
+				if (target.Aggregate.OwnerId != target.Identity.GetUserIdOfInt64())
 				{
 					context.AddErrorResult(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 				}

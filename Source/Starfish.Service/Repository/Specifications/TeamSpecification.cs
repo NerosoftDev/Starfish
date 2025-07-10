@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Repository;
 
 internal static class TeamSpecification
 {
-	public static Specification<Team> IdEquals(string id)
+	public static Specification<Team> IdEquals(long id)
 	{
 		return new DirectSpecification<Team>(t => t.Id == id);
 	}
@@ -39,7 +39,7 @@ internal static class TeamSpecification
 		return new CompositeSpecification<Team>(PredicateOperator.OrElse, specifications);
 	}
 
-	public static Specification<Team> HasMember(string userId)
+	public static Specification<Team> HasMember(long userId)
 	{
 		return new DirectSpecification<Team>(t => t.Members.Any(m => m.UserId == userId));
 	}

@@ -11,7 +11,7 @@ public sealed class TeamMember : Entity<long>, IHasCreateTime
 	{
 	}
 
-	private TeamMember(string userId)
+	private TeamMember(long userId)
 		: this()
 	{
 		UserId = userId;
@@ -20,12 +20,12 @@ public sealed class TeamMember : Entity<long>, IHasCreateTime
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public string UserId { get; set; }
+	public long UserId { get; set; }
 
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public string TeamId { get; set; }
+	public long TeamId { get; set; }
 
 	/// <summary>
 	/// 创建时间
@@ -36,7 +36,7 @@ public sealed class TeamMember : Entity<long>, IHasCreateTime
 
 	public Team Team { get; set; }
 
-	internal static TeamMember Create(string userId)
+	internal static TeamMember Create(long userId)
 	{
 		return new TeamMember(userId);
 	}
