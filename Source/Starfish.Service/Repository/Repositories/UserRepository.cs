@@ -20,7 +20,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, long>, IU
 	}
 
 	/// <inheritdoc />
-	public Task<User> FindByUserNameAsync(string username, bool tracking, CancellationToken cancellationToken = default)
+	public Task<User> FindByUsernameAsync(string username, bool tracking, CancellationToken cancellationToken = default)
 	{
 		return GetAsync(t => t.Username == username, tracking, [], cancellationToken);
 	}
@@ -28,7 +28,7 @@ public sealed class UserRepository : BaseRepository<DataContext, User, long>, IU
 	/// <inheritdoc />
 	public Task<bool> CheckUsernameExistsAsync(string username, CancellationToken cancellationToken = default)
 	{
-		var specification = UserSpecification.UserNameEquals(username);
+		var specification = UserSpecification.UsernameEquals(username);
 		var predicate = specification.Satisfy();
 		return AnyAsync(predicate, null, cancellationToken);
 	}
