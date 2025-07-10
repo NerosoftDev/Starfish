@@ -31,8 +31,8 @@
         <FluentDivider Orientation="Orientation.Vertical" Style="height: 100%"></FluentDivider>
         <div style="width:100%">
             <FluentDataGrid Items="@QueryableMembers" Style="width: 100%">
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_USER_NAME)" Property="@(c => c.UserName)"/>
-                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_NICK_NAME)" Property="@(c => c.NickName)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_USER_NAME)" Property="@(c => c.Username)"/>
+                <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_NICK_NAME)" Property="@(c => c.Nickname)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_EMAIL)" Property="@(c => c.Email)"/>
                 <PropertyColumn Class="data-grid-column" Title="@(Resources.IDS_TEAM_DETAIL_COLUMN_PHONE)" Property="@(c => c.Phone)"/>
                 <TemplateColumn Title="@(Resources.IDS_COMMON_COLUMN_ACTIONS)" Align="@Align.Center">
@@ -46,7 +46,7 @@
 @code {
 
     [Parameter]
-    public string Id { get; set; }
+    public long Id { get; set; }
 
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationState { get; set; }
@@ -100,7 +100,7 @@
                       .EnsureSuccess(result => Members.ReplaceRange(result));
     }
 
-    private async Task OnRemoveMemberClicked(string userId)
+    private async Task OnRemoveMemberClicked(long userId)
     {
         var confirmation = await DialogService.ShowConfirmationAsync(Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_MESSAGE, primaryText: Resources.IDS_COMMON_YES, secondaryText: Resources.IDS_COMMON_NO, title: Resources.IDS_TEAM_DETAIL_REMOVE_CONFIRMATION_TITLE);
         var result = await confirmation.Result;

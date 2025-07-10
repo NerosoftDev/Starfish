@@ -1,4 +1,4 @@
-﻿@implements IDialogContentComponent<string>
+﻿@implements IDialogContentComponent<long>
 
 @inject ITeamApi TeamApi
 @inject IUserApi UserApi
@@ -9,7 +9,7 @@
                     Width="100%"
                     Placeholder="@(Resources.IDS_COMMON_PLACEHOLDER_KEYWORD)"
                     OnOptionsSearch="@OnSearchAsync"
-                    OptionText="@(item => item.NickName)"
+                    OptionText="@(item => item.Nickname)"
                     @bind-SelectedOptions="@_selectedItems"/>
 
 <FluentDialogFooter>
@@ -20,7 +20,7 @@
 @code {
 
     [Parameter]
-    public string Content { get; set; }
+    public long Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
