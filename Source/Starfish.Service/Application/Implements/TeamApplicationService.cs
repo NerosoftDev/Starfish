@@ -22,7 +22,7 @@ public class TeamApplicationService : BaseApplicationService, ITeamApplicationSe
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
-	public Task<TeamDetailDto> GetAsync(string id, CancellationToken cancellationToken = default)
+	public Task<TeamDetailDto> GetAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<ITeamDetailUseCase>();
 		var input = new TeamDetailInput(id);
@@ -30,22 +30,19 @@ public class TeamApplicationService : BaseApplicationService, ITeamApplicationSe
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
-	public Task<string> CreateAsync(TeamEditDto data, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(TeamEditDto data, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<ITeamCreateUseCase>();
-		var input = new TeamCreateInput(data);
-		return useCase.ExecuteAsync(input, cancellationToken)
-		              .ContinueWith(task => task.Result.Result, cancellationToken);
+		var command = new TeamCreateCommand(data);
+		return Bus.SendAsync<TeamCreateCommand, long>(command, cancellationToken);
 	}
 
-	public Task UpdateAsync(string id, TeamEditDto data, CancellationToken cancellationToken = default)
+	public Task UpdateAsync(long id, TeamEditDto data, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<ITeamUpdateUseCase>();
-		var input = new TeamUpdateInput(id, data);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new TeamUpdateCommand(id, data);
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
-	public Task<List<TeamMemberDto>> QueryMembersAsync(string id, CancellationToken cancellationToken = default)
+	public Task<List<TeamMemberDto>> QueryMembersAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetService<ITeamMemberQueryUseCase>();
 		var input = new TeamMemberQueryInput(id);
@@ -53,24 +50,21 @@ public class TeamApplicationService : BaseApplicationService, ITeamApplicationSe
 		              .ContinueWith(task => task.Result.Result, cancellationToken);
 	}
 
-	public Task AppendMembersAsync(string id, List<string> userIds, CancellationToken cancellationToken = default)
+	public Task AppendMembersAsync(long id, List<long> userIds, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<ITeamMemberAppendUseCase>();
-		var input = new TeamMemberAppendInput(id, userIds);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new TeamMemberEditCommand(id, userIds, "+");
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
-	public Task RemoveMembersAsync(string id, List<string> userIds, CancellationToken cancellationToken = default)
+	public Task RemoveMembersAsync(long id, List<long> userIds, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<ITeamMemberRemoveUseCase>();
-		var input = new TeamMemberRemoveInput(id, userIds);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new TeamMemberEditCommand(id, userIds, "-");
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
-	public Task QuitAsync(string id, CancellationToken cancellationToken = default)
+	public Task QuitAsync(long id, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<ITeamMemberQuitUseCase>();
-		var input = new TeamMemberQuitInput(id, User.UserId);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new TeamMemberEditCommand(id, [User.GetUserIdOfInt64()], "-");
+		return Bus.SendAsync(command, cancellationToken);
 	}
 }

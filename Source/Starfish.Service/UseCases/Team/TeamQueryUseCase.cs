@@ -48,7 +48,7 @@ internal class TeamQueryUseCase : ITeamQueryUseCase
 				var memberQuery = _repository.Context.Set<TeamMember>();
 				query = from team in query
 				        join member in memberQuery on team.Id equals member.TeamId
-				        where member.UserId == _identity.UserId
+				        where member.UserId == _identity.GetUserIdOfInt64()
 				        select team;
 			}
 

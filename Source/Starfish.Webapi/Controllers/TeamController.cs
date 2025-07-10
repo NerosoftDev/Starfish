@@ -57,9 +57,9 @@ public class TeamController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id}")]
+	[HttpGet("{id:long}")]
 	[Produces(typeof(TeamDetailDto))]
-	public async Task<IActionResult> GetAsync(string id)
+	public async Task<IActionResult> GetAsync(long id)
 	{
 		var result = await _service.GetAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
@@ -84,8 +84,8 @@ public class TeamController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id}")]
-	public async Task<IActionResult> UpdateAsync(string id, [FromBody] TeamEditDto data)
+	[HttpPut("{id:long}")]
+	public async Task<IActionResult> UpdateAsync(long id, [FromBody] TeamEditDto data)
 	{
 		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -96,9 +96,9 @@ public class TeamController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id}/member")]
+	[HttpGet("{id:long}/member")]
 	[Produces(typeof(List<TeamMemberDto>))]
-	public async Task<IActionResult> QueryMembersAsync(string id)
+	public async Task<IActionResult> QueryMembersAsync(long id)
 	{
 		var result = await _service.QueryMembersAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
@@ -110,8 +110,8 @@ public class TeamController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="userIds"></param>
 	/// <returns></returns>
-	[HttpPost("{id}/member")]
-	public async Task<IActionResult> AppendMembersAsync(string id, [FromBody] List<string> userIds)
+	[HttpPost("{id:long}/member")]
+	public async Task<IActionResult> AppendMembersAsync(long id, [FromBody] List<long> userIds)
 	{
 		await _service.AppendMembersAsync(id, userIds, HttpContext.RequestAborted);
 		return Ok();
@@ -123,8 +123,8 @@ public class TeamController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="userIds"></param>
 	/// <returns></returns>
-	[HttpDelete("{id}/member")]
-	public async Task<IActionResult> RemoveMembersAsync(string id, [FromBody] List<string> userIds)
+	[HttpDelete("{id:long}/member")]
+	public async Task<IActionResult> RemoveMembersAsync(long id, [FromBody] List<long> userIds)
 	{
 		await _service.RemoveMembersAsync(id, userIds, HttpContext.RequestAborted);
 		return Ok();
@@ -135,8 +135,8 @@ public class TeamController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpDelete("{id}/quit")]
-	public async Task<IActionResult> QuitAsync(string id)
+	[HttpDelete("{id:long}/quit")]
+	public async Task<IActionResult> QuitAsync(long id)
 	{
 		await _service.QuitAsync(id, HttpContext.RequestAborted);
 		return Ok();

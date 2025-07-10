@@ -29,7 +29,7 @@ internal class TeamCountUseCase : ITeamCountUseCase
 		var specification = input.Criteria.GetSpecification();
 		if (!_identity.IsInRole("SA"))
 		{
-			specification &= TeamSpecification.HasMember(_identity.UserId);
+			specification &= TeamSpecification.HasMember(_identity.GetUserIdOfInt64());
 		}
 
 		var predicate = specification.Satisfy();

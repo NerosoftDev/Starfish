@@ -10,7 +10,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface ITeamDetailUseCase : IUseCase<TeamDetailInput, TeamDetailOutput>;
 
-internal record TeamDetailInput(string Id) : IUseCaseInput;
+internal record TeamDetailInput(long Id) : IUseCaseInput;
 
 internal record TeamDetailOutput(TeamDetailDto Result) : IUseCaseOutput;
 
@@ -30,7 +30,7 @@ internal class TeamDetailUseCase : ITeamDetailUseCase
 		var specification = TeamSpecification.IdEquals(input.Id);
 		if (!_identity.IsInRole("SA"))
 		{
-			specification &= TeamSpecification.HasMember(_identity.UserId);
+			specification &= TeamSpecification.HasMember(_identity.GetUserIdOfInt64());
 		}
 
 		var predicate = specification.Satisfy();

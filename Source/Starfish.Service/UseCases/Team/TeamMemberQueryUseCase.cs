@@ -8,7 +8,7 @@ internal interface ITeamMemberQueryUseCase : IUseCase<TeamMemberQueryInput, Team
 
 internal record TeamMemberQueryOutput(List<TeamMemberDto> Result) : IUseCaseOutput;
 
-internal record TeamMemberQueryInput(string Id) : IUseCaseInput;
+internal record TeamMemberQueryInput(long Id) : IUseCaseInput;
 
 internal class TeamMemberQueryUseCase : ITeamMemberQueryUseCase
 {

@@ -8,17 +8,17 @@ public class TeamMemberDto
 	/// <summary>
 	/// 用户Id
 	/// </summary>
-	public string UserId { get; set; }
+	public long UserId { get; set; }
 
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	public string UserName { get; set; }
+	public string Username { get; set; }
 
 	/// <summary>
 	/// 昵称
 	/// </summary>
-	public string NickName { get; set; }
+	public string Nickname { get; set; }
 
 	/// <summary>
 	/// 邮箱
