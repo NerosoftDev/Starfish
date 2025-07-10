@@ -10,7 +10,7 @@ public class EtcdOptions
 	/// <summary>
 	/// Etcd访问用户名
 	/// </summary>
-	public string UserName { get; set; }
+	public string Username { get; set; }
 
 	/// <summary>
 	/// Etcd访问密码

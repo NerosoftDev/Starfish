@@ -11,7 +11,7 @@ public class EtcdConfigurationProvider : ConfigurationProvider
 	public EtcdConfigurationProvider(EtcdOptions options)
 	{
 		_client = new EtcdClient(options.Address);
-		_client.Authenticate(new AuthenticateRequest { Name = options.UserName, Password = options.PassWord });
+		_client.Authenticate(new AuthenticateRequest { Name = options.Username, Password = options.PassWord });
 		_path = options.Path;
 		_reloadOnChange = options.ReloadOnChange;
 	}
