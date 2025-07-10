@@ -13,7 +13,7 @@ internal interface IConfigurationDeleteUseCase : INonOutputUseCase<Configuration
 /// 删除配置节点输入
 /// </summary>
 /// <param name="Id"></param>
-internal record ConfigurationDeleteInput(string Id) : IUseCaseInput;
+internal record ConfigurationDeleteInput(long Id) : IUseCaseInput;
 
 /// <summary>
 /// 删除配置节点用例

@@ -4,12 +4,12 @@ namespace Nerosoft.Starfish.Application;
 
 public class ConfigurationCreateCommand : Command
 {
-	public ConfigurationCreateCommand(string teamId)
+	public ConfigurationCreateCommand(long teamId)
 	{
 		TeamId = teamId;
 	}
 
-	public string TeamId { get; set; }
+	public long TeamId { get; set; }
 
 	public string Name { get; set; }
 

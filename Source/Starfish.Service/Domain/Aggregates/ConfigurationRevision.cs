@@ -20,7 +20,7 @@ public sealed class ConfigurationRevision : Entity<long>, IHasCreateTime
 		Operator = @operator;
 	}
 
-	public string ConfigurationId { get; set; }
+	public long ConfigurationId { get; set; }
 
 	/// <summary>
 	/// 配置数据

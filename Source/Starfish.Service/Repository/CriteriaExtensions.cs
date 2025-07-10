@@ -23,9 +23,9 @@ public static class CriteriaExtensions
 			return specification;
 		}
 
-		if (!string.IsNullOrWhiteSpace(criteria.UserName))
+		if (!string.IsNullOrWhiteSpace(criteria.Username))
 		{
-			specification &= OperateLogSpecification.UserNameContains(criteria.UserName);
+			specification &= OperateLogSpecification.UsernameContains(criteria.Username);
 		}
 
 		if (!string.IsNullOrWhiteSpace(criteria.Module))
@@ -64,7 +64,7 @@ public static class CriteriaExtensions
 			return specification;
 		}
 
-		if (!string.IsNullOrWhiteSpace(criteria.TeamId))
+		if (criteria.TeamId > 0)
 		{
 			specification &= ConfigurationSpecification.TeamIdEquals(criteria.TeamId);
 		}
@@ -96,7 +96,7 @@ public static class CriteriaExtensions
 
 		if (!string.IsNullOrWhiteSpace(criteria.Keyword))
 		{
-			specification &= UserSpecification.UserNameContains(criteria.Keyword);
+			specification &= UserSpecification.UsernameContains(criteria.Keyword);
 		}
 
 		return specification;

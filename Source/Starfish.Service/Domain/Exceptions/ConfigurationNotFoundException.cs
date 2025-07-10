@@ -10,7 +10,7 @@ public class ConfigurationNotFoundException : NotFoundException
 	{
 	}
 
-	public ConfigurationNotFoundException(string id)
+	public ConfigurationNotFoundException(long id)
 		: base(string.Format(Resources.IDS_ERROR_CONFIG_NOT_EXISTS_OF_ID, id))
 	{
 	}

@@ -6,9 +6,9 @@ using Nerosoft.Starfish.Transit;
 
 namespace Nerosoft.Starfish.UseCases;
 
-internal interface IConfigurationCreateUseCase : IUseCase<ConfigurationCreateInput, string>;
+internal interface IConfigurationCreateUseCase : IUseCase<ConfigurationCreateInput, long>;
 
-internal record ConfigurationCreateInput(string TeamId, ConfigurationEditDto Data) : IUseCaseInput;
+internal record ConfigurationCreateInput(long TeamId, ConfigurationEditDto Data) : IUseCaseInput;
 
 internal class ConfigurationCreateUseCase : IConfigurationCreateUseCase
 {
@@ -19,13 +19,13 @@ internal class ConfigurationCreateUseCase : IConfigurationCreateUseCase
 		_bus = bus;
 	}
 
-	public Task<string> ExecuteAsync(ConfigurationCreateInput input, CancellationToken cancellationToken = default)
+	public Task<long> ExecuteAsync(ConfigurationCreateInput input, CancellationToken cancellationToken = default)
 	{
 		var command = new ConfigurationCreateCommand(input.TeamId);
 
 		command = TypeAdapter.ProjectedAs(input.Data, command);
 
-		return _bus.SendAsync<ConfigurationCreateCommand, string>(command, cancellationToken)
+		return _bus.SendAsync<ConfigurationCreateCommand, long>(command, cancellationToken)
 		           .ContinueWith(task =>
 		           {
 			           task.WaitAndUnwrapException(cancellationToken);

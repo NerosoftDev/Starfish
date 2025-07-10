@@ -11,10 +11,10 @@ public class ConfigurationDeleteCommand : Command
 	/// 构造函数
 	/// </summary>
 	/// <param name="id">配置Id</param>
-	public ConfigurationDeleteCommand(string id)
+	public ConfigurationDeleteCommand(long id)
 	{
 		Id = id;
 	}
 
-	public string Id { get; set; }
+	public long Id { get; set; }
 }

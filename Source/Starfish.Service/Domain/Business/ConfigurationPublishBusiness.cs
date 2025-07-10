@@ -18,7 +18,7 @@ public class ConfigurationPublishBusiness : CommandObjectBase<ConfigurationPubli
 	public IConfigurationRepository ConfigurationRepository { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(string id, string version, string comment, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(long id, string version, string comment, CancellationToken cancellationToken = default)
 	{
 		string[] includeProperties = [nameof(Configuration.Items), nameof(Configuration.Revisions), nameof(Configuration.Archive)];
 
@@ -29,7 +29,7 @@ public class ConfigurationPublishBusiness : CommandObjectBase<ConfigurationPubli
 			throw new ConfigurationNotFoundException(id);
 		}
 
-		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{

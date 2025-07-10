@@ -4,10 +4,10 @@ namespace Nerosoft.Starfish.Application;
 
 public class ConfigurationEnableCommand : Command
 {
-	public ConfigurationEnableCommand(string id)
+	public ConfigurationEnableCommand(long id)
 	{
 		Id = id;
 	}
 
-	public string Id { get; set; }
+	public long Id { get; set; }
 }

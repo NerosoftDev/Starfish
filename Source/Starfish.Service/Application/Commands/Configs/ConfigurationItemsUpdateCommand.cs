@@ -4,14 +4,14 @@ namespace Nerosoft.Starfish.Application;
 
 public sealed class ConfigurationItemsUpdateCommand : Command
 {
-	public ConfigurationItemsUpdateCommand(string id, string mode, IDictionary<string, string> items)
+	public ConfigurationItemsUpdateCommand(long id, string mode, IDictionary<string, string> items)
 	{
 		Id = id;
 		Mode = mode;
 		Items = items;
 	}
 
-	public string Id { get; set; }
+	public long Id { get; set; }
 
 	/// <summary>
 	/// 更新方式

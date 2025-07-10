@@ -13,7 +13,7 @@ public class ConfigurationStatusBusiness : CommandObjectBase<ConfigurationStatus
 	public IConfigurationRepository ConfigurationRepository { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(string id, bool availability, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(long id, bool availability, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await ConfigurationRepository.GetAsync(id, true, cancellationToken);
 
@@ -22,7 +22,7 @@ public class ConfigurationStatusBusiness : CommandObjectBase<ConfigurationStatus
 			throw new ConfigurationNotFoundException(id);
 		}
 
-		var permission = await TeamRepository.CheckPermissionAsync(id, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{

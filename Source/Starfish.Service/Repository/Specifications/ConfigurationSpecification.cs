@@ -5,14 +5,14 @@ namespace Nerosoft.Starfish.Repository;
 
 internal static class ConfigurationSpecification
 {
-	public static Specification<Configuration> IdEquals(string id)
+	public static Specification<Configuration> IdEquals(long id)
 	{
 		return new DirectSpecification<Configuration>(x => x.Id == id);
 	}
 
-	public static Specification<Configuration> TeamIdEquals(string appId)
+	public static Specification<Configuration> TeamIdEquals(long teamId)
 	{
-		return new DirectSpecification<Configuration>(x => x.TeamId == appId);
+		return new DirectSpecification<Configuration>(x => x.TeamId == teamId);
 	}
 
 	public static Specification<Configuration> NameEquals(string name)

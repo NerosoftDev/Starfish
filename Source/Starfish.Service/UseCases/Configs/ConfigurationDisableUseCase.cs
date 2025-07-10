@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IConfigurationDisableUseCase : INonOutputUseCase<ConfigurationDisableInput>;
 
-internal record ConfigurationDisableInput(string Id) : IUseCaseInput;
+internal record ConfigurationDisableInput(long Id) : IUseCaseInput;
 
 internal class ConfigurationDisableUseCase : IConfigurationDisableUseCase
 {

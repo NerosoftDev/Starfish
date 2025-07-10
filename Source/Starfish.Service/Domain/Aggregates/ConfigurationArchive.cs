@@ -5,7 +5,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 配置归档
 /// </summary>
-public sealed class ConfigurationArchive : Aggregate<string>
+public sealed class ConfigurationArchive : Aggregate<long>
 {
 	private ConfigurationArchive()
 	{
@@ -26,9 +26,12 @@ public sealed class ConfigurationArchive : Aggregate<string>
 	/// </summary>
 	public DateTime ArchiveTime { get; set; }
 
+	/// <summary>
+	/// 关联的配置信息
+	/// </summary>
 	public Configuration Configuration { get; set; }
 
-	internal static ConfigurationArchive Create(string configId)
+	internal static ConfigurationArchive Create(long configId)
 	{
 		var entity = new ConfigurationArchive()
 		{

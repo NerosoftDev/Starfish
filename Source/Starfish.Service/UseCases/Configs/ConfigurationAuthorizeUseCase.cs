@@ -7,9 +7,9 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IConfigurationAuthorizeUseCase : IUseCase<ConfigurationAuthorizeInput, ConfigurationAuthorizeOutput>;
 
-internal record ConfigurationAuthorizeInput(string Id, string TeamId, string Name, string Secret) : IUseCaseInput;
+internal record ConfigurationAuthorizeInput(long Id, long TeamId, string Name, string Secret) : IUseCaseInput;
 
-internal record ConfigurationAuthorizeOutput(string Id) : IUseCaseOutput;
+internal record ConfigurationAuthorizeOutput(long Id) : IUseCaseOutput;
 
 internal class ConfigurationAuthorizeUseCase : IConfigurationAuthorizeUseCase
 {
@@ -23,11 +23,11 @@ internal class ConfigurationAuthorizeUseCase : IConfigurationAuthorizeUseCase
 	public async Task<ConfigurationAuthorizeOutput> ExecuteAsync(ConfigurationAuthorizeInput input, CancellationToken cancellationToken = default)
 	{
 		Specification<Configuration> specification;
-		if (!string.IsNullOrEmpty(input.Id))
+		if (input.Id > 0)
 		{
 			specification = ConfigurationSpecification.IdEquals(input.Id);
 		}
-		else if (!string.IsNullOrEmpty(input.TeamId) && !string.IsNullOrEmpty(input.Name))
+		else if (input.TeamId > 0 && !string.IsNullOrEmpty(input.Name))
 		{
 			specification = new CompositeSpecification<Configuration>(PredicateOperator.AndAlso,
 				ConfigurationSpecification.TeamIdEquals(input.TeamId),

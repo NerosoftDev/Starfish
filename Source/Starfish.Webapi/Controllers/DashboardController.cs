@@ -42,7 +42,7 @@ public class DashboardController : ControllerBase
 	[HttpGet("configurations/items/count")]
 	public async Task<IActionResult> GetConfigurationItemCountAsync()
 	{
-		var count = await _configService.GetItemCountAsync(string.Empty, string.Empty, HttpContext.RequestAborted);
+		var count = await _configService.GetItemCountAsync(0, string.Empty, HttpContext.RequestAborted);
 		return Ok(count);
 	}
 

@@ -20,7 +20,7 @@ internal record GetConfigurationDetailOutput(ConfigurationDto Result) : IUseCase
 /// 获取配置节点详情用例输入
 /// </summary>
 /// <param name="Id"></param>
-internal record GetConfigurationDetailInput(string Id) : IUseCaseInput;
+internal record GetConfigurationDetailInput(long Id) : IUseCaseInput;
 
 /// <summary>
 /// 获取配置节点详情用例

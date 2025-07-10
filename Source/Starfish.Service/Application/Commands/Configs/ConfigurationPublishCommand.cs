@@ -7,14 +7,14 @@ namespace Nerosoft.Starfish.Application;
 /// </summary>
 public class ConfigurationPublishCommand : Command
 {
-	public ConfigurationPublishCommand(string id, string version, string comment)
+	public ConfigurationPublishCommand(long id, string version, string comment)
 	{
 		Id = id;
 		Version = version;
 		Comment = comment;
 	}
 
-	public string Id { get; set; }
+	public long Id { get; set; }
 
 	public string Version { get; set; }
 

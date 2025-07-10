@@ -24,7 +24,7 @@ internal record GetConfigurationItemListOutput(List<ConfigurationItemDto> Result
 /// <param name="Key"></param>
 /// <param name="Skip"></param>
 /// <param name="Count"></param>
-internal record GetConfigurationItemListInput(string Id, string Key, int Skip, int Count) : IUseCaseInput;
+internal record GetConfigurationItemListInput(long Id, string Key, int Skip, int Count) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置列表用例

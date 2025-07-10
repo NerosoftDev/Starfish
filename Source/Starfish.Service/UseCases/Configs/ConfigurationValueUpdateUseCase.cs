@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IConfigurationValueUpdateUseCase : INonOutputUseCase<ConfigurationValueUpdateInput>;
 
-internal record ConfigurationValueUpdateInput(string Id, string Key, string Value) : IUseCaseInput;
+internal record ConfigurationValueUpdateInput(long Id, string Key, string Value) : IUseCaseInput;
 
 internal class ConfigurationValueUpdateUseCase : IConfigurationValueUpdateUseCase
 {

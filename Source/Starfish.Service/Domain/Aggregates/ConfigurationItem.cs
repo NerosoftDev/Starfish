@@ -25,7 +25,7 @@ public sealed class ConfigurationItem : Entity<long>
 		Value = value;
 	}
 
-	public string ConfigurationId { get; set; }
+	public long ConfigurationId { get; set; }
 
 	public string Key { get; set; }
 

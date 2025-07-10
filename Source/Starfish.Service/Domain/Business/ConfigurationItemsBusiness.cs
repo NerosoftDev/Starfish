@@ -13,7 +13,7 @@ public class ConfigurationItemsBusiness : CommandObjectBase<ConfigurationItemsBu
 	public IConfigurationRepository ConfigurationRepository { get; set; }
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(string id, IDictionary<string, string> items, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(long id, IDictionary<string, string> items, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await ConfigurationRepository.GetAsync(id, true, cancellationToken);
 
@@ -22,7 +22,7 @@ public class ConfigurationItemsBusiness : CommandObjectBase<ConfigurationItemsBu
 			throw new ConfigurationNotFoundException(id);
 		}
 
-		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{
@@ -42,7 +42,7 @@ public class ConfigurationItemsBusiness : CommandObjectBase<ConfigurationItemsBu
 	}
 
 	[FactoryExecute]
-	protected async Task ExecuteAsync(string id, string key, string value, CancellationToken cancellationToken = default)
+	protected async Task ExecuteAsync(long id, string key, string value, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await ConfigurationRepository.GetAsync(id, true, cancellationToken);
 
@@ -51,7 +51,7 @@ public class ConfigurationItemsBusiness : CommandObjectBase<ConfigurationItemsBu
 			throw new ConfigurationNotFoundException(id);
 		}
 
-		var permission = await TeamRepository.CheckPermissionAsync(id, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(aggregate.TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{

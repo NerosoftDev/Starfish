@@ -6,7 +6,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface ISetConfigurationSecretUseCase : INonOutputUseCase<SetConfigurationSecretInput>;
 
-internal record SetConfigurationSecretInput(string Id, string Secret) : IUseCaseInput;
+internal record SetConfigurationSecretInput(long Id, string Secret) : IUseCaseInput;
 
 internal class SetConfigurationSecretUseCase : ISetConfigurationSecretUseCase
 {

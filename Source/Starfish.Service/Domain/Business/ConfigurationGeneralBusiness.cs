@@ -15,19 +15,19 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 
 	internal Configuration Aggregate { get; private set; }
 
-	public static readonly PropertyInfo<string> IdProperty = RegisterProperty<string>(p => p.Id);
-	public static readonly PropertyInfo<string> TeamIdProperty = RegisterProperty<string>(p => p.TeamId);
+	public static readonly PropertyInfo<long> IdProperty = RegisterProperty<long>(p => p.Id);
+	public static readonly PropertyInfo<long> TeamIdProperty = RegisterProperty<long>(p => p.TeamId);
 	public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(p => p.Name);
 	public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(p => p.Description);
 	public static readonly PropertyInfo<string> SecretProperty = RegisterProperty<string>(p => p.Secret);
 
-	public string Id
+	public long Id
 	{
 		get => ReadProperty(IdProperty);
 		set => LoadProperty(IdProperty, value);
 	}
 
-	public string TeamId
+	public long TeamId
 	{
 		get => GetProperty(TeamIdProperty);
 		set => SetProperty(TeamIdProperty, value);
@@ -63,7 +63,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	}
 
 	[FactoryFetch]
-	protected async Task FetchAsync(string id, CancellationToken cancellationToken = default)
+	protected async Task FetchAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var aggregate = await ConfigurationRepository.GetAsync(id, true, [nameof(Configuration.Items)], cancellationToken);
 
@@ -81,7 +81,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryInsert]
 	protected override async Task InsertAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await TeamRepository.CheckPermissionAsync(TeamId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{
@@ -108,7 +108,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryUpdate]
 	protected override async Task UpdateAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await TeamRepository.CheckPermissionAsync(Aggregate.TeamId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(Aggregate.TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{
@@ -150,7 +150,7 @@ internal class ConfigurationGeneralBusiness : EditableObjectBase<ConfigurationGe
 	[FactoryDelete]
 	protected override async Task DeleteAsync(CancellationToken cancellationToken = default)
 	{
-		var permission = await TeamRepository.CheckPermissionAsync(Aggregate.TeamId, Identity.UserId, cancellationToken);
+		var permission = await TeamRepository.CheckPermissionAsync(Aggregate.TeamId, Identity.GetUserIdOfInt64(), cancellationToken);
 
 		switch (permission)
 		{

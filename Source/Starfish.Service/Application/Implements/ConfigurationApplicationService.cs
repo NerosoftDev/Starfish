@@ -26,7 +26,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<List<ConfigurationItemDto>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItemDto>> GetItemListAsync(long id, string key, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemListUseCase>();
 		var input = new GetConfigurationItemListInput(id, key, skip, count);
@@ -35,7 +35,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<int> GetItemCountAsync(string id, string key, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(long id, string key, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationItemCountUseCase>();
 		var input = new GetConfigurationItemCountInput(id, key);
@@ -44,7 +44,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<ConfigurationDto> GetDetailAsync(string id, CancellationToken cancellationToken = default)
+	public Task<ConfigurationDto> GetDetailAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationDetailUseCase>();
 		var input = new GetConfigurationDetailInput(id);
@@ -53,7 +53,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<string> CreateAsync(string teamId, ConfigurationEditDto data, CancellationToken cancellationToken = default)
+	public Task<long> CreateAsync(long teamId, ConfigurationEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationCreateUseCase>();
 		var input = new ConfigurationCreateInput(teamId, data);
@@ -62,7 +62,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public async Task UpdateAsync(string id, ConfigurationEditDto data, CancellationToken cancellationToken = default)
+	public async Task UpdateAsync(long id, ConfigurationEditDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationUpdateUseCase>();
 		var input = new ConfigurationUpdateInput(id, data);
@@ -70,51 +70,51 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+	public Task DeleteAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationDeleteUseCase>();
 		var input = new ConfigurationDeleteInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task SetSecretAsync(string id, string secret, CancellationToken cancellationToken = default)
+	public Task SetSecretAsync(long id, string secret, CancellationToken cancellationToken = default)
 	{
 		var input = new SetConfigurationSecretInput(id, secret);
 		var useCase = LazyServiceProvider.GetRequiredService<ISetConfigurationSecretUseCase>();
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task DisableAsync(string id, CancellationToken cancellationToken = default)
+	public Task DisableAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationDisableUseCase>();
 		var input = new ConfigurationDisableInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task EnableAsync(string id, CancellationToken cancellationToken = default)
+	public Task EnableAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationEnableUseCase>();
 		var input = new ConfigurationEnableInput(id);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task<string> AuthorizeAsync(string id, string teamId, string name, string secret, CancellationToken cancellationToken = default)
+	public Task<long> AuthorizeAsync(long id, string name, string secret, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationAuthorizeUseCase>();
-		var input = new ConfigurationAuthorizeInput(id, teamId, name, secret);
+		var input = new ConfigurationAuthorizeInput(id, 0, name, secret);
 		return useCase.ExecuteAsync(input, cancellationToken)
 		              .ContinueWith(t => t.Result.Id, cancellationToken);
 	}
 
 	/// <inheritdoc />
-	public Task UpdateValueAsync(string id, string key, string value, CancellationToken cancellationToken = default)
+	public Task UpdateValueAsync(long id, string key, string value, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationValueUpdateUseCase>();
 		var input = new ConfigurationValueUpdateInput(id, key, value);
 		return useCase.ExecuteAsync(input, cancellationToken);
 	}
 
-	public Task UpdateItemsAsync(string id, ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default)
+	public Task UpdateItemsAsync(long id, ConfigurationItemsUpdateDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationItemsUpdateUseCase>();
 		var input = new ConfigurationItemsUpdateInput(id, data);
@@ -122,7 +122,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task PublishAsync(string id, ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default)
+	public Task PublishAsync(long id, ConfigurationPublishRequestDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationPublishUseCase>();
 		var input = new ConfigurationPublishInput(id, data);
@@ -130,7 +130,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<string> GetArchiveAsync(string id, CancellationToken cancellationToken = default)
+	public Task<string> GetArchiveAsync(long id, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IGetConfigurationArchiveUseCase>();
 		var input = new GetConfigurationArchiveInput(id);
@@ -139,7 +139,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 	}
 
 	/// <inheritdoc />
-	public Task<string> GetItemsInTextAsync(string id, string format, CancellationToken cancellationToken = default)
+	public Task<string> GetItemsInTextAsync(long id, string format, CancellationToken cancellationToken = default)
 	{
 		var parser = LazyServiceProvider.GetRequiredService<IServiceProvider>()
 		                                .GetKeyedService<IConfigurationParser>(format.Normalize(TextCaseType.Lower));
@@ -153,7 +153,7 @@ public class ConfigurationApplicationService : BaseApplicationService, IConfigur
 			}, cancellationToken);
 	}
 
-	public Task PushRedisAsync(string id, ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default)
+	public Task PushRedisAsync(long id, ConfigurationPushRedisRequestDto data, CancellationToken cancellationToken = default)
 	{
 		var useCase = LazyServiceProvider.GetRequiredService<IConfigurationPushRedisUseCase>();
 		var input = new ConfigurationPushRedisInput(id, data);

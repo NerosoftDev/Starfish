@@ -139,7 +139,7 @@ CREATE TABLE `token`  (
 
 ```sql
 CREATE TABLE `user`  (
-  `id` varchar(32) NOT NULL,
+  `id` bigint NOT NULL,
   `username` varchar(64) NOT NULL,
   `password_hash` varchar(512) NOT NULL,
   `password_salt` varchar(32) NOT NULL,

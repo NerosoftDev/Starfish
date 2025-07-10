@@ -20,7 +20,7 @@ internal record GetConfigurationItemCountOutput(int Result) : IUseCaseOutput;
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Key"></param>
-internal record GetConfigurationItemCountInput(string Id, string Key) : IUseCaseInput;
+internal record GetConfigurationItemCountInput(long Id, string Key) : IUseCaseInput;
 
 /// <summary>
 /// 获取符合条件的配置数量用例
@@ -53,7 +53,7 @@ internal class GetConfigurationItemCountUseCase : IGetConfigurationItemCountUseC
 			var query = from c in configSet
 			            join t in teamSet on c.TeamId equals t.Id
 			            join tm in teamMemberSet on t.Id equals tm.TeamId
-			            where tm.UserId == _identity.UserId
+			            where tm.UserId == _identity.GetUserIdOfInt64()
 			            select c.Id;
 			action = q => q.Where(t => query.Contains(t.ConfigurationId));
 		}

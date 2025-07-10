@@ -7,7 +7,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IConfigurationItemsUpdateUseCase : INonOutputUseCase<ConfigurationItemsUpdateInput>;
 
-internal record ConfigurationItemsUpdateInput(string Id, ConfigurationItemsUpdateDto Data);
+internal record ConfigurationItemsUpdateInput(long Id, ConfigurationItemsUpdateDto Data);
 
 internal class ConfigurationItemsUpdateUseCase : IConfigurationItemsUpdateUseCase
 {

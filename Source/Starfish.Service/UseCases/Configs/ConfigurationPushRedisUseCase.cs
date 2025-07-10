@@ -9,7 +9,7 @@ namespace Nerosoft.Starfish.UseCases;
 
 internal interface IConfigurationPushRedisUseCase : INonOutputUseCase<ConfigurationPushRedisInput>;
 
-internal record ConfigurationPushRedisInput(string Id, ConfigurationPushRedisRequestDto Data) : IUseCaseInput;
+internal record ConfigurationPushRedisInput(long Id, ConfigurationPushRedisRequestDto Data) : IUseCaseInput;
 
 internal sealed class ConfigurationPushRedisUseCase : IConfigurationPushRedisUseCase
 {
@@ -26,18 +26,18 @@ internal sealed class ConfigurationPushRedisUseCase : IConfigurationPushRedisUse
 
 	public async Task ExecuteAsync(ConfigurationPushRedisInput input, CancellationToken cancellationToken = default)
 	{
-		var permission = await _teamRepository.CheckPermissionAsync(input.Id, _identity.UserId, cancellationToken);
-
-		if (permission != PermissionState.Edit)
-		{
-			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
-		}
-
 		var configuration = await _configurationRepository.GetAsync(input.Id, false, [nameof(Configuration.Archive)], cancellationToken);
 
 		if (configuration == null)
 		{
 			throw new ConfigurationNotFoundException(input.Id);
+		}
+		
+		var permission = await _teamRepository.CheckPermissionAsync(configuration.TeamId, _identity.GetUserIdOfInt64(), cancellationToken);
+
+		if (permission != PermissionState.Edit)
+		{
+			throw new UnauthorizedAccessException(Resources.IDS_ERROR_COMMON_UNAUTHORIZED_ACCESS);
 		}
 
 		if (configuration.Archive == null)

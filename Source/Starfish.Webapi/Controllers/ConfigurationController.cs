@@ -60,7 +60,7 @@ public class ConfigurationController : ControllerBase
 	/// <returns></returns>
 	[HttpGet("{id}")]
 	[Produces<ConfigurationDto>]
-	public async Task<IActionResult> GetAsync(string id)
+	public async Task<IActionResult> GetAsync(long id)
 	{
 		var result = await _service.GetDetailAsync(id, HttpContext.RequestAborted);
 		return Ok(result);
@@ -73,7 +73,7 @@ public class ConfigurationController : ControllerBase
 	/// <param name="data">配置基本信息</param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<IActionResult> CreateAsync(string teamId, [FromBody] ConfigurationEditDto data)
+	public async Task<IActionResult> CreateAsync(long teamId, [FromBody] ConfigurationEditDto data)
 	{
 		var result = await _service.CreateAsync(teamId, data, HttpContext.RequestAborted);
 		Response.Headers.Append("Entry", $"{result}");
@@ -86,8 +86,8 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id">应用Id</param>
 	/// <param name="data">配置基本信息</param>
 	/// <returns></returns>
-	[HttpPut("{id}")]
-	public async Task<IActionResult> UpdateAsync(string id, [FromBody] ConfigurationEditDto data)
+	[HttpPut("{id:long}")]
+	public async Task<IActionResult> UpdateAsync(long id, [FromBody] ConfigurationEditDto data)
 	{
 		await _service.UpdateAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -98,8 +98,8 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="id">应用Id</param>
 	/// <returns></returns>
-	[HttpDelete("{id}")]
-	public async Task<IActionResult> DeleteAsync(string id)
+	[HttpDelete("{id:long}")]
+	public async Task<IActionResult> DeleteAsync(long id)
 	{
 		await _service.DeleteAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -111,8 +111,8 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id}/secret")]
-	public async Task<IActionResult> SetSecretAsync(string id, [FromBody] ConfigurationSecretSetRequestDto data)
+	[HttpPut("{id:long}/secret")]
+	public async Task<IActionResult> SetSecretAsync(long id, [FromBody] ConfigurationSecretSetRequestDto data)
 	{
 		await _service.SetSecretAsync(id, data.Secret, HttpContext.RequestAborted);
 		return Ok();
@@ -123,8 +123,8 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPut("{id}/disable")]
-	public async Task<IActionResult> DisableAsync(string id)
+	[HttpPut("{id:long}/disable")]
+	public async Task<IActionResult> DisableAsync(long id)
 	{
 		await _service.DisableAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -135,8 +135,8 @@ public class ConfigurationController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpPut("{id}/enable")]
-	public async Task<IActionResult> EnableAsync(string id)
+	[HttpPut("{id:long}/enable")]
+	public async Task<IActionResult> EnableAsync(long id)
 	{
 		await _service.EnableAsync(id, HttpContext.RequestAborted);
 		return Ok();
@@ -148,8 +148,8 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id">应用Id</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPost("{id}/publish")]
-	public async Task<IActionResult> PublishAsync(string id, [FromBody] ConfigurationPublishRequestDto data)
+	[HttpPost("{id:long}/publish")]
+	public async Task<IActionResult> PublishAsync(long id, [FromBody] ConfigurationPublishRequestDto data)
 	{
 		await _service.PublishAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -161,8 +161,8 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPost("{id}/redis")]
-	public async Task<IActionResult> PushRedisAsync(string id, [FromBody] ConfigurationPushRedisRequestDto data)
+	[HttpPost("{id:long}/redis")]
+	public async Task<IActionResult> PushRedisAsync(long id, [FromBody] ConfigurationPushRedisRequestDto data)
 	{
 		await _service.PushRedisAsync(id, data, HttpContext.RequestAborted);
 		return Ok();
@@ -177,9 +177,9 @@ public class ConfigurationController : ControllerBase
 	/// <param name="count"></param>
 	/// <param name="format"></param>
 	/// <returns></returns>
-	[HttpGet("{id}/item")]
+	[HttpGet("{id:long}/item")]
 	[Produces(typeof(List<ConfigurationItemDto>))]
-	public async Task<IActionResult> GetItemListAsync(string id, string key, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
+	public async Task<IActionResult> GetItemListAsync(long id, string key, int skip = Constants.Query.Skip, int count = Constants.Query.Count, [FromHeader(Name = "x-format")] string format = null)
 	{
 		switch (format)
 		{
@@ -201,9 +201,9 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id">应用Id</param>
 	/// <param name="keyword">关键字</param>
 	/// <returns></returns>
-	[HttpGet("{id}/item/count")]
+	[HttpGet("{id:long}/item/count")]
 	[Produces(typeof(int))]
-	public async Task<IActionResult> GetItemCountAsync(string id, string keyword)
+	public async Task<IActionResult> GetItemCountAsync(long id, string keyword)
 	{
 		var result = await _service.GetItemCountAsync(id, keyword, HttpContext.RequestAborted);
 		return Ok(result);
@@ -216,9 +216,9 @@ public class ConfigurationController : ControllerBase
 	/// <param name="key">完整Key名称</param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id}/item/{key}")]
+	[HttpPut("{id:long}/item/{key}")]
 	[Consumes("text/plain")]
-	public async Task<IActionResult> UpdateValueAsync(string id, string key, [FromBody] string data)
+	public async Task<IActionResult> UpdateValueAsync(long id, string key, [FromBody] string data)
 	{
 		key = HttpUtility.UrlDecode(key);
 		await _service.UpdateValueAsync(id, key, data, HttpContext.RequestAborted);
@@ -231,8 +231,8 @@ public class ConfigurationController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="data"></param>
 	/// <returns></returns>
-	[HttpPut("{id}/item")]
-	public async Task<IActionResult> UpdateItemsAsync(string id, [FromBody] ConfigurationItemsUpdateDto data)
+	[HttpPut("{id:long}/item")]
+	public async Task<IActionResult> UpdateItemsAsync(long id, [FromBody] ConfigurationItemsUpdateDto data)
 	{
 		await _service.UpdateItemsAsync(id, data, HttpContext.RequestAborted);
 		return Ok();

@@ -4,12 +4,12 @@ namespace Nerosoft.Starfish.Application;
 
 public class ConfigurationUpdateCommand : Command
 {
-	public ConfigurationUpdateCommand(string id)
+	public ConfigurationUpdateCommand(long id)
 	{
 		Id = id;
 	}
 
-	public string Id { get; set; }
+	public long Id { get; set; }
 
 	public string Name { get; set; }
 

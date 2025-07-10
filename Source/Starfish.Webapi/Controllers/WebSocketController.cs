@@ -33,7 +33,7 @@ public class WebSocketController : ControllerBase
 	{
 		if (HttpContext.WebSockets.IsWebSocketRequest)
 		{
-			var configId = await AuthAsync(id, teamId, name, secret);
+			var configId = await AuthAsync(id, name, secret);
 
 			using var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 
@@ -91,12 +91,14 @@ public class WebSocketController : ControllerBase
 		}
 	}
 
-	private Task<string> AuthAsync(string id, string teamId, string name, string secret)
+	private Task<long> AuthAsync(string vanity, string name, string secret)
 	{
 		// var app = HttpContext.Request.Headers[Constants.RequestHeaders.App];
 		// var secret = HttpContext.Request.Headers[Constants.RequestHeaders.Secret];
 
+		var id = ShortUniqueId.Default.DecodeSingleInt64(vanity);
+		
 		var service = HttpContext.RequestServices.GetRequiredService<IConfigurationApplicationService>();
-		return service.AuthorizeAsync(id, teamId, name, secret, HttpContext.RequestAborted);
+		return service.AuthorizeAsync(id, name, secret, HttpContext.RequestAborted);
 	}
 }

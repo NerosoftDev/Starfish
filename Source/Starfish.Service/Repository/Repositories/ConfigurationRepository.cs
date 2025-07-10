@@ -7,14 +7,14 @@ using Nerosoft.Starfish.Service;
 
 namespace Nerosoft.Starfish.Repository;
 
-public class ConfigurationRepository : BaseRepository<DataContext, Configuration, string>, IConfigurationRepository
+public class ConfigurationRepository : BaseRepository<DataContext, Configuration, long>, IConfigurationRepository
 {
 	public ConfigurationRepository(IContextProvider provider)
 		: base(provider)
 	{
 	}
 
-	public Task<bool> ExistsAsync(string teamId, string name, CancellationToken cancellationToken = default)
+	public Task<bool> ExistsAsync(long teamId, string name, CancellationToken cancellationToken = default)
 	{
 		ISpecification<Configuration>[] specifications =
 		[
@@ -26,7 +26,7 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		return AnyAsync(predicate, null, cancellationToken);
 	}
 
-	public Task<List<ConfigurationItem>> GetItemListAsync(string id, string key, int skip, int count, CancellationToken cancellationToken = default)
+	public Task<List<ConfigurationItem>> GetItemListAsync(long id, string key, int skip, int count, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<ConfigurationItem>()
 		                   .AsQueryable()
@@ -49,7 +49,7 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 		            .ToListAsync(cancellationToken);
 	}
 
-	public Task<int> GetItemCountAsync(string id, string key, Func<IQueryable<ConfigurationItem>, IQueryable<ConfigurationItem>> action, CancellationToken cancellationToken = default)
+	public Task<int> GetItemCountAsync(long id, string key, Func<IQueryable<ConfigurationItem>, IQueryable<ConfigurationItem>> action, CancellationToken cancellationToken = default)
 	{
 		var query = Context.Set<ConfigurationItem>()
 		                   .AsQueryable();
@@ -64,7 +64,7 @@ public class ConfigurationRepository : BaseRepository<DataContext, Configuration
 			t => t.Id > 0
 		};
 
-		if (!string.IsNullOrWhiteSpace(id))
+		if (id > 0)
 		{
 			expressions.Add(t => t.ConfigurationId == id);
 		}

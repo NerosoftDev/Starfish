@@ -9,7 +9,7 @@ public class ConnectionContainer
 {
 	public event EventHandler<ClientConnectedEventArgs> OnConnected;
 
-	private static readonly ConcurrentDictionary<string, ConnectionChannel> _connections = new(StringComparer.OrdinalIgnoreCase);
+	private static readonly ConcurrentDictionary<long, ConnectionChannel> _connections = new();
 
 	private readonly IConfigurationApplicationService _service;
 
@@ -34,7 +34,7 @@ public class ConnectionContainer
 		}
 	}
 
-	public ConnectionChannel GetOrAdd(string configId, string connectionId, string connectionType)
+	public ConnectionChannel GetOrAdd(long configId, string connectionId, string connectionType)
 	{
 		var channel = _connections.GetOrAdd(configId, _ => ConnectionChannel.New(configId));
 
@@ -44,7 +44,7 @@ public class ConnectionContainer
 		return channel;
 	}
 
-	public List<ConnectionInfo> GetConnections(string configId)
+	public List<ConnectionInfo> GetConnections(long configId)
 	{
 		return _connections.TryGetValue(configId, out var info) ? info.Connections : null;
 	}
@@ -54,7 +54,7 @@ public class ConnectionContainer
 		return _connections.SelectMany(t => t.Value.Connections ?? []).ToList();
 	}
 
-	public void Remove(string configId, string connectionId)
+	public void Remove(long configId, string connectionId)
 	{
 		if (!_connections.TryGetValue(configId, out var info))
 		{
@@ -80,7 +80,7 @@ public class ConnectionContainer
 
 	public class ClientConnectedEventArgs : EventArgs
 	{
-		public string ConfigId { get; set; }
+		public long ConfigId { get; set; }
 
 		public string ConnectionId { get; set; }
 
@@ -90,19 +90,19 @@ public class ConnectionContainer
 
 public class ConnectionChannel
 {
-	private ConnectionChannel(string configId)
+	private ConnectionChannel(long configId)
 	{
 		ConfigId = configId;
 		Connections = [];
 	}
 
-	public string ConfigId { get; }
+	public long ConfigId { get; }
 
 	public List<ConnectionInfo> Connections { get; private set; }
 
 	public Channel<Tuple<string, string>> Channel { get; private init; }
 
-	public static ConnectionChannel New(string configId)
+	public static ConnectionChannel New(long configId)
 	{
 		var info = new ConnectionChannel(configId)
 		{
@@ -131,7 +131,7 @@ public class ConnectionChannel
 
 public class ConnectionInfo
 {
-	public string ConfigurationId { get; set; }
+	public long ConfigurationId { get; set; }
 
 	public string ConnectionId { get; set; }
 

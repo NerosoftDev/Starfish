@@ -8,7 +8,7 @@ public class ConfigurationCriteria
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public string TeamId { get; set; }
+	public long TeamId { get; set; }
 
 	/// <summary>
 	/// 关键字

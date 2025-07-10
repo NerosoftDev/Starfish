@@ -7,7 +7,7 @@ internal interface IGetConfigurationArchiveUseCase : IUseCase<GetConfigurationAr
 
 internal record GetConfigurationArchiveOutput(string Result) : IUseCaseOutput;
 
-internal record GetConfigurationArchiveInput(string Id) : IUseCaseInput;
+internal record GetConfigurationArchiveInput(long Id) : IUseCaseInput;
 
 internal class GetConfigurationArchiveUseCase : IGetConfigurationArchiveUseCase
 {

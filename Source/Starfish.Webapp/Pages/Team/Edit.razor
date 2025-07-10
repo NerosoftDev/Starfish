@@ -1,4 +1,4 @@
-﻿@implements IDialogContentComponent<string>
+﻿@implements IDialogContentComponent<long>
 
 @inject ITeamApi Api
 
@@ -23,14 +23,15 @@
 </FluentDialogBody>
 
 <FluentDialogFooter>
-    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync" Loading="Loading">@(Resources.IDS_COMMON_SAVE)</FluentButton>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync"
+                  Loading="Loading">@(Resources.IDS_COMMON_SAVE)</FluentButton>
     <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">@(Resources.IDS_COMMON_CANCEL)</FluentButton>
 </FluentDialogFooter>
 
 @code {
 
     [Parameter]
-    public string Content { get; set; }
+    public long Content { get; set; }
 
     [CascadingParameter]
     public FluentDialog Dialog { get; set; } = default!;
@@ -58,7 +59,7 @@
                 Description = Description
             };
 
-            if (!string.IsNullOrEmpty(Content))
+            if (Content > 0)
             {
                 await Api.UpdateAsync(Content, request)
                          .EnsureSuccess();
@@ -86,9 +87,9 @@
         await Dialog.CancelAsync();
     }
 
-    private async Task LoadAsync(string id)
+    private async Task LoadAsync(long id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (id <= 0)
         {
             return;
         }

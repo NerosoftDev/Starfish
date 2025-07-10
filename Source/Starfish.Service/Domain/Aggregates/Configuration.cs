@@ -8,7 +8,7 @@ namespace Nerosoft.Starfish.Domain;
 /// <summary>
 /// 设置聚合根
 /// </summary>
-public sealed class Configuration : Aggregate<string>, IAuditing
+public sealed class Configuration : Aggregate<long>, IAuditing
 {
 	private Configuration()
 	{
@@ -30,7 +30,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		});
 	}
 
-	private Configuration(string teamId, string name)
+	private Configuration(long teamId, string name)
 		: this()
 	{
 		TeamId = teamId;
@@ -41,7 +41,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 	/// <summary>
 	/// 团队Id
 	/// </summary>
-	public string TeamId { get; set; }
+	public long TeamId { get; set; }
 
 	/// <summary>
 	/// 配置名称
@@ -102,7 +102,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 	/// </summary>
 	public ConfigurationArchive Archive { get; set; }
 
-	internal static Configuration Create(string teamId, string name)
+	internal static Configuration Create(long teamId, string name)
 	{
 		var configuration = new Configuration(teamId, name);
 		configuration.RaiseEvent(new ConfigurationCreatedEvent(configuration));
@@ -140,7 +140,7 @@ public sealed class Configuration : Aggregate<string>, IAuditing
 		
 		var secretHash = Cryptography.SHA.Encrypt(secret);
 
-		if (!string.IsNullOrEmpty(Id))
+		if (Id > 0)
 		{
 			RaiseEvent(new ConfigurationSecretChangedEvent(secretHash));
 		}

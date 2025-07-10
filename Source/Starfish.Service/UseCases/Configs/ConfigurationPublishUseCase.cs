@@ -15,7 +15,7 @@ internal interface IConfigurationPublishUseCase : INonOutputUseCase<Configuratio
 /// </summary>
 /// <param name="Id"></param>
 /// <param name="Data"></param>
-internal record ConfigurationPublishInput(string Id, ConfigurationPublishRequestDto Data) : IUseCaseInput;
+internal record ConfigurationPublishInput(long Id, ConfigurationPublishRequestDto Data) : IUseCaseInput;
 
 /// <summary>
 /// 配置节点发布用例
