@@ -125,7 +125,7 @@ public class UserController : ControllerBase
 	[HttpPut("password")]
 	public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordRequestDto data)
 	{
-		await _service.ChangePasswordAsync(data.OldPassword, data.NewPassword, HttpContext.RequestAborted);
+		await _service.ChangePasswordAsync(data.Password, HttpContext.RequestAborted);
 		return Ok();
 	}
 }

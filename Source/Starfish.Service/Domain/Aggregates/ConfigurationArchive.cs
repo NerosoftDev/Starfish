@@ -7,6 +7,10 @@ namespace Nerosoft.Starfish.Domain;
 /// </summary>
 public sealed class ConfigurationArchive : Aggregate<long>
 {
+	/// <summary>
+	/// 构造函数
+	/// </summary>
+	/// <remarks>仅供EF使用</remarks>
 	private ConfigurationArchive()
 	{
 	}

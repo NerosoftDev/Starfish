@@ -1,4 +1,5 @@
-﻿using Nerosoft.Euonia.Application;
+﻿using System.Security.Authentication;
+using Nerosoft.Euonia.Application;
 using Nerosoft.Starfish.Transit;
 using Nerosoft.Starfish.UseCases;
 
@@ -58,18 +59,21 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 		return Bus.SendAsync(command, cancellationToken);
 	}
 
-	public Task ChangePasswordAsync(string oldPassword, string newPassword, CancellationToken cancellationToken = default)
+	public Task ChangePasswordAsync(string password, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<IChangePasswordUseCase>();
-		var input = new ChangePasswordInput(oldPassword, newPassword);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		if (User?.IsAuthenticated != true)
+		{
+			throw new AuthenticationException("User is not authenticated.");
+		}
+
+		var command = new ChangePasswordCommand(User.GetUserIdOfInt64(), password, "change");
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
 	public Task ResetPasswordAsync(long id, string password, CancellationToken cancellationToken = default)
 	{
-		var useCase = LazyServiceProvider.GetService<IResetPasswordUseCase>();
-		var input = new ResetPasswordInput(id, password);
-		return useCase.ExecuteAsync(input, cancellationToken);
+		var command = new ChangePasswordCommand(id, password, "reset");
+		return Bus.SendAsync(command, cancellationToken);
 	}
 
 	public Task InitializeAsync(CancellationToken cancellationToken = default)
@@ -77,5 +81,4 @@ public class UserApplicationService : BaseApplicationService, IUserApplicationSe
 		var useCase = LazyServiceProvider.GetService<IUserInitializeUseCase>();
 		return useCase.ExecuteAsync(cancellationToken);
 	}
-
 }

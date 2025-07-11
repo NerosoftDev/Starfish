@@ -6,12 +6,7 @@
 public class ChangePasswordRequestDto
 {
 	/// <summary>
-	/// 原密码
-	/// </summary>
-	public string OldPassword { get; set; }
-
-	/// <summary>
 	/// 新密码
 	/// </summary>
-	public string NewPassword { get; set; }
+	public string Password { get; set; }
 }

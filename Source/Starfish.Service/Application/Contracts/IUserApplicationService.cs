@@ -62,11 +62,10 @@ public interface IUserApplicationService : IApplicationService
 	/// <summary>
 	/// 修改密码
 	/// </summary>
-	/// <param name="oldPassword"></param>
-	/// <param name="newPassword"></param>
+	/// <param name="password"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task ChangePasswordAsync(string oldPassword, string newPassword, CancellationToken cancellationToken = default);
+	Task ChangePasswordAsync(string password, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// 重置密码
