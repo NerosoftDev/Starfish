@@ -28,8 +28,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
-			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .IsRequired();
 
 			entity.Property(t => t.Username)
 			      .HasColumnName("username")
@@ -59,7 +58,8 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			      .IsUnicode();
 
 			entity.Property(t => t.AccessFailedCount)
-			      .HasColumnName("access_failed_count");
+			      .HasColumnName("access_failed_count")
+			      .HasDefaultValue(0);
 
 			entity.Property(t => t.IsAdmin)
 			      .HasColumnName("is_admin")
@@ -107,7 +107,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>()
 			      .HasMaxLength(32);
 
 			entity.Property(t => t.Name)
@@ -124,8 +124,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 
 			entity.Property(t => t.OwnerId)
 			      .HasColumnName("owner_id")
-			      .IsRequired()
-			      .HasMaxLength(32);
+			      .IsRequired();
 
 			entity.Property(t => t.MemberCount)
 			      .HasColumnName("member_count")
@@ -165,17 +164,15 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.Property(t => t.UserId)
 			      .HasColumnName("user_id")
-			      .IsRequired()
-			      .HasMaxLength(32);
+			      .IsRequired();
 
 			entity.Property(t => t.TeamId)
 			      .HasColumnName("team_id")
-			      .IsRequired()
-			      .HasMaxLength(32);
+			      .IsRequired();
 
 			entity.Property(t => t.CreateTime)
 			      .HasColumnName("create_time")
@@ -212,7 +209,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.Property(t => t.TeamId)
 			      .HasColumnName("team_id")
@@ -298,7 +295,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.Property(t => t.ConfigurationId)
 			      .HasColumnName("configuration_id")
@@ -318,7 +315,9 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasKey(t => t.Id);
 
 			entity.Property(t => t.Id)
-			      .IsRequired();
+			      .HasColumnName("id")
+			      .IsRequired()
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Configuration)
 			      .WithOne(t => t.Archive)
@@ -334,8 +333,9 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.HasIndex(t => t.ConfigurationId).HasDatabaseName("IDS_CONFIG_REVISION_FK");
 
 			entity.Property(t => t.Id)
+			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.HasOne(t => t.Configuration)
 			      .WithMany(t => t.Revisions)
@@ -360,7 +360,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.Property(t => t.Key)
 			      .HasColumnName("key")
@@ -394,7 +394,7 @@ internal abstract class RelationalDatabaseModelBuilder : AbstractDatabaseModelBu
 			entity.Property(t => t.Id)
 			      .HasColumnName("id")
 			      .IsRequired()
-			      .HasValueGenerator<SequentialGuidValueGenerator>();
+			      .HasValueGenerator<SnowflakeIdValueGenerator>();
 
 			entity.Property(t => t.Username)
 			      .HasColumnName("username")

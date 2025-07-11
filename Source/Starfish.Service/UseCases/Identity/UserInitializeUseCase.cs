@@ -43,7 +43,7 @@ internal class UserInitializeUseCase : IUserInitializeUseCase
 			IsAdmin = true,
 			Reserved = true
 		};
-		await _bus.SendAsync<UserCreateCommand, string>(command, cancellationToken)
+		await _bus.SendAsync<UserCreateCommand, long>(command, cancellationToken)
 		          .ContinueWith(task => task.WaitAndUnwrapException(), cancellationToken);
 	}
 }
